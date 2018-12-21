@@ -20,7 +20,9 @@
             <div class="box-header with-border">
               <h3 class="box-title">Form Master Kendaraan</h3>
             </div>
-            <form role="form">
+            <form role="form" id="form-kendaraan">
+              <input type="hidden" name="tipe_form" value="">
+              <input type="hidden" name="kode_kendaraan" value="">
               <div class="box-body">
                 <div class="form-group">
                   <label>Nopol</label>
@@ -74,6 +76,9 @@
                   <label>Kernet</label>
                   <input type="text" name="kernet_kendaraan" class="form-control">
                 </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
+                </div>
               </div>
             </form>
           </div>
@@ -94,151 +99,7 @@
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="text-center">1</td>
-                    <td class="text-center">BRG001</td>
-                    <td class="text-center">BARANG A</td>
-                    <td class="text-center">09876</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1A</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">2</td>
-                    <td class="text-center">BRG002</td>
-                    <td class="text-center">BARANG B</td>
-                    <td class="text-center">09866</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1A</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">3</td>
-                    <td class="text-center">BRG003</td>
-                    <td class="text-center">BARANG C</td>
-                    <td class="text-center">06876</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1A</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">4</td>
-                    <td class="text-center">BRG004</td>
-                    <td class="text-center">BARANG A</td>
-                    <td class="text-center">09872</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1A</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">5</td>
-                    <td class="text-center">BRG005</td>
-                    <td class="text-center">BARANG E</td>
-                    <td class="text-center">19876</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1A</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">6</td>
-                    <td class="text-center">BRG006</td>
-                    <td class="text-center">BARANG F</td>
-                    <td class="text-center">07876</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1B</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">7</td>
-                    <td class="text-center">BRG007</td>
-                    <td class="text-center">BARANG G</td>
-                    <td class="text-center">09816</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1B</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">8</td>
-                    <td class="text-center">BRG008</td>
-                    <td class="text-center">BARANG H</td>
-                    <td class="text-center">29876</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1B</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">9</td>
-                    <td class="text-center">BRG009</td>
-                    <td class="text-center">BARANG I</td>
-                    <td class="text-center">39876</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1B</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">10</td>
-                    <td class="text-center">BRG010</td>
-                    <td class="text-center">BARANG J</td>
-                    <td class="text-center">09873</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1B</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">11</td>
-                    <td class="text-center">BRG011</td>
-                    <td class="text-center">BARANG K</td>
-                    <td class="text-center">09176</td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">1C</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody></tbody>
               </table>
             </div>
           </div>        
@@ -255,24 +116,82 @@
   <script>
     $(function ()
     {
-      $("#m_kendaraan").DataTable({});
+      tbKendaraan();
     })
+    function tbKendaraan()
+    {
+      table = $('#m_kendaraan').DataTable({
+        "info": false,
+        "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+          "url": "<?php echo site_url('Datatables/mKendaraan')?>",
+          "type": "POST",
+          },
+        "columnDefs": [
+          { 
+            "targets": [ 0 ],
+            "orderable": false,
+          },
+          {
+            "className": "text-center", "targets": ['_all']
+          }
+        ],
+      });
+    }
+    function reloadTb()
+    {
+      table.ajax.reload(null,false);
+    }
     function add()
     {
+      var urls = ($('[name="tipe_form"]').val()!='1')?'<?= site_url('Crud/addKendaraan')?>':'<?= site_url('Crud/updKendaraan')?>';
       $.ajax({
         type: 'POST',
-        url: '/addBarang',
-        data: $('#form-customer').serialize(),
+        url: urls,
+        data: $('#form-kendaraan').serialize(),
+        dataType: 'JSON',
         success: function(data)
         {
           if(data.status)
           {
-            alert('Sukses Menambah Barang');
+            alert('Sukses Menambah Kendaraan');
+            $('#form-kendaraan')[0].reset();
+            $('[name="tipe_form"]').val('');
+            reloadTb();
           }
           else
           {
-            alert('Gagal Menambah Barang');
+            alert('Gagal Menambah Kendaraan');
           }
+        }
+      });
+    }
+    function edit(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/getKendaraan/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          $('[name="nopol"]').val(data.nopol);
+          $('[name="no_mesin"]').val(data.no_mesin);
+          $('[name="no_rangka"]').val(data.no_rangka);
+          $('[name="tipe_kendaraan"]').val(data.tipe_kendaraan);
+          $('[name="jenis_kendaraan"]').val(data.jenis_kendaraan);
+          $('[name="nama_pemilik"]').val(data.nama_pemilik);
+          $('[name="thn_pembuatan"]').val(data.thn_pembuatan);
+          $('[name="no_bpkb"]').val(data.no_bpkb);
+          $('[name="warna_kendaraan"]').val(data.warna_kendaraan);
+          $('[name="masa_stnk"]').val(data.masa_stnk);
+          $('[name="cc_kendaraan"]').val(data.cc_kendaraan);
+          $('[name="sopir_kendaraan"]').val(data.sopir_kendaraan);
+          $('[name="kernet_kendaraan"]').val(data.kernet_kendaraan);
+          $('[name="kode_kendaraan"]').val(data.kode_kendaraan);
+          $('[name="tipe_form"]').val('1');
         }
       });
     }

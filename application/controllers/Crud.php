@@ -147,4 +147,165 @@ class Crud extends CI_Controller
 		$data = $this->db->get_where('master_biaya_driver', array('kode_biaya_driver'=>$key))->row();
 		echo json_encode($data);
 	}
+
+	//CRUD Master Tujuan
+	public function addTujuan()
+	{
+		$ins = array(
+			'kode_tujuan'=>$this->input->post('kode_tujuan'),
+			'ket_tujuan'=>$this->input->post('ket_tujuan')
+		);
+		$this->db->insert('master_tujuan',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updTujuan()
+	{
+		$upd = array(
+			'ket_tujuan'=>$this->input->post('ket_tujuan')
+		);
+		$this->db->update('master_tujuan',$upd,array('kode_tujuan'=>$this->input->post('kode_tujuan')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function getTujuan($key)
+	{
+		$data = $this->db->get_where('master_tujuan', array('kode_tujuan'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	//CRUD Master Supplier
+	public function addSupplier()
+	{
+		$ins = array(
+			'kode_supplier'=>$this->input->post('kode_supplier'),
+			'nama_supplier'=>$this->input->post('nama_supplier'),
+			'alamat_supplier'=>$this->input->post('alamat_supplier'),
+			'kota_supplier'=>$this->input->post('kota_supplier'),
+			'tlp_supplier'=>$this->input->post('tlp_supplier')
+		);
+		$this->db->insert('master_supplier',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updSupplier()
+	{
+		$upd = array(
+			'kode_supplier'=>$this->input->post('kode_supplier'),
+			'nama_supplier'=>$this->input->post('nama_supplier'),
+			'alamat_supplier'=>$this->input->post('alamat_supplier'),
+			'kota_supplier'=>$this->input->post('kota_supplier'),
+			'tlp_supplier'=>$this->input->post('tlp_supplier')
+		);
+		$this->db->update('master_supplier',$upd,array('kode_supplier'=>$this->input->post('kode_supplier')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function getSupplier($key)
+	{
+		$data = $this->db->get_where('master_supplier', array('kode_supplier'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	//CRUD Master Karyawan
+	public function addKaryawan()
+	{
+		$ins = array(
+			'kode_karyawan'=>$this->input->post('kode_karyawan'),
+			'nama_karyawan'=>$this->input->post('nama_karyawan'),
+			'alamat_karyawan'=>$this->input->post('alamat_karyawan'),
+			'kota_karyawan'=>$this->input->post('kota_karyawan'),
+			'tlp_karyawan'=>$this->input->post('tlp_karyawan'),
+			'upah_harian'=>$this->input->post('upah_harian'),
+			'upah_hari_besar'=>$this->input->post('upah_hari_besar'),
+			'upah_hari_minggu'=>$this->input->post('upah_hari_minggu'),
+			'min_jam_lembur'=>$this->input->post('min_jam_lembur'),
+			'upah_lembur'=>$this->input->post('upah_lembur'),
+			'gaji_bulanan'=>$this->input->post('gaji_bulanan'),
+			'kerja_penuh_6x'=>$this->input->post('kerja_penuh_6x')
+		);
+		$this->db->insert('master_karyawan',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updKaryawan()
+	{
+		$upd = array(
+			'nama_karyawan'=>$this->input->post('nama_karyawan'),
+			'alamat_karyawan'=>$this->input->post('alamat_karyawan'),
+			'kota_karyawan'=>$this->input->post('kota_karyawan'),
+			'tlp_karyawan'=>$this->input->post('tlp_karyawan'),
+			'upah_harian'=>$this->input->post('upah_harian'),
+			'upah_hari_besar'=>$this->input->post('upah_hari_besar'),
+			'upah_hari_minggu'=>$this->input->post('upah_hari_minggu'),
+			'min_jam_lembur'=>$this->input->post('min_jam_lembur'),
+			'upah_lembur'=>$this->input->post('upah_lembur'),
+			'gaji_bulanan'=>$this->input->post('gaji_bulanan'),
+			'kerja_penuh_6x'=>$this->input->post('kerja_penuh_6x')
+		);
+		$this->db->update('master_karyawan',$upd,array('kode_karyawan'=>$this->input->post('kode_karyawan')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function getKaryawan($key)
+	{
+		$data = $this->db->get_where('master_karyawan', array('kode_karyawan'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	//CRUD Master Kendaraan
+	public function addKendaraan()
+	{
+		$ins = array(
+			'nopol'=>$this->input->post('nopol'),
+			'no_mesin'=>$this->input->post('no_mesin'),
+			'no_rangka'=>$this->input->post('no_rangka'),
+			'tipe_kendaraan'=>$this->input->post('tipe_kendaraan'),
+			'jenis_kendaraan'=>$this->input->post('jenis_kendaraan'),
+			'nama_pemilik'=>$this->input->post('nama_pemilik'),
+			'thn_pembuatan'=>$this->input->post('thn_pembuatan'),
+			'no_bpkb'=>$this->input->post('no_bpkb'),
+			'warna_kendaraan'=>$this->input->post('warna_kendaraan'),
+			'masa_stnk'=>$this->input->post('masa_stnk'),
+			'cc_kendaraan'=>$this->input->post('cc_kendaraan'),
+			'sopir_kendaraan'=>$this->input->post('sopir_kendaraan'),
+			'kernet_kendaraan'=>$this->input->post('kernet_kendaraan')
+		);
+		$this->db->insert('master_kendaraan',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updKendaraan()
+	{
+		$upd = array(
+			'no_mesin'=>$this->input->post('no_mesin'),
+			'no_rangka'=>$this->input->post('no_rangka'),
+			'tipe_kendaraan'=>$this->input->post('tipe_kendaraan'),
+			'jenis_kendaraan'=>$this->input->post('jenis_kendaraan'),
+			'nama_pemilik'=>$this->input->post('nama_pemilik'),
+			'thn_pembuatan'=>$this->input->post('thn_pembuatan'),
+			'no_bpkb'=>$this->input->post('no_bpkb'),
+			'warna_kendaraan'=>$this->input->post('warna_kendaraan'),
+			'masa_stnk'=>$this->input->post('masa_stnk'),
+			'cc_kendaraan'=>$this->input->post('cc_kendaraan'),
+			'sopir_kendaraan'=>$this->input->post('sopir_kendaraan'),
+			'kernet_kendaraan'=>$this->input->post('kernet_kendaraan')
+		);
+		$this->db->update('master_kendaraan',$upd,array('kode_kendaraan'=>$this->input->post('kode_kendaraan')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function getKendaraan($key)
+	{
+		$data = $this->db->get_where('master_kendaraan', array('kode_kendaraan'=>$key))->row();
+		echo json_encode($data);
+	}
 }

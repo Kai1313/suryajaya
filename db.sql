@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
--- HeidiSQL Version:             9.5.0.5196
+-- HeidiSQL Version:             9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `master_biaya_driver` (
   PRIMARY KEY (`kode_biaya_driver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.master_biaya_driver: ~0 rows (approximately)
+-- Dumping data for table suryajaya.master_biaya_driver: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_biaya_driver` DISABLE KEYS */;
 INSERT INTO `master_biaya_driver` (`kode_biaya_driver`, `ket_biaya_driver`, `nom_biaya_driver`) VALUES
 	('BDR0001', 'Biaya Jkt -> Sby', 2000000.00),
@@ -89,6 +89,85 @@ INSERT INTO `master_driver` (`kode_driver`, `nama_driver`, `alamat_driver`, `kot
 	('DRV0001', 'Sugeng', 'Putat Jaya No.88', 'Surabaya', '085235789172', '0'),
 	('DRV0002', 'Mulyadi', 'Lesti No.42', 'Surabaya', '088353678678', '1');
 /*!40000 ALTER TABLE `master_driver` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.master_karyawan
+DROP TABLE IF EXISTS `master_karyawan`;
+CREATE TABLE IF NOT EXISTS `master_karyawan` (
+  `kode_karyawan` char(10) NOT NULL,
+  `nama_karyawan` char(100) DEFAULT NULL,
+  `alamat_karyawan` varchar(1024) DEFAULT NULL,
+  `kota_karyawan` char(100) DEFAULT NULL,
+  `tlp_karyawan` char(20) DEFAULT NULL,
+  `upah_harian` decimal(10,2) DEFAULT NULL,
+  `upah_hari_besar` decimal(10,2) DEFAULT NULL,
+  `upah_hari_minggu` decimal(10,2) DEFAULT NULL,
+  `min_jam_lembur` decimal(10,2) DEFAULT NULL,
+  `upah_lembur` decimal(10,2) DEFAULT NULL,
+  `gaji_bulanan` decimal(10,2) DEFAULT NULL,
+  `kerja_penuh_6x` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`kode_karyawan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.master_karyawan: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_karyawan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_karyawan` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.master_kendaraan
+DROP TABLE IF EXISTS `master_kendaraan`;
+CREATE TABLE IF NOT EXISTS `master_kendaraan` (
+  `kode_kendaraan` int(11) NOT NULL AUTO_INCREMENT,
+  `nopol` char(10) NOT NULL,
+  `no_mesin` char(100) DEFAULT NULL,
+  `no_rangka` char(100) DEFAULT NULL,
+  `tipe_kendaraan` char(100) DEFAULT NULL,
+  `jenis_kendaraan` char(100) DEFAULT NULL,
+  `nama_pemilik` char(100) DEFAULT NULL,
+  `thn_pembuatan` char(10) DEFAULT NULL,
+  `no_bpkb` char(100) DEFAULT NULL,
+  `warna_kendaraan` char(50) DEFAULT NULL,
+  `masa_stnk` char(100) DEFAULT NULL,
+  `cc_kendaraan` char(100) DEFAULT NULL,
+  `sopir_kendaraan` char(100) DEFAULT NULL,
+  `kernet_kendaraan` char(100) DEFAULT NULL,
+  PRIMARY KEY (`kode_kendaraan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.master_kendaraan: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_kendaraan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_kendaraan` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.master_supplier
+DROP TABLE IF EXISTS `master_supplier`;
+CREATE TABLE IF NOT EXISTS `master_supplier` (
+  `kode_supplier` char(10) NOT NULL,
+  `nama_supplier` char(100) DEFAULT NULL,
+  `alamat_supplier` varchar(1024) DEFAULT NULL,
+  `kota_supplier` char(100) DEFAULT NULL,
+  `tlp_supplier` char(20) DEFAULT NULL,
+  PRIMARY KEY (`kode_supplier`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.master_supplier: ~2 rows (approximately)
+/*!40000 ALTER TABLE `master_supplier` DISABLE KEYS */;
+INSERT INTO `master_supplier` (`kode_supplier`, `nama_supplier`, `alamat_supplier`, `kota_supplier`, `tlp_supplier`) VALUES
+	('SUP0001', 'Sinar Sahabat', 'Mayjend Sungkono No.42', 'Surabaya', '085235252522'),
+	('SUP0002', 'Murni Motor', 'HR Muhammad No.4A-4C', 'Surabaya', '0319878899');
+/*!40000 ALTER TABLE `master_supplier` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.master_tujuan
+DROP TABLE IF EXISTS `master_tujuan`;
+CREATE TABLE IF NOT EXISTS `master_tujuan` (
+  `kode_tujuan` char(10) NOT NULL,
+  `ket_tujuan` text,
+  PRIMARY KEY (`kode_tujuan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.master_tujuan: ~2 rows (approximately)
+/*!40000 ALTER TABLE `master_tujuan` DISABLE KEYS */;
+INSERT INTO `master_tujuan` (`kode_tujuan`, `ket_tujuan`) VALUES
+	('DST0001', 'SBY->JKT'),
+	('DST0002', 'JKT->SBY');
+/*!40000 ALTER TABLE `master_tujuan` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

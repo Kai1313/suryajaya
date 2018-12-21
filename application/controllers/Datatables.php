@@ -10,6 +10,10 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/show/showCustomer','showCustomer');
 		$this->load->model('Datatables/show/showDriver','showDriver');
 		$this->load->model('Datatables/show/showBiayaDriver','showBiayaDriver');
+		$this->load->model('Datatables/show/showTujuan','showTujuan');
+		$this->load->model('Datatables/show/showSupplier','showSupplier');
+		$this->load->model('Datatables/show/showKaryawan','showKaryawan');
+		$this->load->model('Datatables/show/showKendaraan','showKendaraan');
 	}
 
 	public function mBarang()
@@ -116,6 +120,113 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->showBiayaDriver->count_all(),
 				"recordsFiltered" => $this->showBiayaDriver->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function mTujuan()
+	{
+		$list = $this->showTujuan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->kode_tujuan;
+			$row[] = $dat->ket_tujuan;
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_tujuan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_tujuan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->showTujuan->count_all(),
+				"recordsFiltered" => $this->showTujuan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function mSupplier()
+	{
+		$list = $this->showSupplier->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->kode_supplier;
+			$row[] = $dat->nama_supplier;
+			$row[] = $dat->alamat_supplier;
+			$row[] = $dat->kota_supplier;
+			$row[] = $dat->tlp_supplier;
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_supplier."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_supplier."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->showSupplier->count_all(),
+				"recordsFiltered" => $this->showSupplier->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function mKaryawan()
+	{
+		$list = $this->showKaryawan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->kode_karyawan;
+			$row[] = $dat->nama_karyawan;
+			$row[] = $dat->alamat_karyawan;
+			$row[] = $dat->kota_karyawan;
+			$row[] = $dat->tlp_karyawan;
+			$row[] = $dat->gaji_bulanan;
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_karyawan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_karyawan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->showKaryawan->count_all(),
+				"recordsFiltered" => $this->showKaryawan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function mKendaraan()
+	{
+		$list = $this->showKendaraan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->nopol;
+			$row[] = $dat->tipe_kendaraan;
+			$row[] = $dat->jenis_kendaraan;
+			$row[] = $dat->warna_kendaraan;
+			$row[] = $dat->sopir_kendaraan;
+			$row[] = $dat->kernet_kendaraan;
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->nopol."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->nopol."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->showKendaraan->count_all(),
+				"recordsFiltered" => $this->showKendaraan->count_filtered(),
 				"data" => $data,
 			);
 		echo json_encode($output);
