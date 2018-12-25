@@ -46,16 +46,16 @@
             <li class="<?php if($this->uri->segment(1)=='master-supplier'){echo 'active';}?>"><a href="<?= base_url('master-supplier')?>">Supplier</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview <?php $arr=array('transaksi-pembelian-spare-part','transaksi-pemakaian-spare-part'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
           <a href="#"><i class="fa fa-cart-plus"></i> <span>Transaksi</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Pembelian Spare Part</a></li>
-            <li><a href="#">Pemakaian</a></li>
-            <li><a href="#">Pembelian Ban</a></li>
+            <li class="<?php if($this->uri->segment(1)=='transaksi-pembelian-spare-part'){echo 'active';}?>"><a href="<?= base_url('transaksi-pembelian-spare-part')?>">Pembelian Spare Part</a></li>
+            <li class="<?php if($this->uri->segment(1)=='transaksi-pemakaian-spare-part'){echo 'active';}?>"><a href="<?= base_url('transaksi-pemakaian-spare-part')?>">Pemakaian Spare Part</a></li>
+            <li class="<?php if($this->uri->segment(1)=='transaksi-pembelian-ban'){echo 'active';}?>"><a href="<?= base_url('transaksi-pembelian-ban')?>">Pembelian Ban</a></li>
           </ul>
         </li>
         <li class="treeview">

@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
--- HeidiSQL Version:             9.4.0.5125
+-- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS `master_barang` (
   `min_qty` decimal(10,2) DEFAULT NULL,
   `qty_perset` decimal(10,2) DEFAULT NULL,
   `no_rak` char(10) DEFAULT NULL,
+  `stok_barang` decimal(10,2) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`kode_barang`)
@@ -28,12 +30,12 @@ CREATE TABLE IF NOT EXISTS `master_barang` (
 
 -- Dumping data for table suryajaya.master_barang: ~5 rows (approximately)
 /*!40000 ALTER TABLE `master_barang` DISABLE KEYS */;
-INSERT INTO `master_barang` (`kode_barang`, `nama_barang`, `part_number`, `nama_satuan`, `min_qty`, `qty_perset`, `no_rak`, `updated_at`, `created_at`) VALUES
-	('BRG0001', 'Barang A', '123456', 'Pcs', 1.00, 4.00, '1A', '2018-12-16 05:16:38', '2018-12-16 05:16:38'),
-	('BRG0002', 'Barang B', '987652', 'Pcs', 1.00, 6.00, '1B', NULL, NULL),
-	('BRG0003', 'Barang C', '987652', 'Pcs', 1.00, 6.00, '1B', NULL, NULL),
-	('BRG0004', 'Barang D', '987652', 'Pcs', 1.00, 6.00, '1D', NULL, NULL),
-	('BRG0005', 'Barang E', '456789', 'Pcs', 1.00, 4.00, '1E', NULL, NULL);
+INSERT INTO `master_barang` (`kode_barang`, `nama_barang`, `part_number`, `nama_satuan`, `min_qty`, `qty_perset`, `no_rak`, `stok_barang`, `data_sts`, `updated_at`, `created_at`) VALUES
+	('BRG0001', 'Barang A', '123456', 'Pcs', 1.00, 4.00, '1A', 0.00, '1', '2018-12-16 05:16:38', '2018-12-16 05:16:38'),
+	('BRG0002', 'Barang B', '987652', 'Pcs', 1.00, 6.00, '1B', 0.00, '1', NULL, NULL),
+	('BRG0003', 'Barang C', '987652', 'Pcs', 1.00, 6.00, '1B', 0.00, '1', NULL, NULL),
+	('BRG0004', 'Barang D', '987652', 'Pcs', 1.00, 6.00, '1D', 0.00, '1', NULL, NULL),
+	('BRG0005', 'Barang E', '456789', 'Pcs', 1.00, 4.00, '1E', 0.00, '1', NULL, NULL);
 /*!40000 ALTER TABLE `master_barang` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_biaya_driver
@@ -42,14 +44,15 @@ CREATE TABLE IF NOT EXISTS `master_biaya_driver` (
   `kode_biaya_driver` char(10) NOT NULL,
   `ket_biaya_driver` text,
   `nom_biaya_driver` decimal(10,2) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_biaya_driver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.master_biaya_driver: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_biaya_driver` DISABLE KEYS */;
-INSERT INTO `master_biaya_driver` (`kode_biaya_driver`, `ket_biaya_driver`, `nom_biaya_driver`) VALUES
-	('BDR0001', 'Biaya Jkt -> Sby', 2000000.00),
-	('BDR0002', 'Biaya Sby -> Jkt', 1000000.00);
+INSERT INTO `master_biaya_driver` (`kode_biaya_driver`, `ket_biaya_driver`, `nom_biaya_driver`, `data_sts`) VALUES
+	('BDR0001', 'Biaya Jkt -> Sby', 2000000.00, '1'),
+	('BDR0002', 'Biaya Sby -> Jkt', 1000000.00, '1');
 /*!40000 ALTER TABLE `master_biaya_driver` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_customer
@@ -61,14 +64,15 @@ CREATE TABLE IF NOT EXISTS `master_customer` (
   `kota_customer` char(100) DEFAULT NULL,
   `jenis_customer` char(10) DEFAULT NULL,
   `tlp_customer` char(20) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_customer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.master_customer: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_customer` DISABLE KEYS */;
-INSERT INTO `master_customer` (`kode_customer`, `nama_customer`, `alamat_customer`, `kota_customer`, `jenis_customer`, `tlp_customer`) VALUES
-	('CUST0001', 'Jono', 'Semampir Barat No.4', 'Surabaya', 'Customer', '081234234242'),
-	('CUST0002', 'Boni', 'Semolowaru Timur No.8', 'Surabaya', 'Customer', '085242242424');
+INSERT INTO `master_customer` (`kode_customer`, `nama_customer`, `alamat_customer`, `kota_customer`, `jenis_customer`, `tlp_customer`, `data_sts`) VALUES
+	('CUST0001', 'Jono', 'Semampir Barat No.4', 'Surabaya', 'Customer', '081234234242', '1'),
+	('CUST0002', 'Boni', 'Semolowaru Timur No.8', 'Surabaya', 'Customer', '085242242424', '1');
 /*!40000 ALTER TABLE `master_customer` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_driver
@@ -80,14 +84,15 @@ CREATE TABLE IF NOT EXISTS `master_driver` (
   `kota_driver` char(100) DEFAULT NULL,
   `tlp_driver` char(20) DEFAULT NULL,
   `jenis_driver` char(1) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_driver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.master_driver: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_driver` DISABLE KEYS */;
-INSERT INTO `master_driver` (`kode_driver`, `nama_driver`, `alamat_driver`, `kota_driver`, `tlp_driver`, `jenis_driver`) VALUES
-	('DRV0001', 'Sugeng', 'Putat Jaya No.88', 'Surabaya', '085235789172', '0'),
-	('DRV0002', 'Mulyadi', 'Lesti No.42', 'Surabaya', '088353678678', '1');
+INSERT INTO `master_driver` (`kode_driver`, `nama_driver`, `alamat_driver`, `kota_driver`, `tlp_driver`, `jenis_driver`, `data_sts`) VALUES
+	('DRV0001', 'Sugeng', 'Putat Jaya No.88', 'Surabaya', '085235789172', '0', '1'),
+	('DRV0002', 'Mulyadi', 'Lesti No.42', 'Surabaya', '088353678678', '1', '1');
 /*!40000 ALTER TABLE `master_driver` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_karyawan
@@ -105,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `master_karyawan` (
   `upah_lembur` decimal(10,2) DEFAULT NULL,
   `gaji_bulanan` decimal(10,2) DEFAULT NULL,
   `kerja_penuh_6x` decimal(10,2) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_karyawan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -129,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `master_kendaraan` (
   `cc_kendaraan` char(100) DEFAULT NULL,
   `sopir_kendaraan` char(100) DEFAULT NULL,
   `kernet_kendaraan` char(100) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_kendaraan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -144,14 +151,15 @@ CREATE TABLE IF NOT EXISTS `master_supplier` (
   `alamat_supplier` varchar(1024) DEFAULT NULL,
   `kota_supplier` char(100) DEFAULT NULL,
   `tlp_supplier` char(20) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_supplier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.master_supplier: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_supplier` DISABLE KEYS */;
-INSERT INTO `master_supplier` (`kode_supplier`, `nama_supplier`, `alamat_supplier`, `kota_supplier`, `tlp_supplier`) VALUES
-	('SUP0001', 'Sinar Sahabat', 'Mayjend Sungkono No.42', 'Surabaya', '085235252522'),
-	('SUP0002', 'Murni Motor', 'HR Muhammad No.4A-4C', 'Surabaya', '0319878899');
+INSERT INTO `master_supplier` (`kode_supplier`, `nama_supplier`, `alamat_supplier`, `kota_supplier`, `tlp_supplier`, `data_sts`) VALUES
+	('SUP0001', 'Sinar Sahabat', 'Mayjend Sungkono No.42', 'Surabaya', '085235252522', '1'),
+	('SUP0002', 'Murni Motor', 'HR Muhammad No.4A-4C', 'Surabaya', '0319878899', '1');
 /*!40000 ALTER TABLE `master_supplier` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_tujuan
@@ -159,15 +167,17 @@ DROP TABLE IF EXISTS `master_tujuan`;
 CREATE TABLE IF NOT EXISTS `master_tujuan` (
   `kode_tujuan` char(10) NOT NULL,
   `ket_tujuan` text,
+  `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_tujuan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.master_tujuan: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_tujuan` DISABLE KEYS */;
-INSERT INTO `master_tujuan` (`kode_tujuan`, `ket_tujuan`) VALUES
-	('DST0001', 'SBY->JKT'),
-	('DST0002', 'JKT->SBY');
+INSERT INTO `master_tujuan` (`kode_tujuan`, `ket_tujuan`, `data_sts`) VALUES
+	('DST0001', 'SBY->JKT', '1'),
+	('DST0002', 'JKT->SBY', '1');
 /*!40000 ALTER TABLE `master_tujuan` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Paging extends CI_Controller
 {
+	//Dashboard
 	public function index()
 	{
 		$data['page_header']='Dashboard';
@@ -11,6 +12,7 @@ class Paging extends CI_Controller
 		$this->load->view('layout/wrapper',$data);
 	}
 
+	//Master
 	public function m_barang()
 	{
 		$data['page_header']='Master Barang';
@@ -64,6 +66,28 @@ class Paging extends CI_Controller
 	{
 		$data['page_header']='Master Supplier';
 		$data['content']='menu/m_supplier';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	//Transaksi
+	public function t_pembelian_spare_part()
+	{
+		$data['page_header']='Transaksi Pembelian Spare Part';
+		$data['content']='menu/t_pembelian_spare_part';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_pemakaian_spare_part()
+	{
+		$data['page_header']='Transaksi Pemakaian Spare Part';
+		$data['content']='menu/t_pemakaian_spare_part';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_pembelian_ban()
+	{
+		$data['page_header']='Transaksi Pembelian Ban';
+		$data['content']='menu/t_pembelian_ban';
 		$this->load->view('layout/wrapper',$data);
 	}
 }
