@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/Ionicons/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+<<<<<<< HEAD
+=======
+  <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/datatables-responsive/css/responsive.dataTables.min.css">
+>>>>>>> update
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/plugins/iCheck/all.css">
   <!-- Bootstrap Color Picker -->

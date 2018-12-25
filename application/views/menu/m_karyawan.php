@@ -20,8 +20,12 @@
             <div class="box-header with-border">
               <h3 class="box-title">Form Master Karyawan</h3>
             </div>
+<<<<<<< HEAD
             <form role="form" id="form-karyawan">
               <input type="hidden" name="tipe_form" value="">
+=======
+            <form role="form">
+>>>>>>> update
               <div class="box-body">
                 <div class="form-group">
                   <label>Kode</label>
@@ -71,9 +75,12 @@
                   <label>6x Kerja Penuh</label>
                   <input type="text" name="kerja_penuh_6x" class="form-control">
                 </div>
+<<<<<<< HEAD
                 <div class="form-group">
                   <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
                 </div>
+=======
+>>>>>>> update
               </div>
             </form>
           </div>
@@ -94,7 +101,155 @@
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
+<<<<<<< HEAD
                 <tbody></tbody>
+=======
+                <tbody>
+                  <tr>
+                    <td class="text-center">1</td>
+                    <td class="text-center">BRG001</td>
+                    <td class="text-center">BARANG A</td>
+                    <td class="text-center">09876</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1A</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">2</td>
+                    <td class="text-center">BRG002</td>
+                    <td class="text-center">BARANG B</td>
+                    <td class="text-center">09866</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1A</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">3</td>
+                    <td class="text-center">BRG003</td>
+                    <td class="text-center">BARANG C</td>
+                    <td class="text-center">06876</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1A</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">4</td>
+                    <td class="text-center">BRG004</td>
+                    <td class="text-center">BARANG A</td>
+                    <td class="text-center">09872</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1A</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">5</td>
+                    <td class="text-center">BRG005</td>
+                    <td class="text-center">BARANG E</td>
+                    <td class="text-center">19876</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1A</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">6</td>
+                    <td class="text-center">BRG006</td>
+                    <td class="text-center">BARANG F</td>
+                    <td class="text-center">07876</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1B</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">7</td>
+                    <td class="text-center">BRG007</td>
+                    <td class="text-center">BARANG G</td>
+                    <td class="text-center">09816</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1B</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">8</td>
+                    <td class="text-center">BRG008</td>
+                    <td class="text-center">BARANG H</td>
+                    <td class="text-center">29876</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1B</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">9</td>
+                    <td class="text-center">BRG009</td>
+                    <td class="text-center">BARANG I</td>
+                    <td class="text-center">39876</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1B</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">10</td>
+                    <td class="text-center">BRG010</td>
+                    <td class="text-center">BARANG J</td>
+                    <td class="text-center">09873</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1B</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">11</td>
+                    <td class="text-center">BRG011</td>
+                    <td class="text-center">BARANG K</td>
+                    <td class="text-center">09176</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1C</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                  </tr>
+                </tbody>
+>>>>>>> update
               </table>
             </div>
           </div>        
@@ -111,6 +266,7 @@
   <script>
     $(function ()
     {
+<<<<<<< HEAD
       tbKaryawan();
     })
     function tbKaryawan()
@@ -148,10 +304,21 @@
         url: urls,
         data: $('#form-karyawan').serialize(),
         dataType: 'JSON',
+=======
+      $("#m_karyawan").DataTable({});
+    })
+    function add()
+    {
+      $.ajax({
+        type: 'POST',
+        url: '/addBarang',
+        data: $('#form-customer').serialize(),
+>>>>>>> update
         success: function(data)
         {
           if(data.status)
           {
+<<<<<<< HEAD
             alert('Sukses Menambah Karyawan');
             $('#form-karyawan')[0].reset();
             $('[name="tipe_form"]').val('');
@@ -160,10 +327,18 @@
           else
           {
             alert('Gagal Menambah Karyawan');
+=======
+            alert('Sukses Menambah Barang');
+          }
+          else
+          {
+            alert('Gagal Menambah Barang');
+>>>>>>> update
           }
         }
       });
     }
+<<<<<<< HEAD
     function edit(id)
     {
       $.ajax({
@@ -188,4 +363,6 @@
         }
       });
     }
+=======
+>>>>>>> update
   </script>

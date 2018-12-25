@@ -6,6 +6,10 @@
 <!-- DataTables -->
 <script src="<?= base_url()?>assets/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url()?>assets/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<<<<<<< HEAD
+=======
+<script src="<?= base_url()?>assets/adminlte/bower_components/datatables-responsive/js/dataTables.responsive.min.js"></script>
+>>>>>>> update
 <!-- bootstrap color picker -->
 <script src="<?= base_url()?>assets/adminlte/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 <!-- iCheck 1.0.1 -->

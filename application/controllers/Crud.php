@@ -147,6 +147,7 @@ class Crud extends CI_Controller
 		$data = $this->db->get_where('master_biaya_driver', array('kode_biaya_driver'=>$key))->row();
 		echo json_encode($data);
 	}
+<<<<<<< HEAD
 
 	//CRUD Master Tujuan
 	public function addTujuan()
@@ -308,4 +309,6 @@ class Crud extends CI_Controller
 		$data = $this->db->get_where('master_kendaraan', array('kode_kendaraan'=>$key))->row();
 		echo json_encode($data);
 	}
+=======
+>>>>>>> update
 }

@@ -10,10 +10,13 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/show/showCustomer','showCustomer');
 		$this->load->model('Datatables/show/showDriver','showDriver');
 		$this->load->model('Datatables/show/showBiayaDriver','showBiayaDriver');
+<<<<<<< HEAD
 		$this->load->model('Datatables/show/showTujuan','showTujuan');
 		$this->load->model('Datatables/show/showSupplier','showSupplier');
 		$this->load->model('Datatables/show/showKaryawan','showKaryawan');
 		$this->load->model('Datatables/show/showKendaraan','showKendaraan');
+=======
+>>>>>>> update
 	}
 
 	public function mBarang()
@@ -124,6 +127,7 @@ class Datatables extends CI_Controller
 			);
 		echo json_encode($output);
 	}
+<<<<<<< HEAD
 
 	public function mTujuan()
 	{
@@ -231,4 +235,6 @@ class Datatables extends CI_Controller
 			);
 		echo json_encode($output);
 	}
+=======
+>>>>>>> update
 }

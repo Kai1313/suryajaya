@@ -2,7 +2,11 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
+<<<<<<< HEAD
 -- HeidiSQL Version:             9.4.0.5125
+=======
+-- HeidiSQL Version:             9.5.0.5196
+>>>>>>> update
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -45,7 +49,11 @@ CREATE TABLE IF NOT EXISTS `master_biaya_driver` (
   PRIMARY KEY (`kode_biaya_driver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+<<<<<<< HEAD
 -- Dumping data for table suryajaya.master_biaya_driver: ~2 rows (approximately)
+=======
+-- Dumping data for table suryajaya.master_biaya_driver: ~0 rows (approximately)
+>>>>>>> update
 /*!40000 ALTER TABLE `master_biaya_driver` DISABLE KEYS */;
 INSERT INTO `master_biaya_driver` (`kode_biaya_driver`, `ket_biaya_driver`, `nom_biaya_driver`) VALUES
 	('BDR0001', 'Biaya Jkt -> Sby', 2000000.00),
@@ -90,6 +98,7 @@ INSERT INTO `master_driver` (`kode_driver`, `nama_driver`, `alamat_driver`, `kot
 	('DRV0002', 'Mulyadi', 'Lesti No.42', 'Surabaya', '088353678678', '1');
 /*!40000 ALTER TABLE `master_driver` ENABLE KEYS */;
 
+<<<<<<< HEAD
 -- Dumping structure for table suryajaya.master_karyawan
 DROP TABLE IF EXISTS `master_karyawan`;
 CREATE TABLE IF NOT EXISTS `master_karyawan` (
@@ -169,6 +178,8 @@ INSERT INTO `master_tujuan` (`kode_tujuan`, `ket_tujuan`) VALUES
 	('DST0002', 'JKT->SBY');
 /*!40000 ALTER TABLE `master_tujuan` ENABLE KEYS */;
 
+=======
+>>>>>>> update
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
