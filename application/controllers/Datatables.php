@@ -6,14 +6,14 @@ class Datatables extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Datatables/show/showBarang','showBarang');
-		$this->load->model('Datatables/show/showCustomer','showCustomer');
-		$this->load->model('Datatables/show/showDriver','showDriver');
-		$this->load->model('Datatables/show/showBiayaDriver','showBiayaDriver');
-		$this->load->model('Datatables/show/showTujuan','showTujuan');
-		$this->load->model('Datatables/show/showSupplier','showSupplier');
-		$this->load->model('Datatables/show/showKaryawan','showKaryawan');
-		$this->load->model('Datatables/show/showKendaraan','showKendaraan');
+		$this->load->model('Datatables/show/ShowBarang','showBarang');
+		$this->load->model('Datatables/show/ShowCustomer','showCustomer');
+		$this->load->model('Datatables/show/ShowDriver','showDriver');
+		$this->load->model('Datatables/show/ShowBiayaDriver','showBiayaDriver');
+		$this->load->model('Datatables/show/ShowTujuan','showTujuan');
+		$this->load->model('Datatables/show/ShowSupplier','showSupplier');
+		$this->load->model('Datatables/show/ShowKaryawan','showKaryawan');
+		$this->load->model('Datatables/show/ShowKendaraan','showKendaraan');
 	}
 
 	public function mBarang()
