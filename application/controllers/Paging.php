@@ -69,6 +69,13 @@ class Paging extends CI_Controller
 		$this->load->view('layout/wrapper',$data);
 	}
 
+	public function m_ban()
+	{
+		$data['page_header']='Master Ban';
+		$data['content']='menu/m_ban';
+		$this->load->view('layout/wrapper',$data);
+	}
+
 	//Transaksi
 	public function t_pembelian_spare_part()
 	{

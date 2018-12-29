@@ -19,6 +19,7 @@ class Crud extends CI_Controller
 			'min_qty'=>$this->input->post('min_qty'),
 			'qty_perset'=>$this->input->post('qty_perset'),
 			'no_rak'=>$this->input->post('no_rak'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->insert('master_barang',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -34,6 +35,7 @@ class Crud extends CI_Controller
 			'min_qty'=>$this->input->post('min_qty'),
 			'qty_perset'=>$this->input->post('qty_perset'),
 			'no_rak'=>$this->input->post('no_rak'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->update('master_barang',$upd,array('kode_barang'=>$this->input->post('kode_barang')));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -55,7 +57,8 @@ class Crud extends CI_Controller
 			'alamat_customer'=>$this->input->post('alamat_customer'),
 			'kota_customer'=>$this->input->post('kota_customer'),
 			'jenis_customer'=>$this->input->post('jenis_customer'),
-			'tlp_customer'=>$this->input->post('tlp_customer')
+			'tlp_customer'=>$this->input->post('tlp_customer'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->insert('master_customer',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -69,7 +72,8 @@ class Crud extends CI_Controller
 			'alamat_customer'=>$this->input->post('alamat_customer'),
 			'kota_customer'=>$this->input->post('kota_customer'),
 			'jenis_customer'=>$this->input->post('jenis_customer'),
-			'tlp_customer'=>$this->input->post('tlp_customer')
+			'tlp_customer'=>$this->input->post('tlp_customer'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->update('master_customer',$upd,array('kode_customer'=>$this->input->post('kode_customer')));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -91,7 +95,8 @@ class Crud extends CI_Controller
 			'alamat_driver'=>$this->input->post('alamat_driver'),
 			'kota_driver'=>$this->input->post('kota_driver'),
 			'jenis_driver'=>$this->input->post('jenis_driver'),
-			'tlp_driver'=>$this->input->post('tlp_driver')
+			'tlp_driver'=>$this->input->post('tlp_driver'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->insert('master_driver',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -105,7 +110,8 @@ class Crud extends CI_Controller
 			'alamat_driver'=>$this->input->post('alamat_driver'),
 			'kota_driver'=>$this->input->post('kota_driver'),
 			'jenis_driver'=>$this->input->post('jenis_driver'),
-			'tlp_driver'=>$this->input->post('tlp_driver')
+			'tlp_driver'=>$this->input->post('tlp_driver'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->update('master_driver',$upd,array('kode_driver'=>$this->input->post('kode_driver')));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -124,7 +130,8 @@ class Crud extends CI_Controller
 		$ins = array(
 			'kode_biaya_driver'=>$this->input->post('kode_biaya'),
 			'ket_biaya_driver'=>$this->input->post('ket_biaya'),
-			'nom_biaya_driver'=>$this->input->post('nom_biaya')
+			'nom_biaya_driver'=>$this->input->post('nom_biaya'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->insert('master_biaya_driver',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -135,7 +142,8 @@ class Crud extends CI_Controller
 	{
 		$upd = array(
 			'ket_biaya_driver'=>$this->input->post('ket_biaya'),
-			'nom_biaya_driver'=>$this->input->post('nom_biaya')
+			'nom_biaya_driver'=>$this->input->post('nom_biaya'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->update('master_biaya_driver',$upd,array('kode_biaya_driver'=>$this->input->post('kode_biaya')));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -147,14 +155,14 @@ class Crud extends CI_Controller
 		$data = $this->db->get_where('master_biaya_driver', array('kode_biaya_driver'=>$key))->row();
 		echo json_encode($data);
 	}
-<<<<<<< HEAD
 
 	//CRUD Master Tujuan
 	public function addTujuan()
 	{
 		$ins = array(
 			'kode_tujuan'=>$this->input->post('kode_tujuan'),
-			'ket_tujuan'=>$this->input->post('ket_tujuan')
+			'ket_tujuan'=>$this->input->post('ket_tujuan'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->insert('master_tujuan',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -164,7 +172,8 @@ class Crud extends CI_Controller
 	public function updTujuan()
 	{
 		$upd = array(
-			'ket_tujuan'=>$this->input->post('ket_tujuan')
+			'ket_tujuan'=>$this->input->post('ket_tujuan'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->update('master_tujuan',$upd,array('kode_tujuan'=>$this->input->post('kode_tujuan')));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -185,7 +194,8 @@ class Crud extends CI_Controller
 			'nama_supplier'=>$this->input->post('nama_supplier'),
 			'alamat_supplier'=>$this->input->post('alamat_supplier'),
 			'kota_supplier'=>$this->input->post('kota_supplier'),
-			'tlp_supplier'=>$this->input->post('tlp_supplier')
+			'tlp_supplier'=>$this->input->post('tlp_supplier'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->insert('master_supplier',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -199,7 +209,8 @@ class Crud extends CI_Controller
 			'nama_supplier'=>$this->input->post('nama_supplier'),
 			'alamat_supplier'=>$this->input->post('alamat_supplier'),
 			'kota_supplier'=>$this->input->post('kota_supplier'),
-			'tlp_supplier'=>$this->input->post('tlp_supplier')
+			'tlp_supplier'=>$this->input->post('tlp_supplier'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->update('master_supplier',$upd,array('kode_supplier'=>$this->input->post('kode_supplier')));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -227,7 +238,8 @@ class Crud extends CI_Controller
 			'min_jam_lembur'=>$this->input->post('min_jam_lembur'),
 			'upah_lembur'=>$this->input->post('upah_lembur'),
 			'gaji_bulanan'=>$this->input->post('gaji_bulanan'),
-			'kerja_penuh_6x'=>$this->input->post('kerja_penuh_6x')
+			'kerja_penuh_6x'=>$this->input->post('kerja_penuh_6x'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->insert('master_karyawan',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -247,7 +259,8 @@ class Crud extends CI_Controller
 			'min_jam_lembur'=>$this->input->post('min_jam_lembur'),
 			'upah_lembur'=>$this->input->post('upah_lembur'),
 			'gaji_bulanan'=>$this->input->post('gaji_bulanan'),
-			'kerja_penuh_6x'=>$this->input->post('kerja_penuh_6x')
+			'kerja_penuh_6x'=>$this->input->post('kerja_penuh_6x'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->update('master_karyawan',$upd,array('kode_karyawan'=>$this->input->post('kode_karyawan')));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -276,7 +289,8 @@ class Crud extends CI_Controller
 			'masa_stnk'=>$this->input->post('masa_stnk'),
 			'cc_kendaraan'=>$this->input->post('cc_kendaraan'),
 			'sopir_kendaraan'=>$this->input->post('sopir_kendaraan'),
-			'kernet_kendaraan'=>$this->input->post('kernet_kendaraan')
+			'kernet_kendaraan'=>$this->input->post('kernet_kendaraan'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->insert('master_kendaraan',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -297,7 +311,8 @@ class Crud extends CI_Controller
 			'masa_stnk'=>$this->input->post('masa_stnk'),
 			'cc_kendaraan'=>$this->input->post('cc_kendaraan'),
 			'sopir_kendaraan'=>$this->input->post('sopir_kendaraan'),
-			'kernet_kendaraan'=>$this->input->post('kernet_kendaraan')
+			'kernet_kendaraan'=>$this->input->post('kernet_kendaraan'),
+			'data_sts'=>$this->input->post('1')
 		);
 		$this->db->update('master_kendaraan',$upd,array('kode_kendaraan'=>$this->input->post('kode_kendaraan')));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -309,6 +324,40 @@ class Crud extends CI_Controller
 		$data = $this->db->get_where('master_kendaraan', array('kode_kendaraan'=>$key))->row();
 		echo json_encode($data);
 	}
-=======
->>>>>>> update
+
+	//CRUD Master Ban
+	public function addBan()
+	{
+		$ins = array(
+			'kode_ban'=>$this->input->post('kode_ban'),
+			'nama_ban'=>$this->input->post('nama_ban'),
+			'jenis_ban'=>$this->input->post('jenis_ban'),
+			'merk_ban'=>$this->input->post('merk_ban'),
+			'harga_satuan'=>$this->input->post('harga_satuan'),
+			'data_sts'=>$this->input->post('1')
+		);
+		$this->db->insert('master_ban',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updBan()
+	{
+		$upd = array(
+			'nama_ban'=>$this->input->post('nama_ban'),
+			'jenis_ban'=>$this->input->post('jenis_ban'),
+			'merk_ban'=>$this->input->post('merk_ban'),
+			'harga_satuan'=>$this->input->post('harga_satuan'),
+			'data_sts'=>$this->input->post('1')
+		);
+		$this->db->update('master_ban',$upd,array('kode_ban'=>$this->input->post('kode_ban')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function getBan($key)
+	{
+		$data = $this->db->get_where('master_ban', array('kode_ban'=>$key))->row();
+		echo json_encode($data);
+	}
 }

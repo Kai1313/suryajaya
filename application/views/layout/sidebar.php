@@ -29,7 +29,7 @@
         <li class="header">MAIN MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="<?php if($this->uri->segment(1)=='dashboard'){echo 'active';}?>"><a href="<?= base_url('dashboard')?>"><i class="fa fa-dashboard"></i> <span>Dashoard</span></a></li>
-        <li class="treeview <?php $arr=array('master-barang','master-customer','master-kendaraan','master-karyawan','master-driver','master-biaya-driver','master-tujuan','master-supplier'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
+        <li class="treeview <?php $arr=array('master-barang','master-customer','master-kendaraan','master-karyawan','master-driver','master-biaya-driver','master-tujuan','master-supplier','master-ban'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
           <a href="#"><i class="fa fa-database"></i> <span>Master</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -44,6 +44,7 @@
             <li class="<?php if($this->uri->segment(1)=='master-biaya-driver'){echo 'active';}?>"><a href="<?= base_url('master-biaya-driver')?>">Biaya Sopir</a></li>
             <li class="<?php if($this->uri->segment(1)=='master-tujuan'){echo 'active';}?>"><a href="<?= base_url('master-tujuan')?>">Tujuan</a></li>
             <li class="<?php if($this->uri->segment(1)=='master-supplier'){echo 'active';}?>"><a href="<?= base_url('master-supplier')?>">Supplier</a></li>
+            <li class="<?php if($this->uri->segment(1)=='master-ban'){echo 'active';}?>"><a href="<?= base_url('master-ban')?>">Ban</a></li>
           </ul>
         </li>
         <li class="treeview <?php $arr=array('transaksi-pembelian-spare-part','transaksi-pemakaian-spare-part'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
