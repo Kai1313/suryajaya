@@ -115,7 +115,7 @@
                     <td><button type="button" class="btn btn-sm btn-danger">Hapus</button></td>
                     <td>Ban Luar</td>
                     <td>290x30</td>
-                    <td>Federal</td>
+                    <td>Federal Ban</td>
                     <td>2500000</td>
                     <td>4 Pcs</td>
                     <td>10000000</td>
