@@ -1,11 +1,11 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class ShowKaryawan extends CI_Model 
+	class ShowBan extends CI_Model 
 	{
-		var $table = 'master_karyawan';
-		var $column_order = array(null,'kode_karyawan','nama_karyawan','alamat_karyawan','kota_karyawan','tlp_karyawan','gaji_bulanan',null);
-		var $column_search = array('kode_karyawan','nama_karyawan','alamat_karyawan','kota_karyawan','tlp_karyawan','gaji_bulanan');
-		var $order = array('kode_karyawan' => 'asc'); 
+		var $table = 'master_ban';
+		var $column_order = array(null,'kode_ban','nama_ban','jenis_ban','merk_ban','harga_satuan',null);
+		var $column_search = array('kode_ban','nama_ban','jenis_ban','merk_ban','harga_satuan');
+		var $order = array('kode_ban' => 'asc'); 
 		public function __construct()
 		{
 			parent::__construct();		

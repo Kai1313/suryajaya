@@ -360,4 +360,53 @@ class Crud extends CI_Controller
 		$data = $this->db->get_where('master_ban', array('kode_ban'=>$key))->row();
 		echo json_encode($data);
 	}
+
+	//Dropdown Data
+	public function getDropSupplier()
+	{
+		$data = $this->db->get_where('master_supplier',array('data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
+	public function getDropBarang()
+	{
+		$data = $this->db->get_where('master_barang',array('data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
+	//Pick Data From Dropdown
+	public function pickDropSupplier($key)
+	{
+		$data = $this->db->get_where('master_supplier',array('kode_supplier'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function pickDropBarang($key)
+	{
+		$data = $this->db->get_where('master_barang',array('kode_barang'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	//Transaksi Pembelian Barang/Spare Part
+	public function addBeliBarang()
+	{
+		$ins = array(
+			'no_nota'=>$this->input->post('no_nota'),
+			'kode_barang'=>$this->input->post('kode_barang'),
+			'qty_beli'=>$this->input->post('qty_beli'),
+			'harga_satuan'=>$this->input->post('harga_satuan'),
+			'jumlah'=>$this->input->post('qty_beli')*$this->input->post('harga_satuan')
+		);
+		$this->db->insert('trx_beli_barang_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function rmvBeliBarang($key)
+	{
+		$this->db->delete('trx_beli_barang_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+	
 }

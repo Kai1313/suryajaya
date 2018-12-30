@@ -20,7 +20,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">Form Master Ban</h3>
             </div>
-            <form role="form" id="form-tujuan">
+            <form role="form" id="form-ban">
               <input type="hidden" name="tipe_form" value="">
               <div class="box-body">
                 <div class="form-group">
@@ -32,8 +32,16 @@
                   <input type="text" name="nama_ban" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label>Jenis</label>
-                  <input type="text" name="jenis_ban" class="form-control">
+                  <label>Jenis</label><br>
+                  <label>
+                    <input type="radio" name="jenis_ban" value="0" class="flat-red" checked> Ban Dalam
+                  </label>
+                  <label>
+                    <input type="radio" name="jenis_ban" value="1" class="flat-red"> Ban Luar
+                  </label>
+                  <label>
+                    <input type="radio" name="jenis_ban" value="2" class="flat-red"> Marset Ban
+                  </label>
                 </div>
                 <div class="form-group">
                   <label>Merk</label>
@@ -83,6 +91,10 @@
     $(function ()
     {
       tbBan();
+      $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-green',
+        radioClass   : 'iradio_flat-green'
+      })
     })
     function tbBan()
     {
@@ -145,7 +157,8 @@
         {
           $('[name="kode_ban"]').val(data.kode_ban);
           $('[name="nama_ban"]').val(data.nama_ban);
-          $('[name="jenis_ban"]').val(data.jenis_ban);
+          $('[name="jenis_ban"]').parent().removeClass(' checked');
+          $('[name="jenis_ban"][value="'+data.jenis_ban+'"]').parent().addClass(' checked');
           $('[name="merk_ban"]').val(data.merk_ban);
           $('[name="harga_satuan"]').val(data.harga_satuan);
           $('[name="tipe_form"]').val('1');

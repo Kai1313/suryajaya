@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/datatables-responsive/css/responsive.dataTables.min.css">
@@ -18,6 +22,8 @@
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/plugins/iCheck/all.css">
   <!-- Bootstrap Color Picker -->
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url()?>assets/adminlte/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter

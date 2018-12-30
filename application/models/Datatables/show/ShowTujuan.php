@@ -1,6 +1,6 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class showTujuan extends CI_Model 
+	class ShowTujuan extends CI_Model 
 	{
 		var $table = 'master_tujuan';
 		var $column_order = array(null,'kode_tujuan','ket_tujuan',null);

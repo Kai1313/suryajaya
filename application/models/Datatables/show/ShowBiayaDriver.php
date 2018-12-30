@@ -1,6 +1,6 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class showBiayaDriver extends CI_Model 
+	class ShowBiayaDriver extends CI_Model 
 	{
 		var $table = 'master_biaya_driver';
 		var $column_order = array(null,'kode_biaya_driver','ket_biaya_driver','nom_biaya_driver',null);

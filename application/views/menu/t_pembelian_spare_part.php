@@ -31,17 +31,20 @@
                     </div>
                     <div class="form-group">
                       <label>Tanggal</label>
-                      <input type="text" name="tgl_nota" class="form-control">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_nota" class="form-control pull-right" id="tgl_nota">
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                       <label>Kode Supplier</label>
-                      <input type="text" name="kode_supplier" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label>Nama Supplier</label>
-                      <input type="text" name="nama_supplier" class="form-control">
+                      <select class="form-control" name="kode_supplier" id="dropSupplier" style="width: 100%;">
+                        <option value="">Pilih Supplier</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -59,17 +62,19 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Kode Barang</label>
-                      <input type="text" name="kode_barang" class="form-control">
+                      <select class="form-control" name="kode_barang" id="dropBarang" style="width: 100%;">
+                        <option value="">Pilih Barang</option>
+                      </select>
                     </div>
                     <div class="form-group">
-                      <label>Qty Barang</label>
-                      <input type="text" name="qty_barang" class="form-control">
+                      <label>Qty Beli</label>
+                      <input type="text" name="qty_beli" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
-                      <label>Harga Barang</label>
-                      <input type="text" name="harga_barang" class="form-control">
+                      <label>Harga Satuan</label>
+                      <input type="text" name="harga_satuan" class="form-control">
                     </div>
                     <div class="form-group">
                       <br>
@@ -78,7 +83,15 @@
                   </div>
                 </div>
               </form>
-              <table id="m_pembelian_spare_part" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+              <div class="alert alert-success alert-dismissible" id="alert_success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> <span name="successMsg"></span></h4>
+              </div>
+              <div class="alert alert-danger alert-dismissible" id="alert_failed">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> <span name="failedMsg"></span></h4>
+              </div>
+              <table id="m_detBeli" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th class="col-xs-1 text-center">Action</th>
@@ -89,24 +102,7 @@
                     <th class="col-xs-3 text-center">Jumlah</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><button type="button" class="btn btn-sm btn-danger">Hapus</button></td>
-                    <td>08364</td>
-                    <td>Barang A</td>
-                    <td>2000</td>
-                    <td>5 Pcs</td>
-                    <td>10000</td>
-                  </tr>
-                  <tr>
-                    <td><button type="button" class="btn btn-sm btn-danger">Hapus</button></td>
-                    <td>08363</td>
-                    <td>Barang B</td>
-                    <td>2500</td>
-                    <td>4 Pcs</td>
-                    <td>10000</td>
-                  </tr>
-                </tbody>
+                <tbody></tbody>
                 <tfoot>
                   <tr>
                     <th colspan="5" class="text-center">Sub Total</th>
@@ -172,18 +168,113 @@
   <script>
     $(function ()
     {
-      // tbTujuan();
+      key = ($('[name="no_nota"]').val()!='')?$('[name="no_nota"]').val():'0';
+      tbDetBeli(key);
+      $('#tgl_nota').datepicker({
+        autoclose: true
+      });
+      dropsupplier();
+      dropbarang();
+      alertCheck('');
+      // $('#dropBarang').change(function()
+      // {
+      //   pickBarang($('#dropBarang option:selected').val());
+      // });
     })
-    function tbTujuan()
+    function alertCheck(id)
     {
-      table = $('#m_tujuan').DataTable({
+      if(id=='')
+      {
+        $('#alert_success').css('display','none');
+        $('#alert_failed').css('display','none');
+      }
+      else
+      {
+        if(id=='0')
+        {
+          $('#alert_success').css('display','block');
+          $('#alert_failed').css('display','none');
+        }
+        else
+        {
+          $('#alert_success').css('display','none');
+          $('#alert_failed').css('display','block');
+        }
+      }
+    }
+    function dropsupplier()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropSupplier')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropSupplier');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_supplier']
+            option.text = data[i]['kode_supplier']+' - '+data[i]['nama_supplier'];
+            select.add(option);
+          }
+          $('#dropSupplier').select2();
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get supplier data');
+        }
+      });
+    }
+    function dropbarang()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropBarang')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropBarang');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_barang']
+            option.text = data[i]['kode_barang']+' - '+data[i]['nama_barang'];
+            select.add(option);
+          }
+          $('#dropBarang').select2({placeholder: 'Select an option'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get supplier data');
+        }
+      });
+    }
+    // function pickBarang(key)
+    // {
+    //   $.ajax({
+    //     type: 'GET',
+    //     url: '<?= site_url('Crud/pickDropBarang/')?>'+key,
+    //     dataType: 'JSON',
+    //     success: function(data)
+    //     {
+    //       $('[name="nama_supplier"]').val(data.nama_supplier);
+    //     }
+    //   });
+    // }
+    function tbDetBeli(key)
+    {
+      table = $('#m_detBeli').DataTable({
         "info": false,
+        "destroy": true,
         "responsive": true,
         "processing": true,
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/mTujuan')?>",
+          "url": "<?php echo site_url('Datatables/detBeliBarang/')?>"+key,
           "type": "POST",
           },
         "columnDefs": [
@@ -197,30 +288,59 @@
         ],
       });
     }
-    function reloadTb()
-    {
-      table.ajax.reload(null,false);
-    }
     function add()
     {
-      var urls = ($('[name="tipe_form"]').val()!='1')?'<?= site_url('Crud/addTujuan')?>':'<?= site_url('Crud/updTujuan')?>';
+      key = ($('[name="no_nota"]').val()!='')?$('[name="no_nota"]').val():'';
+      if(key!='')
+      {
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/addBeliBarang')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
+          {
+            if(data.status)
+            {
+              $('[name="successMsg"]').text('Sukses Menambah Barang');
+              alertCheck('0');
+              $('#form-detail-pembelian')[0].reset();
+              $('#dropBarang').select2({placeholder: 'Select an option'});
+              tbDetBeli(key);
+            }
+            else
+            {
+              $('[name="failedMsg"]').text('Gagal Menambah Barang');
+              alertCheck('1');
+            }
+          }
+        });
+      }
+      else
+      {
+        alert('No Nota Masih Kosong');
+      }
+    }
+    function remove(id)
+    {
+      key = ($('[name="no_nota"]').val()!='')?$('[name="no_nota"]').val():'';
       $.ajax({
-        type: 'POST',
-        url: urls,
-        data: $('#form-tujuan').serialize(),
+        type: 'GET',
+        url: '<?= site_url('Crud/rmvBeliBarang/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
           if(data.status)
           {
-            alert('Sukses Menambah Tujuan');
-            $('#form-tujuan')[0].reset();
-            $('[name="tipe_form"]').val('');
-            reloadTb();
+            $('[name="successMsg"]').text('Sukses Menghapus Barang');
+            alertCheck('0');
+            $('#form-detail-pembelian')[0].reset();
+            tbDetBeli(key);
           }
           else
           {
-            alert('Gagal Menambah Tujuan');
+            $('[name="failedMsg"]').text('Gagal Menghapus Barang');
+            alertCheck('1');
           }
         }
       });

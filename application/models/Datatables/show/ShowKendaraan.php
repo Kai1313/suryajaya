@@ -1,6 +1,6 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class showKendaraan extends CI_Model 
+	class ShowKendaraan extends CI_Model 
 	{
 		var $table = 'master_kendaraan';
 		var $column_order = array(null,'nopol','tipe_kendaraan','jenis_kendaraan','warna_kendaraan','sopir_kendaraan','kernet_kendaraan',null);

@@ -1,6 +1,6 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class showDriver extends CI_Model 
+	class ShowDriver extends CI_Model 
 	{
 		var $table = 'master_driver';
 		var $column_order = array(null,'kode_driver','nama_driver','alamat_driver','kota_driver','jenis_driver','tlp_driver',null);
