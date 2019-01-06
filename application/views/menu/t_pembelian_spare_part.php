@@ -27,8 +27,15 @@
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                       <label>No Nota</label>
-                      <input type="text" name="no_nota" class="form-control">
+                      <input type="text" name="no_nota" class="form-control" readonly>
                     </div>
+                    <div class="form-group">
+                      <br>
+                      <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newNota()">Nota Baru</button>
+                      <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editNota()">Edit Nota</button>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                       <label>Tanggal</label>
                       <div class="input-group date">
@@ -38,8 +45,6 @@
                         <input type="text" name="tgl_nota" class="form-control pull-right" id="tgl_nota">
                       </div>
                     </div>
-                  </div>
-                  <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                       <label>Kode Supplier</label>
                       <select class="form-control" name="kode_supplier" id="dropSupplier" style="width: 100%;">
@@ -83,14 +88,7 @@
                   </div>
                 </div>
               </form>
-              <div class="alert alert-success alert-dismissible" id="alert_success">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i> <span name="successMsg"></span></h4>
-              </div>
-              <div class="alert alert-danger alert-dismissible" id="alert_failed">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> <span name="failedMsg"></span></h4>
-              </div>
+              <div id="alertMsg"></div>
               <table id="m_detBeli" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
                 <thead>
                   <tr>
@@ -106,7 +104,7 @@
                 <tfoot>
                   <tr>
                     <th colspan="5" class="text-center">Sub Total</th>
-                    <th class=""><span name="sub_total">20000</span></th>
+                    <th class=""><span name="sub_total">0</span></th>
                   </tr>
                 </tfoot>
               </table>
@@ -115,17 +113,20 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Diskon</label>
-                      <input type="text" name="diskon" class="form-control">
+                      <div class="input-group">
+                        <span class="input-group-addon">%</span>
+                        <input type="text" name="diskon" id="diskon" class="form-control">
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Nominal Diskon</label>
-                      <input type="text" name="nom_diskon" class="form-control">
+                      <input type="text" name="nom_diskon" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                       <label>Grand Total</label>
-                      <input type="text" name="grand_total" class="form-control">
+                      <input type="text" name="grand_total" class="form-control" readonly>
                     </div>
                   </div>
                 </div>
@@ -145,12 +146,22 @@
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
+                  <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
+                </div>
+              </div>
+              <div class="col-md-1 col-xs-1">
+                <div class="form-group">
                   <button type="button" class="btn btn-md btn-primary" onclick="printDt()">Cetak</button>
                 </div>
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="resetDt()">Batal</button>
+                  <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                </div>
+              </div>
+              <div class="col-md-1 col-xs-1">
+                <div class="form-group">
+                  <button type="button" class="btn btn-md btn-primary" onclick="resetDt()">Reset</button>
                 </div>
               </div>
             </div>
@@ -160,6 +171,38 @@
     </section>
     <!-- /.content -->
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modal-edit">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <table id="daftarPembelian" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>No Nota</th>
+                  <th>Tgl. Nota</th>
+                  <th>Supplier</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.Modal -->
   <!-- /.content-wrapper -->
   <?php include 'application/views/layout/footer.php' ;?>
   <?php include 'application/views/layout/controlsidebar.php' ;?>
@@ -171,36 +214,27 @@
       key = ($('[name="no_nota"]').val()!='')?$('[name="no_nota"]').val():'0';
       tbDetBeli(key);
       $('#tgl_nota').datepicker({
-        autoclose: true
+        autoclose: true,
+        format: 'yyyy-m-d'
+      });
+      $('#diskon').on('input',function(){
+        hitung();
       });
       dropsupplier();
       dropbarang();
-      alertCheck('');
-      // $('#dropBarang').change(function()
-      // {
-      //   pickBarang($('#dropBarang option:selected').val());
-      // });
     })
-    function alertCheck(id)
+    function newNota()
     {
-      if(id=='')
-      {
-        $('#alert_success').css('display','none');
-        $('#alert_failed').css('display','none');
-      }
-      else
-      {
-        if(id=='0')
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/gen_noBeliBarang')?>',
+        dataType: 'JSON',
+        success: function(data)
         {
-          $('#alert_success').css('display','block');
-          $('#alert_failed').css('display','none');
+          $('[name="no_nota"]').val(data.no_nota);
+          $('#newBtn').prop('disabled',true);
         }
-        else
-        {
-          $('#alert_success').css('display','none');
-          $('#alert_failed').css('display','block');
-        }
-      }
+      });
     }
     function dropsupplier()
     {
@@ -219,7 +253,7 @@
             option.text = data[i]['kode_supplier']+' - '+data[i]['nama_supplier'];
             select.add(option);
           }
-          $('#dropSupplier').select2();
+          $('#dropSupplier').select2({placeholder: 'Pilih Supplier'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
@@ -244,26 +278,14 @@
             option.text = data[i]['kode_barang']+' - '+data[i]['nama_barang'];
             select.add(option);
           }
-          $('#dropBarang').select2({placeholder: 'Select an option'});
+          $('#dropBarang').select2({placeholder: 'Pilih Barang'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
           alert('Error get supplier data');
         }
       });
-    }
-    // function pickBarang(key)
-    // {
-    //   $.ajax({
-    //     type: 'GET',
-    //     url: '<?= site_url('Crud/pickDropBarang/')?>'+key,
-    //     dataType: 'JSON',
-    //     success: function(data)
-    //     {
-    //       $('[name="nama_supplier"]').val(data.nama_supplier);
-    //     }
-    //   });
-    // }
+    }    
     function tbDetBeli(key)
     {
       table = $('#m_detBeli').DataTable({
@@ -302,16 +324,15 @@
           {
             if(data.status)
             {
-              $('[name="successMsg"]').text('Sukses Menambah Barang');
-              alertCheck('0');
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
               $('#form-detail-pembelian')[0].reset();
               $('#dropBarang').select2({placeholder: 'Select an option'});
               tbDetBeli(key);
+              subTotal(key);
             }
             else
             {
-              $('[name="failedMsg"]').text('Gagal Menambah Barang');
-              alertCheck('1');
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
             }
           }
         });
@@ -332,30 +353,129 @@
         {
           if(data.status)
           {
-            $('[name="successMsg"]').text('Sukses Menghapus Barang');
-            alertCheck('0');
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            $('#form-detail-pembelian')[0].reset();
+            tbDetBeli(key);
+            subTotal(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
+    function saveDt()
+    {
+      key = ($('[name="no_nota"]').val()!='')?$('[name="no_nota"]').val():'';
+      $.ajax({
+        type: 'POST',
+        url: '<?= site_url('Crud/saveBeliBarang')?>',
+        data: $('form').serialize(),
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
             $('#form-detail-pembelian')[0].reset();
             tbDetBeli(key);
           }
           else
           {
-            $('[name="failedMsg"]').text('Gagal Menghapus Barang');
-            alertCheck('1');
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
           }
         }
       });
     }
-    function edit(id)
+    function cancelDt()
     {
+      key = ($('[name="no_nota"]').val()!='')?$('[name="no_nota"]').val():'';
       $.ajax({
-        type: 'GET',
-        url: '<?= site_url('Crud/getTujuan/')?>'+id,
+        type: 'POST',
+        url: '<?= site_url('Crud/cancelBeliBarang')?>',
+        data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="kode_tujuan"]').val(data.kode_tujuan);
-          $('[name="ket_tujuan"]').val(data.ket_tujuan);
-          $('[name="tipe_form"]').val('1');
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            $('#form-detail-pembelian')[0].reset();
+            tbDetBeli(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
+    function subTotal(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/subTotalBeliBarang/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          $('[name="sub_total"]').text(data.subtotal);
+        }
+      });
+    }
+    function hitung()
+    {
+      sub = parseFloat($('[name="sub_total"]').text());
+      dis = parseFloat($('[name="diskon"]').val())/100*sub;
+      tot = parseFloat(sub*1)-parseFloat(dis*1);
+      $('[name="nom_diskon"]').val(dis);
+      $('[name="grand_total"]').val(tot);
+    }
+    function editNota()
+    {
+      $('#modal-edit').modal('show');
+      $('.modal-title').text('Daftar Pembelian Barang');
+      table = $('#daftarPembelian').DataTable({
+        "info": false,
+        "destroy": true,
+        "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+          "url": "<?php echo site_url('Datatables/listBeliBarang')?>",
+          "type": "POST",
+          },
+        "columnDefs": [
+          { 
+            "targets": [ 0 ],
+            "orderable": false,
+          },
+          {
+            "className": "text-center", "targets": ['_all']
+          }
+        ],
+      });
+    }
+    function pilihNotaBrg(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/getBeliBrg/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          key = data.no_nota;
+          $('[name="no_nota"]').val(data.no_nota);
+          $('[name="tgl_nota"]').val(data.tgl_nota);
+          $('[name="diskon"]').val(data.diskon);
+          $('[name="nom_diskon"]').val(data.nom_diskon);
+          $('[name="grand_total"]').val(data.grand_total);
+          $('#dropSupplier').val(data.kode_supplier).trigger('change');
+          tbDetBeli(key);
+          subTotal(key);
+          $('#newBtn').prop('disabled',true);
+          $('#modal-edit').modal('hide');
         }
       });
     }

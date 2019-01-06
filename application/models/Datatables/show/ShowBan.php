@@ -3,8 +3,8 @@
 	class ShowBan extends CI_Model 
 	{
 		var $table = 'master_ban';
-		var $column_order = array(null,'kode_ban','nama_ban','jenis_ban','merk_ban','harga_satuan',null);
-		var $column_search = array('kode_ban','nama_ban','jenis_ban','merk_ban','harga_satuan');
+		var $column_order = array(null,'kode_ban','nama_ban','jenis_ban','merk_ban','ukuran_ban',null);
+		var $column_search = array('kode_ban','nama_ban','jenis_ban','merk_ban','ukuran_ban');
 		var $order = array('kode_ban' => 'asc'); 
 		public function __construct()
 		{
@@ -13,7 +13,7 @@
 		private function _get_datatables_query()
 		{
 			$this->db->from($this->table);
-			// $this->db->where("branch_dtsts","1");
+			$this->db->where('data_sts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{

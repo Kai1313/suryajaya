@@ -17,8 +17,94 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/show/ShowBan','showBan');
 
 		$this->load->model('Datatables/details/DetPembelianBarang','detBeliBrg');
+		$this->load->model('Datatables/details/DetPemakaianBarang','detPakaiBrg');
+		$this->load->model('Datatables/details/DetPembelianBan','detBeliBan');
+
+		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
+		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
+		$this->load->model('Datatables/search/SearchDaftarPembelianBan','listBeliBan');
 	}
 
+	//Data Cari Transaksi
+	public function listBeliBarang()
+	{
+		$list = $this->listBeliBrg->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $dat->no_nota;
+			$row[] = $dat->tgl_nota;
+			$row[] = $dat->nama_supplier;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihNotaBrg('."'".$dat->no_nota."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listBeliBrg->count_all(),
+				"recordsFiltered" => $this->listBeliBrg->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listPakaiBarang()
+	{
+		$list = $this->listPakaiBrg->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $dat->no_pakai_brg;
+			$row[] = $dat->tgl_pakai_brg;
+			$row[] = $dat->nama_karyawan;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihPakaiBrg('."'".$dat->no_pakai_brg."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listPakaiBrg->count_all(),
+				"recordsFiltered" => $this->listPakaiBrg->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listBeliBan()
+	{
+		$list = $this->listBeliBan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $dat->no_pembelian;
+			$row[] = $dat->tgl_pembelian;
+			$row[] = $dat->nama_supplier;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihBeliBan('."'".$dat->no_pembelian."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listBeliBan->count_all(),
+				"recordsFiltered" => $this->listBeliBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	//Data Detail Transaksi
 	public function detBeliBarang($key)
 	{
 		$list = $this->detBeliBrg->get_datatables($key);
@@ -26,9 +112,10 @@ class Datatables extends CI_Controller
 		$no = $_POST['start'];
 		foreach ($list as $dat)
 		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
 			$no++;
 			$row = array();
-			$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>';
+			$row[] = $btn;
 			$row[] = $dat->part_number;
 			$row[] = $dat->nama_barang;
 			$row[] = $dat->harga_satuan;
@@ -45,6 +132,75 @@ class Datatables extends CI_Controller
 		echo json_encode($output);
 	}
 
+	public function detPakaiBarang($key)
+	{
+		$list = $this->detPakaiBrg->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->kode_barang;
+			$row[] = $dat->nama_barang;
+			$row[] = $dat->qty_pakai.' '.$dat->nama_satuan;
+			$row[] = $dat->stok_barang.' '.$dat->nama_satuan;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detPakaiBrg->count_all(),
+				"recordsFiltered" => $this->detPakaiBrg->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function detBeliBan($key)
+	{
+		$list = $this->detBeliBan->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset Ban';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $jenis;
+			$row[] = $dat->ukuran_ban;
+			$row[] = $dat->merk_ban;
+			$row[] = $dat->harga_satuan;
+			$row[] = $dat->qty_beli;
+			$row[] = $dat->jumlah;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detBeliBan->count_all(),
+				"recordsFiltered" => $this->detBeliBan->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	//Data Master
 	public function mBarang()
 	{
 		$list = $this->showBarang->get_datatables();
@@ -247,9 +403,9 @@ class Datatables extends CI_Controller
 			$row[] = $dat->tipe_kendaraan;
 			$row[] = $dat->jenis_kendaraan;
 			$row[] = $dat->warna_kendaraan;
-			$row[] = $dat->sopir_kendaraan;
-			$row[] = $dat->kernet_kendaraan;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->nopol."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->nopol."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = $dat->nama_sopir;
+			$row[] = $dat->nama_kernet;
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_kendaraan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_kendaraan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -289,7 +445,7 @@ class Datatables extends CI_Controller
 			$row[] = $dat->nama_ban;
 			$row[] = $jenis;
 			$row[] = $dat->merk_ban;
-			$row[] = $dat->harga_satuan;
+			$row[] = $dat->ukuran_ban;
 			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_ban."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_ban."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}

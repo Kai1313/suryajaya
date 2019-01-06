@@ -48,8 +48,8 @@
                   <input type="text" name="merk_ban" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label>Harga</label>
-                  <input type="text" name="harga_satuan" class="form-control">
+                  <label>Ukuran</label>
+                  <input type="text" name="ukuran_ban" class="form-control">
                 </div>
                 <div class="form-group">
                   <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
@@ -69,7 +69,7 @@
                     <th class="text-center">Nama</th>
                     <th class="text-center">Jenis</th>
                     <th class="text-center">Merk</th>
-                    <th class="text-center">Harga</th>
+                    <th class="text-center">Ukuran</th>
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
@@ -160,7 +160,7 @@
           $('[name="jenis_ban"]').parent().removeClass(' checked');
           $('[name="jenis_ban"][value="'+data.jenis_ban+'"]').parent().addClass(' checked');
           $('[name="merk_ban"]').val(data.merk_ban);
-          $('[name="harga_satuan"]').val(data.harga_satuan);
+          $('[name="ukuran_ban"]').val(data.ukuran_ban);
           $('[name="tipe_form"]').val('1');
         }
       });

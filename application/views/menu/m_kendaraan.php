@@ -70,11 +70,15 @@
                 </div>
                 <div class="form-group">
                   <label>Sopir</label>
-                  <input type="text" name="sopir_kendaraan" class="form-control">
+                  <select class="form-control" name="sopir_kendaraan" id="dropSopir" style="width: 100%;">
+                    <option value=""></option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Kernet</label>
-                  <input type="text" name="kernet_kendaraan" class="form-control">
+                  <select class="form-control" name="kernet_kendaraan" id="dropKernet" style="width: 100%;">
+                    <option value=""></option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
@@ -117,7 +121,59 @@
     $(function ()
     {
       tbKendaraan();
+      dropsopir();
+      dropkernet();
     })
+    function dropsopir()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropSopir')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropSopir');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_driver']
+            option.text = data[i]['kode_driver']+' - '+data[i]['nama_driver'];
+            select.add(option);
+          }
+          $('#dropSopir').select2({placeholder: 'Pilih Sopir'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get sopir data');
+        }
+      });
+    }
+    function dropkernet()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropKernet')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropKernet');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_driver']
+            option.text = data[i]['kode_driver']+' - '+data[i]['nama_driver'];
+            select.add(option);
+          }
+          $('#dropKernet').select2({placeholder: 'Pilih Kernet'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get kernet data');
+        }
+      });
+    }
     function tbKendaraan()
     {
       table = $('#m_kendaraan').DataTable({
@@ -177,6 +233,7 @@
         dataType: 'JSON',
         success: function(data)
         {
+          $('[name="kode_kendaraan"]').val(data.kode_kendaraan);
           $('[name="nopol"]').val(data.nopol);
           $('[name="no_mesin"]').val(data.no_mesin);
           $('[name="no_rangka"]').val(data.no_rangka);
@@ -189,8 +246,8 @@
           $('[name="masa_stnk"]').val(data.masa_stnk);
           $('[name="cc_kendaraan"]').val(data.cc_kendaraan);
           $('[name="sopir_kendaraan"]').val(data.sopir_kendaraan);
-          $('[name="kernet_kendaraan"]').val(data.kernet_kendaraan);
-          $('[name="kode_kendaraan"]').val(data.kode_kendaraan);
+          $('#dropSopir').val(data.sopir_kendaraan).trigger('change');
+          $('#dropKernet').val(data.kernet_kendaraan).trigger('change');
           $('[name="tipe_form"]').val('1');
         }
       });

@@ -1,22 +1,22 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class ShowKendaraan extends CI_Model 
+	class DetPembelianBan extends CI_Model 
 	{
-		var $table = 'master_kendaraan a';
-		var $column_order = array(null,'a.nopol','a.tipe_kendaraan','a.jenis_kendaraan','a.warna_kendaraan','nama_sopir','nama_kernet',null);
-		var $column_search = array('a.nopol','a.tipe_kendaraan','a.jenis_kendaraan','a.warna_kendaraan','nama_sopir','nama_kernet');
-		var $order = array('a.nopol' => 'asc'); 
+		var $table = 'trx_beli_ban_det a';
+		var $column_order = array(null,'c.jenis_ban','c.ukuran_ban','c.merk_ban','a.harga_satuan','a.qty_beli','a.jumlah',null);
+		var $column_search = array('c.jenis_ban','c.ukuran_ban','c.merk_ban','a.harga_satuan','a.qty_beli','a.jumlah');
+		var $order = array('c.jenis_ban' => 'asc'); 
 		public function __construct()
 		{
-			parent::__construct();		
+			parent::__construct();
 		}
-		private function _get_datatables_query()
+		private function _get_datatables_query($key)
 		{
-			$this->db->select('a.*,b.nama_driver as nama_sopir,c.nama_driver as nama_kernet');
+			$this->db->select('a.det_id,b.data_sts,c.nama_ban,c.ukuran_ban,c.jenis_ban,c.merk_ban,a.harga_satuan,a.qty_beli,a.jumlah');
 			$this->db->from($this->table);
-			$this->db->join('master_driver b','b.kode_driver = a.sopir_kendaraan');
-			$this->db->join('master_driver c','c.kode_driver = a.kernet_kendaraan');
-			$this->db->where('a.data_sts','1');
+			$this->db->join('trx_beli_ban b','b.no_pembelian = a.no_pembelian');
+			$this->db->join('master_ban c','c.kode_ban = a.kode_ban');
+			$this->db->where('a.no_pembelian',$key);
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{
@@ -46,17 +46,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables()
+		public function get_datatables($key)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($key);
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered()
+		public function count_filtered($key)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($key);
 			$query = $this->db->get();
 			return $query->num_rows();
 		}

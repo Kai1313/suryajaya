@@ -1,22 +1,20 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class ShowKendaraan extends CI_Model 
+	class SearchDaftarPembelianBarang extends CI_Model 
 	{
-		var $table = 'master_kendaraan a';
-		var $column_order = array(null,'a.nopol','a.tipe_kendaraan','a.jenis_kendaraan','a.warna_kendaraan','nama_sopir','nama_kernet',null);
-		var $column_search = array('a.nopol','a.tipe_kendaraan','a.jenis_kendaraan','a.warna_kendaraan','nama_sopir','nama_kernet');
-		var $order = array('a.nopol' => 'asc'); 
+		var $table = 'trx_beli_barang a';
+		var $column_order = array(null,'a.no_nota','a.tgl_nota','b.nama_supplier','a.data_sts',null);
+		var $column_search = array('a.no_nota','a.tgl_nota','b.nama_supplier','a.data_sts');
+		var $order = array('a.tgl_nota' => 'asc'); 
 		public function __construct()
 		{
-			parent::__construct();		
+			parent::__construct();
 		}
 		private function _get_datatables_query()
 		{
-			$this->db->select('a.*,b.nama_driver as nama_sopir,c.nama_driver as nama_kernet');
+			$this->db->select('a.*,b.nama_supplier');
 			$this->db->from($this->table);
-			$this->db->join('master_driver b','b.kode_driver = a.sopir_kendaraan');
-			$this->db->join('master_driver c','c.kode_driver = a.kernet_kendaraan');
-			$this->db->where('a.data_sts','1');
+			$this->db->join('master_supplier b','b.kode_supplier = a.kode_supplier','left');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{

@@ -27,28 +27,36 @@
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                       <label>No Pembelian</label>
-                      <input type="text" name="no_pembelian" class="form-control">
+                      <input type="text" name="no_pembelian" class="form-control" readonly>
                     </div>
                     <div class="form-group">
-                      <label>Tanggal</label>
-                      <input type="text" name="tgl_pembelian" class="form-control">
+                      <br>
+                      <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newBeli()">Pembelian Baru</button>
+                      <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editBeli()">Edit Pembelian</button>
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
-                      <label>Kode Supplier</label>
-                      <input type="text" name="kode_supplier" class="form-control">
+                      <label>Tanggal</label>
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_pembelian" class="form-control pull-right" id="tgl_pembelian">
+                      </div>
                     </div>
                     <div class="form-group">
-                      <label>Nama Supplier</label>
-                      <input type="text" name="nama_supplier" class="form-control">
+                      <label>Kode Supplier</label>
+                      <select class="form-control" name="kode_supplier" id="dropSupplier" style="width: 100%;">
+                        <option value="">Pilih Supplier</option>
+                      </select>
                     </div>
                   </div>
                 </div>
               </div>
             </form>
           </div>
-        </div>        
+        </div>
       </div>
       <div class="row">
         <div class="col-md-12 col-xs-12">
@@ -59,15 +67,17 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Kode Ban</label>
-                      <input type="text" name="kode_ban" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label>Harga Ban</label>
-                      <input type="text" name="harga_ban" class="form-control">
+                      <select class="form-control" name="kode_ban" id="dropBan" style="width: 100%;">
+                        <option value="">Pilih Ban</option>
+                      </select>
                     </div>
                     <div class="form-group">
                       <label>Qty Ban</label>
                       <input type="text" name="qty_ban" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label>Harga Ban</label>
+                      <input type="text" name="harga_ban" class="form-control">
                     </div>
                     <div class="form-group">
                       <button type="button" class="btn btn-sm btn-primary" onclick="add()">Tambah</button>
@@ -76,20 +86,22 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Jenis Ban</label>
-                      <input type="text" name="jenis_ban" class="form-control">
+                      <input type="text" name="jenis_ban" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                       <label>Ukuran Ban</label>
-                      <input type="text" name="ukuran_ban" class="form-control">
+                      <input type="text" name="ukuran_ban" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                       <label>Merk Ban</label>
-                      <input type="text" name="merk_ban" class="form-control">
+                      <input type="text" name="merk_ban" class="form-control" readonly>
                     </div>
+                    <input type="hidden" name="g_total">
                   </div>
                 </div>
               </form>
-              <table id="m_pembelian_spare_part" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+              <div id="alertMsg"></div>
+              <table id="m_pembelian_ban" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th class="col-xs-1 text-center">Action</th>
@@ -101,30 +113,11 @@
                     <th class="col-xs-3 text-center">Jumlah</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><button type="button" class="btn btn-sm btn-danger">Hapus</button></td>
-                    <td>Ban Dalam</td>
-                    <td>290x20</td>
-                    <td>Dunlop</td>
-                    <td>2000000</td>
-                    <td>4 Pcs</td>
-                    <td>8000000</td>
-                  </tr>
-                  <tr>
-                    <td><button type="button" class="btn btn-sm btn-danger">Hapus</button></td>
-                    <td>Ban Luar</td>
-                    <td>290x30</td>
-                    <td>Federal Ban</td>
-                    <td>2500000</td>
-                    <td>4 Pcs</td>
-                    <td>10000000</td>
-                  </tr>
-                </tbody>
+                <tbody></tbody>
                 <tfoot>
                   <tr>
                     <th colspan="6" class="text-center">Grand Total</th>
-                    <th class=""><span name="grand_total">18000000</span></th>
+                    <th class=""><span name="grand_total">0</span></th>
                   </tr>
                 </tfoot>
               </table>
@@ -148,7 +141,7 @@
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="resetDt()">Batal</button>
+                  <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
                 </div>
               </div>
             </div>
@@ -158,6 +151,38 @@
     </section>
     <!-- /.content -->
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modal-edit">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <table id="daftarPembelian" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>No Pembelian</th>
+                  <th>Tgl. Pembelian</th>
+                  <th>Supplier</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.Modal -->
   <!-- /.content-wrapper -->
   <?php include 'application/views/layout/footer.php' ;?>
   <?php include 'application/views/layout/controlsidebar.php' ;?>
@@ -166,18 +191,120 @@
   <script>
     $(function ()
     {
-      // tbTujuan();
+      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'0';
+      tbDetBeli(key);
+      $('#tgl_pembelian').datepicker({
+        autoclose: true,
+        format: 'yyyy-m-d'
+      });
+      dropsupplier();
+      dropban();
+      $('#dropBan').change(function()
+      {
+        pickBan($('#dropBan option:selected').val());
+      });
     })
-    function tbTujuan()
+    function newBeli()
     {
-      table = $('#m_tujuan').DataTable({
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/gen_noBeliBan')?>',
+        dataType: 'JSON',
+        success: function(data)
+        {
+          $('[name="no_pembelian"]').val(data.no_pembelian);
+          $('#newBtn').prop('disabled',true);
+        }
+      });
+    }
+    function dropsupplier()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropSupplier')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropSupplier');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_supplier']
+            option.text = data[i]['kode_supplier']+' - '+data[i]['nama_supplier'];
+            select.add(option);
+          }
+          $('#dropSupplier').select2({placeholder: 'Pilih Supplier'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get supplier data');
+        }
+      });
+    }
+    function dropban()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropBan')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropBan');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_ban']
+            option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban'];
+            select.add(option);
+          }
+          $('#dropBan').select2({placeholder: 'Pilih Ban'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get ban data');
+        }
+      });
+    }
+    function pickBan(key)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/pickDropBan/')?>'+key,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          var jenis;
+          if(data.jenis_ban == '0')
+          {
+            jenis = 'Ban Dalam';
+          }
+          else if(data.jenis_ban == '1')
+          {
+            jenis = 'Ban Luar';
+          }
+          else
+          {
+            jenis = 'Marset Ban';
+          }
+          $('[name="jenis_ban"]').val(jenis);
+          $('[name="ukuran_ban"]').val(data.ukuran_ban);
+          $('[name="merk_ban"]').val(data.merk_ban);
+        }
+      });
+    }
+    function tbDetBeli(key)
+    {
+      table = $('#m_pembelian_ban').DataTable({
         "info": false,
+        "destroy": true,
         "responsive": true,
         "processing": true,
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/mTujuan')?>",
+          "url": "<?php echo site_url('Datatables/detBeliBan/')?>"+key,
           "type": "POST",
           },
         "columnDefs": [
@@ -191,45 +318,164 @@
         ],
       });
     }
-    function reloadTb()
-    {
-      table.ajax.reload(null,false);
-    }
     function add()
     {
-      var urls = ($('[name="tipe_form"]').val()!='1')?'<?= site_url('Crud/addTujuan')?>':'<?= site_url('Crud/updTujuan')?>';
+      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      if(key!='')
+      {
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/addBeliBan')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
+          {
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+              $('#form-detail-pembelian')[0].reset();
+              $('#dropBan').select2({placeholder: 'Select an option'});
+              tbDetBeli(key);
+              subTotal(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            }
+          }
+        });
+      }
+      else
+      {
+        alert('No Pembelian Masih Kosong');
+      }
+    }
+    function remove(id)
+    {
+      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
       $.ajax({
-        type: 'POST',
-        url: urls,
-        data: $('#form-tujuan').serialize(),
+        type: 'GET',
+        url: '<?= site_url('Crud/rmvBeliBan/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
           if(data.status)
           {
-            alert('Sukses Menambah Tujuan');
-            $('#form-tujuan')[0].reset();
-            $('[name="tipe_form"]').val('');
-            reloadTb();
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            $('#form-detail-pembelian')[0].reset();
+            tbDetBeli(key);
+            subTotal(key);
           }
           else
           {
-            alert('Gagal Menambah Tujuan');
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
           }
         }
       });
     }
-    function edit(id)
+    function saveDt()
     {
+      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
       $.ajax({
-        type: 'GET',
-        url: '<?= site_url('Crud/getTujuan/')?>'+id,
+        type: 'POST',
+        url: '<?= site_url('Crud/saveBeliBan')?>',
+        data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="kode_tujuan"]').val(data.kode_tujuan);
-          $('[name="ket_tujuan"]').val(data.ket_tujuan);
-          $('[name="tipe_form"]').val('1');
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            $('#form-detail-pembelian')[0].reset();
+            tbDetBeli(key);
+            subTotal(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
+    function cancelDt()
+    {
+      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      $.ajax({
+        type: 'POST',
+        url: '<?= site_url('Crud/cancelBeliBan')?>',
+        data: $('form').serialize(),
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            $('#form-detail-pembelian')[0].reset();
+            tbDetBeli(key);
+            subTotal(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
+    function subTotal(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/subTotalBeliBan/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          $('[name="grand_total"]').text(data.subtotal);
+          $('[name="g_total"]').val(data.subtotal);
+        }
+      });
+    }
+    function editBeli()
+    {
+      $('#modal-edit').modal('show');
+      $('.modal-title').text('Daftar Pembelian Ban');
+      table = $('#daftarPembelian').DataTable({
+        "info": false,
+        "destroy": true,
+        "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+          "url": "<?php echo site_url('Datatables/listBeliBan')?>",
+          "type": "POST",
+          },
+        "columnDefs": [
+          { 
+            "targets": [ 0 ],
+            "orderable": false,
+          },
+          {
+            "className": "text-center", "targets": ['_all']
+          }
+        ],
+      });
+    }
+    function pilihBeliBan(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/getBeliBan/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          key = data.no_pembelian;
+          $('[name="no_pembelian"]').val(data.no_pembelian);
+          $('[name="tgl_pembelian"]').val(data.tgl_pembelian);
+          $('#dropSupplier').val(data.kode_supplier).trigger('change');
+          tbDetBeli(key);
+          subTotal(key);
+          $('#newBtn').prop('disabled',true);
+          $('#modal-edit').modal('hide');
         }
       });
     }
