@@ -193,6 +193,7 @@
     {
       key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'0';
       tbDetBeli(key);
+      tbDetPakai(key);
       $('#tgl_pembelian').datepicker({
         autoclose: true,
         format: 'yyyy-m-d'
@@ -297,6 +298,30 @@
     function tbDetBeli(key)
     {
       table = $('#m_pembelian_ban').DataTable({
+        "info": false,
+        "destroy": true,
+        "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+          "url": "<?php echo site_url('Datatables/detBeliBan/')?>"+key,
+          "type": "POST",
+          },
+        "columnDefs": [
+          { 
+            "targets": [ 0 ],
+            "orderable": false,
+          },
+          {
+            "className": "text-center", "targets": ['_all']
+          }
+        ],
+      });
+    }
+    function tbDetPakai(key)
+    {
+      table2 = $('#m_pemakaian_barang').DataTable({
         "info": false,
         "destroy": true,
         "responsive": true,

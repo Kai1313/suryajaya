@@ -118,16 +118,10 @@
                     <th class="col-xs-2 text-center">Kode</th>
                     <th class="col-xs-3 text-center">Nama</th>
                     <th class="col-xs-3 text-center">Qty</th>
-                    <th class="col-xs-3 text-center">Sisa Stok</th>
+                    <th class="col-xs-3 text-center">Stok</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
-                <tfoot>
-                  <tr>
-                    <th colspan="5" class="text-center">Total</th>
-                    <th class=""><span name="total">0</span></th>
-                  </tr>
-                </tfoot>
               </table>
               <form role="form" id="form-ket-pemakaian">
                 <div class="form-group">
