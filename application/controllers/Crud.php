@@ -83,6 +83,24 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noBiayaKendaraan()
+	{
+		$res = $this->gen_num_('trx_biaya_kendaraan','no_biaya','BY');
+		$check = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_biaya_kendaraan','no_biaya','BY');
+		}
+		$crt = array(
+			'no_biaya'=>$res,
+			'tgl_biaya'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_biaya_kendaraan',$crt);
+		$data['no_biaya'] = $res;
+		echo json_encode($data);
+	}
+
 	//CRUD Master Barang
 	public function addBarang()
 	{

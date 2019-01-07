@@ -97,4 +97,123 @@ class Paging extends CI_Controller
 		$data['content']='menu/t_pembelian_ban';
 		$this->load->view('layout/wrapper',$data);
 	}
+
+	public function t_pemakaian_ban()
+	{
+		$data['page_header']='Transaksi Pemakaian Ban';
+		$data['content']='menu/t_pemakaian_ban';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_biaya_kendaraan()
+	{
+		$data['page_header']='Transaksi Biaya Kendaraan';
+		$data['content']='menu/t_biaya_kendaraan';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_retur_pembelian_spare_part()
+	{
+		$data['page_header']='Transaksi Retur Pembelian Spare Part';
+		$data['content']='menu/t_retur_pembelian_spare_part';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_retur_pemakaian_spare_part()
+	{
+		$data['page_header']='Transaksi Retur Pemakaian Spare Part';
+		$data['content']='menu/t_retur_pemakaian_spare_part';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_input_bon()
+	{
+		$data['page_header']='Transaksi Input Bon';
+		$data['content']='menu/t_input_bon';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_input_kas()
+	{
+		$data['page_header']='Transaksi Input Kas';
+		$data['content']='menu/t_input_kas';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_input_upah()
+	{
+		$data['page_header']='Transaksi Input Upah';
+		$data['content']='menu/t_input_upah';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_katalog_kendaraan()
+	{
+		$data['page_header']='Transaksi Katalog Kendaraan';
+		$data['content']='menu/t_katalog_kendaraan';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_input_bon_sopir()
+	{
+		$data['page_header']='Transaksi Input Bon Sopir';
+		$data['content']='menu/t_input_bon_sopir';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_input_klaim_sopir()
+	{
+		$data['page_header']='Transaksi Input Klaim Sopir';
+		$data['content']='menu/t_input_klaim_sopir';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_kas_bon_sopir()
+	{
+		$data['page_header']='Transaksi Kas Bon Sopir';
+		$data['content']='menu/t_kas_bon_sopir';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_kas_bon_kantor()
+	{
+		$data['page_header']='Transaksi Kas Bon Kantor';
+		$data['content']='menu/t_kas_bon_kantor';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_tagihan()
+	{
+		$data['page_header']='Transaksi Tagihan';
+		$data['content']='menu/t_tagihan';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_tagihan_manual()
+	{
+		$data['page_header']='Transaksi Tagihan Manual';
+		$data['content']='menu/t_tagihan_manual';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_pelunasan_piutang()
+	{
+		$data['page_header']='Transaksi Pelunasan Piutang';
+		$data['content']='menu/t_pelunasan_piutang';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_kuitansi()
+	{
+		$data['page_header']='Transaksi Kuitansi';
+		$data['content']='menu/t_kuitansi';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function t_pembayaran_bon_klaim()
+	{
+		$data['page_header']='Transaksi Pembayaran Bon Klaim';
+		$data['content']='menu/t_pembayaran_bon_klaim';
+		$this->load->view('layout/wrapper',$data);
+	}
 }

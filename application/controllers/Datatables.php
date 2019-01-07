@@ -19,6 +19,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/details/DetPembelianBarang','detBeliBrg');
 		$this->load->model('Datatables/details/DetPemakaianBarang','detPakaiBrg');
 		$this->load->model('Datatables/details/DetPembelianBan','detBeliBan');
+		$this->load->model('Datatables/details/DetBiayaKendaraan','detBiayaKdr');
 
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
@@ -195,6 +196,30 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->detBeliBan->count_all(),
 				"recordsFiltered" => $this->detBeliBan->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function detBiayaKendaraan($key)
+	{
+		$list = $this->detBiayaKdr->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->keterangan;
+			$row[] = $dat->jumlah;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detBiayaKdr->count_all(),
+				"recordsFiltered" => $this->detBiayaKdr->count_filtered($key),
 				"data" => $data,
 			);
 		echo json_encode($output);

@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `trx_beli_ban_det` (
   CONSTRAINT `FK_trx_beli_ban_det_trx_beli_ban` FOREIGN KEY (`no_pembelian`) REFERENCES `trx_beli_ban` (`no_pembelian`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_beli_ban_det: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_beli_ban_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_beli_ban_det` DISABLE KEYS */;
 INSERT INTO `trx_beli_ban_det` (`det_id`, `no_pembelian`, `kode_ban`, `qty_beli`, `harga_satuan`, `jumlah`) VALUES
 	(2, 'BL1901-000002', 'BAN0001', 2.00, 1000000.00, 2000000.00);
@@ -295,6 +295,50 @@ INSERT INTO `trx_beli_barang_det` (`det_id`, `no_nota`, `kode_barang`, `qty_beli
 	(4, 'SK1901-000002', 'BRG0003', 2.00, 20000.00, 40000.00),
 	(5, 'SK1901-000002', 'BRG0005', 2.00, 10000.00, 20000.00);
 /*!40000 ALTER TABLE `trx_beli_barang_det` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_biaya_kendaraan
+DROP TABLE IF EXISTS `trx_biaya_kendaraan`;
+CREATE TABLE IF NOT EXISTS `trx_biaya_kendaraan` (
+  `no_biaya` char(20) NOT NULL,
+  `kode_karyawan` char(10) DEFAULT NULL,
+  `kode_kendaraan` int(11) DEFAULT NULL,
+  `sopir_kendaraan` char(10) DEFAULT NULL,
+  `kernet_kendaraan` char(10) DEFAULT NULL,
+  `tgl_biaya` date DEFAULT NULL,
+  `grand_total` decimal(10,2) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`no_biaya`),
+  KEY `FK_trx_biaya_kendaraan_master_karyawan` (`kode_karyawan`),
+  KEY `FK_trx_biaya_kendaraan_master_kendaraan` (`kode_kendaraan`),
+  KEY `FK_trx_biaya_kendaraan_master_driver` (`sopir_kendaraan`),
+  KEY `FK_trx_biaya_kendaraan_master_driver_2` (`kernet_kendaraan`),
+  CONSTRAINT `FK_trx_biaya_kendaraan_master_driver` FOREIGN KEY (`sopir_kendaraan`) REFERENCES `master_driver` (`kode_driver`),
+  CONSTRAINT `FK_trx_biaya_kendaraan_master_driver_2` FOREIGN KEY (`kernet_kendaraan`) REFERENCES `master_driver` (`kode_driver`),
+  CONSTRAINT `FK_trx_biaya_kendaraan_master_karyawan` FOREIGN KEY (`kode_karyawan`) REFERENCES `master_karyawan` (`kode_karyawan`),
+  CONSTRAINT `FK_trx_biaya_kendaraan_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_biaya_kendaraan: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_biaya_kendaraan` DISABLE KEYS */;
+INSERT INTO `trx_biaya_kendaraan` (`no_biaya`, `kode_karyawan`, `kode_kendaraan`, `sopir_kendaraan`, `kernet_kendaraan`, `tgl_biaya`, `grand_total`, `data_sts`) VALUES
+	('BY1901-000001', NULL, NULL, NULL, NULL, '2019-01-08', NULL, '0');
+/*!40000 ALTER TABLE `trx_biaya_kendaraan` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_biaya_kendaraan_det
+DROP TABLE IF EXISTS `trx_biaya_kendaraan_det`;
+CREATE TABLE IF NOT EXISTS `trx_biaya_kendaraan_det` (
+  `det_id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_biaya` char(20) DEFAULT NULL,
+  `keterangan` text,
+  `jumlah` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`det_id`),
+  KEY `FK_trx_biaya_kendaraan_det_trx_biaya_kendaraan` (`no_biaya`),
+  CONSTRAINT `FK_trx_biaya_kendaraan_det_trx_biaya_kendaraan` FOREIGN KEY (`no_biaya`) REFERENCES `trx_biaya_kendaraan` (`no_biaya`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_biaya_kendaraan_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_biaya_kendaraan_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_biaya_kendaraan_det` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_pakai_barang
 DROP TABLE IF EXISTS `trx_pakai_barang`;
