@@ -20,7 +20,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">Form Biaya Kendaraan</h3>
             </div>
-            <form role="form" id="form-master-pembelian">
+            <form role="form" id="form-master-biaya">
               <input type="hidden" name="tipe_form" value="">
               <div class="box-body">
                 <div class="row">
@@ -84,12 +84,12 @@
         <div class="col-md-12 col-xs-12">
           <div class="box">
             <div class="box-body">
-              <form role="form" id="form-detail-pembelian">
+              <form role="form" id="form-detail-biaya">
                 <div class="row">
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Keterangan</label>
-                      <textarea name="ket_pemakaian" class="form-control"></textarea>
+                      <textarea name="keterangan" class="form-control"></textarea>
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
@@ -202,12 +202,14 @@
         autoclose: true,
         format: 'yyyy-m-d'
       });
-      dropsupplier();
-      dropban();
-      $('#dropBan').change(function()
+      dropkaryawan();
+      dropkendaraan();
+      $('#dropNopol').change(function()
       {
-        pickBan($('#dropBan option:selected').val());
+        pickKendaraan($('#dropNopol option:selected').val());
       });
+      dropsopir();
+      dropkernet();
     })
     function newBiaya()
     {
@@ -222,80 +224,115 @@
         }
       });
     }
-    function dropsupplier()
+    function dropkaryawan()
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getDropSupplier')?>",
+        url : "<?php echo site_url('Crud/getDropKaryawan')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {   
-          var select = document.getElementById('dropSupplier');
+          var select = document.getElementById('dropKaryawan');
           var option;
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_supplier']
-            option.text = data[i]['kode_supplier']+' - '+data[i]['nama_supplier'];
+            option.value = data[i]['kode_karyawan']
+            option.text = data[i]['kode_karyawan']+' - '+data[i]['nama_karyawan'];
             select.add(option);
           }
-          $('#dropSupplier').select2({placeholder: 'Pilih Supplier'});
+          $('#dropKaryawan').select2({placeholder: 'Pilih Karyawan'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
-          alert('Error get supplier data');
+          alert('Error get karyawan data');
         }
       });
     }
-    function dropban()
+    function dropkendaraan()
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getDropBan')?>",
+        url : "<?php echo site_url('Crud/getDropKendaraan')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {   
-          var select = document.getElementById('dropBan');
+          var select = document.getElementById('dropNopol');
           var option;
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_ban']
-            option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban'];
+            option.value = data[i]['kode_kendaraan']
+            option.text = data[i]['nopol'];
             select.add(option);
           }
-          $('#dropBan').select2({placeholder: 'Pilih Ban'});
+          $('#dropNopol').select2({placeholder: 'Pilih Kendaraan'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
-          alert('Error get ban data');
+          alert('Error get kendaraan data');
         }
       });
     }
-    function pickBan(key)
+    function pickKendaraan(key)
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/pickDropBan/')?>'+key,
+        url: '<?= site_url('Crud/pickDropKendaraan/')?>'+key,
         dataType: 'JSON',
         success: function(data)
         {
-          var jenis;
-          if(data.jenis_ban == '0')
+          $('[name="tipe_kendaraan"]').val(data.tipe_kendaraan+' - '+data.jenis_kendaraan);
+        }
+      });
+    }
+    function dropsopir()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropSopir')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropSopir');
+          var option;
+          for (var i = 0; i < data.length; i++)
           {
-            jenis = 'Ban Dalam';
+            option = document.createElement('option');
+            option.value = data[i]['kode_driver']
+            option.text = data[i]['kode_driver']+' - '+data[i]['nama_driver'];
+            select.add(option);
           }
-          else if(data.jenis_ban == '1')
+          $('#dropSopir').select2({placeholder: 'Pilih Sopir'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get sopir data');
+        }
+      });
+    }
+    function dropkernet()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropKernet')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropKernet');
+          var option;
+          for (var i = 0; i < data.length; i++)
           {
-            jenis = 'Ban Luar';
+            option = document.createElement('option');
+            option.value = data[i]['kode_driver']
+            option.text = data[i]['kode_driver']+' - '+data[i]['nama_driver'];
+            select.add(option);
           }
-          else
-          {
-            jenis = 'Marset Ban';
-          }
-          $('[name="jenis_ban"]').val(jenis);
-          $('[name="ukuran_ban"]').val(data.ukuran_ban);
-          $('[name="merk_ban"]').val(data.merk_ban);
+          $('#dropKernet').select2({placeholder: 'Pilih Kernet'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get kernet data');
         }
       });
     }
@@ -325,12 +362,12 @@
     }
     function add()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
       if(key!='')
       {
         $.ajax({
           type: 'POST',
-          url: '<?= site_url('Crud/addBeliBan')?>',
+          url: '<?= site_url('Crud/addBiayaKdr')?>',
           data: $('form').serialize(),
           dataType: 'JSON',
           success: function(data)
@@ -338,9 +375,8 @@
             if(data.status)
             {
               msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-              $('#form-detail-pembelian')[0].reset();
-              $('#dropBan').select2({placeholder: 'Select an option'});
-              tbDetBeli(key);
+              $('#form-detail-biaya')[0].reset();
+              tbDetBiaya(key);
               subTotal(key);
             }
             else
@@ -352,23 +388,23 @@
       }
       else
       {
-        alert('No Pembelian Masih Kosong');
+        alert('No Kuitansi Masih Kosong');
       }
     }
     function remove(id)
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_biaya"]').val()!='')?$('[name="no_biaya"]').val():'';
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/rmvBeliBan/')?>'+id,
+        url: '<?= site_url('Crud/rmvBiayaKdr/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
+            $('#form-detail-biaya')[0].reset();
+            tbDetBiaya(key);
             subTotal(key);
           }
           else
@@ -380,10 +416,10 @@
     }
     function saveDt()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_biaya"]').val()!='')?$('[name="no_biaya"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/saveBeliBan')?>',
+        url: '<?= site_url('Crud/saveBiayaKdr')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -391,8 +427,8 @@
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
+            $('#form-detail-biaya')[0].reset();
+            tbDetBiaya(key);
             subTotal(key);
           }
           else
@@ -404,10 +440,10 @@
     }
     function cancelDt()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_biaya"]').val()!='')?$('[name="no_biaya"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/cancelBeliBan')?>',
+        url: '<?= site_url('Crud/cancelBiayaKdr')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -415,8 +451,8 @@
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
+            $('#form-detail-biaya')[0].reset();
+            tbDetBiaya(key);
             subTotal(key);
           }
           else
@@ -430,7 +466,7 @@
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/subTotalBeliBan/')?>'+id,
+        url: '<?= site_url('Crud/subTotalBiayaKdr/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
@@ -439,11 +475,11 @@
         }
       });
     }
-    function editBeli()
+    function editBiaya()
     {
       $('#modal-edit').modal('show');
-      $('.modal-title').text('Daftar Pembelian Ban');
-      table = $('#daftarPembelian').DataTable({
+      $('.modal-title').text('Daftar Biaya Kendaraan');
+      table = $('#daftarBiaya').DataTable({
         "info": false,
         "destroy": true,
         "responsive": true,
@@ -451,7 +487,7 @@
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/listBeliBan')?>",
+          "url": "<?php echo site_url('Datatables/listBiayaKendaraan')?>",
           "type": "POST",
           },
         "columnDefs": [
@@ -465,19 +501,22 @@
         ],
       });
     }
-    function pilihBeliBan(id)
+    function pilihBiayaKdr(id)
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/getBeliBan/')?>'+id,
+        url: '<?= site_url('Crud/getBiayaKdr/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
-          key = data.no_pembelian;
-          $('[name="no_pembelian"]').val(data.no_pembelian);
-          $('[name="tgl_pembelian"]').val(data.tgl_pembelian);
-          $('#dropSupplier').val(data.kode_supplier).trigger('change');
-          tbDetBeli(key);
+          key = data.no_biaya;
+          $('[name="no_kuitansi"]').val(data.no_biaya);
+          $('[name="tgl_biaya"]').val(data.tgl_biaya);
+          $('#dropKaryawan').val(data.kode_karyawan).trigger('change');
+          $('#dropNopol').val(data.kode_kendaraan).trigger('change');
+          $('#dropSopir').val(data.kode_driver).trigger('change');
+          $('#dropKernet').val(data.kode_driver).trigger('change');
+          tbDetBiaya(key);
           subTotal(key);
           $('#newBtn').prop('disabled',true);
           $('#modal-edit').modal('hide');

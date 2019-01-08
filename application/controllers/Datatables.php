@@ -24,6 +24,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
 		$this->load->model('Datatables/search/SearchDaftarPembelianBan','listBeliBan');
+		$this->load->model('Datatables/search/SearchDaftarBiayaKendaraan','listBiayaKdr');
 	}
 
 	//Data Cari Transaksi
@@ -100,6 +101,32 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->listBeliBan->count_all(),
 				"recordsFiltered" => $this->listBeliBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listBiayaKendaraan()
+	{
+		$list = $this->listBiayaKdr->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $dat->no_biaya;
+			$row[] = $dat->tgl_biaya;
+			$row[] = $dat->nama_karyawan;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihBiayaKdr('."'".$dat->no_biaya."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listBiayaKdr->count_all(),
+				"recordsFiltered" => $this->listBiayaKdr->count_filtered(),
 				"data" => $data,
 			);
 		echo json_encode($output);

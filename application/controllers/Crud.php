@@ -674,6 +674,113 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	//Transaksi Biaya Kendaraan
+	public function addBiayaKdr()
+	{
+		$ins = array(
+			'no_biaya'=>$this->input->post('no_kuitansi'),
+			'keterangan'=>$this->input->post('keterangan'),
+			'jumlah'=>$this->input->post('jumlah')
+		);
+		$this->db->insert('trx_biaya_kendaraan_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Biaya</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Biaya</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function subTotalBiayaKdr($key)
+	{
+		$data = $this->db->select('SUM(a.jumlah) as subtotal')->join('trx_biaya_kendaraan b','b.no_biaya = a.no_biaya')->get_where('trx_biaya_kendaraan_det a',array('a.no_biaya'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function rmvBiayaKdr($key)
+	{
+		$this->db->delete('trx_biaya_kendaraan_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Biaya</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Biaya</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveBiayaKdr()
+	{
+		$getSts = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$this->input->post('no_kuitansi')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_karyawan'=>$this->input->post('kode_karyawan'),
+				'tgl_biaya'=>$this->input->post('tgl_biaya'),
+				'grand_total'=>$this->input->post('g_total'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_biaya_kendaraan',$upd,array('no_biaya'=>$this->input->post('no_kuitansi')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Biaya Kendaraan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Biaya Kendaraan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelBiayaKdr()
+	{
+		$getSts = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$this->input->post('no_kuitansi')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_biaya_kendaraan',$can,array('no_biaya'=>$this->input->post('no_kuitansi')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Biaya Kendaraan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Biaya Kendaraan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
 	//Transaksi Pemakaian Barang/Spare Part
 	public function addPakaiBarang()
 	{
@@ -976,6 +1083,12 @@ class Crud extends CI_Controller
 	public function getBeliBan($key)
 	{
 		$data = $this->db->get_where('trx_beli_ban',array('no_pembelian'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getBiayaKdr($key)
+	{
+		$data = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$key))->row();
 		echo json_encode($data);
 	}
 }
