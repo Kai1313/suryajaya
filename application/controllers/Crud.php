@@ -101,6 +101,42 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noReturBeliBarang()
+	{
+		$res = $this->gen_num_('trx_retur_beli_barang','no_retur','RBL');
+		$check = $this->db->get_where('trx_retur_beli_barang',array('no_retur'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_retur_beli_barang','no_retur','RBL');
+		}
+		$crt = array(
+			'no_retur'=>$res,
+			'tgl_retur'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_retur_beli_barang',$crt);
+		$data['no_retur'] = $res;
+		echo json_encode($data);
+	}
+
+	public function gen_noReturPakaiBarang()
+	{
+		$res = $this->gen_num_('trx_retur_pakai_barang','no_retur','RJL');
+		$check = $this->db->get_where('trx_retur_pakai_barang',array('no_retur'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_retur_pakai_barang','no_retur','RJL');
+		}
+		$crt = array(
+			'no_retur'=>$res,
+			'tgl_retur'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_retur_pakai_barang',$crt);
+		$data['no_retur'] = $res;
+		echo json_encode($data);
+	}
+
 	//CRUD Master Barang
 	public function addBarang()
 	{
@@ -501,6 +537,18 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getDropNota()
+	{
+		$data = $this->db->get_where('trx_beli_barang',array('data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
+	public function getDropPemakaian()
+	{
+		$data = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_pakai_barang a',array('a.data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
 	//Pick Data From Dropdown
 	public function pickDropSupplier($key)
 	{
@@ -529,6 +577,18 @@ class Crud extends CI_Controller
 	public function pickDropBan($key)
 	{
 		$data = $this->db->get_where('master_ban',array('kode_ban'=>$key,'data_sts'=>'1'))->row();
+		echo json_encode($data);
+	}
+
+	public function pickDropNota($key)
+	{
+		$data = $this->db->get_where('trx_beli_barang',array('no_nota'=>$key,'data_sts'=>'1'))->row();
+		echo json_encode($data);
+	}
+
+	public function pickDropPemakaian($key)
+	{
+		$data = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_pakai_barang a',array('a.no_pakai_brg'=>$key,'a.data_sts'=>'1'))->row();
 		echo json_encode($data);
 	}
 
@@ -605,6 +665,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_supplier'=>$this->input->post('kode_supplier'),
+				'nota_toko'=>$this->input->post('nota_toko'),
 				'tgl_nota'=>$this->input->post('tgl_nota'),
 				'diskon'=>$this->input->post('diskon'),
 				'nom_diskon'=>$this->input->post('nom_diskon'),
@@ -722,6 +783,41 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function tempBiayaKdr()
+	{
+		$getSts = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$this->input->post('no_kuitansi')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_karyawan'=>$this->input->post('kode_karyawan'),
+				'kode_kendaraan'=>$this->input->post('nopol'),
+				'sopir_kendaraan'=>$this->input->post('sopir_kendaraan'),
+				'kernet_kendaraan'=>$this->input->post('kernet_kendaraan'),
+				'tgl_biaya'=>$this->input->post('tgl_biaya'),
+				'grand_total'=>$this->input->post('g_total'),
+				'data_sts'=>'0'
+			);
+			$this->db->update('trx_biaya_kendaraan',$upd,array('no_biaya'=>$this->input->post('no_kuitansi')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Sementara Biaya Kendaraan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Sementara Biaya Kendaraan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
 	public function saveBiayaKdr()
 	{
 		$getSts = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$this->input->post('no_kuitansi')))->row();
@@ -733,6 +829,9 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_karyawan'=>$this->input->post('kode_karyawan'),
+				'kode_kendaraan'=>$this->input->post('nopol'),
+				'sopir_kendaraan'=>$this->input->post('sopir_kendaraan'),
+				'kernet_kendaraan'=>$this->input->post('kernet_kendaraan'),
 				'tgl_biaya'=>$this->input->post('tgl_biaya'),
 				'grand_total'=>$this->input->post('g_total'),
 				'data_sts'=>'1'
@@ -1000,6 +1099,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_supplier'=>$this->input->post('kode_supplier'),
+				'nota_toko'=>$this->input->post('nota_toko'),
 				'tgl_pembelian'=>$this->input->post('tgl_pembelian'),
 				'grand_total'=>$this->input->post('g_total'),
 				'data_sts'=>'1'
@@ -1066,6 +1166,246 @@ class Crud extends CI_Controller
 		 ;
 		echo json_encode($data);
 	}
+
+	//Transaksi Retur Pembelian Barang/Spare Part
+	public function addReturBeliBarang()
+	{
+		$ins = array(
+			'no_retur'=>$this->input->post('no_retur'),
+			'kode_barang'=>$this->input->post('kode_barang'),
+			'qty_retur'=>$this->input->post('qty_retur'),
+			'jumlah'=>$this->input->post('qty_retur')
+		);
+		$this->db->insert('trx_retur_beli_barang_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Retur Barang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Retur Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function rmvReturBeliBarang($key)
+	{
+		$this->db->delete('trx_retur_beli_barang_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Retur Barang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Retur Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveReturBeliBarang()
+	{
+		$getSts = $this->db->get_where('trx_retur_beli_barang',array('no_retur'=>$this->input->post('no_retur')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'no_nota'=>$this->input->post('no_nota'),
+				'tgl_retur'=>$this->input->post('tgl_retur'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_retur_beli_barang',$upd,array('no_retur'=>$this->input->post('no_retur')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$detAll = $this->db->get_where('trx_retur_beli_barang_det',array('no_retur'=>$this->input->post('no_retur')))->result();
+				foreach ($detAll as $det)
+				{
+					$getStok = $this->db->get_where('master_barang',array('kode_barang'=>$det->kode_barang))->row()->stok_barang;
+					$upStok = ($getStok*1)-($det->qty_retur*1);
+					$upd = array('stok_barang'=>$upStok);
+					$this->db->update('master_barang',$upd,array('kode_barang'=>$det->kode_barang));
+				}
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Retur Pembelian Barang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Retur Pembelian Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelReturBeliBarang()
+	{
+		$getSts = $this->db->get_where('trx_retur_beli_barang',array('no_retur'=>$this->input->post('no_retur')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$detAll = $this->db->get_where('trx_retur_beli_barang_det',array('no_retur'=>$this->input->post('no_retur')))->result();
+			foreach ($detAll as $det)
+			{
+				$getStok = $this->db->get_where('master_barang',array('kode_barang'=>$det->kode_barang))->row()->stok_barang;
+				$upStok = ($getStok*1)+($det->qty_retur*1);
+				$upd = array('stok_barang'=>$upStok);
+				$this->db->update('master_barang',$upd,array('kode_barang'=>$det->kode_barang));
+			}
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_retur_beli_barang',$can,array('no_retur'=>$this->input->post('no_retur')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Retur Pembelian Barang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Retur Pembelian Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	//Transaksi Retur Pemakaian Barang/Spare Part
+	public function addReturPakaiBarang()
+	{
+		$ins = array(
+			'no_retur'=>$this->input->post('no_retur'),
+			'kode_barang'=>$this->input->post('kode_barang'),
+			'qty_retur'=>$this->input->post('qty_retur'),
+			'jumlah'=>$this->input->post('qty_retur')
+		);
+		$this->db->insert('trx_retur_pakai_barang_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Retur Pemakaian Barang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Retur Pemakaian Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function rmvReturPakaiBarang($key)
+	{
+		$this->db->delete('trx_retur_pakai_barang_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Retur Pemakaian Barang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Retur Pemakaian Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveReturPakaiBarang()
+	{
+		$getSts = $this->db->get_where('trx_retur_pakai_barang',array('no_retur'=>$this->input->post('no_retur')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'no_pakai_brg'=>$this->input->post('no_pemakaian'),
+				'tgl_retur'=>$this->input->post('tgl_retur'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_retur_pakai_barang',$upd,array('no_retur'=>$this->input->post('no_retur')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$detAll = $this->db->get_where('trx_retur_pakai_barang_det',array('no_retur'=>$this->input->post('no_retur')))->result();
+				foreach ($detAll as $det)
+				{
+					$getStok = $this->db->get_where('master_barang',array('kode_barang'=>$det->kode_barang))->row()->stok_barang;
+					$upStok = ($getStok*1)+($det->qty_retur*1);
+					$upd = array('stok_barang'=>$upStok);
+					$this->db->update('master_barang',$upd,array('kode_barang'=>$det->kode_barang));
+				}
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Retur Pemakaian Barang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Retur Pemakaian Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelReturPakaiBarang()
+	{
+		$getSts = $this->db->get_where('trx_retur_pakai_barang',array('no_retur'=>$this->input->post('no_retur')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$detAll = $this->db->get_where('trx_retur_pakai_barang_det',array('no_retur'=>$this->input->post('no_retur')))->result();
+			foreach ($detAll as $det)
+			{
+				$getStok = $this->db->get_where('master_barang',array('kode_barang'=>$det->kode_barang))->row()->stok_barang;
+				$upStok = ($getStok*1)-($det->qty_retur*1);
+				$upd = array('stok_barang'=>$upStok);
+				$this->db->update('master_barang',$upd,array('kode_barang'=>$det->kode_barang));
+			}
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_retur_pakai_barang',$can,array('no_retur'=>$this->input->post('no_retur')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Retur Pembelian Barang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Retur Pembelian Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
 	
 	//Get Data Pencarian
 	public function getBeliBrg($key)
@@ -1089,6 +1429,18 @@ class Crud extends CI_Controller
 	public function getBiayaKdr($key)
 	{
 		$data = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getReturBeliBrg($key)
+	{
+		$data = $this->db->get_where('trx_retur_beli_barang',array('no_retur'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getReturPakaiBrg($key)
+	{
+		$data = $this->db->get_where('trx_retur_pakai_barang',array('no_retur'=>$key))->row();
 		echo json_encode($data);
 	}
 }

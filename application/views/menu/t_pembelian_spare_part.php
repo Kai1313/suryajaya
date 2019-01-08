@@ -30,6 +30,10 @@
                       <input type="text" name="no_nota" class="form-control" readonly>
                     </div>
                     <div class="form-group">
+                      <label>Nota Toko</label>
+                      <input type="text" name="nota_toko" class="form-control">
+                    </div>
+                    <div class="form-group">
                       <br>
                       <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newNota()">Nota Baru</button>
                       <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editNota()">Edit Nota</button>
@@ -467,6 +471,7 @@
         {
           key = data.no_nota;
           $('[name="no_nota"]').val(data.no_nota);
+          $('[name="nota_toko"]').val(data.nota_toko);
           $('[name="tgl_nota"]').val(data.tgl_nota);
           $('[name="diskon"]').val(data.diskon);
           $('[name="nom_diskon"]').val(data.nom_diskon);

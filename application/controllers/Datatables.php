@@ -20,11 +20,15 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/details/DetPemakaianBarang','detPakaiBrg');
 		$this->load->model('Datatables/details/DetPembelianBan','detBeliBan');
 		$this->load->model('Datatables/details/DetBiayaKendaraan','detBiayaKdr');
+		$this->load->model('Datatables/details/DetReturPembelianBarang','detReturBeliBrg');
+		$this->load->model('Datatables/details/DetReturPemakaianBarang','detReturPakaiBrg');
 
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
 		$this->load->model('Datatables/search/SearchDaftarPembelianBan','listBeliBan');
 		$this->load->model('Datatables/search/SearchDaftarBiayaKendaraan','listBiayaKdr');
+		$this->load->model('Datatables/search/SearchDaftarReturPembelianBarang','listReturBeliBrg');
+		$this->load->model('Datatables/search/SearchDaftarReturPemakaianBarang','listReturPakaiBrg');
 	}
 
 	//Data Cari Transaksi
@@ -127,6 +131,58 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->listBiayaKdr->count_all(),
 				"recordsFiltered" => $this->listBiayaKdr->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listReturBeliBarang()
+	{
+		$list = $this->listReturBeliBrg->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $dat->no_retur;
+			$row[] = $dat->tgl_retur;
+			$row[] = $dat->no_nota;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihRetur('."'".$dat->no_retur."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listReturBeliBrg->count_all(),
+				"recordsFiltered" => $this->listReturBeliBrg->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listReturPakaiBarang()
+	{
+		$list = $this->listReturPakaiBrg->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $dat->no_retur;
+			$row[] = $dat->tgl_retur;
+			$row[] = $dat->no_pakai_brg;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihRetur('."'".$dat->no_retur."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listReturPakaiBrg->count_all(),
+				"recordsFiltered" => $this->listReturPakaiBrg->count_filtered(),
 				"data" => $data,
 			);
 		echo json_encode($output);
@@ -247,6 +303,56 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->detBiayaKdr->count_all(),
 				"recordsFiltered" => $this->detBiayaKdr->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function detReturBeliBarang($key)
+	{
+		$list = $this->detReturBeliBrg->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->nama_barang;
+			$row[] = $dat->qty_retur.' '.$dat->nama_satuan;
+			$row[] = $dat->jumlah;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detReturBeliBrg->count_all(),
+				"recordsFiltered" => $this->detReturBeliBrg->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function detReturPakaiBarang($key)
+	{
+		$list = $this->detReturPakaiBrg->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->nama_barang;
+			$row[] = $dat->qty_retur.' '.$dat->nama_satuan;
+			$row[] = $dat->jumlah;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detReturPakaiBrg->count_all(),
+				"recordsFiltered" => $this->detReturPakaiBrg->count_filtered($key),
 				"data" => $data,
 			);
 		echo json_encode($output);

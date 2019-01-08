@@ -18,42 +18,51 @@
         <div class="col-md-12 col-xs-12">
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Form Pembelian Ban</h3>
+              <h3 class="box-title">Form Retur Pembelian Spare Part</h3>
             </div>
-            <form role="form" id="form-master-pembelian">
+            <form role="form" id="form-master-retur">
               <input type="hidden" name="tipe_form" value="">
               <div class="box-body">
                 <div class="row">
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
-                      <label>No Pembelian</label>
-                      <input type="text" name="no_pembelian" class="form-control" readonly>
+                      <label>No Retur</label>
+                      <input type="text" name="no_retur" class="form-control" readonly>
                     </div>
-                    <div class="form-group">
-                      <label>Nota Toko</label>
-                      <input type="text" name="nota_toko" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <br>
-                      <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newBeli()">Pembelian Baru</button>
-                      <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editBeli()">Edit Pembelian</button>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                       <label>Tanggal</label>
                       <div class="input-group date">
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_pembelian" class="form-control pull-right" id="tgl_pembelian">
+                        <input type="text" name="tgl_retur" class="form-control pull-right" id="tgl_retur">
                       </div>
                     </div>
                     <div class="form-group">
-                      <label>Kode Supplier</label>
-                      <select class="form-control" name="kode_supplier" id="dropSupplier" style="width: 100%;">
-                        <option value="">Pilih Supplier</option>
+                      <br>
+                      <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newRetur()">Retur Baru</button>
+                      <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editRetur()">Edit Retur</button>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                      <label>No Nota</label>
+                      <select class="form-control" name="no_nota" id="dropNota" style="width: 100%;">
+                        <option value="">Pilih Nota</option>
                       </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Tanggal</label>
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_nota" class="form-control pull-right" id="tgl_nota" readonly>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Nota Toko</label>
+                      <input type="text" name="nota_toko" class="form-control" readonly>
                     </div>
                   </div>
                 </div>
@@ -66,22 +75,14 @@
         <div class="col-md-12 col-xs-12">
           <div class="box">
             <div class="box-body">
-              <form role="form" id="form-detail-pembelian">
+              <form role="form" id="form-detail-retur">
                 <div class="row">
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
-                      <label>Kode Ban</label>
-                      <select class="form-control" name="kode_ban" id="dropBan" style="width: 100%;">
-                        <option value="">Pilih Ban</option>
+                      <label>Kode Barang</label>
+                      <select class="form-control" name="kode_barang" id="dropBarang" style="width: 100%;">
+                        <option value="">Pilih Barang</option>
                       </select>
-                    </div>
-                    <div class="form-group">
-                      <label>Qty Ban</label>
-                      <input type="text" name="qty_ban" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label>Harga Ban</label>
-                      <input type="text" name="harga_ban" class="form-control">
                     </div>
                     <div class="form-group">
                       <button type="button" class="btn btn-sm btn-primary" onclick="add()">Tambah</button>
@@ -89,41 +90,23 @@
                   </div>
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
-                      <label>Jenis Ban</label>
-                      <input type="text" name="jenis_ban" class="form-control" readonly>
+                      <label>Qty Retur</label>
+                      <input type="text" name="qty_retur" class="form-control">
                     </div>
-                    <div class="form-group">
-                      <label>Ukuran Ban</label>
-                      <input type="text" name="ukuran_ban" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label>Merk Ban</label>
-                      <input type="text" name="merk_ban" class="form-control" readonly>
-                    </div>
-                    <input type="hidden" name="g_total">
                   </div>
                 </div>
               </form>
               <div id="alertMsg"></div>
-              <table id="m_pembelian_ban" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+              <table id="m_retur" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th class="col-xs-1 text-center">Action</th>
-                    <th class="col-xs-1 text-center">Jenis</th>
-                    <th class="col-xs-2 text-center">Ukuran</th>
-                    <th class="col-xs-2 text-center">Merk</th>
-                    <th class="col-xs-2 text-center">Harga Satuan</th>
-                    <th class="col-xs-1 text-center">Qty</th>
+                    <th class="col-xs-5 text-center">Nama</th>
+                    <th class="col-xs-3 text-center">Qty</th>
                     <th class="col-xs-3 text-center">Jumlah</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
-                <tfoot>
-                  <tr>
-                    <th colspan="6" class="text-center">Grand Total</th>
-                    <th class=""><span name="grand_total">0</span></th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
           </div>        
@@ -166,13 +149,13 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <table id="daftarPembelian" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+            <table id="daftarRetur" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>No Pembelian</th>
-                  <th>Tgl. Pembelian</th>
-                  <th>Supplier</th>
+                  <th>No Retur</th>
+                  <th>Tgl. Retur</th>
+                  <th>No Nota</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -195,112 +178,102 @@
   <script>
     $(function ()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'0';
-      tbDetBeli(key);
-      $('#tgl_pembelian').datepicker({
+      key = ($('[name="no_retur"]').val()!='')?$('[name="no_retur"]').val():'0';
+      tbDetRetur(key);
+      $('#tgl_retur').datepicker({
         autoclose: true,
         format: 'yyyy-m-d'
       });
-      dropsupplier();
-      dropban();
-      $('#dropBan').change(function()
-      {
-        pickBan($('#dropBan option:selected').val());
+      $('#tgl_nota').datepicker({
+        autoclose: true,
+        format: 'yyyy-m-d'
       });
+      dropnota();
+      $('#dropNota').change(function()
+      {
+        pickNota($('#dropNota option:selected').val());
+      });
+      dropbarang();
     })
-    function newBeli()
+    function newRetur()
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/gen_noBeliBan')?>',
+        url: '<?= site_url('Crud/gen_noReturBeliBarang')?>',
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="no_pembelian"]').val(data.no_pembelian);
+          $('[name="no_retur"]').val(data.no_retur);
           $('#newBtn').prop('disabled',true);
         }
       });
     }
-    function dropsupplier()
+    function dropnota()
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getDropSupplier')?>",
+        url : "<?php echo site_url('Crud/getDropNota')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {   
-          var select = document.getElementById('dropSupplier');
+          var select = document.getElementById('dropNota');
           var option;
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_supplier']
-            option.text = data[i]['kode_supplier']+' - '+data[i]['nama_supplier'];
+            option.value = data[i]['no_nota']
+            option.text = data[i]['no_nota'];
             select.add(option);
           }
-          $('#dropSupplier').select2({placeholder: 'Pilih Supplier'});
+          $('#dropNota').select2({placeholder: 'Pilih Nota'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get nota data');
+        }
+      });
+    }
+    function pickNota(key)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/pickDropNota/')?>'+key,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          $('[name="tgl_nota"]').val(data.tgl_nota);
+          $('[name="nota_toko"]').val(data.nota_toko);
+        }
+      });
+    }
+    function dropbarang()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropBarang')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropBarang');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_barang']
+            option.text = data[i]['kode_barang']+' - '+data[i]['nama_barang'];
+            select.add(option);
+          }
+          $('#dropBarang').select2({placeholder: 'Pilih Barang'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
           alert('Error get supplier data');
         }
       });
-    }
-    function dropban()
+    } 
+    function tbDetRetur(key)
     {
-      $.ajax({
-        url : "<?php echo site_url('Crud/getDropBan')?>",
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {   
-          var select = document.getElementById('dropBan');
-          var option;
-          for (var i = 0; i < data.length; i++)
-          {
-            option = document.createElement('option');
-            option.value = data[i]['kode_ban']
-            option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban'];
-            select.add(option);
-          }
-          $('#dropBan').select2({placeholder: 'Pilih Ban'});
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-          alert('Error get ban data');
-        }
-      });
-    }
-    function pickBan(key)
-    {
-      $.ajax({
-        type: 'GET',
-        url: '<?= site_url('Crud/pickDropBan/')?>'+key,
-        dataType: 'JSON',
-        success: function(data)
-        {
-          var jenis;
-          if(data.jenis_ban == '0')
-          {
-            jenis = 'Ban Dalam';
-          }
-          else if(data.jenis_ban == '1')
-          {
-            jenis = 'Ban Luar';
-          }
-          else
-          {
-            jenis = 'Marset Ban';
-          }
-          $('[name="jenis_ban"]').val(jenis);
-          $('[name="ukuran_ban"]').val(data.ukuran_ban);
-          $('[name="merk_ban"]').val(data.merk_ban);
-        }
-      });
-    }
-    function tbDetBeli(key)
-    {
-      table = $('#m_pembelian_ban').DataTable({
+      table = $('#m_retur').DataTable({
         "info": false,
         "destroy": true,
         "responsive": true,
@@ -308,7 +281,7 @@
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/detBeliBan/')?>"+key,
+          "url": "<?php echo site_url('Datatables/detReturBeliBarang/')?>"+key,
           "type": "POST",
           },
         "columnDefs": [
@@ -324,12 +297,12 @@
     }
     function add()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_retur"]').val()!='')?$('[name="no_retur"]').val():'';
       if(key!='')
       {
         $.ajax({
           type: 'POST',
-          url: '<?= site_url('Crud/addBeliBan')?>',
+          url: '<?= site_url('Crud/addReturBeliBarang')?>',
           data: $('form').serialize(),
           dataType: 'JSON',
           success: function(data)
@@ -337,10 +310,9 @@
             if(data.status)
             {
               msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-              $('#form-detail-pembelian')[0].reset();
-              $('#dropBan').select2({placeholder: 'Select an option'});
-              tbDetBeli(key);
-              subTotal(key);
+              $('#form-detail-retur')[0].reset();
+              $('#dropBarang').select2({placeholder: 'Pilih Barang'});
+              tbDetRetur(key);
             }
             else
             {
@@ -356,19 +328,18 @@
     }
     function remove(id)
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_retur"]').val()!='')?$('[name="no_retur"]').val():'';
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/rmvBeliBan/')?>'+id,
+        url: '<?= site_url('Crud/rmvReturBeliBarang/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
-            subTotal(key);
+            $('#form-detail-retur')[0].reset();
+            tbDetRetur(key);
           }
           else
           {
@@ -379,10 +350,10 @@
     }
     function saveDt()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_retur"]').val()!='')?$('[name="no_retur"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/saveBeliBan')?>',
+        url: '<?= site_url('Crud/saveReturBeliBarang')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -390,9 +361,8 @@
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
-            subTotal(key);
+            $('#form-detail-retur')[0].reset();
+            tbDetRetur(key);
           }
           else
           {
@@ -403,10 +373,10 @@
     }
     function cancelDt()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_retur"]').val()!='')?$('[name="no_retur"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/cancelBeliBan')?>',
+        url: '<?= site_url('Crud/cancelReturBeliBarang')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -414,9 +384,8 @@
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
-            subTotal(key);
+            $('#form-detail-retur')[0].reset();
+            tbDetRetur(key);
           }
           else
           {
@@ -425,24 +394,11 @@
         }
       });
     }
-    function subTotal(id)
-    {
-      $.ajax({
-        type: 'GET',
-        url: '<?= site_url('Crud/subTotalBeliBan/')?>'+id,
-        dataType: 'JSON',
-        success: function(data)
-        {
-          $('[name="grand_total"]').text(data.subtotal);
-          $('[name="g_total"]').val(data.subtotal);
-        }
-      });
-    }
-    function editBeli()
+    function editRetur()
     {
       $('#modal-edit').modal('show');
-      $('.modal-title').text('Daftar Pembelian Ban');
-      table = $('#daftarPembelian').DataTable({
+      $('.modal-title').text('Daftar Retur Pembelian Barang');
+      table = $('#daftarRetur').DataTable({
         "info": false,
         "destroy": true,
         "responsive": true,
@@ -450,7 +406,7 @@
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/listBeliBan')?>",
+          "url": "<?php echo site_url('Datatables/listReturBeliBarang')?>",
           "type": "POST",
           },
         "columnDefs": [
@@ -464,21 +420,19 @@
         ],
       });
     }
-    function pilihBeliBan(id)
+    function pilihRetur(id)
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/getBeliBan/')?>'+id,
+        url: '<?= site_url('Crud/getReturBeliBrg/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
-          key = data.no_pembelian;
-          $('[name="no_pembelian"]').val(data.no_pembelian);
-          $('[name="tgl_pembelian"]').val(data.tgl_pembelian);
-          $('[name="nota_toko"]').val(data.nota_toko);
-          $('#dropSupplier').val(data.kode_supplier).trigger('change');
-          tbDetBeli(key);
-          subTotal(key);
+          key = data.no_retur;
+          $('[name="no_retur"]').val(data.no_retur);
+          $('[name="tgl_retur"]').val(data.tgl_retur);
+          $('#dropNota').val(data.no_nota).trigger('change');
+          tbDetRetur(key);
           $('#newBtn').prop('disabled',true);
           $('#modal-edit').modal('hide');
         }

@@ -393,7 +393,7 @@
     }
     function remove(id)
     {
-      key = ($('[name="no_biaya"]').val()!='')?$('[name="no_biaya"]').val():'';
+      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
       $.ajax({
         type: 'GET',
         url: '<?= site_url('Crud/rmvBiayaKdr/')?>'+id,
@@ -414,9 +414,33 @@
         }
       });
     }
+    function tempsaveDt()
+    {
+      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
+      $.ajax({
+        type: 'POST',
+        url: '<?= site_url('Crud/tempBiayaKdr')?>',
+        data: $('form').serialize(),
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            $('#form-detail-biaya')[0].reset();
+            tbDetBiaya(key);
+            subTotal(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
     function saveDt()
     {
-      key = ($('[name="no_biaya"]').val()!='')?$('[name="no_biaya"]').val():'';
+      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
       $.ajax({
         type: 'POST',
         url: '<?= site_url('Crud/saveBiayaKdr')?>',
@@ -440,7 +464,7 @@
     }
     function cancelDt()
     {
-      key = ($('[name="no_biaya"]').val()!='')?$('[name="no_biaya"]').val():'';
+      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
       $.ajax({
         type: 'POST',
         url: '<?= site_url('Crud/cancelBiayaKdr')?>',
@@ -514,8 +538,8 @@
           $('[name="tgl_biaya"]').val(data.tgl_biaya);
           $('#dropKaryawan').val(data.kode_karyawan).trigger('change');
           $('#dropNopol').val(data.kode_kendaraan).trigger('change');
-          $('#dropSopir').val(data.kode_driver).trigger('change');
-          $('#dropKernet').val(data.kode_driver).trigger('change');
+          $('#dropSopir').val(data.sopir_kendaraan).trigger('change');
+          $('#dropKernet').val(data.kernet_kendaraan).trigger('change');
           tbDetBiaya(key);
           subTotal(key);
           $('#newBtn').prop('disabled',true);
