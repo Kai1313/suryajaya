@@ -137,6 +137,78 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noBonKaryawan()
+	{
+		$res = $this->gen_num_('trx_input_bon_karyawan','no_bon','BON');
+		$check = $this->db->get_where('trx_input_bon_karyawan',array('no_bon'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_input_bon_karyawan','no_bon','BON');
+		}
+		$crt = array(
+			'no_bon'=>$res,
+			'tgl_bon'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_input_bon_karyawan',$crt);
+		$data['no_bon'] = $res;
+		echo json_encode($data);
+	}
+
+	public function gen_noKas()
+	{
+		$res = $this->gen_num_('trx_input_kas','no_kas','KAS');
+		$check = $this->db->get_where('trx_input_kas',array('no_kas'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_input_kas','no_kas','KAS');
+		}
+		$crt = array(
+			'no_kas'=>$res,
+			'tgl_kas'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_input_kas',$crt);
+		$data['no_kas'] = $res;
+		echo json_encode($data);
+	}
+
+	public function gen_noBonSopir()
+	{
+		$res = $this->gen_num_('trx_input_bon_sopir','no_bon','BONS');
+		$check = $this->db->get_where('trx_input_bon_sopir',array('no_bon'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_input_bon_sopir','no_bon','BONS');
+		}
+		$crt = array(
+			'no_bon'=>$res,
+			'tgl_bon'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_input_bon_sopir',$crt);
+		$data['no_bon'] = $res;
+		echo json_encode($data);
+	}
+
+	public function gen_noKlaimSopir()
+	{
+		$res = $this->gen_num_('trx_input_klaim_sopir','no_klaim','KLM');
+		$check = $this->db->get_where('trx_input_klaim_sopir',array('no_klaim'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_input_klaim_sopir','no_klaim','KLM');
+		}
+		$crt = array(
+			'no_klaim'=>$res,
+			'tgl_klaim'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_input_klaim_sopir',$crt);
+		$data['no_klaim'] = $res;
+		echo json_encode($data);
+	}
+
 	//CRUD Master Barang
 	public function addBarang()
 	{
@@ -589,6 +661,12 @@ class Crud extends CI_Controller
 	public function pickDropPemakaian($key)
 	{
 		$data = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_pakai_barang a',array('a.no_pakai_brg'=>$key,'a.data_sts'=>'1'))->row();
+		echo json_encode($data);
+	}
+
+	public function pickDropSopir($key)
+	{
+		$data = $this->db->get_where('master_driver',array('kode_driver'=>$key,'data_sts'=>'1'))->row();
 		echo json_encode($data);
 	}
 
@@ -1406,6 +1484,292 @@ class Crud extends CI_Controller
 		 ;
 		echo json_encode($data);
 	}
+
+	//Transaksi Input Bon Karyawan
+	public function saveBonKaryawan()
+	{
+		$getSts = $this->db->get_where('trx_input_bon_karyawan',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_karyawan'=>$this->input->post('kode_karyawan'),
+				'tgl_bon'=>$this->input->post('tgl_bon'),
+				'nom_bon'=>$this->input->post('nom_bon'),
+				'ket_bon'=>$this->input->post('ket_bon'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_input_bon_karyawan',$upd,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getBon = $this->db->get_where('master_karyawan',array('kode_karyawan'=>$this->input->post('kode_karyawan')))->row()->jml_bon;
+				$tot = ($getBon*1)+($this->input->post('nom_bon')*1);
+				$upBon = array('jml_bon'=>$tot);
+				$this->db->update('master_karyawan',$upBon,array('kode_karyawan'=>$this->input->post('kode_karyawan')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Bon Karyawan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Bon Karyawan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelBonKaryawan()
+	{
+		$getSts = $this->db->get_where('trx_input_bon_karyawan',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_input_bon_karyawan',$can,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getBon = $this->db->get_where('master_karyawan',array('kode_karyawan'=>$this->input->post('kode_karyawan')))->row()->jml_bon;
+				$tot = ($getBon*1)-($this->input->post('nom_bon')*1);
+				$upBon = array('jml_bon'=>$tot);
+				$this->db->update('master_karyawan',$upBon,array('kode_karyawan'=>$this->input->post('kode_karyawan')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Bon Karyawan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Bon Karyawan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	//Transaksi Input Bon Karyawan
+	public function saveKas()
+	{
+		$getSts = $this->db->get_where('trx_input_kas',array('no_kas'=>$this->input->post('no_kas')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'tgl_kas'=>$this->input->post('tgl_kas'),
+				'debet'=>$this->input->post('debet'),
+				'kredit'=>$this->input->post('kredit'),
+				'ket_kas'=>$this->input->post('ket_kas'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_input_kas',$upd,array('no_kas'=>$this->input->post('no_kas')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Kas</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Kas</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelKas()
+	{
+		$getSts = $this->db->get_where('trx_input_kas',array('no_kas'=>$this->input->post('no_kas')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_input_kas',$can,array('no_kas'=>$this->input->post('no_kas')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Kas</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Kas</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	//Transaksi Input Bon Sopir
+	public function saveBonSopir()
+	{
+		$getSts = $this->db->get_where('trx_input_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_driver'=>$this->input->post('kode_sopir'),
+				'tgl_bon'=>$this->input->post('tgl_bon'),
+				'nom_bon'=>$this->input->post('nom_bon'),
+				'ket_bon'=>$this->input->post('ket_bon'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_input_bon_sopir',$upd,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getBon = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_bon;
+				$tot = ($getBon*1)+($this->input->post('nom_bon')*1);
+				$upBon = array('jml_bon'=>$tot);
+				$this->db->update('master_driver',$upBon,array('kode_driver'=>$this->input->post('kode_sopir')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Bon Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Bon Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelBonSopir()
+	{
+		$getSts = $this->db->get_where('trx_input_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_input_bon_sopir',$can,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getBon = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_bon;
+				$tot = ($getBon*1)-($this->input->post('nom_bon')*1);
+				$upBon = array('jml_bon'=>$tot);
+				$this->db->update('master_driver',$upBon,array('kode_driver'=>$this->input->post('kode_sopir')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Bon Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Bon Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	//Transaksi Input Klaim Sopir
+	public function saveKlaimSopir()
+	{
+		$getSts = $this->db->get_where('trx_input_klaim_sopir',array('no_klaim'=>$this->input->post('no_klaim')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_driver'=>$this->input->post('kode_sopir'),
+				'tgl_klaim'=>$this->input->post('tgl_klaim'),
+				'nom_klaim'=>$this->input->post('nom_klaim'),
+				'ket_klaim'=>$this->input->post('ket_klaim'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_input_klaim_sopir',$upd,array('no_klaim'=>$this->input->post('no_klaim')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getKlaim = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_klaim;
+				$tot = ($getKlaim*1)+($this->input->post('nom_klaim')*1);
+				$upKlaim = array('jml_klaim'=>$tot);
+				$this->db->update('master_driver',$upKlaim,array('kode_driver'=>$this->input->post('kode_sopir')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Klaim Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Klaim Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelKlaimSopir()
+	{
+		$getSts = $this->db->get_where('trx_input_klaim_sopir',array('no_klaim'=>$this->input->post('no_klaim')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_input_klaim_sopir',$can,array('no_klaim'=>$this->input->post('no_klaim')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getKlaim = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_klaim;
+				$tot = ($getKlaim*1)-($this->input->post('nom_klaim')*1);
+				$upKlaim = array('jml_klaim'=>$tot);
+				$this->db->update('master_driver',$upKlaim,array('kode_driver'=>$this->input->post('kode_sopir')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Klaim Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Klaim Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
 	
 	//Get Data Pencarian
 	public function getBeliBrg($key)
@@ -1441,6 +1805,30 @@ class Crud extends CI_Controller
 	public function getReturPakaiBrg($key)
 	{
 		$data = $this->db->get_where('trx_retur_pakai_barang',array('no_retur'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getBonKaryawan($key)
+	{
+		$data = $this->db->get_where('trx_input_bon_karyawan',array('no_bon'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getKas($key)
+	{
+		$data = $this->db->get_where('trx_input_kas',array('no_kas'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getBonSopir($key)
+	{
+		$data = $this->db->get_where('trx_input_bon_sopir',array('no_bon'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getKlaimSopir($key)
+	{
+		$data = $this->db->get_where('trx_input_klaim_sopir',array('no_klaim'=>$key))->row();
 		echo json_encode($data);
 	}
 }

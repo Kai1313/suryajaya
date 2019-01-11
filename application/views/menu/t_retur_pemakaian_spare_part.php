@@ -160,6 +160,7 @@
                   <th>No Retur</th>
                   <th>Tgl. Retur</th>
                   <th>No Pemakaian</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>

@@ -174,6 +174,7 @@
                   <th>No Kuitansi</th>
                   <th>Tgl. Kuitansi</th>
                   <th>Nopol</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>

@@ -193,6 +193,7 @@
                   <th>No Nota</th>
                   <th>Tgl. Nota</th>
                   <th>Supplier</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>

@@ -173,6 +173,7 @@
                   <th>No Pembelian</th>
                   <th>Tgl. Pembelian</th>
                   <th>Supplier</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>

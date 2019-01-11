@@ -29,6 +29,10 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarBiayaKendaraan','listBiayaKdr');
 		$this->load->model('Datatables/search/SearchDaftarReturPembelianBarang','listReturBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarReturPemakaianBarang','listReturPakaiBrg');
+		$this->load->model('Datatables/search/SearchDaftarInputBonKaryawan','listInpBonKry');
+		$this->load->model('Datatables/search/SearchDaftarInputKas','listInputKas');
+		$this->load->model('Datatables/search/SearchDaftarInputBonSopir','listInpBonSopir');
+		$this->load->model('Datatables/search/SearchDaftarInputKlaimSopir','listInpKlaimSopir');
 	}
 
 	//Data Cari Transaksi
@@ -42,6 +46,7 @@ class Datatables extends CI_Controller
 			$sts = ($dat->data_sts!='1')?'Void':'Posted';
 			$no++;
 			$row = array();
+			$row[] = $no;
 			$row[] = $dat->no_nota;
 			$row[] = $dat->tgl_nota;
 			$row[] = $dat->nama_supplier;
@@ -68,6 +73,7 @@ class Datatables extends CI_Controller
 			$sts = ($dat->data_sts!='1')?'Void':'Posted';
 			$no++;
 			$row = array();
+			$row[] = $no;
 			$row[] = $dat->no_pakai_brg;
 			$row[] = $dat->tgl_pakai_brg;
 			$row[] = $dat->nama_karyawan;
@@ -94,6 +100,7 @@ class Datatables extends CI_Controller
 			$sts = ($dat->data_sts!='1')?'Void':'Posted';
 			$no++;
 			$row = array();
+			$row[] = $no;
 			$row[] = $dat->no_pembelian;
 			$row[] = $dat->tgl_pembelian;
 			$row[] = $dat->nama_supplier;
@@ -120,6 +127,7 @@ class Datatables extends CI_Controller
 			$sts = ($dat->data_sts!='1')?'Void':'Posted';
 			$no++;
 			$row = array();
+			$row[] = $no;
 			$row[] = $dat->no_biaya;
 			$row[] = $dat->tgl_biaya;
 			$row[] = $dat->nama_karyawan;
@@ -146,6 +154,7 @@ class Datatables extends CI_Controller
 			$sts = ($dat->data_sts!='1')?'Void':'Posted';
 			$no++;
 			$row = array();
+			$row[] = $no;
 			$row[] = $dat->no_retur;
 			$row[] = $dat->tgl_retur;
 			$row[] = $dat->no_nota;
@@ -172,6 +181,7 @@ class Datatables extends CI_Controller
 			$sts = ($dat->data_sts!='1')?'Void':'Posted';
 			$no++;
 			$row = array();
+			$row[] = $no;
 			$row[] = $dat->no_retur;
 			$row[] = $dat->tgl_retur;
 			$row[] = $dat->no_pakai_brg;
@@ -183,6 +193,115 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->listReturPakaiBrg->count_all(),
 				"recordsFiltered" => $this->listReturPakaiBrg->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listBonKaryawan()
+	{
+		$list = $this->listInpBonKry->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_bon;
+			$row[] = $dat->tgl_bon;
+			$row[] = $dat->nama_karyawan;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihBon('."'".$dat->no_bon."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listInpBonKry->count_all(),
+				"recordsFiltered" => $this->listInpBonKry->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listKas()
+	{
+		$list = $this->listInputKas->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$nom = ($dat->debet*1)-($dat->kredit*1);
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_kas;
+			$row[] = $dat->tgl_kas;
+			$row[] = $nom;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihKas('."'".$dat->no_kas."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listInputKas->count_all(),
+				"recordsFiltered" => $this->listInputKas->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listBonSopir()
+	{
+		$list = $this->listInpBonSopir->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_bon;
+			$row[] = $dat->tgl_bon;
+			$row[] = $dat->nama_driver;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihBon('."'".$dat->no_bon."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listInpBonSopir->count_all(),
+				"recordsFiltered" => $this->listInpBonSopir->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listKlaimSopir()
+	{
+		$list = $this->listInpKlaimSopir->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_klaim;
+			$row[] = $dat->tgl_klaim;
+			$row[] = $dat->nama_driver;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihKlaim('."'".$dat->no_klaim."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listInpKlaimSopir->count_all(),
+				"recordsFiltered" => $this->listInpKlaimSopir->count_filtered(),
 				"data" => $data,
 			);
 		echo json_encode($output);

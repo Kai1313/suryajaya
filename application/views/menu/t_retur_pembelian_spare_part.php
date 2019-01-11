@@ -156,6 +156,7 @@
                   <th>No Retur</th>
                   <th>Tgl. Retur</th>
                   <th>No Nota</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>

@@ -182,6 +182,7 @@
                   <th>No Pemakaian</th>
                   <th>Tgl. Pemakaian</th>
                   <th>Karyawan</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
