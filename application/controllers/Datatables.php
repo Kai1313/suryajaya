@@ -33,6 +33,8 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarInputKas','listInputKas');
 		$this->load->model('Datatables/search/SearchDaftarInputBonSopir','listInpBonSopir');
 		$this->load->model('Datatables/search/SearchDaftarInputKlaimSopir','listInpKlaimSopir');
+		$this->load->model('Datatables/search/SearchDaftarBayarSopir','listByrSopir');
+		$this->load->model('Datatables/search/SearchDaftarUpahKaryawan','listUpahKry');
 	}
 
 	//Data Cari Transaksi
@@ -302,6 +304,60 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->listInpKlaimSopir->count_all(),
 				"recordsFiltered" => $this->listInpKlaimSopir->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listBayarSopir()
+	{
+		$list = $this->listByrSopir->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_bayar;
+			$row[] = $dat->tgl_bayar;
+			$row[] = $dat->nama_driver;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihBayar('."'".$dat->no_bayar."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listByrSopir->count_all(),
+				"recordsFiltered" => $this->listByrSopir->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listUpahKaryawan()
+	{
+		$list = $this->listUpahKry->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_kuitansi;
+			$row[] = $dat->tgl_upah;
+			$row[] = $dat->nama_karyawan;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihUpah('."'".$dat->no_kuitansi."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listUpahKry->count_all(),
+				"recordsFiltered" => $this->listUpahKry->count_filtered(),
 				"data" => $data,
 			);
 		echo json_encode($output);

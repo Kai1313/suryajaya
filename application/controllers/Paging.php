@@ -210,10 +210,10 @@ class Paging extends CI_Controller
 		$this->load->view('layout/wrapper',$data);
 	}
 
-	public function t_pembayaran_bon_klaim()
+	public function t_pembayaran_bon_klaim_sopir()
 	{
-		$data['page_header']='Transaksi Pembayaran Bon Klaim';
-		$data['content']='menu/t_pembayaran_bon_klaim';
+		$data['page_header']='Transaksi Pembayaran Bon Klaim Sopir';
+		$data['content']='menu/t_pembayaran_bon_klaim_sopir';
 		$this->load->view('layout/wrapper',$data);
 	}
 }

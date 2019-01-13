@@ -81,4 +81,4 @@ $route['transaksi-tagihan'] = 'Paging/t_tagihan';
 $route['transaksi-tagihan-manual'] = 'Paging/t_tagihan_manual';
 $route['transaksi-pelunasan-piutang'] = 'Paging/t_pelunasan_piutang';
 $route['transaksi-kuitansi'] = 'Paging/t_kuitansi';
-$route['transaksi-pembayaran-bon-klaim'] = 'Paging/t_pembayaran_bon_klaim';
+$route['transaksi-pembayaran-bon-klaim-sopir'] = 'Paging/t_pembayaran_bon_klaim_sopir';

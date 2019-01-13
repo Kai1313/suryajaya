@@ -209,6 +209,42 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noBayarSopir()
+	{
+		$res = $this->gen_num_('trx_bayar_bonklaim_sopir','no_bayar','BYR');
+		$check = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_bayar_bonklaim_sopir','no_klaim','BYR');
+		}
+		$crt = array(
+			'no_bayar'=>$res,
+			'tgl_bayar'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_bayar_bonklaim_sopir',$crt);
+		$data['no_bayar'] = $res;
+		echo json_encode($data);
+	}
+
+	public function gen_noKuitansiUpah()
+	{
+		$res = $this->gen_num_('trx_bayar_upah_karyawan','no_kuitansi','KUI');
+		$check = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_bayar_upah_karyawan','no_kuitansi','KUI');
+		}
+		$crt = array(
+			'no_kuitansi'=>$res,
+			'tgl_upah'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_bayar_upah_karyawan',$crt);
+		$data['no_kuitansi'] = $res;
+		echo json_encode($data);
+	}
+
 	//CRUD Master Barang
 	public function addBarang()
 	{
@@ -1770,6 +1806,155 @@ class Crud extends CI_Controller
 		 ;
 		echo json_encode($data);
 	}
+
+	//Transaksi Bayar Upah Karyawan
+	public function saveBayarUpahKaryawan()
+	{
+		$getSts = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$this->input->post('no_bayar')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_driver'=>$this->input->post('kode_sopir'),
+				'tgl_bayar'=>$this->input->post('tgl_bayar'),
+				'nom_bon'=>$this->input->post('nom_bon'),
+				'nom_klaim'=>$this->input->post('nom_klaim'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_bayar_bonklaim_sopir',$upd,array('no_bayar'=>$this->input->post('no_bayar')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getKlaim = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_klaim;
+				$getBon = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_bon;
+				$totKlaim = ($getKlaim*1)-($this->input->post('nom_klaim')*1);
+				$totBon = ($getBon*1)-($this->input->post('nom_bon')*1);
+				$upDrv = array('jml_klaim'=>$totKlaim,'jml_bon'=>$totBon);
+				$this->db->update('master_driver',$upDrv,array('kode_driver'=>$this->input->post('kode_sopir')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Pembayaran Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Pembayaran Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelBayarUpahKaryawan()
+	{
+		$getSts = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$this->input->post('no_bayar')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_bayar_bonklaim_sopir',$can,array('no_bayar'=>$this->input->post('no_bayar')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getKlaim = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_klaim;
+				$getBon = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_bon;
+				$totKlaim = ($getKlaim*1)+($this->input->post('nom_klaim')*1);
+				$totBon = ($getBon*1)+($this->input->post('nom_bon')*1);
+				$upDrv = array('jml_klaim'=>$totKlaim,'jml_bon'=>$totBon);
+				$this->db->update('master_driver',$upDrv,array('kode_driver'=>$this->input->post('kode_sopir')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Pembayaran Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pembayaran Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	//Transaksi Bayar Bon Klaim Sopir
+	public function saveBayarSopir()
+	{
+		$getSts = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_karyawan'=>$this->input->post('kode_karyawan'),
+				'tgl_upah'=>$this->input->post('tgl_upah'),
+				'nom_bon'=>$this->input->post('nom_bon'),
+				'nom_klaim'=>$this->input->post('nom_klaim'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_bayar_upah_karyawan',$upd,array('no_kuitansi'=>$this->input->post('no_kuitansi')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Pembayaran Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Pembayaran Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelBayarSopir()
+	{
+		$getSts = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$this->input->post('no_bayar')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_bayar_bonklaim_sopir',$can,array('no_bayar'=>$this->input->post('no_bayar')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$getKlaim = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_klaim;
+				$getBon = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_bon;
+				$totKlaim = ($getKlaim*1)+($this->input->post('nom_klaim')*1);
+				$totBon = ($getBon*1)+($this->input->post('nom_bon')*1);
+				$upDrv = array('jml_klaim'=>$totKlaim,'jml_bon'=>$totBon);
+				$this->db->update('master_driver',$upDrv,array('kode_driver'=>$this->input->post('kode_sopir')));
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Pembayaran Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pembayaran Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
 	
 	//Get Data Pencarian
 	public function getBeliBrg($key)
@@ -1829,6 +2014,18 @@ class Crud extends CI_Controller
 	public function getKlaimSopir($key)
 	{
 		$data = $this->db->get_where('trx_input_klaim_sopir',array('no_klaim'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getBayarSopir($key)
+	{
+		$data = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getUpahKaryawan($key)
+	{
+		$data = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$key))->row();
 		echo json_encode($data);
 	}
 }

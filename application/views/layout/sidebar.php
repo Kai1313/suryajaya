@@ -47,7 +47,7 @@
             <li class="<?php if($this->uri->segment(1)=='master-ban'){echo 'active';}?>"><a href="<?= base_url('master-ban')?>">Ban</a></li>
           </ul>
         </li>
-        <li class="treeview <?php $arr=array('transaksi-pembelian-spare-part','transaksi-pemakaian-spare-part','transaksi-pembelian-ban','transaksi-pemakaian-ban','transaksi-biaya-kendaraan','transaksi-retur-pembelian-spare-part','transaksi-retur-pemakaian-spare-part','transaksi-input-bon','transaksi-input-kas','transaksi-input-upah','transaksi-katalog-kendaraan','transaksi-input-bon-sopir','transaksi-input-klaim-sopir','transaksi-kas-bon-sopir','transaksi-kas-bon-kantor','transaksi-tagihan','transaksi-tagihan-manual','transaksi-pelunasan-piutang','transaksi-kuitansi','transaksi-pembayaran-bon-klaim'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
+        <li class="treeview <?php $arr=array('transaksi-pembelian-spare-part','transaksi-pemakaian-spare-part','transaksi-pembelian-ban','transaksi-pemakaian-ban','transaksi-biaya-kendaraan','transaksi-retur-pembelian-spare-part','transaksi-retur-pemakaian-spare-part','transaksi-input-bon','transaksi-input-kas','transaksi-input-upah','transaksi-katalog-kendaraan','transaksi-input-bon-sopir','transaksi-input-klaim-sopir','transaksi-kas-bon-sopir','transaksi-kas-bon-kantor','transaksi-tagihan','transaksi-tagihan-manual','transaksi-pelunasan-piutang','transaksi-kuitansi','transaksi-pembayaran-bon-klaim-sopir'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
           <a href="#"><i class="fa fa-cart-plus"></i> <span>Transaksi</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -73,7 +73,7 @@
             <li class="<?php if($this->uri->segment(1)=='transaksi-tagihan-manual'){echo 'active';}?>"><a href="<?= base_url('transaksi-tagihan-manual')?>">Tagihan Manual</a></li>
             <li class="<?php if($this->uri->segment(1)=='transaksi-pelunasan-piutang'){echo 'active';}?>"><a href="<?= base_url('transaksi-pelunasan-piutang')?>">Pelunasan Piutang</a></li>
             <li class="<?php if($this->uri->segment(1)=='transaksi-kuitansi'){echo 'active';}?>"><a href="<?= base_url('transaksi-kuitansi')?>">Kuitansi</a></li>
-            <li class="<?php if($this->uri->segment(1)=='transaksi-pembayaran-bon-klaim'){echo 'active';}?>"><a href="<?= base_url('transaksi-pembayaran-bon-klaim')?>">Pembayaran Bon/Klaim</a></li>
+            <li class="<?php if($this->uri->segment(1)=='transaksi-pembayaran-bon-klaim-sopir'){echo 'active';}?>"><a href="<?= base_url('transaksi-pembayaran-bon-klaim-sopir')?>">Pembayaran Bon/Klaim</a></li>
           </ul>
         </li>
         <li class="treeview">
