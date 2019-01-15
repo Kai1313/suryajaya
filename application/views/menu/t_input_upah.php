@@ -69,12 +69,12 @@
                       <label>Masuk Kerja</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="hari_kerja" id="hari_kerja" class="form-control">
+                        <input type="text" name="hari_kerja" id="hari_kerja" class="form-control chgcount">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Bonus Harian</label>
-                      <input type="text" name="bonus_harian" class="form-control">
+                      <input type="text" name="bonus_harian" class="form-control chgcount">
                     </div>
                     <div class="form-group">
                       <label>Uang Makan</label>
@@ -298,6 +298,7 @@
       {
         pickKaryawan($('#dropKaryawan option:selected').val());
       });
+      inputchg();
     })
     function newUpah()
     {
@@ -345,7 +346,13 @@
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="tipe_kendaraan"]').val(data.tipe_kendaraan+' - '+data.jenis_kendaraan);
+          $('[name="upah_harian"]').val(data.upah_harian);
+          $('[name="upah_lembur"]').val(data.upah_lembur);
+          $('[name="upah_minggu"]').val(data.upah_hari_minggu);
+          $('[name="upah_haribesar"]').val(data.upah_hari_besar);
+          $('[name="upah_bulanan"]').val(data.gaji_bulanan);
+          $('[name="sisa_bon"]').val(data.jml_bon);
+          $('[name="min_lembur"]').val(data.min_jam_lembur);
         }
       });
     }
@@ -432,6 +439,20 @@
           $('#newBtn').prop('disabled',true);
           $('#modal-edit').modal('hide');
         }
+      });
+    }
+    function hitung_()
+    {
+      subHarian = parseFloat($('[name="hari_kerja"]').val())*parseFloat($('[name="upah_harian"]').val());
+      $('[name="sub_harian"]').val(subHarian);
+      subBonusHarian = parseFloat($('[name="bonus_harian"]').val());
+      $('[name="sub_bonusharian"]').val(subBonusHarian);
+    }
+    function inputchg()
+    {
+      $('.chgcount').on('input', function()
+      {
+        hitung_();
       });
     }
   </script>
