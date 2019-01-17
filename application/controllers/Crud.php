@@ -469,6 +469,7 @@ class Crud extends CI_Controller
 			'alamat_karyawan'=>$this->input->post('alamat_karyawan'),
 			'kota_karyawan'=>$this->input->post('kota_karyawan'),
 			'tlp_karyawan'=>$this->input->post('tlp_karyawan'),
+			'upah_makan'=>$this->input->post('upah_makan'),
 			'upah_harian'=>$this->input->post('upah_harian'),
 			'upah_hari_besar'=>$this->input->post('upah_hari_besar'),
 			'upah_hari_minggu'=>$this->input->post('upah_hari_minggu'),
@@ -490,6 +491,7 @@ class Crud extends CI_Controller
 			'alamat_karyawan'=>$this->input->post('alamat_karyawan'),
 			'kota_karyawan'=>$this->input->post('kota_karyawan'),
 			'tlp_karyawan'=>$this->input->post('tlp_karyawan'),
+			'upah_makan'=>$this->input->post('upah_makan'),
 			'upah_harian'=>$this->input->post('upah_harian'),
 			'upah_hari_besar'=>$this->input->post('upah_hari_besar'),
 			'upah_hari_minggu'=>$this->input->post('upah_hari_minggu'),
@@ -1810,7 +1812,7 @@ class Crud extends CI_Controller
 	//Transaksi Bayar Upah Karyawan
 	public function saveBayarUpahKaryawan()
 	{
-		$getSts = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$this->input->post('no_bayar')))->row();
+		$getSts = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
 		if($getSts->data_sts != '0')
 		{
 			$data['status'] = FALSE;
@@ -1818,13 +1820,13 @@ class Crud extends CI_Controller
 		else
 		{
 			$upd = array(
-				'kode_driver'=>$this->input->post('kode_sopir'),
-				'tgl_bayar'=>$this->input->post('tgl_bayar'),
-				'nom_bon'=>$this->input->post('nom_bon'),
+				'kode_karyawan'=>$this->input->post('kode_karyawan'),
+				'tgl_upah'=>$this->input->post('tgl_upah'),
+				'hari_kerja'=>$this->input->post('hari_kerja'),
 				'nom_klaim'=>$this->input->post('nom_klaim'),
 				'data_sts'=>'1'
 			);
-			$this->db->update('trx_bayar_bonklaim_sopir',$upd,array('no_bayar'=>$this->input->post('no_bayar')));
+			$this->db->update('trx_bayar_upah_karyawan',$upd,array('no_bayar'=>$this->input->post('no_bayar')));
 			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 			if($data['status']!=FALSE)
 			{
@@ -1852,7 +1854,7 @@ class Crud extends CI_Controller
 
 	public function cancelBayarUpahKaryawan()
 	{
-		$getSts = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$this->input->post('no_bayar')))->row();
+		$getSts = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
 		if($getSts->data_sts != '1')
 		{
 			$data['status'] = FALSE;
@@ -1860,27 +1862,25 @@ class Crud extends CI_Controller
 		else
 		{
 			$can = array('data_sts'=>'0');
-			$this->db->update('trx_bayar_bonklaim_sopir',$can,array('no_bayar'=>$this->input->post('no_bayar')));
+			$this->db->update('trx_bayar_upah_karyawan',$can,array('no_kuitansi'=>$this->input->post('no_kuitansi')));
 			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 			if($data['status']!=FALSE)
 			{
-				$getKlaim = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_klaim;
-				$getBon = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_bon;
-				$totKlaim = ($getKlaim*1)+($this->input->post('nom_klaim')*1);
-				$totBon = ($getBon*1)+($this->input->post('nom_bon')*1);
-				$upDrv = array('jml_klaim'=>$totKlaim,'jml_bon'=>$totBon);
-				$this->db->update('master_driver',$upDrv,array('kode_driver'=>$this->input->post('kode_sopir')));
+				$getBon = $this->db->get_where('master_karyawan',array('kode_karyawan'=>$this->input->post('kode_karyawan')))->row()->jml_bon;
+				$totBon = ($getBon*1)+($this->input->post('sub_bon')*1);
+				$upKry = array('jml_bon'=>$totBon);
+				$this->db->update('master_karyawan',$upKry,array('kode_karyawan'=>$this->input->post('kode_karyawan')));
 			}
 		}
 		$data['msg'] = ($data['status']!=FALSE)?
 		'<div class="alert alert-success alert-dismissible" id="alert_success">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Pembayaran Sopir</h4>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Pembayaran Karyawan</h4>
 		 </div>'
 		 :
 		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pembayaran Sopir</h4>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pembayaran Karyawan</h4>
       </div>'
 		 ;
 		echo json_encode($data);

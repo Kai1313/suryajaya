@@ -129,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `master_karyawan` (
   `alamat_karyawan` varchar(1024) DEFAULT NULL,
   `kota_karyawan` char(100) DEFAULT NULL,
   `tlp_karyawan` char(20) DEFAULT NULL,
+  `upah_makan` decimal(10,2) DEFAULT NULL,
   `upah_harian` decimal(10,2) DEFAULT NULL,
   `upah_hari_besar` decimal(10,2) DEFAULT NULL,
   `upah_hari_minggu` decimal(10,2) DEFAULT NULL,
@@ -143,8 +144,8 @@ CREATE TABLE IF NOT EXISTS `master_karyawan` (
 
 -- Dumping data for table suryajaya.master_karyawan: ~1 rows (approximately)
 /*!40000 ALTER TABLE `master_karyawan` DISABLE KEYS */;
-INSERT INTO `master_karyawan` (`kode_karyawan`, `nama_karyawan`, `alamat_karyawan`, `kota_karyawan`, `tlp_karyawan`, `upah_harian`, `upah_hari_besar`, `upah_hari_minggu`, `min_jam_lembur`, `upah_lembur`, `gaji_bulanan`, `kerja_penuh_6x`, `jml_bon`, `data_sts`) VALUES
-	('KRY00001', 'Hendro', 'Semolowaru Utara No.42, Sukolilo', 'Surabaya', '083335335627', 100000.00, 150000.00, 120000.00, 2.00, 50000.00, 3000000.00, 500000.00, 0.00, '1');
+INSERT INTO `master_karyawan` (`kode_karyawan`, `nama_karyawan`, `alamat_karyawan`, `kota_karyawan`, `tlp_karyawan`, `upah_makan`, `upah_harian`, `upah_hari_besar`, `upah_hari_minggu`, `min_jam_lembur`, `upah_lembur`, `gaji_bulanan`, `kerja_penuh_6x`, `jml_bon`, `data_sts`) VALUES
+	('KRY00001', 'Hendro', 'Semolowaru Utara No.42, Sukolilo', 'Surabaya', '083335335627', 10000.00, 100000.00, 150000.00, 120000.00, 2.00, 50000.00, 3000000.00, 500000.00, 0.00, '1');
 /*!40000 ALTER TABLE `master_karyawan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_kendaraan

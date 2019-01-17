@@ -44,6 +44,10 @@
                   <input type="text" name="tlp_karyawan" class="form-control">
                 </div>
                 <div class="form-group">
+                  <label>Uang Makan</label>
+                  <input type="text" name="upah_makan" class="form-control">
+                </div>
+                <div class="form-group">
                   <label>Upah Harian</label>
                   <input type="text" name="upah_harian" class="form-control">
                 </div>
@@ -177,6 +181,7 @@
           $('[name="alamat_karyawan"]').val(data.alamat_karyawan);
           $('[name="kota_karyawan"]').val(data.kota_karyawan);
           $('[name="tlp_karyawan"]').val(data.tlp_karyawan);
+          $('[name="upah_makan"]').val(data.upah_makan);
           $('[name="upah_harian"]').val(data.upah_harian);
           $('[name="upah_hari_besar"]').val(data.upah_hari_besar);
           $('[name="upah_hari_minggu"]').val(data.upah_hari_minggu);

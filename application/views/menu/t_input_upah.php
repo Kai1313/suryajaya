@@ -80,50 +80,50 @@
                       <label>Uang Makan</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_makan" id="uang_makan" class="form-control">
+                        <input type="text" name="uang_makan" id="uang_makan" class="form-control chgcount">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Uang Lembur</label>
                       <div class="input-group">
                         <span class="input-group-addon">Jam</span>
-                        <input type="text" name="uang_lembur" id="uang_lembur" class="form-control">
+                        <input type="text" name="uang_lembur" id="uang_lembur" class="form-control chgcount">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Hari Minggu</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_minggu" id="uang_minggu" class="form-control">
+                        <input type="text" name="uang_minggu" id="uang_minggu" class="form-control chgcount">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Hari Besar</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_haribesar" id="uang_haribesar" class="form-control">
+                        <input type="text" name="uang_haribesar" id="uang_haribesar" class="form-control chgcount">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Gaji Bulanan</label>
                       <div class="input-group">
                         <span class="input-group-addon">Bulan</span>
-                        <input type="text" name="uang_bulanan" id="uang_bulanan" class="form-control">
+                        <input type="text" name="uang_bulanan" id="uang_bulanan" class="form-control chgcount">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Bonus Bulanan</label>
-                      <input type="text" name="bonus_bulanan" class="form-control">
+                      <input type="text" name="bonus_bulanan" class="form-control chgcount">
                     </div>
                     <div class="form-group">
                       <label>Lain-Lain</label>
-                      <input type="text" name="uang_lain" class="form-control">
+                      <input type="text" name="uang_lain" class="form-control chgcount">
                     </div>
                     <div class="form-group">
                       <label>Minimum Lembur</label>
                       <div class="input-group">
                         <span class="input-group-addon">Jam</span>
-                        <input type="text" name="min_lembur" id="min_lembur" class="form-control" readonly>
+                        <input type="text" name="min_lembur" id="min_lembur" class="form-control chgcount" readonly>
                       </div>
                     </div>
                     <div class="form-group">
@@ -208,7 +208,7 @@
                     </div>
                     <div class="form-group">
                       <label>Potong Bon</label>
-                      <input type="text" name="sub_bon" class="form-control">
+                      <input type="text" name="sub_bon" class="form-control chgcount">
                     </div>
                     <div class="form-group">
                       <label>Grand Total</label>
@@ -347,6 +347,7 @@
         success: function(data)
         {
           $('[name="upah_harian"]').val(data.upah_harian);
+          $('[name="makan_harian"]').val(data.upah_makan);
           $('[name="upah_lembur"]').val(data.upah_lembur);
           $('[name="upah_minggu"]').val(data.upah_hari_minggu);
           $('[name="upah_haribesar"]').val(data.upah_hari_besar);
@@ -447,6 +448,25 @@
       $('[name="sub_harian"]').val(subHarian);
       subBonusHarian = parseFloat($('[name="bonus_harian"]').val());
       $('[name="sub_bonusharian"]').val(subBonusHarian);
+      subMakan = parseFloat($('[name="uang_makan"]').val())*parseFloat($('[name="makan_harian"]').val());
+      $('[name="sub_makan"]').val(subMakan);
+      subLembur = parseFloat($('[name="uang_lembur"]').val())*parseFloat($('[name="upah_lembur"]').val());
+      $('[name="sub_lembur"]').val(subLembur);
+      subMinggu = parseFloat($('[name="uang_minggu"]').val())*parseFloat($('[name="upah_minggu"]').val());
+      $('[name="sub_minggu"]').val(subMinggu);
+      subHariBesar = parseFloat($('[name="uang_haribesar"]').val())*parseFloat($('[name="upah_haribesar"]').val());
+      $('[name="sub_haribesar"]').val(subHariBesar);
+      subBulanan = parseFloat($('[name="uang_bulanan"]').val())*parseFloat($('[name="upah_bulanan"]').val());
+      $('[name="sub_bulanan"]').val(subBulanan);
+      subBonusBulanan = parseFloat($('[name="bonus_bulanan"]').val());
+      $('[name="sub_bonusbulanan"]').val(subBonusBulanan);
+      subLain = parseFloat($('[name="uang_lain"]').val());
+      $('[name="sub_lain"]').val(subLain);
+      subJml = parseFloat(subHarian)+parseFloat(subBonusHarian)+parseFloat(subMakan)+parseFloat(subLembur)+parseFloat(subMinggu)+parseFloat(subHariBesar)+parseFloat(subBulanan)+parseFloat(subBonusBulanan)+parseFloat(subLain);
+      $('[name="sub_total"]').val(subJml);
+      subBon = parseFloat($('[name="sub_bon"]').val());
+      grandTotal = parseFloat(subJml)-parseFloat(subBon);
+      $('[name="g_total"]').val(grandTotal);
     }
     function inputchg()
     {
