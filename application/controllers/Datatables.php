@@ -22,6 +22,8 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/details/DetBiayaKendaraan','detBiayaKdr');
 		$this->load->model('Datatables/details/DetReturPembelianBarang','detReturBeliBrg');
 		$this->load->model('Datatables/details/DetReturPemakaianBarang','detReturPakaiBrg');
+		$this->load->model('Datatables/details/DetPemasanganBan','detPsgBan');
+		$this->load->model('Datatables/details/DetPelepasanBan','detLpsBan');
 
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
@@ -35,9 +37,66 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarInputKlaimSopir','listInpKlaimSopir');
 		$this->load->model('Datatables/search/SearchDaftarBayarSopir','listByrSopir');
 		$this->load->model('Datatables/search/SearchDaftarUpahKaryawan','listUpahKry');
+		$this->load->model('Datatables/search/SearchDaftarKasBonSopir','listKasBonSpr');
+		$this->load->model('Datatables/search/SearchDaftarPemasanganBan','listPsgBan');
+		$this->load->model('Datatables/search/SearchDaftarPelepasanBan','listLpsBan');
 	}
 
 	//Data Cari Transaksi
+	public function listPasangBan()
+	{
+		$list = $this->listPsgBan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_pemasangan;
+			$row[] = $dat->tgl_pemasangan;
+			$row[] = $dat->nopol;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihPasangBan('."'".$dat->no_pemasangan."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listPsgBan->count_all(),
+				"recordsFiltered" => $this->listPsgBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listLepasBan()
+	{
+		$list = $this->listLpsBan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_pelepasan;
+			$row[] = $dat->tgl_pelepasan;
+			$row[] = $dat->nopol;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihLepasBan('."'".$dat->no_pelepasan."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listLpsBan->count_all(),
+				"recordsFiltered" => $this->listLpsBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function listBeliBarang()
 	{
 		$list = $this->listBeliBrg->get_datatables();
@@ -363,7 +422,144 @@ class Datatables extends CI_Controller
 		echo json_encode($output);
 	}
 
+	public function listKasBonSopir()
+	{
+		$list = $this->listKasBonSpr->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_bon;
+			$row[] = $dat->tgl_bon;
+			$row[] = $dat->nopol;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihKasBon('."'".$dat->no_bon."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listKasBonSpr->count_all(),
+				"recordsFiltered" => $this->listKasBonSpr->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	//Data Detail Transaksi
+	public function detPasangBan($key)
+	{
+		$list = $this->detPsgBan->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset Ban';
+					break;
+				default:
+					break;
+			}
+			switch ($dat->status_pasang)
+			{
+				case '0':
+					$status = 'Baru';
+					break;
+				case '1':
+					$status = 'Bekas';
+					break;
+				case '2':
+					$status = 'Vulkanisir';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $jenis;
+			$row[] = $dat->ukuran_ban;
+			$row[] = $dat->merk_ban;
+			$row[] = $status;
+			$row[] = $dat->qty_pasang;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detPsgBan->count_all(),
+				"recordsFiltered" => $this->detPsgBan->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function detLepasBan($key)
+	{
+		$list = $this->detLpsBan->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset Ban';
+					break;
+				default:
+					break;
+			}
+			switch ($dat->status_lepas)
+			{
+				case '0':
+					$status = 'Bekas';
+					break;
+				case '1':
+					$status = 'Vulkanisir';
+					break;
+				case '2':
+					$status = 'Afkir';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $jenis;
+			$row[] = $dat->ukuran_ban;
+			$row[] = $dat->merk_ban;
+			$row[] = $status;
+			$row[] = $dat->qty_lepas;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detLpsBan->count_all(),
+				"recordsFiltered" => $this->detLpsBan->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function detBeliBarang($key)
 	{
 		$list = $this->detBeliBrg->get_datatables($key);

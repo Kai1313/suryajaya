@@ -245,6 +245,60 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noKasBonSopir()
+	{
+		$res = $this->gen_num_('trx_kas_bon_sopir','no_bon','SS');
+		$check = $this->db->get_where('trx_kas_bon_sopir',array('no_bon'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_kas_bon_sopir','no_bon','SS');
+		}
+		$crt = array(
+			'no_bon'=>$res,
+			'tgl_bon'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_kas_bon_sopir',$crt);
+		$data['no_bon'] = $res;
+		echo json_encode($data);
+	}
+
+	public function gen_noPasangBan()
+	{
+		$res = $this->gen_num_('trx_pasang_ban','no_pemasangan','PSG');
+		$check = $this->db->get_where('trx_pasang_ban',array('no_pemasangan'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_pasang_ban','no_pemasangan','PSG');
+		}
+		$crt = array(
+			'no_pemasangan'=>$res,
+			'tgl_pemasangan'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_pasang_ban',$crt);
+		$data['no_pemasangan'] = $res;
+		echo json_encode($data);
+	}
+
+	public function gen_noLepasBan()
+	{
+		$res = $this->gen_num_('trx_lepas_ban','no_pelepasan','LPS');
+		$check = $this->db->get_where('trx_lepas_ban',array('no_pelepasan'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_lepas_ban','no_pelepasan','LPS');
+		}
+		$crt = array(
+			'no_pelepasan'=>$res,
+			'tgl_pelepasan'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_lepas_ban',$crt);
+		$data['no_pelepasan'] = $res;
+		echo json_encode($data);
+	}
+
 	//CRUD Master Barang
 	public function addBarang()
 	{
@@ -656,6 +710,12 @@ class Crud extends CI_Controller
 	public function getDropPemakaian()
 	{
 		$data = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_pakai_barang a',array('a.data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
+	public function getDropCustomer()
+	{
+		$data = $this->db->get_where('master_customer',array('data_sts'=>'1'))->result();
 		echo json_encode($data);
 	}
 
@@ -1823,30 +1883,47 @@ class Crud extends CI_Controller
 				'kode_karyawan'=>$this->input->post('kode_karyawan'),
 				'tgl_upah'=>$this->input->post('tgl_upah'),
 				'hari_kerja'=>$this->input->post('hari_kerja'),
-				'nom_klaim'=>$this->input->post('nom_klaim'),
+				'sub_harian'=>$this->input->post('sub_harian'),
+				'bonus_harian'=>$this->input->post('bonus_harian'),
+				'sub_bonusharian'=>$this->input->post('sub_bonusharian'),
+				'uang_makan'=>$this->input->post('uang_makan'),
+				'sub_makan'=>$this->input->post('sub_makan'),
+				'uang_lembur'=>$this->input->post('uang_lembur'),
+				'sub_lembur'=>$this->input->post('sub_lembur'),
+				'uang_minggu'=>$this->input->post('uang_minggu'),
+				'sub_minggu'=>$this->input->post('sub_minggu'),
+				'uang_haribesar'=>$this->input->post('uang_haribesar'),
+				'sub_haribesar'=>$this->input->post('sub_haribesar'),
+				'uang_bulanan'=>$this->input->post('uang_bulanan'),
+				'sub_bulanan'=>$this->input->post('sub_bulanan'),
+				'bonus_bulanan'=>$this->input->post('bonus_bulanan'),
+				'sub_bonusbulanan'=>$this->input->post('sub_bonusbulanan'),
+				'uang_lain'=>$this->input->post('uang_lain'),
+				'sub_lain'=>$this->input->post('sub_lain'),
+				'sub_total'=>$this->input->post('sub_total'),
+				'sub_bon'=>$this->input->post('sub_bon'),
+				'grand_total'=>$this->input->post('g_total'),
 				'data_sts'=>'1'
 			);
-			$this->db->update('trx_bayar_upah_karyawan',$upd,array('no_bayar'=>$this->input->post('no_bayar')));
+			$this->db->update('trx_bayar_upah_karyawan',$upd,array('no_kuitansi'=>$this->input->post('no_kuitansi')));
 			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 			if($data['status']!=FALSE)
 			{
-				$getKlaim = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_klaim;
-				$getBon = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_bon;
-				$totKlaim = ($getKlaim*1)-($this->input->post('nom_klaim')*1);
-				$totBon = ($getBon*1)-($this->input->post('nom_bon')*1);
-				$upDrv = array('jml_klaim'=>$totKlaim,'jml_bon'=>$totBon);
-				$this->db->update('master_driver',$upDrv,array('kode_driver'=>$this->input->post('kode_sopir')));
+				$getBon = $this->db->get_where('master_karyawan',array('kode_karyawan'=>$this->input->post('kode_karyawan')))->row()->jml_bon;
+				$totBon = ($getBon*1)-($this->input->post('sub_bon')*1);
+				$upKry = array('jml_bon'=>$totBon);
+				$this->db->update('master_karyawan',$upKry,array('kode_karyawan'=>$this->input->post('kode_karyawan')));
 			}
 		}
 		$data['msg'] = ($data['status']!=FALSE)?
 		'<div class="alert alert-success alert-dismissible" id="alert_success">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Pembayaran Sopir</h4>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Pembayaran Karyawan</h4>
 		 </div>'
 		 :
 		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Pembayaran Sopir</h4>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Pembayaran Karyawan</h4>
       </div>'
 		 ;
 		echo json_encode($data);
@@ -1855,6 +1932,7 @@ class Crud extends CI_Controller
 	public function cancelBayarUpahKaryawan()
 	{
 		$getSts = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
+		$getJmlBon = $getSts->sub_bon;
 		if($getSts->data_sts != '1')
 		{
 			$data['status'] = FALSE;
@@ -1867,7 +1945,7 @@ class Crud extends CI_Controller
 			if($data['status']!=FALSE)
 			{
 				$getBon = $this->db->get_where('master_karyawan',array('kode_karyawan'=>$this->input->post('kode_karyawan')))->row()->jml_bon;
-				$totBon = ($getBon*1)+($this->input->post('sub_bon')*1);
+				$totBon = ($getBon*1)+($getJmlBon*1);
 				$upKry = array('jml_bon'=>$totBon);
 				$this->db->update('master_karyawan',$upKry,array('kode_karyawan'=>$this->input->post('kode_karyawan')));
 			}
@@ -1955,6 +2033,123 @@ class Crud extends CI_Controller
 		 ;
 		echo json_encode($data);
 	}
+
+	//Transaksi Kas Bon Sopir
+	public function saveKasBonSopir()
+	{
+		$getSts = $this->db->get_where('trx_kas_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
+				'tgl_bon'=>$this->input->post('tgl_bon'),
+				'kode_sopir'=>$this->input->post('kode_sopir'),
+				'kode_kernet'=>$this->input->post('kode_kernet'),
+				'kode_sopir'=>$this->input->post('kode_sopir'),
+				'tab_sopir'=>$this->input->post('tab_sopir'),
+				'berat_jenis'=>$this->input->post('berat_jenis'),
+				'ket_kasbon'=>$this->input->post('ket_kasbon'),
+				'uang_saku_kota'=>$this->input->post('uang_saku_kota'),
+				'uang_saku_a'=>$this->input->post('uang_saku_a'),
+				'uang_saku_b'=>$this->input->post('uang_saku_b'),
+				'uang_saku_c'=>$this->input->post('uang_saku_c'),
+				'uang_saku_d'=>$this->input->post('uang_saku_d'),
+				'tgl_bon_a'=>$this->input->post('tgl_bon_a'),
+				'tgl_bon_b'=>$this->input->post('tgl_bon_b'),
+				'tgl_bon_c'=>$this->input->post('tgl_bon_c'),
+				'tgl_bon_d'=>$this->input->post('tgl_bon_d'),
+				'sub_uang_saku'=>$this->input->post('sub_uang_saku'),
+				'uang_solar'=>$this->input->post('uang_solar'),
+				'tgl_solar'=>$this->input->post('tgl_solar'),
+				'nama_pom'=>$this->input->post('nama_pom'),
+				'sub_bonall'=>$this->input->post('sub_bonall'),
+				'tgl_muat'=>$this->input->post('tgl_muat'),
+				'tgl_muat_b'=>$this->input->post('tgl_muat_b'),
+				'tgl_bongkar'=>$this->input->post('tgl_bongkar'),
+				'tgl_bongkar_b'=>$this->input->post('tgl_bongkar_b'),
+				'uang_makan'=>$this->input->post('uang_makan'),
+				'uang_makan_b'=>$this->input->post('uang_makan_b'),
+				'kode_customer_a'=>$this->input->post('kode_customer_a'),
+				'kode_customer_b'=>$this->input->post('kode_customer_b'),
+				'kode_customer_c'=>$this->input->post('kode_customer_c'),
+				'kode_customer_d'=>$this->input->post('kode_customer_d'),
+				'kode_customer_e'=>$this->input->post('kode_customer_e'),
+				'kode_customer_f'=>$this->input->post('kode_customer_f'),
+				'kode_customer_g'=>$this->input->post('kode_customer_g'),
+				'kode_customer_h'=>$this->input->post('kode_customer_h'),
+				'jenis_muatan_a'=>$this->input->post('jenis_muatan_a'),
+				'jenis_muatan_b'=>$this->input->post('jenis_muatan_b'),
+				'jenis_muatan_c'=>$this->input->post('jenis_muatan_c'),
+				'jenis_muatan_d'=>$this->input->post('jenis_muatan_d'),
+				'berat_muatan_a'=>$this->input->post('berat_muatan_a'),
+				'berat_muatan_b'=>$this->input->post('berat_muatan_b'),
+				'berat_muatan_c'=>$this->input->post('berat_muatan_c'),
+				'berat_muatan_d'=>$this->input->post('berat_muatan_d'),
+				'surat_jalan_a'=>$this->input->post('surat_jalan_a'),
+				'surat_jalan_b'=>$this->input->post('surat_jalan_b'),
+				'surat_jalan_c'=>$this->input->post('surat_jalan_c'),
+				'surat_jalan_d'=>$this->input->post('surat_jalan_d'),
+				'sub_beratmuat'=>$this->input->post('sub_beratmuat'),
+				'sub_beratmuat_b'=>$this->input->post('sub_beratmuat_b'),
+				'solar_berangkat'=>$this->input->post('solar_berangkat'),
+				'solar_kembali'=>$this->input->post('solar_kembali'),
+				'bantuan_a'=>$this->input->post('bantuan_a'),
+				'bantuan_b'=>$this->input->post('bantuan_b'),
+				'bantuan_c'=>$this->input->post('bantuan_c'),
+				'bantuan_d'=>$this->input->post('bantuan_d'),
+				'tambah_a'=>$this->input->post('tambah_a'),
+				'tambah_b'=>$this->input->post('tambah_b'),
+				'tambah_c'=>$this->input->post('tambah_c'),
+				'tambah_d'=>$this->input->post('tambah_d'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_kas_bon_sopir',$upd,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Kas Bon Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Kas Bon Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelKasBonSopir()
+	{
+		$getSts = $this->db->get_where('trx_kas_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_kas_bon_sopir',$can,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Kas Bon Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Kas Bon Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
 	
 	//Get Data Pencarian
 	public function getBeliBrg($key)
@@ -2026,6 +2221,12 @@ class Crud extends CI_Controller
 	public function getUpahKaryawan($key)
 	{
 		$data = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getKasBonSopir($key)
+	{
+		$data = $this->db->get_where('trx_kas_bon_sopir',array('no_bon'=>$key))->row();
 		echo json_encode($data);
 	}
 }
