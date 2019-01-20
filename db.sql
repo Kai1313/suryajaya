@@ -21,16 +21,18 @@ CREATE TABLE IF NOT EXISTS `master_ban` (
   `ukuran_ban` char(200) DEFAULT NULL,
   `stok_baru` decimal(10,2) DEFAULT NULL,
   `stok_bekas` decimal(10,2) DEFAULT NULL,
+  `stok_vulkanisir` decimal(10,2) DEFAULT NULL,
+  `stok_afkir` decimal(10,2) DEFAULT NULL,
   `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_ban`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.master_ban: ~3 rows (approximately)
 /*!40000 ALTER TABLE `master_ban` DISABLE KEYS */;
-INSERT INTO `master_ban` (`kode_ban`, `nama_ban`, `jenis_ban`, `merk_ban`, `ukuran_ban`, `stok_baru`, `stok_bekas`, `data_sts`) VALUES
-	('BAN0001', 'Ban A', '1', 'Dunlop', '900-200', 2.00, 0.00, '1'),
-	('BAN0002', 'Ban B', '0', 'Federal', '900-250', 0.00, 0.00, '1'),
-	('BAN0003', 'Ban C', '2', 'IRC', '800-300', 0.00, 0.00, '1');
+INSERT INTO `master_ban` (`kode_ban`, `nama_ban`, `jenis_ban`, `merk_ban`, `ukuran_ban`, `stok_baru`, `stok_bekas`, `stok_vulkanisir`, `stok_afkir`, `data_sts`) VALUES
+	('BAN0001', 'Ban A', '1', 'Dunlop', '900-200', 2.00, 0.00, NULL, NULL, '1'),
+	('BAN0002', 'Ban B', '0', 'Federal', '900-250', 0.00, 0.00, NULL, NULL, '1'),
+	('BAN0003', 'Ban C', '2', 'IRC', '800-300', 0.00, 0.00, NULL, NULL, '1');
 /*!40000 ALTER TABLE `master_ban` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_barang
@@ -264,10 +266,11 @@ CREATE TABLE IF NOT EXISTS `trx_bayar_upah_karyawan` (
   CONSTRAINT `FK_trx_bayar_upah_karyawan_master_karyawan` FOREIGN KEY (`kode_karyawan`) REFERENCES `master_karyawan` (`kode_karyawan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_bayar_upah_karyawan: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_bayar_upah_karyawan: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_bayar_upah_karyawan` DISABLE KEYS */;
 INSERT INTO `trx_bayar_upah_karyawan` (`no_kuitansi`, `kode_karyawan`, `tgl_upah`, `hari_kerja`, `sub_harian`, `bonus_harian`, `sub_bonusharian`, `uang_makan`, `sub_makan`, `uang_lembur`, `sub_lembur`, `uang_minggu`, `sub_minggu`, `uang_haribesar`, `sub_haribesar`, `uang_bulanan`, `sub_bulanan`, `bonus_bulanan`, `sub_bonusbulanan`, `uang_lain`, `sub_lain`, `sub_total`, `sub_bon`, `grand_total`, `data_sts`) VALUES
-	('KUI1901-000001', NULL, '2019-01-14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0');
+	('KUI1901-000001', NULL, '2019-01-14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0'),
+	('KUI1901-000002', 'KRY00001', '2019-01-19', 20.00, 2000000.00, 0.00, 0.00, 20.00, 200000.00, 4.00, 200000.00, 4.00, 480000.00, 0.00, 0.00, 1.00, 3000000.00, 0.00, 0.00, 0.00, 0.00, 5880000.00, 0.00, 5880000.00, '1');
 /*!40000 ALTER TABLE `trx_bayar_upah_karyawan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_beli_ban
@@ -492,6 +495,140 @@ INSERT INTO `trx_input_klaim_sopir` (`no_klaim`, `kode_driver`, `tgl_klaim`, `ke
 	('KLM1901-000001', 'DRV0001', '2019-01-12', 'tes klaim', 10000.00, '1');
 /*!40000 ALTER TABLE `trx_input_klaim_sopir` ENABLE KEYS */;
 
+-- Dumping structure for table suryajaya.trx_kas_bon_sopir
+DROP TABLE IF EXISTS `trx_kas_bon_sopir`;
+CREATE TABLE IF NOT EXISTS `trx_kas_bon_sopir` (
+  `no_bon` char(20) NOT NULL,
+  `tgl_bon` date DEFAULT NULL,
+  `kode_kendaraan` int(11) DEFAULT NULL,
+  `kode_sopir` char(10) DEFAULT NULL,
+  `kode_kernet` char(10) DEFAULT NULL,
+  `tab_sopir` char(10) DEFAULT NULL,
+  `berat_jenis` char(1) DEFAULT NULL,
+  `ket_kasbon` text,
+  `uang_saku_kota` decimal(10,2) DEFAULT NULL,
+  `tgl_bon_kota` date DEFAULT NULL,
+  `uang_saku_a` decimal(10,2) DEFAULT NULL,
+  `tgl_bon_a` date DEFAULT NULL,
+  `uang_saku_b` decimal(10,2) DEFAULT NULL,
+  `tgl_bon_b` date DEFAULT NULL,
+  `uang_saku_c` decimal(10,2) DEFAULT NULL,
+  `tgl_bon_c` date DEFAULT NULL,
+  `uang_saku_d` decimal(10,2) DEFAULT NULL,
+  `tgl_bon_d` date DEFAULT NULL,
+  `sub_uang_saku` decimal(10,2) DEFAULT NULL,
+  `uang_solar` decimal(10,2) DEFAULT NULL,
+  `tgl_solar` date DEFAULT NULL,
+  `nama_pom` char(100) DEFAULT NULL,
+  `sub_bonall` decimal(10,2) DEFAULT NULL,
+  `tgl_muat` date DEFAULT NULL,
+  `tgl_muat_b` date DEFAULT NULL,
+  `tgl_bongkar` date DEFAULT NULL,
+  `tgl_bongkar_b` date DEFAULT NULL,
+  `uang_makan` decimal(10,2) DEFAULT NULL,
+  `uang_makan_b` decimal(10,2) DEFAULT NULL,
+  `kode_customer_a` char(10) DEFAULT NULL,
+  `kode_customer_b` char(10) DEFAULT NULL,
+  `kode_customer_c` char(10) DEFAULT NULL,
+  `kode_customer_d` char(10) DEFAULT NULL,
+  `kode_customer_e` char(10) DEFAULT NULL,
+  `kode_customer_f` char(10) DEFAULT NULL,
+  `kode_customer_g` char(10) DEFAULT NULL,
+  `kode_customer_h` char(10) DEFAULT NULL,
+  `jenis_muatan_a` char(10) DEFAULT NULL,
+  `jenis_muatan_b` char(10) DEFAULT NULL,
+  `jenis_muatan_c` char(10) DEFAULT NULL,
+  `jenis_muatan_d` char(10) DEFAULT NULL,
+  `berat_muatan_a` decimal(10,2) DEFAULT NULL,
+  `berat_muatan_b` decimal(10,2) DEFAULT NULL,
+  `berat_muatan_c` decimal(10,2) DEFAULT NULL,
+  `berat_muatan_d` decimal(10,2) DEFAULT NULL,
+  `surat_jalan_a` char(100) DEFAULT NULL,
+  `surat_jalan_b` char(100) DEFAULT NULL,
+  `surat_jalan_c` char(100) DEFAULT NULL,
+  `surat_jalan_d` char(100) DEFAULT NULL,
+  `sub_beratmuat` decimal(10,2) DEFAULT NULL,
+  `sub_beratmuat_b` decimal(10,2) DEFAULT NULL,
+  `solar_berangkat` decimal(10,2) DEFAULT NULL,
+  `solar_kembali` decimal(10,2) DEFAULT NULL,
+  `bantuan_a` decimal(10,2) DEFAULT NULL,
+  `bantuan_b` decimal(10,2) DEFAULT NULL,
+  `bantuan_c` decimal(10,2) DEFAULT NULL,
+  `bantuan_d` decimal(10,2) DEFAULT NULL,
+  `tambah_a` decimal(10,2) DEFAULT NULL,
+  `tambah_b` decimal(10,2) DEFAULT NULL,
+  `tambah_c` decimal(10,2) DEFAULT NULL,
+  `tambah_d` decimal(10,2) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`no_bon`),
+  KEY `FK_trx_kas_bon_sopir_master_kendaraan` (`kode_kendaraan`),
+  KEY `FK_trx_kas_bon_sopir_master_driver` (`kode_sopir`),
+  KEY `FK_trx_kas_bon_sopir_master_driver_2` (`kode_kernet`),
+  KEY `FK_trx_kas_bon_sopir_master_customer` (`kode_customer_a`),
+  KEY `FK_trx_kas_bon_sopir_master_customer_2` (`kode_customer_b`),
+  KEY `FK_trx_kas_bon_sopir_master_customer_3` (`kode_customer_c`),
+  KEY `FK_trx_kas_bon_sopir_master_customer_4` (`kode_customer_d`),
+  KEY `FK_trx_kas_bon_sopir_master_customer_5` (`kode_customer_e`),
+  KEY `FK_trx_kas_bon_sopir_master_customer_6` (`kode_customer_f`),
+  KEY `FK_trx_kas_bon_sopir_master_customer_7` (`kode_customer_g`),
+  KEY `FK_trx_kas_bon_sopir_master_customer_8` (`kode_customer_h`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_customer` FOREIGN KEY (`kode_customer_a`) REFERENCES `master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_customer_2` FOREIGN KEY (`kode_customer_b`) REFERENCES `master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_customer_3` FOREIGN KEY (`kode_customer_c`) REFERENCES `master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_customer_4` FOREIGN KEY (`kode_customer_d`) REFERENCES `master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_customer_5` FOREIGN KEY (`kode_customer_e`) REFERENCES `master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_customer_6` FOREIGN KEY (`kode_customer_f`) REFERENCES `master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_customer_7` FOREIGN KEY (`kode_customer_g`) REFERENCES `master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_customer_8` FOREIGN KEY (`kode_customer_h`) REFERENCES `master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_driver` FOREIGN KEY (`kode_sopir`) REFERENCES `master_driver` (`kode_driver`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_driver_2` FOREIGN KEY (`kode_kernet`) REFERENCES `master_driver` (`kode_driver`),
+  CONSTRAINT `FK_trx_kas_bon_sopir_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_kas_bon_sopir: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_kas_bon_sopir` DISABLE KEYS */;
+INSERT INTO `trx_kas_bon_sopir` (`no_bon`, `tgl_bon`, `kode_kendaraan`, `kode_sopir`, `kode_kernet`, `tab_sopir`, `berat_jenis`, `ket_kasbon`, `uang_saku_kota`, `tgl_bon_kota`, `uang_saku_a`, `tgl_bon_a`, `uang_saku_b`, `tgl_bon_b`, `uang_saku_c`, `tgl_bon_c`, `uang_saku_d`, `tgl_bon_d`, `sub_uang_saku`, `uang_solar`, `tgl_solar`, `nama_pom`, `sub_bonall`, `tgl_muat`, `tgl_muat_b`, `tgl_bongkar`, `tgl_bongkar_b`, `uang_makan`, `uang_makan_b`, `kode_customer_a`, `kode_customer_b`, `kode_customer_c`, `kode_customer_d`, `kode_customer_e`, `kode_customer_f`, `kode_customer_g`, `kode_customer_h`, `jenis_muatan_a`, `jenis_muatan_b`, `jenis_muatan_c`, `jenis_muatan_d`, `berat_muatan_a`, `berat_muatan_b`, `berat_muatan_c`, `berat_muatan_d`, `surat_jalan_a`, `surat_jalan_b`, `surat_jalan_c`, `surat_jalan_d`, `sub_beratmuat`, `sub_beratmuat_b`, `solar_berangkat`, `solar_kembali`, `bantuan_a`, `bantuan_b`, `bantuan_c`, `bantuan_d`, `tambah_a`, `tambah_b`, `tambah_c`, `tambah_d`, `data_sts`) VALUES
+	('SS1901-000001', '2019-01-20', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0');
+/*!40000 ALTER TABLE `trx_kas_bon_sopir` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_lepas_ban
+DROP TABLE IF EXISTS `trx_lepas_ban`;
+CREATE TABLE IF NOT EXISTS `trx_lepas_ban` (
+  `no_pelepasan` char(20) NOT NULL,
+  `kode_kendaraan` int(11) DEFAULT NULL,
+  `tgl_pelepasan` date DEFAULT NULL,
+  `bengkel_pelepasan` varchar(1024) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`no_pelepasan`),
+  KEY `FK_trx_lepas_ban_master_kendaraan` (`kode_kendaraan`),
+  CONSTRAINT `FK_trx_lepas_ban_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_lepas_ban: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_lepas_ban` DISABLE KEYS */;
+INSERT INTO `trx_lepas_ban` (`no_pelepasan`, `kode_kendaraan`, `tgl_pelepasan`, `bengkel_pelepasan`, `data_sts`) VALUES
+	('LPS1901-000001', NULL, '2019-01-20', NULL, '0');
+/*!40000 ALTER TABLE `trx_lepas_ban` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_lepas_ban_det
+DROP TABLE IF EXISTS `trx_lepas_ban_det`;
+CREATE TABLE IF NOT EXISTS `trx_lepas_ban_det` (
+  `det_id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_pelepasan` char(20) DEFAULT NULL,
+  `kode_ban` char(10) DEFAULT NULL,
+  `qty_lepas` char(20) DEFAULT NULL,
+  `status_lepas` char(20) DEFAULT NULL,
+  PRIMARY KEY (`det_id`),
+  KEY `FK_trx_lepas_ban_det_trx_lepas_ban` (`no_pelepasan`),
+  KEY `FK_trx_lepas_ban_det_master_ban` (`kode_ban`),
+  CONSTRAINT `FK_trx_lepas_ban_det_master_ban` FOREIGN KEY (`kode_ban`) REFERENCES `master_ban` (`kode_ban`),
+  CONSTRAINT `FK_trx_lepas_ban_det_trx_lepas_ban` FOREIGN KEY (`no_pelepasan`) REFERENCES `trx_lepas_ban` (`no_pelepasan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_lepas_ban_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_lepas_ban_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_lepas_ban_det` ENABLE KEYS */;
+
 -- Dumping structure for table suryajaya.trx_pakai_barang
 DROP TABLE IF EXISTS `trx_pakai_barang`;
 CREATE TABLE IF NOT EXISTS `trx_pakai_barang` (
@@ -539,6 +676,44 @@ CREATE TABLE IF NOT EXISTS `trx_pakai_barang_det` (
 INSERT INTO `trx_pakai_barang_det` (`det_id`, `no_pakai_brg`, `kode_barang`, `qty_pakai`) VALUES
 	(12, 'JL1901-000001', 'BRG0001', 4.00);
 /*!40000 ALTER TABLE `trx_pakai_barang_det` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_pasang_ban
+DROP TABLE IF EXISTS `trx_pasang_ban`;
+CREATE TABLE IF NOT EXISTS `trx_pasang_ban` (
+  `no_pemasangan` char(20) NOT NULL,
+  `kode_kendaraan` int(10) DEFAULT NULL,
+  `tgl_pemasangan` date DEFAULT NULL,
+  `bengkel_pemasangan` varchar(1024) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`no_pemasangan`),
+  KEY `FK_trx_pasang_ban_master_kendaraan` (`kode_kendaraan`),
+  CONSTRAINT `FK_trx_pasang_ban_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_pasang_ban: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_pasang_ban` DISABLE KEYS */;
+INSERT INTO `trx_pasang_ban` (`no_pemasangan`, `kode_kendaraan`, `tgl_pemasangan`, `bengkel_pemasangan`, `data_sts`) VALUES
+	('PSG1901-000001', NULL, '2019-01-20', NULL, '0');
+/*!40000 ALTER TABLE `trx_pasang_ban` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_pasang_ban_det
+DROP TABLE IF EXISTS `trx_pasang_ban_det`;
+CREATE TABLE IF NOT EXISTS `trx_pasang_ban_det` (
+  `det_id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_pemasangan` char(20) DEFAULT NULL,
+  `kode_ban` char(10) DEFAULT NULL,
+  `qty_pasang` decimal(10,2) DEFAULT NULL,
+  `status_pasang` char(1) DEFAULT NULL,
+  PRIMARY KEY (`det_id`),
+  KEY `FK_trx_pasang_ban_det_trx_pasang_ban` (`no_pemasangan`),
+  KEY `FK_trx_pasang_ban_det_master_ban` (`kode_ban`),
+  CONSTRAINT `FK_trx_pasang_ban_det_master_ban` FOREIGN KEY (`kode_ban`) REFERENCES `master_ban` (`kode_ban`),
+  CONSTRAINT `FK_trx_pasang_ban_det_trx_pasang_ban` FOREIGN KEY (`no_pemasangan`) REFERENCES `trx_pasang_ban` (`no_pemasangan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_pasang_ban_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_pasang_ban_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_pasang_ban_det` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_retur_beli_barang
 DROP TABLE IF EXISTS `trx_retur_beli_barang`;
