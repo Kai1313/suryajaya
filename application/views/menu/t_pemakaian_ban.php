@@ -133,7 +133,7 @@
         <div class="col-md-12 col-xs-12">
           <div class="box" id="det_pemasangan">
             <div class="box-body">
-              <form role="form" id="form-detail-pembelian">
+              <form role="form" id="form-detail-pemasangan">
                 <div class="row">
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
@@ -159,7 +159,7 @@
                       </label>
                     </div>
                     <div class="form-group">
-                      <button type="button" class="btn btn-sm btn-primary" onclick="add()">Tambah</button>
+                      <button type="button" class="btn btn-sm btn-primary" onclick="addPasang()">Tambah</button>
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
@@ -223,7 +223,7 @@
                       </label>
                     </div>
                     <div class="form-group">
-                      <button type="button" class="btn btn-sm btn-primary" onclick="add()">Tambah</button>
+                      <button type="button" class="btn btn-sm btn-primary" onclick="addLepas()">Tambah</button>
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
@@ -243,7 +243,7 @@
                   </div>
                 </div>
               </form>
-              <div id="alertMsg"></div>
+              <div id="alertMsgLps"></div>
               <table id="m_pelepasan_ban" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
                 <thead>
                   <tr>
@@ -267,17 +267,17 @@
             <div class="box-body">
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="saveDt()">Simpan</button>
+                  <button type="button" class="btn btn-md btn-primary" onclick="saveDtLps()">Simpan</button>
                 </div>
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="printDt()">Cetak</button>
+                  <button type="button" class="btn btn-md btn-primary" onclick="printDtLps()">Cetak</button>
                 </div>
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
+                  <button type="button" class="btn btn-md btn-primary" onclick="cancelDtLps()">Batal</button>
                 </div>
               </div>
             </div>
@@ -603,14 +603,14 @@
         ],
       });
     }
-    function add()
+    function addPasang()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
       if(key!='')
       {
         $.ajax({
           type: 'POST',
-          url: '<?= site_url('Crud/addBeliBan')?>',
+          url: '<?= site_url('Crud/addPasangBan')?>',
           data: $('form').serialize(),
           dataType: 'JSON',
           success: function(data)
@@ -618,10 +618,9 @@
             if(data.status)
             {
               msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-              $('#form-detail-pembelian')[0].reset();
-              $('#dropBan').select2({placeholder: 'Select an option'});
-              tbDetBeli(key);
-              subTotal(key);
+              $('#form-detail-pemasangan')[0].reset();
+              $('#dropBanPsg').select2({placeholder: 'Pilih Ban'});
+              tbDetPsg(key);
             }
             else
             {
@@ -632,38 +631,90 @@
       }
       else
       {
-        alert('No Pembelian Masih Kosong');
+        alert('No Pemasangan Masih Kosong');
       }
     }
-    function remove(id)
+    function removePsg(id)
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/rmvBeliBan/')?>'+id,
+        url: '<?= site_url('Crud/rmvPasangBan/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
-            subTotal(key);
+            $('#form-detail-pemasangan')[0].reset();
+            tbDetPsg(key);
           }
           else
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
+    function addLepas()
+    {
+      key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
+      if(key!='')
+      {
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/addLepasBan')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
+          {
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+              $('#form-detail-pelepasan')[0].reset();
+              $('#dropBanLps').select2({placeholder: 'Pilih Ban'});
+              tbDetLps(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+            }
+          }
+        });
+      }
+      else
+      {
+        alert('No Pelepasan Masih Kosong');
+      }
+    }
+    function removeLps(id)
+    {
+      key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/rmvLepasBan/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+            $('#form-detail-pelepasan')[0].reset();
+            tbDetLps(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
           }
         }
       });
     }
     function saveDt()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/saveBeliBan')?>',
+        url: '<?= site_url('Crud/savePasangBan')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -671,9 +722,8 @@
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
-            subTotal(key);
+            $('#form-detail-pemasangan')[0].reset();
+            tbDetPsg(key);
           }
           else
           {
@@ -682,12 +732,35 @@
         }
       });
     }
-    function cancelDt()
+    function saveDtLps()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/cancelBeliBan')?>',
+        url: '<?= site_url('Crud/saveLepasBan')?>',
+        data: $('form').serialize(),
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+            $('#form-detail-pelepasan')[0].reset();
+            tbDetLps(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+          }
+        }
+      });
+    }
+    function cancelDt()
+    {
+      key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
+      $.ajax({
+        type: 'POST',
+        url: '<?= site_url('Crud/cancelPasangBan')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -695,13 +768,35 @@
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
-            subTotal(key);
+            $('#form-detail-pemasangan')[0].reset();
+            tbDetPsg(key);
           }
           else
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
+    function cancelDtLps()
+    {
+      key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
+      $.ajax({
+        type: 'POST',
+        url: '<?= site_url('Crud/cancelLepasBan')?>',
+        data: $('form').serialize(),
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+            $('#form-detail-pelepasan')[0].reset();
+            tbDetLps(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
           }
         }
       });

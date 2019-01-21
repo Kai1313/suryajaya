@@ -1214,7 +1214,7 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
-	//Transaksi Pembelian Barang/Spare Part
+	//Transaksi Pembelian Ban
 	public function addBeliBan()
 	{
 		$ins = array(
@@ -1338,6 +1338,363 @@ class Crud extends CI_Controller
 		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pembelian Barang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	//Transaksi Pemasangan Ban
+	public function addPasangBan()
+	{
+		$getBan = $this->db->get_where('master_ban',array('kode_ban'=>$this->input->post('kode_ban_pasang')))->row();
+		$stsBan = $this->input->post('status_pasang');
+		switch($stsBan)
+		{
+			case '0':
+			$getStok = $getBan->stok_baru;
+			break;
+			case '1':
+			$getStok = $getBan->stok_bekas;
+			break;
+			case '2':
+			$getStok = $getBan->stok_vulkanisir;
+			break;
+			default:
+			break;
+		}
+		if($getStok < $this->input->post('qty_pasang'))
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$ins = array(
+				'no_pemasangan'=>$this->input->post('no_pemasangan'),
+				'kode_ban'=>$this->input->post('kode_ban_pasang'),
+				'qty_pasang'=>$this->input->post('qty_pasang'),
+				'status_pasang'=>$this->input->post('status_pasang')
+			);
+			$this->db->insert('trx_pasang_ban_det',$ins);
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Memasang Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Memasang Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function rmvPasangBan($key)
+	{
+		$this->db->delete('trx_pasang_ban_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Pasang Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pasang Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function savePasangBan()
+	{
+		$getSts = $this->db->get_where('trx_pasang_ban',array('no_pemasangan'=>$this->input->post('no_pemasangan')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
+				'bengkel_pemasangan'=>$this->input->post('bengkel_pemasangan'),
+				'tgl_pemasangan'=>$this->input->post('tgl_pemasangan'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_pasang_ban',$upd,array('no_pemasangan'=>$this->input->post('no_pemasangan')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$detAll = $this->db->get_where('trx_pasang_ban_det',array('no_pemasangan'=>$this->input->post('no_pemasangan')))->result();
+				foreach ($detAll as $det)
+				{
+					$stsBan = $det->status_pasang;
+					switch ($stsBan)
+					{
+						case '0':
+							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
+							$upStok = ($getStok->stok_baru*1)-($det->qty_pasang*1);
+							$upPsg = ($getStok->stok_pasang*1)+($det->qty_pasang*1);
+							$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+							break;
+						case '1':
+							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_bekas;
+							$upStok = ($getStok->stok_bekas*1)-($det->qty_pasang*1);
+							$upPsg = ($getStok->stok_pasang*1)+($det->qty_pasang*1);
+							$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+							break;
+						case '2':
+							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_vulkanisir;
+							$upStok = ($getStok->stok_vulkanisir*1)-($det->qty_pasang*1);
+							$upPsg = ($getStok->stok_pasang*1)+($det->qty_pasang*1);
+							$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+							break;
+						default:
+							break;
+					}
+					$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
+				}
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Pemasangan Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Pemasangan Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelPasangBan()
+	{
+		$getSts = $this->db->get_where('trx_pasang_ban',array('no_pemasangan'=>$this->input->post('no_pemasangan')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$detAll = $this->db->get_where('trx_pasang_ban_det',array('no_pemasangan'=>$this->input->post('no_pemasangan')))->result();
+			foreach ($detAll as $det)
+			{
+				$stsBan = $det->status_pasang;
+				switch ($stsBan)
+				{
+					case '0':
+						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
+						$upStok = ($getStok->stok_baru*1)+($det->qty_pasang*1);
+						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
+						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+						break;
+					case '1':
+						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_bekas;
+						$upStok = ($getStok->stok_bekas*1)+($det->qty_pasang*1);
+						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
+						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+						break;
+					case '2':
+						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_vulkanisir;
+						$upStok = ($getStok->stok_vulkanisir*1)+($det->qty_pasang*1);
+						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
+						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+						break;
+					default:
+						break;
+				}
+				$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
+			}
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_pasang_ban',$can,array('no_pemasangan'=>$this->input->post('no_pemasangan')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Pemasangan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pemasangan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	//Transaksi Pelepasan Ban
+	public function addLepasBan()
+	{
+		$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$this->input->post('kode_ban_lepas')))->row()->stok_pasang;
+		if($getStok < $this->input->post('qty_lepas'))
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$ins = array(
+				'no_pelepasan'=>$this->input->post('no_pelepasan'),
+				'kode_ban'=>$this->input->post('kode_ban_lepas'),
+				'qty_lepas'=>$this->input->post('qty_lepas'),
+				'status_lepas'=>$this->input->post('status_lepas')
+			);
+			$this->db->insert('trx_lepas_ban_det',$ins);
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Melepas Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Melepas Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function rmvLepasBan($key)
+	{
+		$this->db->delete('trx_lepas_ban_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Lepas Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Lepas Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveLepasBan()
+	{
+		$getSts = $this->db->get_where('trx_lepas_ban',array('no_pelepasan'=>$this->input->post('no_pelepasan')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
+				'bengkel_pelepasan'=>$this->input->post('bengkel_pelepasan'),
+				'tgl_pelepasan'=>$this->input->post('tgl_pelepasan'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_lepas_ban',$upd,array('no_pelepasan'=>$this->input->post('no_pelepasan')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$detAll = $this->db->get_where('trx_lepas_ban_det',array('no_pelepasan'=>$this->input->post('no_pelepasan')))->result();
+				foreach ($detAll as $det)
+				{
+					$stsBan = $det->status_lepas;
+					switch ($stsBan)
+					{
+						case '0':
+							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
+							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
+							$upStok = ($getStok->stok_bekas*1)+($det->qty_lepas*1);
+							$upd = array('stok_bekas'=>$upStok,'stok_pasang'=>$upLps);
+							break;
+						case '1':
+							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
+							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
+							$upStok = ($getStok->stok_vulkanisir*1)+($det->qty_lepas*1);
+							$upd = array('stok_vulkanisir'=>$upStok,'stok_pasang'=>$upLps);
+							break;
+						case '2':
+							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
+							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
+							$upStok = ($getStok->stok_afkir*1)+($det->qty_lepas*1);
+							$upd = array('stok_afkir'=>$upStok,'stok_pasang'=>$upLps);
+							break;
+						default:
+							break;
+					}
+					$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
+				}
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Pelepasan Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Pelepasan Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelLepasBan()
+	{
+		$getSts = $this->db->get_where('trx_lepas_ban',array('no_pelepasan'=>$this->input->post('no_pelepasan')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$detAll = $this->db->get_where('trx_lepas_ban_det',array('no_pelepasan'=>$this->input->post('no_pelepasan')))->result();
+			foreach ($detAll as $det)
+			{
+				$stsBan = $det->status_lepas;
+				switch ($stsBan)
+				{
+					case '0':
+						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
+						$upLps = ($getStok->stok_pasang*1)+($det->qty_lepas*1);
+						$upStok = ($getStok->stok_bekas*1)-($det->qty_lepas*1);
+						$upd = array('stok_bekas'=>$upStok,'stok_pasang'=>$upLps);
+						break;
+					case '1':
+						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
+						$upLps = ($getStok->stok_pasang*1)+($det->qty_lepas*1);
+						$upStok = ($getStok->stok_vulkanisir*1)-($det->qty_lepas*1);
+						$upd = array('stok_vulkanisir'=>$upStok,'stok_pasang'=>$upLps);
+						break;
+					case '2':
+						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
+						$upLps = ($getStok->stok_pasang*1)+($det->qty_lepas*1);
+						$upStok = ($getStok->stok_afkir*1)-($det->qty_lepas*1);
+						$upd = array('stok_afkir'=>$upStok,'stok_pasang'=>$upLps);
+						break;
+					default:
+						break;
+				}
+				$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
+			}
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_lepas_ban',$can,array('no_pelepasan'=>$this->input->post('no_pelepasan')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Pelepasan Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pelepasan Ban</h4>
       </div>'
 		 ;
 		echo json_encode($data);
