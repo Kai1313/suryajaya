@@ -289,7 +289,7 @@
                     </div>
                     <div class="form-group">
                       <label>Ongkos Angkut Bruto 1</label>
-                      <input type="text" name="ongkos_bruto" class="form-control">
+                      <input type="text" name="ongkos_bruto" class="form-control chgbrutobrgkt">
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-12">
@@ -302,8 +302,8 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label>Ongkos Angkut Bruto 1</label>
-                      <input type="text" name="ongkos_bruto" class="form-control">
+                      <label>Tambah Borong 1</label>
+                      <input type="text" name="tambah_borong_a" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -345,7 +345,7 @@
                     </div>
                     <div class="form-group">
                       <label>Ongkos Angkut Bruto 2</label>
-                      <input type="text" name="ongkos_bruto_2" class="form-control">
+                      <input type="text" name="ongkos_bruto_2" class="form-control chgbrutobrgkt">
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-12">
@@ -358,8 +358,8 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label>Ongkos Angkut Bruto 2</label>
-                      <input type="text" name="ongkos_bruto_2" class="form-control">
+                      <label>Tambah Borong 2</label>
+                      <input type="text" name="tambah_borong_b" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -443,7 +443,7 @@
                     </div>
                     <div class="form-group">
                       <label>Ongkos Angkut Bruto 3</label>
-                      <input type="text" name="ongkos_bruto_3" class="form-control">
+                      <input type="text" name="ongkos_bruto_3" class="form-control chgbrutokmb">
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-12">
@@ -456,8 +456,8 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label>Ongkos Angkut Bruto 3</label>
-                      <input type="text" name="ongkos_bruto_3" class="form-control">
+                      <label>Tambah Borong 3</label>
+                      <input type="text" name="tambah_borong_c" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -499,7 +499,7 @@
                     </div>
                     <div class="form-group">
                       <label>Ongkos Angkut Bruto 4</label>
-                      <input type="text" name="ongkos_bruto_4" class="form-control">
+                      <input type="text" name="ongkos_bruto_4" class="form-control chgbrutokmb">
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-12">
@@ -512,8 +512,8 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label>Ongkos Angkut Bruto 4</label>
-                      <input type="text" name="ongkos_bruto_4" class="form-control">
+                      <label>Tambah Borong 4</label>
+                      <input type="text" name="tambah_borong_d" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -706,6 +706,14 @@
         autoclose: true,
         format: 'yyyy-m-d'
       });
+      $('#tgl_berangkat').datepicker({
+        autoclose: true,
+        format: 'yyyy-m-d'
+      });
+      $('#tgl_kembali').datepicker({
+        autoclose: true,
+        format: 'yyyy-m-d'
+      });
       $('#tgl_bon_kota').datepicker({
         autoclose: true,
         format: 'yyyy-m-d'
@@ -733,7 +741,13 @@
       bonsakuchg();
       beratBrgkt();
       beratKmb();
+      brutoBrgkt();
+      brutoKmb();
       $('#berat_jenis').select2({placeholder: 'Pilih Berat Jenis'});
+      $('#borSopir').select2({placeholder: 'Pilih Salah Satu'});
+      $('#borSopir2').select2({placeholder: 'Pilih Salah Satu'});
+      $('#borSopir3').select2({placeholder: 'Pilih Salah Satu'});
+      $('#borSopir4').select2({placeholder: 'Pilih Salah Satu'});
       dropkendaraan();
       dropsopir();
       dropkernet();
@@ -750,7 +764,7 @@
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/gen_noKasBonSopir')?>',
+        url: '<?= site_url('Crud/gen_noKasBonKantor')?>',
         dataType: 'JSON',
         success: function(data)
         {
@@ -1094,7 +1108,7 @@
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/listKasBonSopir')?>",
+          "url": "<?php echo site_url('Datatables/listKasBonKantor')?>",
           "type": "POST",
           },
         "columnDefs": [
@@ -1112,7 +1126,7 @@
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/getKasBonSopir/')?>'+id,
+        url: '<?= site_url('Crud/getKasBonKantor/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
@@ -1121,8 +1135,6 @@
           $('[name="tgl_bon"]').val(data.tgl_bon);
           $('[name="nota_toko"]').val(data.nota_toko);
           $('#dropSupplier').val(data.kode_supplier).trigger('change');
-          tbDetBeli(key);
-          subTotal(key);
           $('#newBtn').prop('disabled',true);
           $('#modal-edit').modal('hide');
         }
@@ -1174,6 +1186,34 @@
       $('.chgberatkmb').on('input', function()
       {
         hitungberatkmb_();
+      });
+    }
+    function hitungbrutobrgkt_()
+    {
+      brutoA = $('[name="ongkos_bruto"]').val();
+      brutoB = $('[name="ongkos_bruto_2"]').val();
+      subBruto = parseFloat(brutoA)+parseFloat(brutoB);
+      $('[name="sub_bruto"]').val(subBruto);
+    }
+    function brutoBrgkt()
+    {
+      $('.chgbrutobrgkt').on('input', function()
+      {
+        hitungbrutobrgkt_();
+      });
+    }
+    function hitungbrutokmb_()
+    {
+      brutoA = $('[name="ongkos_bruto_3"]').val();
+      brutoB = $('[name="ongkos_bruto_4"]').val();
+      subBruto = parseFloat(brutoA)+parseFloat(brutoB);
+      $('[name="sub_bruto_b"]').val(subBruto);
+    }
+    function brutoKmb()
+    {
+      $('.chgbrutokmb').on('input', function()
+      {
+        hitungbrutokmb_();
       });
     }
   </script>

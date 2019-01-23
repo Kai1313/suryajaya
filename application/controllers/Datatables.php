@@ -40,6 +40,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarKasBonSopir','listKasBonSpr');
 		$this->load->model('Datatables/search/SearchDaftarPemasanganBan','listPsgBan');
 		$this->load->model('Datatables/search/SearchDaftarPelepasanBan','listLpsBan');
+		$this->load->model('Datatables/search/SearchDaftarKasBonKantor','listKasBonKtr');
 	}
 
 	//Data Cari Transaksi
@@ -444,6 +445,33 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->listKasBonSpr->count_all(),
 				"recordsFiltered" => $this->listKasBonSpr->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function listKasBonKantor()
+	{
+		$list = $this->listKasBonKtr->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_bon;
+			$row[] = $dat->tgl_bon;
+			$row[] = $dat->nopol;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihKasBon('."'".$dat->no_bon."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listKasBonKtr->count_all(),
+				"recordsFiltered" => $this->listKasBonKtr->count_filtered(),
 				"data" => $data,
 			);
 		echo json_encode($output);

@@ -263,6 +263,24 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noKasBonKantor()
+	{
+		$res = $this->gen_num_('trx_kas_bon_kantor','no_bon','AS');
+		$check = $this->db->get_where('trx_kas_bon_kantor',array('no_bon'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_kas_bon_kantor','no_bon','AS');
+		}
+		$crt = array(
+			'no_bon'=>$res,
+			'tgl_bon'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_kas_bon_kantor',$crt);
+		$data['no_bon'] = $res;
+		echo json_encode($data);
+	}
+
 	public function gen_noPasangBan()
 	{
 		$res = $this->gen_num_('trx_pasang_ban','no_pemasangan','PSG');
