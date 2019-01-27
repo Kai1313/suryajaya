@@ -317,6 +317,24 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noTagihan()
+	{
+		$res = $this->gen_num_('trx_tagihan','no_tagihan','SJT');
+		$check = $this->db->get_where('trx_tagihan',array('no_tagihan'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_tagihan','no_tagihan','SJT');
+		}
+		$crt = array(
+			'no_tagihan'=>$res,
+			'tgl_tagihan'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_tagihan',$crt);
+		$data['no_tagihan'] = $res;
+		echo json_encode($data);
+	}
+
 	//CRUD Master Barang
 	public function addBarang()
 	{
@@ -2525,6 +2543,153 @@ class Crud extends CI_Controller
 		 ;
 		echo json_encode($data);
 	}
+
+	//Transaksi Kas Bon Kantor
+	public function saveKasBonKantor()
+	{
+		$getSts = $this->db->get_where('trx_kas_bon_kantor',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
+				'tgl_bon'=>$this->input->post('tgl_bon'),
+				'tgl_berangkat'=>$this->input->post('tgl_berangkat'),
+				'tgl_kembali'=>$this->input->post('tgl_kembali'),
+				'kode_sopir'=>$this->input->post('kode_sopir'),
+				'kode_kernet'=>$this->input->post('kode_kernet'),
+				'kode_sopir'=>$this->input->post('kode_sopir'),
+				'tab_sopir'=>$this->input->post('tab_sopir'),
+				'berat_jenis'=>$this->input->post('berat_jenis'),
+				'ket_kasbon'=>$this->input->post('ket_kasbon'),
+				'uang_saku_kota'=>$this->input->post('uang_saku_kota'),
+				'uang_saku_a'=>$this->input->post('uang_saku_a'),
+				'uang_saku_b'=>$this->input->post('uang_saku_b'),
+				'uang_saku_c'=>$this->input->post('uang_saku_c'),
+				'uang_saku_d'=>$this->input->post('uang_saku_d'),
+				'tgl_bon_a'=>$this->input->post('tgl_bon_a'),
+				'tgl_bon_b'=>$this->input->post('tgl_bon_b'),
+				'tgl_bon_c'=>$this->input->post('tgl_bon_c'),
+				'tgl_bon_d'=>$this->input->post('tgl_bon_d'),
+				'sub_uang_saku'=>$this->input->post('sub_uang_saku'),
+				'uang_solar'=>$this->input->post('uang_solar'),
+				'tgl_solar'=>$this->input->post('tgl_solar'),
+				'nama_pom'=>$this->input->post('nama_pom'),
+				'sub_bonall'=>$this->input->post('sub_bonall'),
+				'tgl_muat'=>$this->input->post('tgl_muat'),
+				'tgl_muat_b'=>$this->input->post('tgl_muat_b'),
+				'tgl_bongkar'=>$this->input->post('tgl_bongkar'),
+				'tgl_bongkar_b'=>$this->input->post('tgl_bongkar_b'),
+				'uang_makan'=>$this->input->post('uang_makan'),
+				'uang_makan_b'=>$this->input->post('uang_makan_b'),
+				'kode_customer_a'=>($this->input->post('kode_customer_a')!='')?$this->input->post('kode_customer_a'):NULL,
+				'kode_customer_b'=>($this->input->post('kode_customer_b')!='')?$this->input->post('kode_customer_b'):NULL,
+				'kode_customer_c'=>($this->input->post('kode_customer_c')!='')?$this->input->post('kode_customer_c'):NULL,
+				'kode_customer_d'=>($this->input->post('kode_customer_d')!='')?$this->input->post('kode_customer_d'):NULL,
+				'kode_customer_e'=>($this->input->post('kode_customer_e')!='')?$this->input->post('kode_customer_e'):NULL,
+				'kode_customer_f'=>($this->input->post('kode_customer_f')!='')?$this->input->post('kode_customer_f'):NULL,
+				'kode_customer_g'=>($this->input->post('kode_customer_g')!='')?$this->input->post('kode_customer_g'):NULL,
+				'kode_customer_h'=>($this->input->post('kode_customer_h')!='')?$this->input->post('kode_customer_h'):NULL,
+				'jenis_muatan_a'=>$this->input->post('jenis_muatan_a'),
+				'jenis_muatan_b'=>$this->input->post('jenis_muatan_b'),
+				'jenis_muatan_c'=>$this->input->post('jenis_muatan_c'),
+				'jenis_muatan_d'=>$this->input->post('jenis_muatan_d'),
+				'berat_muatan_a'=>$this->input->post('berat_muatan_a'),
+				'berat_muatan_b'=>$this->input->post('berat_muatan_b'),
+				'berat_muatan_c'=>$this->input->post('berat_muatan_c'),
+				'berat_muatan_d'=>$this->input->post('berat_muatan_d'),
+				'surat_jalan_a'=>$this->input->post('surat_jalan_a'),
+				'surat_jalan_b'=>$this->input->post('surat_jalan_b'),
+				'surat_jalan_c'=>$this->input->post('surat_jalan_c'),
+				'surat_jalan_d'=>$this->input->post('surat_jalan_d'),
+				'sub_beratmuat'=>$this->input->post('sub_beratmuat'),
+				'sub_beratmuat_b'=>$this->input->post('sub_beratmuat_b'),
+				'solar_berangkat'=>$this->input->post('solar_berangkat'),
+				'solar_kembali'=>$this->input->post('solar_kembali'),
+				'bantuan_a'=>$this->input->post('bantuan_a'),
+				'bantuan_b'=>$this->input->post('bantuan_b'),
+				'bantuan_c'=>$this->input->post('bantuan_c'),
+				'bantuan_d'=>$this->input->post('bantuan_d'),
+				'tambah_a'=>$this->input->post('tambah_a'),
+				'tambah_b'=>$this->input->post('tambah_b'),
+				'tambah_c'=>$this->input->post('tambah_c'),
+				'tambah_d'=>$this->input->post('tambah_d'),
+				'ongkos_angkut'=>$this->input->post('ongkos_angkut'),
+				'ongkos_angkut_2'=>$this->input->post('ongkos_angkut_2'),
+				'ongkos_angkut_3'=>$this->input->post('ongkos_angkut_3'),
+				'ongkos_angkut_4'=>$this->input->post('ongkos_angkut_4'),
+				'ongkos_bruto'=>$this->input->post('ongkos_bruto'),
+				'ongkos_bruto_2'=>$this->input->post('ongkos_bruto_2'),
+				'ongkos_bruto_3'=>$this->input->post('ongkos_bruto_3'),
+				'ongkos_bruto_4'=>$this->input->post('ongkos_bruto_4'),
+				'borong_sopir'=>$this->input->post('borong_sopir'),
+				'borong_sopir_2'=>$this->input->post('borong_sopir_2'),
+				'borong_sopir_3'=>$this->input->post('borong_sopir_3'),
+				'borong_sopir_4'=>$this->input->post('borong_sopir_4'),
+				'tambah_borong_a'=>$this->input->post('tambah_borong_a'),
+				'tambah_borong_b'=>$this->input->post('tambah_borong_b'),
+				'tambah_borong_c'=>$this->input->post('tambah_borong_c'),
+				'tambah_borong_d'=>$this->input->post('tambah_borong_d'),
+				'sub_bruto'=>$this->input->post('sub_bruto'),
+				'sub_bruto_b'=>$this->input->post('sub_bruto_b'),
+				'uang_sopir_a'=>$this->input->post('uang_sopir_a'),
+				'uang_sopir_b'=>$this->input->post('uang_sopir_b'),
+				'uang_sopir_c'=>$this->input->post('uang_sopir_c'),
+				'uang_sopir_d'=>$this->input->post('uang_sopir_d'),
+				'koreksi_sopir_a'=>$this->input->post('koreksi_sopir_a'),
+				'koreksi_sopir_b'=>$this->input->post('koreksi_sopir_b'),
+				'koreksi_sopir_c'=>$this->input->post('koreksi_sopir_c'),
+				'koreksi_sopir_d'=>$this->input->post('koreksi_sopir_d'),
+				'sub_uangsopir'=>$this->input->post('sub_uangsopir'),
+				'sub_koreksi'=>$this->input->post('sub_koreksi'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_kas_bon_kantor',$upd,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Kas Bon Kantor</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Kas Bon Kantor</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelKasBonKantor()
+	{
+		$getSts = $this->db->get_where('trx_kas_bon_kantor',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_kas_bon_kantor',$can,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Kas Bon Kantor</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Kas Bon Kantor</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
 	
 	//Get Data Pencarian
 	public function getBeliBrg($key)
@@ -2602,6 +2767,12 @@ class Crud extends CI_Controller
 	public function getKasBonSopir($key)
 	{
 		$data = $this->db->get_where('trx_kas_bon_sopir',array('no_bon'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getKasBonKantor($key)
+	{
+		$data = $this->db->get_where('trx_kas_bon_kantor',array('no_bon'=>$key))->row();
 		echo json_encode($data);
 	}
 }

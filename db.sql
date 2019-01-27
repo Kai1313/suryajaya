@@ -554,6 +554,8 @@ CREATE TABLE IF NOT EXISTS `trx_kas_bon_kantor` (
   `ongkos_bruto_2` decimal(10,2) DEFAULT NULL,
   `ongkos_bruto_3` decimal(10,2) DEFAULT NULL,
   `ongkos_bruto_4` decimal(10,2) DEFAULT NULL,
+  `sub_bruto` decimal(10,2) DEFAULT NULL,
+  `sub_bruto_b` decimal(10,2) DEFAULT NULL,
   `borong_sopir` char(1) DEFAULT NULL,
   `borong_sopir_2` char(1) DEFAULT NULL,
   `borong_sopir_3` char(1) DEFAULT NULL,
@@ -614,10 +616,11 @@ CREATE TABLE IF NOT EXISTS `trx_kas_bon_kantor` (
   CONSTRAINT `FK_trx_kas_bon_kantor_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_kas_bon_kantor: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_kas_bon_kantor: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_kas_bon_kantor` DISABLE KEYS */;
-INSERT INTO `trx_kas_bon_kantor` (`no_bon`, `tgl_bon`, `tgl_berangkat`, `tgl_kembali`, `kode_kendaraan`, `kode_sopir`, `kode_kernet`, `tab_sopir`, `berat_jenis`, `ket_kasbon`, `uang_saku_kota`, `tgl_bon_kota`, `uang_saku_a`, `tgl_bon_a`, `uang_saku_b`, `tgl_bon_b`, `uang_saku_c`, `tgl_bon_c`, `uang_saku_d`, `tgl_bon_d`, `sub_uang_saku`, `uang_solar`, `tgl_solar`, `nama_pom`, `sub_bonall`, `tgl_muat`, `tgl_muat_b`, `tgl_bongkar`, `tgl_bongkar_b`, `uang_makan`, `uang_makan_b`, `kode_customer_a`, `kode_customer_b`, `kode_customer_c`, `kode_customer_d`, `kode_customer_e`, `kode_customer_f`, `kode_customer_g`, `kode_customer_h`, `jenis_muatan_a`, `jenis_muatan_b`, `jenis_muatan_c`, `jenis_muatan_d`, `berat_muatan_a`, `berat_muatan_b`, `berat_muatan_c`, `berat_muatan_d`, `ongkos_angkut`, `ongkos_angkut_2`, `ongkos_angkut_3`, `ongkos_angkut_4`, `ongkos_bruto`, `ongkos_bruto_2`, `ongkos_bruto_3`, `ongkos_bruto_4`, `borong_sopir`, `borong_sopir_2`, `borong_sopir_3`, `borong_sopir_4`, `tambah_borong_a`, `tambah_borong_b`, `tambah_borong_c`, `tambah_borong_d`, `surat_jalan_a`, `surat_jalan_b`, `surat_jalan_c`, `surat_jalan_d`, `sub_beratmuat`, `sub_beratmuat_b`, `solar_berangkat`, `solar_kembali`, `bantuan_a`, `bantuan_b`, `bantuan_c`, `bantuan_d`, `tambah_a`, `tambah_b`, `tambah_c`, `tambah_d`, `uang_sopir_a`, `uang_sopir_b`, `uang_sopir_c`, `uang_sopir_d`, `koreksi_sopir_a`, `koreksi_sopir_b`, `koreksi_sopir_c`, `koreksi_sopir_d`, `sub_uangsopir`, `sub_koreksi`, `data_sts`) VALUES
-	('AS1901-000001', '2019-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0');
+INSERT INTO `trx_kas_bon_kantor` (`no_bon`, `tgl_bon`, `tgl_berangkat`, `tgl_kembali`, `kode_kendaraan`, `kode_sopir`, `kode_kernet`, `tab_sopir`, `berat_jenis`, `ket_kasbon`, `uang_saku_kota`, `tgl_bon_kota`, `uang_saku_a`, `tgl_bon_a`, `uang_saku_b`, `tgl_bon_b`, `uang_saku_c`, `tgl_bon_c`, `uang_saku_d`, `tgl_bon_d`, `sub_uang_saku`, `uang_solar`, `tgl_solar`, `nama_pom`, `sub_bonall`, `tgl_muat`, `tgl_muat_b`, `tgl_bongkar`, `tgl_bongkar_b`, `uang_makan`, `uang_makan_b`, `kode_customer_a`, `kode_customer_b`, `kode_customer_c`, `kode_customer_d`, `kode_customer_e`, `kode_customer_f`, `kode_customer_g`, `kode_customer_h`, `jenis_muatan_a`, `jenis_muatan_b`, `jenis_muatan_c`, `jenis_muatan_d`, `berat_muatan_a`, `berat_muatan_b`, `berat_muatan_c`, `berat_muatan_d`, `ongkos_angkut`, `ongkos_angkut_2`, `ongkos_angkut_3`, `ongkos_angkut_4`, `ongkos_bruto`, `ongkos_bruto_2`, `ongkos_bruto_3`, `ongkos_bruto_4`, `sub_bruto`, `sub_bruto_b`, `borong_sopir`, `borong_sopir_2`, `borong_sopir_3`, `borong_sopir_4`, `tambah_borong_a`, `tambah_borong_b`, `tambah_borong_c`, `tambah_borong_d`, `surat_jalan_a`, `surat_jalan_b`, `surat_jalan_c`, `surat_jalan_d`, `sub_beratmuat`, `sub_beratmuat_b`, `solar_berangkat`, `solar_kembali`, `bantuan_a`, `bantuan_b`, `bantuan_c`, `bantuan_d`, `tambah_a`, `tambah_b`, `tambah_c`, `tambah_d`, `uang_sopir_a`, `uang_sopir_b`, `uang_sopir_c`, `uang_sopir_d`, `koreksi_sopir_a`, `koreksi_sopir_b`, `koreksi_sopir_c`, `koreksi_sopir_d`, `sub_uangsopir`, `sub_koreksi`, `data_sts`) VALUES
+	('AS1901-000001', '2019-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0'),
+	('AS1901-000002', '2019-01-18', '2019-01-28', '2019-01-31', 2, 'DRV0001', 'DRV0002', 1000000.00, '0', 'tes', 200000.00, NULL, 100000, '2019-01-29', 100000.00, '2019-01-30', 0.00, '2019-01-31', 0.00, '2019-01-31', 0.00, 10000.00, '2019-01-31', 'Pertamini', 0.00, '2019-01-28', '0000-00-00', '2019-01-31', '0000-00-00', 100000.00, 0.00, 'CUST0001', 'CUST0002', NULL, NULL, NULL, NULL, NULL, NULL, 'Keramik', '', '', '', 20.00, 0.00, 0.00, 0.00, 20.00, 0.00, 0.00, 0.00, 40000.00, 0.00, 0.00, 0.00, 40000.00, 0.00, '0', '', '', '', 0.00, 0.00, 0.00, 0.00, 'SJ00001', '', '', '', 20.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '1');
 /*!40000 ALTER TABLE `trx_kas_bon_kantor` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_kas_bon_sopir
@@ -920,6 +923,22 @@ CREATE TABLE IF NOT EXISTS `trx_retur_pakai_barang_det` (
 INSERT INTO `trx_retur_pakai_barang_det` (`det_id`, `no_retur`, `kode_barang`, `qty_retur`, `jumlah`) VALUES
 	(1, 'RJL1901-000001', 'BRG0001', 2.00, 2.00);
 /*!40000 ALTER TABLE `trx_retur_pakai_barang_det` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_tagihan
+DROP TABLE IF EXISTS `trx_tagihan`;
+CREATE TABLE IF NOT EXISTS `trx_tagihan` (
+  `no_tagihan` char(20) NOT NULL,
+  `tgl_tagihan` date DEFAULT NULL,
+  `kode_customer` char(10) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`no_tagihan`),
+  KEY `FK_trx_tagihan_master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_tagihan_master_customer` FOREIGN KEY (`kode_customer`) REFERENCES `master_customer` (`kode_customer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_tagihan: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_tagihan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_tagihan` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

@@ -44,6 +44,33 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Cari Transaksi
+	public function listTagihan()
+	{
+		$list = $this->listTgh->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_tagihan;
+			$row[] = $dat->tgl_tagihan;
+			$row[] = $dat->nama_customer ;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihTagihan('."'".$dat->no_tagihan."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listTgh->count_all(),
+				"recordsFiltered" => $this->listTgh->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function listPasangBan()
 	{
 		$list = $this->listPsgBan->get_datatables();
