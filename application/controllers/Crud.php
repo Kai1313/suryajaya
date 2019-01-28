@@ -755,6 +755,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getDropKasBonKantor()
+	{
+		$data = $this->db->get_where('trx_kas_bon_kantor',array('data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
 	//Pick Data From Dropdown
 	public function pickDropSupplier($key)
 	{

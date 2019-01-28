@@ -272,81 +272,114 @@
   <script>
     $(function ()
     {
-      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'0';
-      $('#tgl_upah').datepicker({
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'0';
+      $('#tgl_tagihan').datepicker({
         autoclose: true,
         format: 'yyyy-m-d'
       });
-      dropkaryawan();
-      $('#dropKaryawan').change(function()
+      dropcustomer();
+      dropbon();
+      $('#dropBon').change(function()
       {
-        pickKaryawan($('#dropKaryawan option:selected').val());
+        pickBon($('#dropBon option:selected').val());
       });
-      inputchg();
     })
-    function newUpah()
+    function newTagihan()
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/gen_noKuitansiUpah')?>',
+        url: '<?= site_url('Crud/gen_noTagihan')?>',
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="no_kuitansi"]').val(data.no_kuitansi);
+          $('[name="no_tagihan"]').val(data.no_tagihan);
           $('#newBtn').prop('disabled',true);
         }
       });
     }
-    function dropkaryawan()
+    function dropcustomer()
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getDropKaryawan')?>",
+        url : "<?php echo site_url('Crud/getDropCustomer')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {   
-          var select = document.getElementById('dropKaryawan');
+          var select = document.getElementById('dropCustomer');
           var option;
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_karyawan']
-            option.text = data[i]['kode_karyawan']+' - '+data[i]['nama_karyawan'];
+            option.value = data[i]['kode_customer']
+            option.text = data[i]['kode_customer']+' - '+data[i]['nama_customer'];
             select.add(option);
           }
-          $('#dropKaryawan').select2({placeholder: 'Pilih Karyawan'});
+          $('#dropCustomer').select2({placeholder: 'Pilih Customer'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
-          alert('Error get karyawan data');
+          alert('Error get customer data');
         }
       });
     }
-    function pickKaryawan(key)
+    function dropbon()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropKasBonKantor')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropBon');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['no_bon']
+            option.text = data[i]['no_bon'];
+            select.add(option);
+          }
+          $('#dropBon').select2({placeholder: 'Pilih Bon'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get bon data');
+        }
+      });
+    }
+    function pickBon(key)
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/pickDropKaryawan/')?>'+key,
+        url: '<?= site_url('Crud/pickDropKasBonKantor/')?>'+key,
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="upah_harian"]').val(data.upah_harian);
-          $('[name="makan_harian"]').val(data.upah_makan);
-          $('[name="upah_lembur"]').val(data.upah_lembur);
-          $('[name="upah_minggu"]').val(data.upah_hari_minggu);
-          $('[name="upah_haribesar"]').val(data.upah_hari_besar);
-          $('[name="upah_bulanan"]').val(data.gaji_bulanan);
-          $('[name="sisa_bon"]').val(data.jml_bon);
-          $('[name="min_lembur"]').val(data.min_jam_lembur);
+          if(data.kode_customer_a === cust)
+          {
+
+          }
+          if(data.kode_customer_c === cust)
+          {
+
+          }
+          if(data.kode_customer_e === cust)
+          {
+
+          }
+          if(data.kode_customer_g === cust)
+          {
+
+          }
         }
       });
     }
     function saveDt()
     {
-      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/saveBayarUpahKaryawan')?>',
+        url: '<?= site_url('Crud/saveTagihan')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -364,10 +397,10 @@
     }
     function cancelDt()
     {
-      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/cancelBayarUpahKaryawan')?>',
+        url: '<?= site_url('Crud/cancelTagihan')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -383,11 +416,11 @@
         }
       });
     }
-    function editUpah()
+    function editTagihan()
     {
       $('#modal-edit').modal('show');
-      $('.modal-title').text('Daftar Upah Karyawan');
-      table = $('#daftarUpah').DataTable({
+      $('.modal-title').text('Daftar Tagihan');
+      table = $('#daftarTagihan').DataTable({
         "info": false,
         "destroy": true,
         "responsive": true,
@@ -395,7 +428,7 @@
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/listUpahKaryawan')?>",
+          "url": "<?php echo site_url('Datatables/listTagihan')?>",
           "type": "POST",
           },
         "columnDefs": [
@@ -409,17 +442,17 @@
         ],
       });
     }
-    function pilihUpahKry(id)
+    function pilihTagihan(id)
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/getUpahKaryawan/')?>'+id,
+        url: '<?= site_url('Crud/getTagihan/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
-          key = data.no_kuitansi;
-          $('[name="no_kuitansi"]').val(data.no_kuitansi);
-          $('[name="tgl_upah"]').val(data.tgl_upah);
+          key = data.no_tagihan;
+          $('[name="no_tagihan"]').val(data.no_tagihan);
+          $('[name="tgl_tagihan"]').val(data.tgl_tagihan);
           $('#dropKaryawan').val(data.kode_karyawan).trigger('change');
           $('#newBtn').prop('disabled',true);
           $('#modal-edit').modal('hide');
