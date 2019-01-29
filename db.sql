@@ -538,10 +538,10 @@ CREATE TABLE IF NOT EXISTS `trx_kas_bon_kantor` (
   `kode_customer_f` char(10) DEFAULT NULL,
   `kode_customer_g` char(10) DEFAULT NULL,
   `kode_customer_h` char(10) DEFAULT NULL,
-  `jenis_muatan_a` char(10) DEFAULT NULL,
-  `jenis_muatan_b` char(10) DEFAULT NULL,
-  `jenis_muatan_c` char(10) DEFAULT NULL,
-  `jenis_muatan_d` char(10) DEFAULT NULL,
+  `jenis_muatan_a` char(100) DEFAULT NULL,
+  `jenis_muatan_b` char(100) DEFAULT NULL,
+  `jenis_muatan_c` char(100) DEFAULT NULL,
+  `jenis_muatan_d` char(100) DEFAULT NULL,
   `berat_muatan_a` decimal(10,2) DEFAULT NULL,
   `berat_muatan_b` decimal(10,2) DEFAULT NULL,
   `berat_muatan_c` decimal(10,2) DEFAULT NULL,
@@ -936,9 +936,36 @@ CREATE TABLE IF NOT EXISTS `trx_tagihan` (
   CONSTRAINT `FK_trx_tagihan_master_customer` FOREIGN KEY (`kode_customer`) REFERENCES `master_customer` (`kode_customer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_tagihan: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_tagihan: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_tagihan` DISABLE KEYS */;
+INSERT INTO `trx_tagihan` (`no_tagihan`, `tgl_tagihan`, `kode_customer`, `data_sts`) VALUES
+	('SJT1901-000001', '2019-01-29', NULL, '0'),
+	('SJT1901-000002', '2019-01-29', 'CUST0001', '1');
 /*!40000 ALTER TABLE `trx_tagihan` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_tagihan_det
+DROP TABLE IF EXISTS `trx_tagihan_det`;
+CREATE TABLE IF NOT EXISTS `trx_tagihan_det` (
+  `det_id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_tagihan` char(20) DEFAULT NULL,
+  `no_bon` char(20) DEFAULT NULL,
+  `nopol` char(20) DEFAULT NULL,
+  `surat_jalan` char(100) DEFAULT NULL,
+  `jenis_muatan` char(100) DEFAULT NULL,
+  `berat_muatan` decimal(10,2) DEFAULT NULL,
+  `ongkos_bruto` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`det_id`),
+  KEY `FK_trx_tagihan_det_trx_kas_bon_kantor` (`no_bon`),
+  KEY `FK_trx_tagihan_det_trx_tagihan` (`no_tagihan`),
+  CONSTRAINT `FK_trx_tagihan_det_trx_kas_bon_kantor` FOREIGN KEY (`no_bon`) REFERENCES `trx_kas_bon_kantor` (`no_bon`),
+  CONSTRAINT `FK_trx_tagihan_det_trx_tagihan` FOREIGN KEY (`no_tagihan`) REFERENCES `trx_tagihan` (`no_tagihan`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_tagihan_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_tagihan_det` DISABLE KEYS */;
+INSERT INTO `trx_tagihan_det` (`det_id`, `no_tagihan`, `no_bon`, `nopol`, `surat_jalan`, `jenis_muatan`, `berat_muatan`, `ongkos_bruto`) VALUES
+	(3, 'SJT1901-000002', 'AS1901-000002', 'B2345XS', 'SJ00001', 'Keramik', 20.00, 40000.00);
+/*!40000 ALTER TABLE `trx_tagihan_det` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

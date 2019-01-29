@@ -42,7 +42,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_tagihan" class="form-control pull-right" id="tgl_upah">
+                        <input type="text" name="tgl_tagihan" class="form-control pull-right" id="tgl_tagihan">
                       </div>
                     </div>
                     <div class="form-group">
@@ -197,7 +197,7 @@
                 <tfoot>
                   <tr>
                     <th colspan="6" class="text-center">Grand Total</th>
-                    <th class=""><span name="grand_total">0</span></th>
+                    <th class=""><span name="sub_total">0</span></th>
                   </tr>
                 </tfoot>
               </table>
@@ -273,6 +273,7 @@
     $(function ()
     {
       key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'0';
+      tbDetTagihan(key);
       $('#tgl_tagihan').datepicker({
         autoclose: true,
         format: 'yyyy-m-d'
@@ -349,27 +350,226 @@
     }
     function pickBon(key)
     {
+      cust = ($('#dropCustomer option:selected').val()!='')?$('#dropCustomer option:selected').val():'';
+      if(cust != '')
+      {
+        $.ajax({
+          type: 'GET',
+          url: '<?= site_url('Crud/pickDropKasBonKantor/')?>'+key,
+          dataType: 'JSON',
+          success: function(data)
+          {
+            $('[name="kendaraan"]').val(data.nopol);
+            if(data.kode_customer_a === cust)
+            {
+              $('[name="jenis_muat_a"]').val(data.jenis_muatan_a);
+              $('[name="surat_jalan_a"]').val(data.surat_jalan_a);
+              $('[name="berat_muat_a"]').val(data.berat_muatan_a);
+              $('[name="ongkos_muat_a"]').val(data.ongkos_bruto);
+            }
+            if(data.kode_customer_c === cust)
+            {
+              $('[name="jenis_muat_b"]').val(data.jenis_muatan_b);
+              $('[name="surat_jalan_b"]').val(data.surat_jalan_b);
+              $('[name="berat_muat_b"]').val(data.berat_muatan_b);
+              $('[name="ongkos_muat_b"]').val(data.ongkos_bruto_b);
+            }
+            if(data.kode_customer_e === cust)
+            {
+              $('[name="jenis_muat_c"]').val(data.jenis_muatan_c);
+              $('[name="surat_jalan_c"]').val(data.surat_jalan_c);
+              $('[name="berat_muat_c"]').val(data.berat_muatan_c);
+              $('[name="ongkos_muat_c"]').val(data.ongkos_bruto_c);
+            }
+            if(data.kode_customer_g === cust)
+            {
+              $('[name="jenis_muat_d"]').val(data.jenis_muatan_d);
+              $('[name="surat_jalan_d"]').val(data.surat_jalan_d);
+              $('[name="berat_muat_d"]').val(data.berat_muatan_d);
+              $('[name="ongkos_muat_d"]').val(data.ongkos_bruto_d);
+            }
+          }
+        });
+      }
+      else
+      {
+        alert('Belum Pilih Customer');
+      }
+    }
+    function tbDetTagihan(key)
+    {
+      table = $('#m_tagihan').DataTable({
+        "info": false,
+        "destroy": true,
+        "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+          "url": "<?php echo site_url('Datatables/detTagihan/')?>"+key,
+          "type": "POST",
+          },
+        "columnDefs": [
+          { 
+            "targets": [ 0 ],
+            "orderable": false,
+          },
+          {
+            "className": "text-center", "targets": ['_all']
+          }
+        ],
+      });
+    }
+    function subTotal(id)
+    {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/pickDropKasBonKantor/')?>'+key,
+        url: '<?= site_url('Crud/subTotalTagihan/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
-          if(data.kode_customer_a === cust)
+          $('[name="sub_total"]').text(data.subtotal);
+        }
+      });
+    }
+    function addA()
+    {
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
+      if(key!='')
+      {
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/addTagihanA')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
           {
-
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+              tbDetTagihan(key);
+              subTotal(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            }
           }
-          if(data.kode_customer_c === cust)
+        });
+      }
+      else
+      {
+        alert('No Tagihan Masih Kosong');
+      }
+    }
+    function addB()
+    {
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
+      if(key!='')
+      {
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/addTagihanB')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
           {
-
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+              tbDetTagihan(key);
+              subTotal(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            }
           }
-          if(data.kode_customer_e === cust)
+        });
+      }
+      else
+      {
+        alert('No Tagihan Masih Kosong');
+      }
+    }
+    function addC()
+    {
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
+      if(key!='')
+      {
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/addTagihanC')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
           {
-
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+              tbDetTagihan(key);
+              subTotal(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            }
           }
-          if(data.kode_customer_g === cust)
+        });
+      }
+      else
+      {
+        alert('No Tagihan Masih Kosong');
+      }
+    }
+    function addD()
+    {
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
+      if(key!='')
+      {
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/addTagihanD')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
           {
-
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+              tbDetTagihan(key);
+              subTotal(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            }
+          }
+        });
+      }
+      else
+      {
+        alert('No Tagihan Masih Kosong');
+      }
+    }
+    function remove(id)
+    {
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/rmvTagihan/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            tbDetTagihan(key);
+            subTotal(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
           }
         }
       });
@@ -453,7 +653,9 @@
           key = data.no_tagihan;
           $('[name="no_tagihan"]').val(data.no_tagihan);
           $('[name="tgl_tagihan"]').val(data.tgl_tagihan);
-          $('#dropKaryawan').val(data.kode_karyawan).trigger('change');
+          $('#dropCustomer').val(data.kode_customer).trigger('change');
+          tbDetTagihan(key);
+          subTotal(key);
           $('#newBtn').prop('disabled',true);
           $('#modal-edit').modal('hide');
         }

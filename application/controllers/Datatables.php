@@ -24,6 +24,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/details/DetReturPemakaianBarang','detReturPakaiBrg');
 		$this->load->model('Datatables/details/DetPemasanganBan','detPsgBan');
 		$this->load->model('Datatables/details/DetPelepasanBan','detLpsBan');
+		$this->load->model('Datatables/details/DetTagihan','detTgh');
 
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
@@ -41,6 +42,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarPemasanganBan','listPsgBan');
 		$this->load->model('Datatables/search/SearchDaftarPelepasanBan','listLpsBan');
 		$this->load->model('Datatables/search/SearchDaftarKasBonKantor','listKasBonKtr');
+		$this->load->model('Datatables/search/SearchDaftarTagihan','listTgh');
 	}
 
 	//Data Cari Transaksi
@@ -505,6 +507,34 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Detail Transaksi
+	public function detTagihan($key)
+	{
+		$list = $this->detTgh->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->no_bon;
+			$row[] = $dat->nopol;
+			$row[] = $dat->surat_jalan;
+			$row[] = $dat->jenis_muatan;
+			$row[] = $dat->berat_muatan;
+			$row[] = $dat->ongkos_bruto;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detTgh->count_all(),
+				"recordsFiltered" => $this->detTgh->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function detPasangBan($key)
 	{
 		$list = $this->detPsgBan->get_datatables($key);

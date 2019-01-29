@@ -810,6 +810,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function pickDropKasBonKantor($key)
+	{
+		$data = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_kas_bon_kantor a',array('a.no_bon'=>$key,'a.data_sts'=>'1'))->row();
+		echo json_encode($data);
+	}
+
 	//Transaksi Pembelian Barang/Spare Part
 	public function addBeliBarang()
 	{
@@ -2696,6 +2702,197 @@ class Crud extends CI_Controller
 		 ;
 		echo json_encode($data);
 	}
+
+	//Transaksi Tagihan
+	public function addTagihanA()
+	{
+		$ins = array(
+			'no_tagihan'=>$this->input->post('no_tagihan'),
+			'no_bon'=>$this->input->post('kode_bon'),
+			'nopol'=>$this->input->post('kendaraan'),
+			'surat_jalan'=>$this->input->post('surat_jalan_a'),
+			'jenis_muatan'=>$this->input->post('jenis_muat_a'),
+			'berat_muatan'=>$this->input->post('berat_muat_a'),
+			'ongkos_bruto'=>$this->input->post('ongkos_muat_a')
+		);
+		$this->db->insert('trx_tagihan_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Tagihan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Tagihan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function addTagihanB()
+	{
+		$ins = array(
+			'no_tagihan'=>$this->input->post('no_tagihan'),
+			'no_bon'=>$this->input->post('kode_bon'),
+			'nopol'=>$this->input->post('kendaraan'),
+			'surat_jalan'=>$this->input->post('surat_jalan_b'),
+			'jenis_muatan'=>$this->input->post('jenis_muat_b'),
+			'berat_muatan'=>$this->input->post('berat_muat_b'),
+			'ongkos_bruto'=>$this->input->post('ongkos_muat_b')
+		);
+		$this->db->insert('trx_tagihan_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Tagihan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Tagihan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function addTagihanC()
+	{
+		$ins = array(
+			'no_tagihan'=>$this->input->post('no_tagihan'),
+			'no_bon'=>$this->input->post('kode_bon'),
+			'nopol'=>$this->input->post('kendaraan'),
+			'surat_jalan'=>$this->input->post('surat_jalan_c'),
+			'jenis_muatan'=>$this->input->post('jenis_muat_c'),
+			'berat_muatan'=>$this->input->post('berat_muat_c'),
+			'ongkos_bruto'=>$this->input->post('ongkos_muat_c')
+		);
+		$this->db->insert('trx_tagihan_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Tagihan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Tagihan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function addTagihanD()
+	{
+		$ins = array(
+			'no_tagihan'=>$this->input->post('no_tagihan'),
+			'no_bon'=>$this->input->post('kode_bon'),
+			'nopol'=>$this->input->post('kendaraan'),
+			'surat_jalan'=>$this->input->post('surat_jalan_d'),
+			'jenis_muatan'=>$this->input->post('jenis_muat_d'),
+			'berat_muatan'=>$this->input->post('berat_muat_d'),
+			'ongkos_bruto'=>$this->input->post('ongkos_muat_d')
+		);
+		$this->db->insert('trx_tagihan_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Tagihan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Tagihan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function subTotalTagihan($key)
+	{
+		$data = $this->db->select('SUM(a.ongkos_bruto) as subtotal')->join('trx_tagihan b','b.no_tagihan = a.no_tagihan')->get_where('trx_tagihan_det a',array('a.no_tagihan'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function rmvTagihan($key)
+	{
+		$this->db->delete('trx_tagihan_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Tagihan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Tagihan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveTagihan()
+	{
+		$getSts = $this->db->get_where('trx_tagihan',array('no_tagihan'=>$this->input->post('no_tagihan')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_customer'=>$this->input->post('kode_customer'),
+				'tgl_tagihan'=>$this->input->post('tgl_tagihan'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_tagihan',$upd,array('no_tagihan'=>$this->input->post('no_tagihan')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Tagihan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Tagihan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelTagihan()
+	{
+		$getSts = $this->db->get_where('trx_tagihan',array('no_tagihan'=>$this->input->post('no_tagihan')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_tagihan',$can,array('no_tagihan'=>$this->input->post('no_tagihan')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Tagihan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Tagihan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
 	
 	//Get Data Pencarian
 	public function getBeliBrg($key)
@@ -2779,6 +2976,12 @@ class Crud extends CI_Controller
 	public function getKasBonKantor($key)
 	{
 		$data = $this->db->get_where('trx_kas_bon_kantor',array('no_bon'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getTagihan($key)
+	{
+		$data = $this->db->get_where('trx_tagihan',array('no_tagihan'=>$key))->row();
 		echo json_encode($data);
 	}
 }
