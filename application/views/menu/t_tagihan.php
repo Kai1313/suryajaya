@@ -661,37 +661,9 @@
         }
       });
     }
-    function hitung_()
+    function printDt()
     {
-      subHarian = parseFloat($('[name="hari_kerja"]').val())*parseFloat($('[name="upah_harian"]').val());
-      $('[name="sub_harian"]').val(subHarian);
-      subBonusHarian = parseFloat($('[name="bonus_harian"]').val());
-      $('[name="sub_bonusharian"]').val(subBonusHarian);
-      subMakan = parseFloat($('[name="uang_makan"]').val())*parseFloat($('[name="makan_harian"]').val());
-      $('[name="sub_makan"]').val(subMakan);
-      subLembur = parseFloat($('[name="uang_lembur"]').val())*parseFloat($('[name="upah_lembur"]').val());
-      $('[name="sub_lembur"]').val(subLembur);
-      subMinggu = parseFloat($('[name="uang_minggu"]').val())*parseFloat($('[name="upah_minggu"]').val());
-      $('[name="sub_minggu"]').val(subMinggu);
-      subHariBesar = parseFloat($('[name="uang_haribesar"]').val())*parseFloat($('[name="upah_haribesar"]').val());
-      $('[name="sub_haribesar"]').val(subHariBesar);
-      subBulanan = parseFloat($('[name="uang_bulanan"]').val())*parseFloat($('[name="upah_bulanan"]').val());
-      $('[name="sub_bulanan"]').val(subBulanan);
-      subBonusBulanan = parseFloat($('[name="bonus_bulanan"]').val());
-      $('[name="sub_bonusbulanan"]').val(subBonusBulanan);
-      subLain = parseFloat($('[name="uang_lain"]').val());
-      $('[name="sub_lain"]').val(subLain);
-      subJml = parseFloat(subHarian)+parseFloat(subBonusHarian)+parseFloat(subMakan)+parseFloat(subLembur)+parseFloat(subMinggu)+parseFloat(subHariBesar)+parseFloat(subBulanan)+parseFloat(subBonusBulanan)+parseFloat(subLain);
-      $('[name="sub_total"]').val(subJml);
-      subBon = parseFloat($('[name="sub_bon"]').val());
-      grandTotal = parseFloat(subJml)-parseFloat(subBon);
-      $('[name="g_total"]').val(grandTotal);
-    }
-    function inputchg()
-    {
-      $('.chgcount').on('input', function()
-      {
-        hitung_();
-      });
+      key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
+      window.open ( "<?= site_url('Crud/printTagihan/')?>"+key,'_blank');
     }
   </script>

@@ -2893,6 +2893,12 @@ class Crud extends CI_Controller
 		 ;
 		echo json_encode($data);
 	}
+
+	public function printTagihan($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_tagihan',$data);
+	}
 	
 	//Get Data Pencarian
 	public function getBeliBrg($key)
