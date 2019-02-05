@@ -439,4 +439,9 @@
         }
       });
     }
+    function printDt()
+    {
+      key = ($('[name="no_retur"]').val()!='')?$('[name="no_retur"]').val():'';
+      window.open ( "<?= site_url('Crud/printReturBeliBarang/')?>"+key,'_blank');
+    }
   </script>

@@ -444,4 +444,9 @@
         }
       });
     }
+    function printDt()
+    {
+      key = ($('[name="no_retur"]').val()!='')?$('[name="no_retur"]').val():'';
+      window.open ( "<?= site_url('Crud/printReturPakaiBarang/')?>"+key,'_blank');
+    }
   </script>

@@ -949,6 +949,8 @@ CREATE TABLE IF NOT EXISTS `trx_tagihan_det` (
   `det_id` int(11) NOT NULL AUTO_INCREMENT,
   `no_tagihan` char(20) DEFAULT NULL,
   `no_bon` char(20) DEFAULT NULL,
+  `tgl_muat` date DEFAULT NULL,
+  `tgl_bongkar` date DEFAULT NULL,
   `nopol` char(20) DEFAULT NULL,
   `surat_jalan` char(100) DEFAULT NULL,
   `jenis_muatan` char(100) DEFAULT NULL,
@@ -961,10 +963,10 @@ CREATE TABLE IF NOT EXISTS `trx_tagihan_det` (
   CONSTRAINT `FK_trx_tagihan_det_trx_tagihan` FOREIGN KEY (`no_tagihan`) REFERENCES `trx_tagihan` (`no_tagihan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_tagihan_det: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_tagihan_det: ~1 rows (approximately)
 /*!40000 ALTER TABLE `trx_tagihan_det` DISABLE KEYS */;
-INSERT INTO `trx_tagihan_det` (`det_id`, `no_tagihan`, `no_bon`, `nopol`, `surat_jalan`, `jenis_muatan`, `berat_muatan`, `ongkos_bruto`) VALUES
-	(3, 'SJT1901-000002', 'AS1901-000002', 'B2345XS', 'SJ00001', 'Keramik', 20.00, 40000.00);
+INSERT INTO `trx_tagihan_det` (`det_id`, `no_tagihan`, `no_bon`, `tgl_muat`, `tgl_bongkar`, `nopol`, `surat_jalan`, `jenis_muatan`, `berat_muatan`, `ongkos_bruto`) VALUES
+	(3, 'SJT1901-000002', 'AS1901-000002', '2019-01-28', '2019-01-31', 'B2345XS', 'SJ00001', 'Keramik', 20.00, 40000.00);
 /*!40000 ALTER TABLE `trx_tagihan_det` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

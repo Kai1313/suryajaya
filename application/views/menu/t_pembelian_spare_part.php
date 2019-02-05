@@ -485,4 +485,9 @@
         }
       });
     }
+    function printDt()
+    {
+      key = ($('[name="no_nota"]').val()!='')?$('[name="no_nota"]').val():'';
+      window.open ( "<?= site_url('Crud/printBeliBarang/')?>"+key,'_blank');
+    }
   </script>

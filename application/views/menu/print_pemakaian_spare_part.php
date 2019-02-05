@@ -148,6 +148,7 @@
       </div>
     </div>
     <div class="container printing" id="print-div">
+      <input type="hidden" name="">
       <header>
         <div class="row">
           <div class="col-sm-3 col-xs-3">
@@ -164,15 +165,15 @@
       <main>
         <div class="row">
           <div class="col-sm-4 col-xs-4 to-details">
-            <div>Kepada :</div>
-            <div class="to-name" name="to_name"></div>
-            <div class="to-phone" name="to_phone"></div>
-            <div class="to-address" name="to_address"></div>
+            <div>Data :</div>
+            <div class="to-name" name="karyawan"></div>
+            <div class="to-name" name="nopol"></div>
+            <div class="to-name" name="sopir"></div>
+            <div class="to-name" name="kernet"></div>
           </div>
           <div class="col-sm-8 col-xs-8 printing-info">
             <h4 class="info-code" name="data_code"></h4>
             <div class="reff-content">Tgl : <span name="data_date"></span></div>
-            <!-- <div class="reff-content">Rekening : <span name="data_acc"></span></div> -->
           </div>
         </div>
         <div class="row">
@@ -180,24 +181,16 @@
             <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
               <thead>
                 <tr>
-                  <th class="text-center col-xs-1 col-sm-1">Tgl Muat</th>
-                  <th class="text-center col-xs-1 col-sm-1">Tgl Bongkar</th>
-                  <th class="text-center col-xs-1 col-sm-1">Nopol</th>
-                  <th class="text-center col-xs-1 col-sm-1">Surat Jalan</th>
-                  <th class="text-center col-xs-2 col-sm-2">Jenis Muatan</th>
-                  <th class="text-center col-xs-2 col-sm-2">Berat</th>
-                  <th class="text-center col-xs-2 col-sm-2">Ongkos</th>
-                  <th class="text-center col-xs-2 col-sm-2">Jumlah</th>
+                  <th class="text-center col-xs-3 col-sm-3">Part Number</th>
+                  <th class="text-center col-xs-3 col-sm-3">Nama</th>
+                  <th class="text-center col-xs-3 col-sm-3">Qty</th>
+                  <th class="text-center col-xs-3 col-sm-3">Stok</th>
                 </tr>
               </thead>
               <tbody id="tb_content"></tbody>
               <tfoot>
                 <tr>
-                  <th colspan="7" class="text-right">TOTAL</th>
-                  <th class="text-right chgnum-perc"><span name="printing_total"></span></th>
-                </tr>
-                <tr>
-                  <th colspan="8" class="notice-row">
+                  <th colspan="4" class="notice-row">
                     <div class="row">
                       <div class="col-sm-2 col-xs-2">TERBILANG<br>KETERANGAN</div>
                       <div class="col-sm-9 col-xs-9"><span name="printing_spelled"></span><br><span name="printing_info"></span></div>
@@ -253,35 +246,33 @@
     function fetchData(key)
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getPrintTagihan/')?>"+key,
+        url : "<?php echo site_url('Crud/getPrintPakaiBarang/')?>"+key,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
-          $('[name="to_name"]').text(data['a'].nama_customer);
-          $('[name="to_phone"]').text(data['a'].tlp_customer);
-          $('[name="to_address"]').text(data['a'].alamat_customer+', '+data['a'].kota_customer);
-          $('[name="data_code"]').text(data['a'].no_tagihan);
-          $('[name="data_date"]').text(data['a'].tgl_tagihan);
+          $('[name="karyawan"]').text('Pencatat :'+data['a'].nama_karyawan);
+          $('[name="nopol"]').text('Kendaraan :'+data['a'].nopol);
+          $('[name="sopir"]').text('Sopir :'+data['a'].sopir);
+          $('[name="kernet"]').text('Kernet :'+data['a'].kernet);
+          $('[name="printing_info"]').text(data['a'].ket_pakai_brg);
+          $('[name="data_code"]').text(data['a'].no_pakai_brg);
+          $('[name="data_date"]').text(data['a'].tgl_pakai_brg);
           var blankrow = 7-data['b'].length;
           for (var i = 0; i < data['b'].length; i++)
           {
             var $tr = $('<tr>').append(
-              $('<td class="text-center">'+data['b'][i]["tgl_muat"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["tgl_bongkar"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["nopol"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["surat_jalan"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["jenis_muatan"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["berat_muatan"]+'</td>'),
-              $('<td class="text-center">'+parseFloat(data['b'][i]["ongkos_bruto"])/parseFloat(data['b'][i]["berat_muatan"])+'</td>'),
-              $('<td class="text-right chgnum">'+data['b'][i]["ongkos_bruto"]+'</td>')
+              $('<td class="text-center">'+data['b'][i]["part_number"]+'</td>'),
+              $('<td class="text-center">'+data['b'][i]["nama_barang"]+'</td>'),
+              $('<td class="text-center">'+data['b'][i]["qty_pakai"]+'</td>'),
+              $('<td class="text-right chgnum">'+data['b'][i]["stok_barang"]+'</td>')
               ).appendTo('#tb_content');
           }
           for (var j = 0; j < blankrow; j++)
           {
             var $tr = $('<tr>').append(
               $('<td class="blank-row"></td>'),
-              $('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
+              $('<td></td>'),$('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
               ).appendTo('#tb_content');
           }
           // $('td.chgnum').number(true,2);

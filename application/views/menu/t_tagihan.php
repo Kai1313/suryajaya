@@ -71,11 +71,47 @@
                         <option value="">Pilih Bon</option>
                       </select>
                     </div>
+                    <div class="form-group">
+                      <label>Tanggal Muat Berangkat</label>
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_muat_a" class="form-control pull-right" id="tgl_muat_a">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Tanggal Muat Kembali</label>
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_muat_b" class="form-control pull-right" id="tgl_muat_b">
+                      </div>
+                    </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Kendaraan</label>
                       <input type="text" name="kendaraan" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label>Tanggal Bongkar Berangkat</label>
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_bongkar_a" class="form-control pull-right" id="tgl_bongkar_a">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Tanggal Bongkar Kembali</label>
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_bongkar_b" class="form-control pull-right" id="tgl_bongkar_b">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -360,6 +396,10 @@
           success: function(data)
           {
             $('[name="kendaraan"]').val(data.nopol);
+            $('[name="tgl_muat_a"]').val(data.tgl_muat);
+            $('[name="tgl_muat_b"]').val(data.tgl_muat_b);
+            $('[name="tgl_bongkar_a"]').val(data.tgl_bongkar);
+            $('[name="tgl_bongkar_b"]').val(data.tgl_bongkar_b);
             if(data.kode_customer_a === cust)
             {
               $('[name="jenis_muat_a"]').val(data.jenis_muatan_a);

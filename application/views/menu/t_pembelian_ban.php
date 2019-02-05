@@ -485,4 +485,9 @@
         }
       });
     }
+    function printDt()
+    {
+      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      window.open ( "<?= site_url('Crud/printBeliBan/')?>"+key,'_blank');
+    }
   </script>

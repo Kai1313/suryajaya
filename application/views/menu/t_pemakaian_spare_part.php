@@ -582,4 +582,9 @@
         }
       });
     }
+    function printDt()
+    {
+      key = ($('[name="no_pemakaian"]').val()!='')?$('[name="no_pemakaian"]').val():'';
+      window.open ( "<?= site_url('Crud/printPakaiBarang/')?>"+key,'_blank');
+    }
   </script>

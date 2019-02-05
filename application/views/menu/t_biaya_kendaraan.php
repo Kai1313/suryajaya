@@ -548,4 +548,9 @@
         }
       });
     }
+    function printDt()
+    {
+      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
+      window.open ( "<?= site_url('Crud/printBiayaKdr/')?>"+key,'_blank');
+    }
   </script>

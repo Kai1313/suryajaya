@@ -959,6 +959,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function printBeliBarang($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_pembelian_spare_part',$data);
+	}
+
 	//Transaksi Biaya Kendaraan
 	public function addBiayaKdr()
 	{
@@ -1102,6 +1108,12 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function printBiayaKdr($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_biaya_kendaraan',$data);
 	}
 
 	//Transaksi Pemakaian Barang/Spare Part
@@ -1262,6 +1274,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function printPakaiBarang($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_pemakaian_spare_part',$data);
+	}
+
 	//Transaksi Pembelian Ban
 	public function addBeliBan()
 	{
@@ -1389,6 +1407,12 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function printBeliBan($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_pembelian_ban',$data);
 	}
 
 	//Transaksi Pemasangan Ban
@@ -1868,6 +1892,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function printReturBeliBarang($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_retur_pembelian_spare_part',$data);
+	}
+
 	//Transaksi Retur Pemakaian Barang/Spare Part
 	public function addReturPakaiBarang()
 	{
@@ -1986,6 +2016,12 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function printReturPakaiBarang($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_retur_pemakaian_spare_part',$data);
 	}
 
 	//Transaksi Input Bon Karyawan
@@ -2710,6 +2746,8 @@ class Crud extends CI_Controller
 			'no_tagihan'=>$this->input->post('no_tagihan'),
 			'no_bon'=>$this->input->post('kode_bon'),
 			'nopol'=>$this->input->post('kendaraan'),
+			'tgl_muat'=>$this->input->post('tgl_muat_a'),
+			'tgl_bongkar'=>$this->input->post('tgl_bongkar_a'),
 			'surat_jalan'=>$this->input->post('surat_jalan_a'),
 			'jenis_muatan'=>$this->input->post('jenis_muat_a'),
 			'berat_muatan'=>$this->input->post('berat_muat_a'),
@@ -2737,6 +2775,8 @@ class Crud extends CI_Controller
 			'no_tagihan'=>$this->input->post('no_tagihan'),
 			'no_bon'=>$this->input->post('kode_bon'),
 			'nopol'=>$this->input->post('kendaraan'),
+			'tgl_muat'=>$this->input->post('tgl_muat_a'),
+			'tgl_bongkar'=>$this->input->post('tgl_bongkar_a'),
 			'surat_jalan'=>$this->input->post('surat_jalan_b'),
 			'jenis_muatan'=>$this->input->post('jenis_muat_b'),
 			'berat_muatan'=>$this->input->post('berat_muat_b'),
@@ -2764,6 +2804,8 @@ class Crud extends CI_Controller
 			'no_tagihan'=>$this->input->post('no_tagihan'),
 			'no_bon'=>$this->input->post('kode_bon'),
 			'nopol'=>$this->input->post('kendaraan'),
+			'tgl_muat'=>$this->input->post('tgl_muat_b'),
+			'tgl_bongkar'=>$this->input->post('tgl_bongkar_b'),
 			'surat_jalan'=>$this->input->post('surat_jalan_c'),
 			'jenis_muatan'=>$this->input->post('jenis_muat_c'),
 			'berat_muatan'=>$this->input->post('berat_muat_c'),
@@ -2791,6 +2833,8 @@ class Crud extends CI_Controller
 			'no_tagihan'=>$this->input->post('no_tagihan'),
 			'no_bon'=>$this->input->post('kode_bon'),
 			'nopol'=>$this->input->post('kendaraan'),
+			'tgl_muat'=>$this->input->post('tgl_muat_b'),
+			'tgl_bongkar'=>$this->input->post('tgl_bongkar_b'),
 			'surat_jalan'=>$this->input->post('surat_jalan_d'),
 			'jenis_muatan'=>$this->input->post('jenis_muat_d'),
 			'berat_muatan'=>$this->input->post('berat_muat_d'),
@@ -2988,6 +3032,59 @@ class Crud extends CI_Controller
 	public function getTagihan($key)
 	{
 		$data = $this->db->get_where('trx_tagihan',array('no_tagihan'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	//Get Print
+	public function getPrintTagihan($key)
+	{
+		$data['a'] = $this->db->join('master_customer b','b.kode_customer = a.kode_customer')->get_where('trx_tagihan a',array('a.no_tagihan'=>$key))->row();
+		$data['b'] = $this->db->get_where('trx_tagihan_det',array('no_tagihan'=>$key))->result();
+		echo json_encode($data);
+	}
+
+	public function getPrintBeliBarang($key)
+	{
+		$data['a'] = $this->db->join('master_supplier b','b.kode_supplier = a.kode_supplier')->get_where('trx_beli_barang a',array('a.no_nota'=>$key))->row();
+		$data['b'] = $this->db->join('master_barang b','b.kode_barang = a.kode_barang')->get_where('trx_beli_barang_det a',array('a.no_nota'=>$key))->result();
+		$data['c'] = $this->db->select('SUM(a.jumlah) as subtotal')->join('trx_beli_barang b','b.no_nota = a.no_nota')->get_where('trx_beli_barang_det a',array('a.no_nota'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintPakaiBarang($key)
+	{
+		$data['a'] = $this->db->select('b.nama_karyawan, a.tgl_pakai_brg, a.no_pakai_brg, c.nopol, d.nama_driver as sopir, e.nama_driver as kernet, a.ket_pakai_brg')->join('master_karyawan b','b.kode_karyawan = a.kode_karyawan')->join('master_kendaraan c','c.kode_kendaraan = a.kode_kendaraan')->join('master_driver d','d.kode_driver = a.kode_sopir')->join('master_driver e','e.kode_driver = a.kode_kernet')->get_where('trx_pakai_barang a',array('a.no_pakai_brg'=>$key))->row();
+		$data['b'] = $this->db->join('master_barang b','b.kode_barang = a.kode_barang')->get_where('trx_pakai_barang_det a',array('a.no_pakai_brg'=>$key))->result();
+		echo json_encode($data);
+	}
+
+	public function getPrintBeliBan($key)
+	{
+		$data['a'] = $this->db->join('master_supplier b','b.kode_supplier = a.kode_supplier')->get_where('trx_beli_ban a',array('a.no_pembelian'=>$key))->row();
+		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('trx_beli_ban_det a',array('a.no_pembelian'=>$key))->result();
+		$data['c'] = $this->db->select('SUM(a.jumlah) as subtotal')->join('trx_beli_ban b','b.no_pembelian = a.no_pembelian')->get_where('trx_beli_ban_det a',array('a.no_pembelian'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintBiayaKdr($key)
+	{
+		$data['a'] = $this->db->select('b.nama_karyawan, a.tgl_biaya, a.no_biaya, c.nopol, d.nama_driver as sopir, e.nama_driver as kernet,a.grand_total')->join('master_karyawan b','b.kode_karyawan = a.kode_karyawan')->join('master_kendaraan c','c.kode_kendaraan = a.kode_kendaraan')->join('master_driver d','d.kode_driver = a.sopir_kendaraan')->join('master_driver e','e.kode_driver = a.kernet_kendaraan')->get_where('trx_biaya_kendaraan a',array('a.no_biaya'=>$key))->row();
+		$data['b'] = $this->db->get_where('trx_biaya_kendaraan_det a',array('a.no_biaya'=>$key))->result();
+		$data['c'] = $this->db->select('SUM(a.jumlah) as subtotal')->join('trx_biaya_kendaraan b','b.no_biaya = a.no_biaya')->get_where('trx_biaya_kendaraan_det a',array('a.no_biaya'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintReturBeliBarang($key)
+	{
+		$data['a'] = $this->db->join('trx_beli_barang b','b.no_nota = a.no_nota')->get_where('trx_retur_beli_barang a',array('a.no_retur'=>$key))->row();
+		$data['b'] = $this->db->join('master_barang b','b.kode_barang = a.kode_barang')->get_where('trx_retur_beli_barang_det a',array('a.no_retur'=>$key))->result();
+		echo json_encode($data);
+	}
+
+	public function getPrintReturPakaiBarang($key)
+	{
+		$data['a'] = $this->db->join('trx_pakai_barang b','b.no_pakai_brg = a.no_pakai_brg')->join('master_kendaraan c','c.kode_kendaraan = b.kode_kendaraan')->get_where('trx_retur_pakai_barang a',array('a.no_retur'=>$key))->row();
+		$data['b'] = $this->db->join('master_barang b','b.kode_barang = a.kode_barang')->get_where('trx_retur_pakai_barang_det a',array('a.no_retur'=>$key))->result();
 		echo json_encode($data);
 	}
 }
