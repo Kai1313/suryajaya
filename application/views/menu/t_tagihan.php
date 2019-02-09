@@ -132,11 +132,11 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Berat Muatan 1</label>
-                      <input type="text" name="berat_muat_a" class="form-control" readonly>
+                      <input type="text" name="berat_muat_a" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Ongkos Muatan 1</label>
-                      <input type="text" name="ongkos_muat_a" class="form-control" readonly>
+                      <input type="text" name="ongkos_muat_a" class="form-control num" readonly>
                     </div>
                   </div>
                 </div>
@@ -157,11 +157,11 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Berat Muatan 2</label>
-                      <input type="text" name="berat_muat_b" class="form-control" readonly>
+                      <input type="text" name="berat_muat_b" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Ongkos Muatan 2</label>
-                      <input type="text" name="ongkos_muat_b" class="form-control" readonly>
+                      <input type="text" name="ongkos_muat_b" class="form-control num" readonly>
                     </div>
                   </div>
                 </div>
@@ -182,11 +182,11 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Berat Muatan 3</label>
-                      <input type="text" name="berat_muat_c" class="form-control" readonly>
+                      <input type="text" name="berat_muat_c" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Ongkos Muatan 3</label>
-                      <input type="text" name="ongkos_muat_c" class="form-control" readonly>
+                      <input type="text" name="ongkos_muat_c" class="form-control num" readonly>
                     </div>
                   </div>
                 </div>
@@ -207,11 +207,11 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Berat Muatan 4</label>
-                      <input type="text" name="berat_muat_d" class="form-control" readonly>
+                      <input type="text" name="berat_muat_d" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Ongkos Muatan 4</label>
-                      <input type="text" name="ongkos_muat_d" class="form-control" readonly>
+                      <input type="text" name="ongkos_muat_d" class="form-control num" readonly>
                     </div>
                   </div>
                 </div>
@@ -233,7 +233,7 @@
                 <tfoot>
                   <tr>
                     <th colspan="6" class="text-center">Grand Total</th>
-                    <th class=""><span name="sub_total">0</span></th>
+                    <th class="num_"><span name="sub_total">0</span></th>
                   </tr>
                 </tfoot>
               </table>
@@ -320,6 +320,7 @@
       {
         pickBon($('#dropBon option:selected').val());
       });
+      $('.num').number(true,2);
     })
     function newTagihan()
     {
@@ -469,6 +470,7 @@
         success: function(data)
         {
           $('[name="sub_total"]').text(data.subtotal);
+          $('th.num_').number(true,2);
         }
       });
     }

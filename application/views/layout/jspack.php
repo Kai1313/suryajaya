@@ -14,6 +14,10 @@
 <script src="<?= base_url()?>assets/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url()?>assets/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="<?= base_url()?>assets/adminlte/bower_components/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?= base_url()?>assets/adminlte/bower_components/datatables-extension/buttons/js/dataTables.buttons.js"></script>
+<script src="<?= base_url()?>assets/adminlte/bower_components/datatables-extension/jszip/jszip.js"></script>
+<script src="<?= base_url()?>assets/adminlte/bower_components/datatables-extension/buttons/js/buttons.html5.js"></script>
+<script src="<?= base_url()?>assets/adminlte/bower_components/datatables-extension/buttons/js/buttons.print.js"></script>
 <!-- bootstrap color picker -->
 <script src="<?= base_url()?>assets/adminlte/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 <!-- iCheck 1.0.1 -->

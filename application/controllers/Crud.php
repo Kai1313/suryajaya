@@ -1539,7 +1539,7 @@ class Crud extends CI_Controller
 		else
 		{
 			$upd = array(
-				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
+				'kode_kendaraan'=>$this->input->post('kode_kendaraan_pasang'),
 				'bengkel_pemasangan'=>$this->input->post('bengkel_pemasangan'),
 				'tgl_pemasangan'=>$this->input->post('tgl_pemasangan'),
 				'data_sts'=>'1'
@@ -1649,6 +1649,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function printPasangBan($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_pemasangan_ban',$data);
+	}
+
 	//Transaksi Pelepasan Ban
 	public function addLepasBan()
 	{
@@ -1710,7 +1716,7 @@ class Crud extends CI_Controller
 		else
 		{
 			$upd = array(
-				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
+				'kode_kendaraan'=>$this->input->post('kode_kendaraan_lepas'),
 				'bengkel_pelepasan'=>$this->input->post('bengkel_pelepasan'),
 				'tgl_pelepasan'=>$this->input->post('tgl_pelepasan'),
 				'data_sts'=>'1'
@@ -1818,6 +1824,12 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function printLepasBan($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_pelepasan_ban',$data);
 	}
 
 	//Transaksi Retur Pembelian Barang/Spare Part
@@ -3122,6 +3134,18 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getPasangBan($key)
+	{
+		$data = $this->db->get_where('trx_pasang_ban',array('no_pemasangan'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getLepasBan($key)
+	{
+		$data = $this->db->get_where('trx_lepas_ban',array('no_pelepasan'=>$key))->row();
+		echo json_encode($data);
+	}
+
 	//Get Print
 	public function getPrintTagihan($key)
 	{
@@ -3202,6 +3226,20 @@ class Crud extends CI_Controller
 	public function getPrintBonKlaimSopir($key)
 	{
 		$data['a'] = $this->db->join('master_driver b','b.kode_driver = a.kode_driver')->get_where('trx_bayar_bonklaim_sopir a',array('a.no_bayar'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintPasangBan($key)
+	{
+		$data['a'] = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_pasang_ban a',array('a.no_pemasangan'=>$key))->row();
+		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('trx_pasang_ban_det a',array('a.no_pemasangan'=>$key))->result();
+		echo json_encode($data);
+	}
+
+	public function getPrintLepasBan($key)
+	{
+		$data['a'] = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_lepas_ban a',array('a.no_pelepasan'=>$key))->row();
+		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('trx_lepas_ban_det a',array('a.no_pelepasan'=>$key))->result();
 		echo json_encode($data);
 	}
 }

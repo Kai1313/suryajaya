@@ -522,8 +522,8 @@ class Datatables extends CI_Controller
 			$row[] = $dat->nopol;
 			$row[] = $dat->surat_jalan;
 			$row[] = $dat->jenis_muatan;
-			$row[] = $dat->berat_muatan;
-			$row[] = $dat->ongkos_bruto;
+			$row[] = number_format($dat->berat_muatan,2);
+			$row[] = number_format($dat->ongkos_bruto,2);
 			$data[] = $row;
 		}
 		$output = array(
@@ -658,7 +658,7 @@ class Datatables extends CI_Controller
 			$row[] = $btn;
 			$row[] = $dat->part_number;
 			$row[] = $dat->nama_barang;
-			$row[] = $dat->harga_satuan;
+			$row[] = number_format($dat->harga_satuan,2);
 			$row[] = number_format($dat->qty_beli,2).' '.$dat->nama_satuan;
 			$row[] = number_format($dat->jumlah,2);
 			$data[] = $row;

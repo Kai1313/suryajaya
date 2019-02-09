@@ -117,6 +117,19 @@
             "className": "text-center", "targets": ['_all']
           }
         ],
+        "dom": 'Bfrtip',
+          "buttons": 
+          {
+            "dom": 
+            {
+              "button": 
+              {
+                "tag": 'button',
+                "className": 'btn btn-sm btn-info'
+              }
+            },
+            "buttons": ['excelHtml5','print']
+          }
       });
     }
     function reloadTb()

@@ -144,7 +144,7 @@
                     </div>
                     <div class="form-group">
                       <label>Qty Pasang</label>
-                      <input type="text" name="qty_pasang" class="form-control">
+                      <input type="text" name="qty_pasang" class="form-control num">
                     </div>
                     <div class="form-group">
                       <label>Status Ban</label><br>
@@ -208,7 +208,7 @@
                     </div>
                     <div class="form-group">
                       <label>Qty Lepas</label>
-                      <input type="text" name="qty_lepas" class="form-control">
+                      <input type="text" name="qty_lepas" class="form-control num">
                     </div>
                     <div class="form-group">
                       <label>Status Ban</label><br>
@@ -267,17 +267,17 @@
             <div class="box-body">
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="saveDtLps()">Simpan</button>
+                  <button type="button" class="btn btn-md btn-primary" onclick="saveDt()">Simpan</button>
                 </div>
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="printDtLps()">Cetak</button>
+                  <button type="button" class="btn btn-md btn-primary" onclick="printDt()">Cetak</button>
                 </div>
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="cancelDtLps()">Batal</button>
+                  <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
                 </div>
               </div>
             </div>
@@ -353,6 +353,7 @@
       {
         pickBanLps($('#dropBanLps option:selected').val());
       });
+      $('.num').number(true,2);
     })
     function check_()
     {
@@ -711,95 +712,103 @@
     }
     function saveDt()
     {
-      key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
-      $.ajax({
-        type: 'POST',
-        url: '<?= site_url('Crud/savePasangBan')?>',
-        data: $('form').serialize(),
-        dataType: 'JSON',
-        success: function(data)
-        {
-          if(data.status)
+      if($('#sts_trx0').is(':checked'))
+      {
+        key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
+        url = '<?= site_url('Crud/savePasangBan')?>';
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/savePasangBan')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
           {
-            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pemasangan')[0].reset();
-            tbDetPsg(key);
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+              $('#form-detail-pemasangan')[0].reset();
+              tbDetPsg(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            }
           }
-          else
+        });
+      }
+      else
+      {
+        key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
+        url = '<?= site_url('Crud/saveLepasBan')?>';
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/saveLepasBan')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
           {
-            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+              $('#form-detail-pelepasan')[0].reset();
+              tbDetLps(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+            }
           }
-        }
-      });
-    }
-    function saveDtLps()
-    {
-      key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
-      $.ajax({
-        type: 'POST',
-        url: '<?= site_url('Crud/saveLepasBan')?>',
-        data: $('form').serialize(),
-        dataType: 'JSON',
-        success: function(data)
-        {
-          if(data.status)
-          {
-            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
-            $('#form-detail-pelepasan')[0].reset();
-            tbDetLps(key);
-          }
-          else
-          {
-            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
-          }
-        }
-      });
+        });
+      }
     }
     function cancelDt()
     {
-      key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
-      $.ajax({
-        type: 'POST',
-        url: '<?= site_url('Crud/cancelPasangBan')?>',
-        data: $('form').serialize(),
-        dataType: 'JSON',
-        success: function(data)
-        {
-          if(data.status)
+      if($('#sts_trx0').is(':checked'))
+      {
+        key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/cancelPasangBan')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
           {
-            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pemasangan')[0].reset();
-            tbDetPsg(key);
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+              $('#form-detail-pemasangan')[0].reset();
+              tbDetPsg(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            }
           }
-          else
+        });
+      }
+      else
+      {
+        key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/cancelLepasBan')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
           {
-            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            if(data.status)
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+              $('#form-detail-pelepasan')[0].reset();
+              tbDetLps(key);
+            }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
+            }
           }
-        }
-      });
-    }
-    function cancelDtLps()
-    {
-      key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
-      $.ajax({
-        type: 'POST',
-        url: '<?= site_url('Crud/cancelLepasBan')?>',
-        data: $('form').serialize(),
-        dataType: 'JSON',
-        success: function(data)
-        {
-          if(data.status)
-          {
-            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
-            $('#form-detail-pelepasan')[0].reset();
-            tbDetLps(key);
-          }
-          else
-          {
-            msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
-          }
-        }
-      });
+        });
+      }
     }
     function editPasang()
     {
@@ -890,5 +899,18 @@
           $('#modal-edit').modal('hide');
         }
       });
+    }
+    function printDt()
+    {
+      if($('#sts_trx0').is(':checked'))
+      {
+        key = ($('[name="no_pemasangan"]').val()!='')?$('[name="no_pemasangan"]').val():'';
+        window.open ( "<?= site_url('Crud/printPasangBan/')?>"+key,'_blank');
+      }
+      else
+      {
+        key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
+        window.open ( "<?= site_url('Crud/printLepasBan/')?>"+key,'_blank');
+      }
     }
   </script>
