@@ -13,7 +13,7 @@
 		private function _get_datatables_query()
 		{
 			$this->db->from($this->table);
-			// $this->db->where("branch_dtsts","1");
+			$this->db->where('data_sts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{

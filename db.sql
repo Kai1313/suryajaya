@@ -60,7 +60,8 @@ INSERT INTO `master_barang` (`kode_barang`, `nama_barang`, `part_number`, `nama_
 	('BRG0002', 'Barang B', '987652', 'Pcs', 1.00, 6.00, '1B', 15.00, '1', NULL, NULL),
 	('BRG0003', 'Barang C', '987652', 'Pcs', 1.00, 6.00, '1B', 6.00, '1', NULL, NULL),
 	('BRG0004', 'Barang D', '987652', 'Pcs', 1.00, 6.00, '1D', 0.00, '1', NULL, NULL),
-	('BRG0005', 'Barang E', '456789', 'Pcs', 1.00, 4.00, '1E', 6.00, '1', NULL, NULL);
+	('BRG0005', 'Barang E', '456789', 'Pcs', 1.00, 4.00, '1E', 6.00, '1', NULL, NULL),
+	('BRG0006', 'Barang Tes', '0987654', 'Pcs', 20.00, 40.00, '2D', NULL, '0', NULL, NULL);
 /*!40000 ALTER TABLE `master_barang` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_biaya_driver
@@ -120,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `master_driver` (
 -- Dumping data for table suryajaya.master_driver: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_driver` DISABLE KEYS */;
 INSERT INTO `master_driver` (`kode_driver`, `nama_driver`, `alamat_driver`, `kota_driver`, `tlp_driver`, `jenis_driver`, `jml_bon`, `cair_bon`, `jml_klaim`, `cair_klaim`, `data_sts`) VALUES
-	('DRV0001', 'Sugeng', 'Putat Jaya No.88', 'Surabaya', '085235789172', '0', 10000.00, NULL, 10000.00, NULL, '1'),
+	('DRV0001', 'Sugeng', 'Putat Jaya No.88', 'Surabaya', '085235789172', '0', 0.00, NULL, 0.00, NULL, '1'),
 	('DRV0002', 'Mulyadi', 'Lesti No.42', 'Surabaya', '088353678678', '1', 0.00, NULL, 0.00, NULL, '1');
 /*!40000 ALTER TABLE `master_driver` ENABLE KEYS */;
 
@@ -148,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `master_karyawan` (
 -- Dumping data for table suryajaya.master_karyawan: ~1 rows (approximately)
 /*!40000 ALTER TABLE `master_karyawan` DISABLE KEYS */;
 INSERT INTO `master_karyawan` (`kode_karyawan`, `nama_karyawan`, `alamat_karyawan`, `kota_karyawan`, `tlp_karyawan`, `upah_makan`, `upah_harian`, `upah_hari_besar`, `upah_hari_minggu`, `min_jam_lembur`, `upah_lembur`, `gaji_bulanan`, `kerja_penuh_6x`, `jml_bon`, `data_sts`) VALUES
-	('KRY00001', 'Hendro', 'Semolowaru Utara No.42, Sukolilo', 'Surabaya', '083335335627', 10000.00, 100000.00, 150000.00, 120000.00, 2.00, 50000.00, 3000000.00, 500000.00, 0.00, '1');
+	('KRY00001', 'Hendro', 'Semolowaru Utara No.42, Sukolilo', 'Surabaya', '083335335627', 10000.00, 100000.00, 150000.00, 120000.00, 2.00, 50000.00, 3000000.00, 500000.00, 10000.00, '1');
 /*!40000 ALTER TABLE `master_karyawan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_kendaraan
@@ -231,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `trx_bayar_bonklaim_sopir` (
 -- Dumping data for table suryajaya.trx_bayar_bonklaim_sopir: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_bayar_bonklaim_sopir` DISABLE KEYS */;
 INSERT INTO `trx_bayar_bonklaim_sopir` (`no_bayar`, `kode_driver`, `tgl_bayar`, `nom_bon`, `nom_klaim`, `data_sts`) VALUES
-	('BYR1901-000001', 'DRV0001', '2019-01-13', 10000.00, 10000.00, '0');
+	('BYR1901-000001', 'DRV0001', '2019-01-13', 10000.00, 10000.00, '1');
 /*!40000 ALTER TABLE `trx_bayar_bonklaim_sopir` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_bayar_upah_karyawan
@@ -433,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `trx_input_bon_karyawan` (
 -- Dumping data for table suryajaya.trx_input_bon_karyawan: ~1 rows (approximately)
 /*!40000 ALTER TABLE `trx_input_bon_karyawan` DISABLE KEYS */;
 INSERT INTO `trx_input_bon_karyawan` (`no_bon`, `kode_karyawan`, `tgl_bon`, `nom_bon`, `ket_bon`, `data_sts`) VALUES
-	('BON1901-000001', 'KRY00001', '2019-01-11', 10000.00, 'Tes Bon', '0');
+	('BON1901-000001', 'KRY00001', '2019-01-11', 10000.00, 'Tes Bon', '1');
 /*!40000 ALTER TABLE `trx_input_bon_karyawan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_input_bon_sopir

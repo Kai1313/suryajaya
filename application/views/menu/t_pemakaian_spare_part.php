@@ -95,7 +95,7 @@
                     </div>
                     <div class="form-group">
                       <label>Qty Barang</label>
-                      <input type="text" name="qty_barang" class="form-control">
+                      <input type="text" name="qty_barang" class="form-control num">
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
@@ -224,6 +224,7 @@
       {
         pickBarang($('#dropBarang option:selected').val());
       });
+      $('.num').number(true,2);
     })
     function newPakai()
     {

@@ -69,150 +69,150 @@
                       <label>Masuk Kerja</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="hari_kerja" id="hari_kerja" class="form-control chgcount">
+                        <input type="text" name="hari_kerja" id="hari_kerja" class="form-control chgcount num">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Bonus Harian</label>
-                      <input type="text" name="bonus_harian" class="form-control chgcount">
+                      <input type="text" name="bonus_harian" class="form-control chgcount num">
                     </div>
                     <div class="form-group">
                       <label>Uang Makan</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_makan" id="uang_makan" class="form-control chgcount">
+                        <input type="text" name="uang_makan" id="uang_makan" class="form-control chgcount num">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Uang Lembur</label>
                       <div class="input-group">
                         <span class="input-group-addon">Jam</span>
-                        <input type="text" name="uang_lembur" id="uang_lembur" class="form-control chgcount">
+                        <input type="text" name="uang_lembur" id="uang_lembur" class="form-control chgcount num">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Hari Minggu</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_minggu" id="uang_minggu" class="form-control chgcount">
+                        <input type="text" name="uang_minggu" id="uang_minggu" class="form-control chgcount num">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Hari Besar</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_haribesar" id="uang_haribesar" class="form-control chgcount">
+                        <input type="text" name="uang_haribesar" id="uang_haribesar" class="form-control chgcount num">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Gaji Bulanan</label>
                       <div class="input-group">
                         <span class="input-group-addon">Bulan</span>
-                        <input type="text" name="uang_bulanan" id="uang_bulanan" class="form-control chgcount">
+                        <input type="text" name="uang_bulanan" id="uang_bulanan" class="form-control chgcount num">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Bonus Bulanan</label>
-                      <input type="text" name="bonus_bulanan" class="form-control chgcount">
+                      <input type="text" name="bonus_bulanan" class="form-control chgcount num">
                     </div>
                     <div class="form-group">
                       <label>Lain-Lain</label>
-                      <input type="text" name="uang_lain" class="form-control chgcount">
+                      <input type="text" name="uang_lain" class="form-control chgcount num">
                     </div>
                     <div class="form-group">
                       <label>Minimum Lembur</label>
                       <div class="input-group">
                         <span class="input-group-addon">Jam</span>
-                        <input type="text" name="min_lembur" id="min_lembur" class="form-control chgcount" readonly>
+                        <input type="text" name="min_lembur" id="min_lembur" class="form-control chgcount num" readonly>
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Sisa Bon</label>
-                      <input type="text" name="sisa_bon" class="form-control" readonly>
+                      <input type="text" name="sisa_bon" class="form-control num" readonly>
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-4">
                     <div class="form-group">
                       <label>Upah Harian</label>
-                      <input type="text" name="upah_harian" class="form-control" readonly>
+                      <input type="text" name="upah_harian" class="form-control num" readonly>
                     </div>
                     <div class="form-group" style="height: 59px; margin-bottom: 15px;">
                     </div>
                     <div class="form-group">
                       <label>Uang Makan harian</label>
-                      <input type="text" name="makan_harian" class="form-control" readonly>
+                      <input type="text" name="makan_harian" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Upah Lembur</label>
-                      <input type="text" name="upah_lembur" class="form-control" readonly>
+                      <input type="text" name="upah_lembur" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Upah Hari Minggu</label>
-                      <input type="text" name="upah_minggu" class="form-control" readonly>
+                      <input type="text" name="upah_minggu" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Upah Hari Besar</label>
-                      <input type="text" name="upah_haribesar" class="form-control" readonly>
+                      <input type="text" name="upah_haribesar" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Upah Bulanan</label>
-                      <input type="text" name="upah_bulanan" class="form-control" readonly>
+                      <input type="text" name="upah_bulanan" class="form-control num" readonly>
                     </div>
                     <div class="form-group" style="height: 59px; margin-bottom: 15px;">
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="upah_lain" class="form-control" readonly>
+                      <input type="text" name="upah_lain" class="form-control num" readonly>
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-4">
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_harian" class="form-control" readonly>
+                      <input type="text" name="sub_harian" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_bonusharian" class="form-control" readonly>
+                      <input type="text" name="sub_bonusharian" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_makan" class="form-control" readonly>
+                      <input type="text" name="sub_makan" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_lembur" class="form-control" readonly>
+                      <input type="text" name="sub_lembur" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_minggu" class="form-control" readonly>
+                      <input type="text" name="sub_minggu" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_haribesar" class="form-control" readonly>
+                      <input type="text" name="sub_haribesar" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_bulanan" class="form-control" readonly>
+                      <input type="text" name="sub_bulanan" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_bonusbulanan" class="form-control" readonly>
+                      <input type="text" name="sub_bonusbulanan" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>&nbsp;</label>
-                      <input type="text" name="sub_lain" class="form-control" readonly>
+                      <input type="text" name="sub_lain" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Jumlah</label>
-                      <input type="text" name="sub_total" class="form-control" readonly>
+                      <input type="text" name="sub_total" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Potong Bon</label>
-                      <input type="text" name="sub_bon" class="form-control chgcount">
+                      <input type="text" name="sub_bon" class="form-control chgcount num">
                     </div>
                     <div class="form-group">
                       <label>Grand Total</label>
-                      <input type="text" name="g_total" class="form-control" readonly>
+                      <input type="text" name="g_total" class="form-control num" readonly>
                     </div>
                   </div>
                 </div>
@@ -299,6 +299,7 @@
         pickKaryawan($('#dropKaryawan option:selected').val());
       });
       inputchg();
+      $('.num').number(true,2);
     })
     function newUpah()
     {
@@ -425,7 +426,7 @@
         ],
       });
     }
-    function pilihUpahKry(id)
+    function pilihUpah(id)
     {
       $.ajax({
         type: 'GET',
@@ -437,7 +438,28 @@
           $('[name="no_kuitansi"]').val(data.no_kuitansi);
           $('[name="tgl_upah"]').val(data.tgl_upah);
           $('#dropKaryawan').val(data.kode_karyawan).trigger('change');
-          $('#newBtn').prop('disabled',true);
+          $('[name="hari_kerja"]').val(data.hari_kerja);
+          $('[name="bonus_harian"]').val(data.bonus_harian);
+          $('[name="uang_makan"]').val(data.uang_makan);
+          $('[name="uang_lembur"]').val(data.uang_lembur);
+          $('[name="uang_minggu"]').val(data.uang_minggu);
+          $('[name="uang_haribesar"]').val(data.uang_haribesar);
+          $('[name="uang_bulanan"]').val(data.uang_bulanan);
+          $('[name="bonus_bulanan"]').val(data.bonus_bulanan);
+          $('[name="uang_lain"]').val(data.uang_lain);
+          $('[name="sub_bon"]').val(data.sub_bon);
+          $('[name="sub_harian"]').val(data.sub_harian);
+          $('[name="sub_bonusharian"]').val(data.sub_bonusharian);
+          $('[name="sub_makan"]').val(data.sub_makan);
+          $('[name="sub_lembur"]').val(data.sub_lembur);
+          $('[name="sub_minggu"]').val(data.sub_minggu);
+          $('[name="sub_haribesar"]').val(data.sub_haribesar);
+          $('[name="sub_bulanan"]').val(data.sub_bulanan);
+          $('[name="sub_bonusbulanan"]').val(data.sub_bonusbulanan);
+          $('[name="sub_lain"]').val(data.sub_lain);
+          $('[name="sub_total"]').val(data.sub_total);
+          $('[name="g_total"]').val(data.grand_total);
+          $('#newBtn').prop('disabled',true);          
           $('#modal-edit').modal('hide');
         }
       });

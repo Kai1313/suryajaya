@@ -53,19 +53,19 @@
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                       <label>Sisa Bon</label>
-                      <input type="text" name="jml_bon" class="form-control" readonly>
+                      <input type="text" name="jml_bon" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Nominal Bon</label>
-                      <input type="text" name="nom_bon" class="form-control">
+                      <input type="text" name="nom_bon" class="form-control num">
                     </div>
                     <div class="form-group">
                       <label>Sisa Klaim</label>
-                      <input type="text" name="jml_klaim" class="form-control" readonly>
+                      <input type="text" name="jml_klaim" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Nominal Klaim</label>
-                      <input type="text" name="nom_klaim" class="form-control">
+                      <input type="text" name="nom_klaim" class="form-control num">
                     </div>
                   </div>
                 </div>
@@ -151,6 +151,7 @@
       {
         pickSopir($('#dropSopir option:selected').val());
       });
+      $('.num').number(true,2);
     })
     function newBayar()
     {
@@ -215,6 +216,7 @@
         {
           if(data.status)
           {
+            pickSopir($('#dropSopir option:selected').val());
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
           }
           else
@@ -236,6 +238,7 @@
         {
           if(data.status)
           {
+            pickSopir($('#dropSopir option:selected').val());
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
           }
           else
@@ -289,5 +292,10 @@
           $('#modal-edit').modal('hide');
         }
       });
+    }
+    function printDt()
+    {
+      key = ($('[name="no_bayar"]').val()!='')?$('[name="no_bayar"]').val():'';
+      window.open ( "<?= site_url('Crud/printBonKlaimSopir/')?>"+key,'_blank');
     }
   </script>

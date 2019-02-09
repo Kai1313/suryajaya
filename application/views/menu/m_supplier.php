@@ -152,4 +152,26 @@
         }
       });
     }
+    function del(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/delSupplier/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            alert('Sukses Menghapus Supplier');
+            $('#form-supplier')[0].reset();
+            $('[name="tipe_form"]').val('');
+            reloadTb();
+          }
+          else
+          {
+            alert('Gagal Menghapus Supplier');
+          }
+        }
+      });
+    }
   </script>

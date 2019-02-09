@@ -77,13 +77,13 @@
                     </div>
                     <div class="form-group">
                       <label>Qty Beli</label>
-                      <input type="text" name="qty_beli" class="form-control">
+                      <input type="text" name="qty_beli" class="form-control num">
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Harga Satuan</label>
-                      <input type="text" name="harga_satuan" class="form-control">
+                      <input type="text" name="harga_satuan" class="form-control num">
                     </div>
                     <div class="form-group">
                       <br>
@@ -108,7 +108,7 @@
                 <tfoot>
                   <tr>
                     <th colspan="5" class="text-center">Sub Total</th>
-                    <th class=""><span name="sub_total">0</span></th>
+                    <th class="num_"><span name="sub_total">0</span></th>
                   </tr>
                 </tfoot>
               </table>
@@ -119,18 +119,18 @@
                       <label>Diskon</label>
                       <div class="input-group">
                         <span class="input-group-addon">%</span>
-                        <input type="text" name="diskon" id="diskon" class="form-control">
+                        <input type="text" name="diskon" id="diskon" class="form-control num">
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Nominal Diskon</label>
-                      <input type="text" name="nom_diskon" class="form-control" readonly>
+                      <input type="text" name="nom_diskon" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Grand Total</label>
-                      <input type="text" name="grand_total" class="form-control" readonly>
+                      <input type="text" name="grand_total" class="form-control num" readonly>
                     </div>
                   </div>
                 </div>
@@ -227,6 +227,7 @@
       });
       dropsupplier();
       dropbarang();
+      $('.num').number(true,2);
     })
     function newNota()
     {
@@ -425,6 +426,7 @@
         success: function(data)
         {
           $('[name="sub_total"]').text(data.subtotal);
+          $('th.num_').number(true,2);
         }
       });
     }

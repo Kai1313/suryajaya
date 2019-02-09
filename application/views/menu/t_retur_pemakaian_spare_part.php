@@ -95,7 +95,7 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Qty Retur</label>
-                      <input type="text" name="qty_retur" class="form-control">
+                      <input type="text" name="qty_retur" class="form-control num">
                     </div>
                   </div>
                 </div>
@@ -199,6 +199,7 @@
         pickPakai($('#dropPakai option:selected').val());
       });
       dropbarang();
+      $('.num').number(true,2);
     })
     function newRetur()
     {

@@ -190,7 +190,7 @@
               <tfoot>
                 <tr>
                   <th colspan="2" class="text-right">GRAND TOTAL</th>
-                  <th class="text-right chgnum-perc"><span name="printing_total"></span></th>
+                  <th class="text-right chgnum"><span name="printing_total"></span></th>
                 </tr>
                 <tr>
                   <th colspan="3" class="notice-row">
@@ -277,7 +277,8 @@
               $('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
               ).appendTo('#tb_content');
           }
-          // $('td.chgnum').number(true,2);
+          $('td.chgnum').number(true,2);
+          $('th.chgnum').number(true,2);
         },
         error: function (jqXHR, textStatus, errorThrown)
         {

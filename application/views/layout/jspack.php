@@ -18,5 +18,7 @@
 <script src="<?= base_url()?>assets/adminlte/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 <!-- iCheck 1.0.1 -->
 <script src="<?= base_url()?>assets/adminlte/plugins/iCheck/icheck.min.js"></script>
+<!-- Numbers -->
+<script src="<?= base_url()?>assets/adminlte/bower_components/numbers/js/jquery.number.js"></script>
 <!-- AdminLTE App -->
 <script src="<?= base_url()?>assets/adminlte/dist/js/adminlte.min.js"></script>

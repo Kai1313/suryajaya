@@ -264,7 +264,7 @@
             var $tr = $('<tr>').append(
               $('<td class="text-center">'+data['b'][i]["part_number"]+'</td>'),
               $('<td class="text-center">'+data['b'][i]["nama_barang"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["qty_pakai"]+'</td>'),
+              $('<td class="text-center chgnum">'+data['b'][i]["qty_pakai"]+'</td>'),
               $('<td class="text-right chgnum">'+data['b'][i]["stok_barang"]+'</td>')
               ).appendTo('#tb_content');
           }
@@ -275,7 +275,7 @@
               $('<td></td>'),$('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
               ).appendTo('#tb_content');
           }
-          // $('td.chgnum').number(true,2);
+          $('td.chgnum').number(true,2);
         },
         error: function (jqXHR, textStatus, errorThrown)
         {

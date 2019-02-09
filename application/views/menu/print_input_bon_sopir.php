@@ -151,11 +151,15 @@
       <input type="hidden" name="">
       <header>
         <div class="row">
-          <div class="col-sm-3 col-xs-3">
+          <div class="col-sm-2 col-xs-2">
             <!-- <img id="img_logo" class="img-responsive" src=""> -->
             <h2>Suryajaya</h2>
           </div>
-          <div class="col-sm-9 col-xs-9 company-details">
+          <div class="col-sm-2 col-xs-2 text-center">
+            <!-- <img id="img_logo" class="img-responsive" src=""> -->
+            <h3>Bon Sopir</h3>
+          </div>
+          <div class="col-sm-2 col-xs-2 company-details">
             <div><span name="comp-address">Tulungagung</span></div>
             <div>Phone <span name="comp-phone">031 845557</span></div>
             <div>Fax <span name="comp-fax">031 845558</span></div>
@@ -165,52 +169,14 @@
       <main>
         <div class="row">
           <div class="col-sm-4 col-xs-4 to-details">
-            <div>Kepada :</div>
-            <div class="to-name" name="to_name"></div>
-            <div class="to-phone" name="to_phone"></div>
-            <div class="to-address" name="to_address"></div>
+            <div>Data :</div>
+            <div class="to-name" name="karyawan"></div>
+            <div class="to-phone" name="keterangan"></div>
+            <h3>Jumlah <span name="jml_bon" class="chgnum"></span></h3>
           </div>
-          <div class="col-sm-8 col-xs-8 printing-info">
+          <div class="col-sm-2 col-xs-2 printing-info">
             <h4 class="info-code" name="data_code"></h4>
             <div class="reff-content">Tgl : <span name="data_date"></span></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12 col-xs-12 table-responsive">
-            <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
-              <thead>
-                <tr>
-                  <th class="text-center col-xs-2 col-sm-2">Part Number</th>
-                  <th class="text-center col-xs-3 col-sm-3">Nama</th>
-                  <th class="text-center col-xs-2 col-sm-2">Qty</th>
-                  <th class="text-center col-xs-2 col-sm-2">Harga</th>
-                  <th class="text-center col-xs-3 col-sm-3">Jumlah</th>
-                </tr>
-              </thead>
-              <tbody id="tb_content"></tbody>
-              <tfoot>
-                <tr>
-                  <th colspan="4" class="text-right">SUB TOTAL</th>
-                  <th class="text-right chgnum"><span name="sub_total"></span></th>
-                </tr>
-                <tr>
-                  <th colspan="4" class="text-right">DISKON</th>
-                  <th class="text-right chgnum"><span name="diskon_total"></span></th>
-                </tr>
-                <tr>
-                  <th colspan="4" class="text-right">GRAND TOTAL</th>
-                  <th class="text-right chgnum"><span name="printing_total"></span></th>
-                </tr>
-                <tr>
-                  <th colspan="5" class="notice-row">
-                    <div class="row">
-                      <div class="col-sm-2 col-xs-2">TERBILANG<br>KETERANGAN</div>
-                      <div class="col-sm-9 col-xs-9"><span name="printing_spelled"></span><br><span name="printing_info"></span></div>
-                    </div>
-                  </th>
-                </tr>
-              </tfoot>
-            </table>
           </div>
         </div>
       </main>
@@ -219,7 +185,7 @@
           <div class="col-xs-3 col-sm-3">
             <div>Kepada</div>
           </div>
-          <div class="col-xs-offset-2 col-sm-offset-2 col-xs-3 col-sm-3">
+          <div class="col-xs-3 col-sm-3">
             <div>Mengetahui</div>
           </div>
         </div>
@@ -227,7 +193,7 @@
           <div class="col-xs-3 col-sm-3">
             <div>(................)</div>
           </div>
-          <div class="col-xs-offset-2 col-sm-offset-2 col-xs-3 col-sm-3">
+          <div class="col-xs-3 col-sm-3">
             <div>(................)</div>
           </div>
         </div>
@@ -242,55 +208,20 @@
       key = '<?= $key ;?>';
       fetchData(key);
     })
-    function newTagihan()
-    {
-      $.ajax({
-        type: 'GET',
-        url: '<?= site_url('Crud/gen_noTagihan')?>',
-        dataType: 'JSON',
-        success: function(data)
-        {
-          $('[name="no_tagihan"]').val(data.no_tagihan);
-          $('#newBtn').prop('disabled',true);
-        }
-      });
-    }
     function fetchData(key)
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getPrintBeliBarang/')?>"+key,
+        url : "<?php echo site_url('Crud/getPrintBonSopir/')?>"+key,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
-          $('[name="to_name"]').text(data['a'].nama_supplier);
-          $('[name="to_phone"]').text(data['a'].tlp_supplier);
-          $('[name="to_address"]').text(data['a'].alamat_supplier+', '+data['a'].kota_supplier);
-          $('[name="data_code"]').text(data['a'].no_nota);
-          $('[name="data_date"]').text(data['a'].tgl_nota);
-          $('[name="sub_total"]').text(data['c'].subtotal);
-          $('[name="diskon_total"]').text(data['a'].nom_diskon);
-          $('[name="printing_total"]').text(data['a'].grand_total);
-          var blankrow = 7-data['b'].length;
-          for (var i = 0; i < data['b'].length; i++)
-          {
-            var $tr = $('<tr>').append(
-              $('<td class="text-center">'+data['b'][i]["part_number"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["nama_barang"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["qty_beli"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["harga_satuan"]+'</td>'),
-              $('<td class="text-right chgnum">'+data['b'][i]["jumlah"]+'</td>')
-              ).appendTo('#tb_content');
-          }
-          for (var j = 0; j < blankrow; j++)
-          {
-            var $tr = $('<tr>').append(
-              $('<td class="blank-row"></td>'),
-              $('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
-              ).appendTo('#tb_content');
-          }
-          $('td.chgnum').number(true,2);
-          $('th.chgnum').number(true,2);
+          $('[name="karyawan"]').text('Nama '+data['a'].nama_driver);
+          $('[name="keterangan"]').text('Keterangan '+data['a'].ket_bon);
+          $('[name="jml_bon"]').text('Jumlah '+data['a'].nom_bon);
+          $('[name="data_code"]').text(data['a'].no_bon);
+          $('[name="data_date"]').text(data['a'].tgl_bon);
+          $('.chgnum').number(true,2);
         },
         error: function (jqXHR, textStatus, errorThrown)
         {

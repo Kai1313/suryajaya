@@ -134,4 +134,26 @@
         }
       });
     }
+    function del(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/delTujuan/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            alert('Sukses Menghapus Tujuan');
+            $('#form-tujuan')[0].reset();
+            $('[name="tipe_form"]').val('');
+            reloadTb();
+          }
+          else
+          {
+            alert('Gagal Menghapus Tujuan');
+          }
+        }
+      });
+    }
   </script>

@@ -57,11 +57,11 @@
                     </div>
                     <div class="form-group">
                       <label>Sisa Bon</label>
-                      <input type="text" name="jml_bon" class="form-control" readonly>
+                      <input type="text" name="jml_bon" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Nominal Bon</label>
-                      <input type="text" name="nom_bon" class="form-control">
+                      <input type="text" name="nom_bon" class="form-control num">
                     </div>
                   </div>
                 </div>
@@ -147,6 +147,7 @@
       {
         pickKaryawan($('#dropKaryawan option:selected').val());
       });
+      $('.num').number(true,2);
     })
     function newBon()
     {
@@ -284,5 +285,10 @@
           $('#modal-edit').modal('hide');
         }
       });
+    }
+    function printDt()
+    {
+      key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'';
+      window.open ( "<?= site_url('Crud/printBonKaryawan/')?>"+key,'_blank');
     }
   </script>

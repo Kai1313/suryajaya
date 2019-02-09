@@ -659,8 +659,8 @@ class Datatables extends CI_Controller
 			$row[] = $dat->part_number;
 			$row[] = $dat->nama_barang;
 			$row[] = $dat->harga_satuan;
-			$row[] = $dat->qty_beli.' '.$dat->nama_satuan;
-			$row[] = $dat->jumlah;
+			$row[] = number_format($dat->qty_beli,2).' '.$dat->nama_satuan;
+			$row[] = number_format($dat->jumlah,2);
 			$data[] = $row;
 		}
 		$output = array(
@@ -685,8 +685,8 @@ class Datatables extends CI_Controller
 			$row[] = $btn;
 			$row[] = $dat->kode_barang;
 			$row[] = $dat->nama_barang;
-			$row[] = $dat->qty_pakai.' '.$dat->nama_satuan;
-			$row[] = $dat->stok_barang.' '.$dat->nama_satuan;
+			$row[] = number_format($dat->qty_pakai,2).' '.$dat->nama_satuan;
+			$row[] = number_format($dat->stok_barang,2).' '.$dat->nama_satuan;
 			$data[] = $row;
 		}
 		$output = array(
@@ -726,9 +726,9 @@ class Datatables extends CI_Controller
 			$row[] = $jenis;
 			$row[] = $dat->ukuran_ban;
 			$row[] = $dat->merk_ban;
-			$row[] = $dat->harga_satuan;
-			$row[] = $dat->qty_beli;
-			$row[] = $dat->jumlah;
+			$row[] = number_format($dat->harga_satuan,2);
+			$row[] = number_format($dat->qty_beli,2);
+			$row[] = number_format($dat->jumlah,2);
 			$data[] = $row;
 		}
 		$output = array(
@@ -752,7 +752,7 @@ class Datatables extends CI_Controller
 			$row = array();
 			$row[] = $btn;
 			$row[] = $dat->keterangan;
-			$row[] = $dat->jumlah;
+			$row[] = number_format($dat->jumlah,2);
 			$data[] = $row;
 		}
 		$output = array(
@@ -776,8 +776,8 @@ class Datatables extends CI_Controller
 			$row = array();
 			$row[] = $btn;
 			$row[] = $dat->nama_barang;
-			$row[] = $dat->qty_retur.' '.$dat->nama_satuan;
-			$row[] = $dat->jumlah;
+			$row[] = number_format($dat->qty_retur,2).' '.$dat->nama_satuan;
+			$row[] = number_format($dat->jumlah,2);
 			$data[] = $row;
 		}
 		$output = array(
@@ -801,8 +801,8 @@ class Datatables extends CI_Controller
 			$row = array();
 			$row[] = $btn;
 			$row[] = $dat->nama_barang;
-			$row[] = $dat->qty_retur.' '.$dat->nama_satuan;
-			$row[] = $dat->jumlah;
+			$row[] = number_format($dat->qty_retur,2).' '.$dat->nama_satuan;
+			$row[] = number_format($dat->jumlah,2);
 			$data[] = $row;
 		}
 		$output = array(
@@ -828,10 +828,10 @@ class Datatables extends CI_Controller
 			$row[] = $dat->kode_barang;
 			$row[] = $dat->nama_barang;
 			$row[] = $dat->part_number;
-			$row[] = $dat->min_qty.' '.$dat->nama_satuan;
-			$row[] = $dat->qty_perset.' '.$dat->nama_satuan;
+			$row[] = number_format($dat->min_qty,2).' '.$dat->nama_satuan;
+			$row[] = number_format($dat->qty_perset,2).' '.$dat->nama_satuan;
 			$row[] = $dat->no_rak;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_barang."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_barang."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_barang."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_barang."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -859,7 +859,7 @@ class Datatables extends CI_Controller
 			$row[] = $dat->kota_customer;
 			$row[] = $dat->jenis_customer;
 			$row[] = $dat->tlp_customer;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_customer."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_customer."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_customer."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_customer."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -887,7 +887,7 @@ class Datatables extends CI_Controller
 			$row[] = $dat->kota_driver;
 			$row[] = ($dat->jenis_driver=='1')?'Kernet':'Sopir';
 			$row[] = $dat->tlp_driver;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_driver."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_driver."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_driver."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_driver."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -911,8 +911,8 @@ class Datatables extends CI_Controller
 			$row[] = $no;
 			$row[] = $dat->kode_biaya_driver;
 			$row[] = $dat->ket_biaya_driver;
-			$row[] = $dat->nom_biaya_driver;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_biaya_driver."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_biaya_driver."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = number_format($dat->nom_biaya_driver,2);
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_biaya_driver."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_biaya_driver."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -936,7 +936,7 @@ class Datatables extends CI_Controller
 			$row[] = $no;
 			$row[] = $dat->kode_tujuan;
 			$row[] = $dat->ket_tujuan;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_tujuan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_tujuan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_tujuan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_tujuan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -963,7 +963,7 @@ class Datatables extends CI_Controller
 			$row[] = $dat->alamat_supplier;
 			$row[] = $dat->kota_supplier;
 			$row[] = $dat->tlp_supplier;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_supplier."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_supplier."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_supplier."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_supplier."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -990,8 +990,8 @@ class Datatables extends CI_Controller
 			$row[] = $dat->alamat_karyawan;
 			$row[] = $dat->kota_karyawan;
 			$row[] = $dat->tlp_karyawan;
-			$row[] = $dat->gaji_bulanan;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_karyawan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_karyawan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = number_format($dat->gaji_bulanan,2);
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_karyawan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_karyawan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -1019,7 +1019,7 @@ class Datatables extends CI_Controller
 			$row[] = $dat->warna_kendaraan;
 			$row[] = $dat->nama_sopir;
 			$row[] = $dat->nama_kernet;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_kendaraan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_kendaraan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_kendaraan."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_kendaraan."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(
@@ -1060,7 +1060,7 @@ class Datatables extends CI_Controller
 			$row[] = $jenis;
 			$row[] = $dat->merk_ban;
 			$row[] = $dat->ukuran_ban;
-			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_ban."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete('."'".$dat->kode_ban."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_ban."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_ban."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
 		$output = array(

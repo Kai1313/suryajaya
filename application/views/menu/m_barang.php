@@ -41,11 +41,11 @@
                 </div>
                 <div class="form-group">
                   <label>Minimum Quantity</label>
-                  <input type="text" name="min_qty" class="form-control">
+                  <input type="text" name="min_qty" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>Quantity Perset</label>
-                  <input type="text" name="qty_perset" class="form-control">
+                  <input type="text" name="qty_perset" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>Nomor Rak</label>
@@ -92,6 +92,7 @@
     $(function ()
     {
       tbBarang();
+      $('.num').number(true,2);
     })
     function tbBarang()
     {
@@ -160,6 +161,28 @@
           $('[name="qty_perset"]').val(data.qty_perset);
           $('[name="no_rak"]').val(data.no_rak);
           $('[name="tipe_form"]').val('1');
+        }
+      });
+    }
+    function del(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/delBarang/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            alert('Sukses Menghapus Barang');
+            $('#form-barang')[0].reset();
+            $('[name="tipe_form"]').val('');
+            reloadTb();
+          }
+          else
+          {
+            alert('Gagal Menghapus Barang');
+          }
         }
       });
     }

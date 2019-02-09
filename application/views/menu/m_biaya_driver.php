@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
                   <label>Biaya</label>
-                  <input type="text" name="nom_biaya" class="form-control">
+                  <input type="text" name="nom_biaya" class="form-control num">
                 </div>
                 <div class="form-group">
                   <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
@@ -73,6 +73,7 @@
     $(function ()
     {
       tbBiayaDriver();
+      $('.num').number(true,2);
     })
     function tbBiayaDriver()
     {
@@ -137,6 +138,28 @@
           $('[name="ket_biaya"]').val(data.ket_biaya_driver);
           $('[name="nom_biaya"]').val(data.nom_biaya_driver);
           $('[name="tipe_form"]').val('1');
+        }
+      });
+    }
+    function del(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/delBiayaDriver/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            alert('Sukses Menghapus Biaya');
+            $('#form-biaya-driver')[0].reset();
+            $('[name="tipe_form"]').val('');
+            reloadTb();
+          }
+          else
+          {
+            alert('Gagal Menghapus Biaya');
+          }
         }
       });
     }

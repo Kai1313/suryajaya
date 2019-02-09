@@ -77,11 +77,11 @@
                     </div>
                     <div class="form-group">
                       <label>Qty Ban</label>
-                      <input type="text" name="qty_ban" class="form-control">
+                      <input type="text" name="qty_ban" class="form-control num">
                     </div>
                     <div class="form-group">
                       <label>Harga Ban</label>
-                      <input type="text" name="harga_ban" class="form-control">
+                      <input type="text" name="harga_ban" class="form-control num">
                     </div>
                     <div class="form-group">
                       <button type="button" class="btn btn-sm btn-primary" onclick="add()">Tambah</button>
@@ -208,6 +208,7 @@
       {
         pickBan($('#dropBan option:selected').val());
       });
+      $('.num').number(true,2);
     })
     function newBeli()
     {

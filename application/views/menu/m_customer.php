@@ -158,4 +158,26 @@
         }
       });
     }
+    function del(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/delCustomer/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            alert('Sukses Menghapus Customer');
+            $('#form-customer')[0].reset();
+            $('[name="tipe_form"]').val('');
+            reloadTb();
+          }
+          else
+          {
+            alert('Gagal Menghapus Customer');
+          }
+        }
+      });
+    }
   </script>

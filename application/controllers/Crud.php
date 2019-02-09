@@ -369,6 +369,14 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function delBarang($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_barang',$upd,array('kode_barang'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
 	public function getBarang($key)
 	{
 		$data = $this->db->get_where('master_barang', array('kode_barang'=>$key))->row();
@@ -403,6 +411,14 @@ class Crud extends CI_Controller
 			'data_sts'=>'1'
 		);
 		$this->db->update('master_customer',$upd,array('kode_customer'=>$this->input->post('kode_customer')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function delCustomer($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_customer',$upd,array('kode_customer'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		echo json_encode($data);
 	}
@@ -445,6 +461,14 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function delDriver($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_driver',$upd,array('kode_driver'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
 	public function getDriver($key)
 	{
 		$data = $this->db->get_where('master_driver', array('kode_driver'=>$key))->row();
@@ -477,6 +501,14 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function delBiayaDriver($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_biaya_driver',$upd,array('kode_biaya_driver'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
 	public function getBiayaDriver($key)
 	{
 		$data = $this->db->get_where('master_biaya_driver', array('kode_biaya_driver'=>$key))->row();
@@ -503,6 +535,14 @@ class Crud extends CI_Controller
 			'data_sts'=>'1'
 		);
 		$this->db->update('master_tujuan',$upd,array('kode_tujuan'=>$this->input->post('kode_tujuan')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function delTujuan($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_tujuan',$upd,array('kode_tujuan'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		echo json_encode($data);
 	}
@@ -540,6 +580,14 @@ class Crud extends CI_Controller
 			'data_sts'=>'1'
 		);
 		$this->db->update('master_supplier',$upd,array('kode_supplier'=>$this->input->post('kode_supplier')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function delSupplier($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_supplier',$upd,array('kode_supplier'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		echo json_encode($data);
 	}
@@ -2099,7 +2147,13 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
-	//Transaksi Input Bon Karyawan
+	public function printBonKaryawan($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_input_bon',$data);
+	}
+
+	//Transaksi Input Kas
 	public function saveKas()
 	{
 		$getSts = $this->db->get_where('trx_input_kas',array('no_kas'=>$this->input->post('no_kas')))->row();
@@ -2158,6 +2212,12 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function printKas($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_input_kas',$data);
 	}
 
 	//Transaksi Input Bon Sopir
@@ -2235,6 +2295,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function printBonSopir($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_input_bon_sopir',$data);
+	}
+
 	//Transaksi Input Klaim Sopir
 	public function saveKlaimSopir()
 	{
@@ -2308,6 +2374,12 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function printKlaimSopir($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_input_klaim_sopir',$data);
 	}
 
 	//Transaksi Bayar Upah Karyawan
@@ -2408,7 +2480,7 @@ class Crud extends CI_Controller
 	//Transaksi Bayar Bon Klaim Sopir
 	public function saveBayarSopir()
 	{
-		$getSts = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
+		$getSts = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$this->input->post('no_bayar')))->row();
 		if($getSts->data_sts != '0')
 		{
 			$data['status'] = FALSE;
@@ -2416,14 +2488,23 @@ class Crud extends CI_Controller
 		else
 		{
 			$upd = array(
-				'kode_karyawan'=>$this->input->post('kode_karyawan'),
-				'tgl_upah'=>$this->input->post('tgl_upah'),
+				'kode_driver'=>$this->input->post('kode_sopir'),
+				'tgl_bayar'=>$this->input->post('tgl_bayar'),
 				'nom_bon'=>$this->input->post('nom_bon'),
 				'nom_klaim'=>$this->input->post('nom_klaim'),
 				'data_sts'=>'1'
 			);
-			$this->db->update('trx_bayar_upah_karyawan',$upd,array('no_kuitansi'=>$this->input->post('no_kuitansi')));
+			$this->db->update('trx_bayar_bonklaim_sopir',$upd,array('no_bayar'=>$this->input->post('no_bayar')));
 			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		if($data['status']!=FALSE)
+		{
+			$getKlaim = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_klaim;
+			$getBon = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_sopir')))->row()->jml_bon;
+			$totKlaim = ($getKlaim*1)-($this->input->post('nom_klaim')*1);
+			$totBon = ($getBon*1)-($this->input->post('nom_bon')*1);
+			$upDrv = array('jml_klaim'=>$totKlaim,'jml_bon'=>$totBon);
+			$this->db->update('master_driver',$upDrv,array('kode_driver'=>$this->input->post('kode_sopir')));
 		}
 		$data['msg'] = ($data['status']!=FALSE)?
 		'<div class="alert alert-success alert-dismissible" id="alert_success">
@@ -2473,6 +2554,12 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function printBonKlaimSopir($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_bayar_bon_klaim_sopir',$data);
 	}
 
 	//Transaksi Kas Bon Sopir
@@ -3085,6 +3172,36 @@ class Crud extends CI_Controller
 	{
 		$data['a'] = $this->db->join('trx_pakai_barang b','b.no_pakai_brg = a.no_pakai_brg')->join('master_kendaraan c','c.kode_kendaraan = b.kode_kendaraan')->get_where('trx_retur_pakai_barang a',array('a.no_retur'=>$key))->row();
 		$data['b'] = $this->db->join('master_barang b','b.kode_barang = a.kode_barang')->get_where('trx_retur_pakai_barang_det a',array('a.no_retur'=>$key))->result();
+		echo json_encode($data);
+	}
+
+	public function getPrintBonKaryawan($key)
+	{
+		$data['a'] = $this->db->join('master_karyawan b','b.kode_karyawan = a.kode_karyawan')->get_where('trx_input_bon_karyawan a',array('a.no_bon'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintBonSopir($key)
+	{
+		$data['a'] = $this->db->join('master_driver b','b.kode_driver = a.kode_driver')->get_where('trx_input_bon_sopir a',array('a.no_bon'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintKlaimSopir($key)
+	{
+		$data['a'] = $this->db->join('master_driver b','b.kode_driver = a.kode_driver')->get_where('trx_input_klaim_sopir a',array('a.no_klaim'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintKas($key)
+	{
+		$data['a'] = $this->db->get_where('trx_input_kas',array('no_kas'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintBonKlaimSopir($key)
+	{
+		$data['a'] = $this->db->join('master_driver b','b.kode_driver = a.kode_driver')->get_where('trx_bayar_bonklaim_sopir a',array('a.no_bayar'=>$key))->row();
 		echo json_encode($data);
 	}
 }

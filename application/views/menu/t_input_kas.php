@@ -47,11 +47,11 @@
                   <div class="col-md-6 col-xs-12">
                     <div class="form-group">
                       <label>Debet</label>
-                      <input type="text" name="debet" class="form-control">
+                      <input type="text" name="debet" class="form-control num">
                     </div>
                     <div class="form-group">
                       <label>Kredit</label>
-                      <input type="text" name="kredit" class="form-control">
+                      <input type="text" name="kredit" class="form-control num">
                     </div>
                     <div class="form-group">
                       <label>Keterangan</label>
@@ -136,6 +136,7 @@
         autoclose: true,
         format: 'yyyy-m-d'
       });
+      $('.num').number(true,2);
     })
     function newKas()
     {
@@ -236,5 +237,10 @@
           $('#modal-edit').modal('hide');
         }
       });
+    }
+    function printDt()
+    {
+      key = ($('[name="no_kas"]').val()!='')?$('[name="no_kas"]').val():'';
+      window.open ( "<?= site_url('Crud/printKas/')?>"+key,'_blank');
     }
   </script>

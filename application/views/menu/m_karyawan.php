@@ -45,35 +45,35 @@
                 </div>
                 <div class="form-group">
                   <label>Uang Makan</label>
-                  <input type="text" name="upah_makan" class="form-control">
+                  <input type="text" name="upah_makan" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>Upah Harian</label>
-                  <input type="text" name="upah_harian" class="form-control">
+                  <input type="text" name="upah_harian" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>Upah Hari Besar</label>
-                  <input type="text" name="upah_hari_besar" class="form-control">
+                  <input type="text" name="upah_hari_besar" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>Upah Hari Minggu</label>
-                  <input type="text" name="upah_hari_minggu" class="form-control">
+                  <input type="text" name="upah_hari_minggu" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>Minimum Jam Lembur</label>
-                  <input type="text" name="min_jam_lembur" class="form-control">
+                  <input type="text" name="min_jam_lembur" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>Upah Lembur per Jam</label>
-                  <input type="text" name="upah_lembur" class="form-control">
+                  <input type="text" name="upah_lembur" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>Gaji Bulanan</label>
-                  <input type="text" name="gaji_bulanan" class="form-control">
+                  <input type="text" name="gaji_bulanan" class="form-control num">
                 </div>
                 <div class="form-group">
                   <label>6x Kerja Penuh</label>
-                  <input type="text" name="kerja_penuh_6x" class="form-control">
+                  <input type="text" name="kerja_penuh_6x" class="form-control num">
                 </div>
                 <div class="form-group">
                   <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
@@ -116,6 +116,7 @@
     $(function ()
     {
       tbKaryawan();
+      $('.num').number(true,2);
     })
     function tbKaryawan()
     {
@@ -190,6 +191,28 @@
           $('[name="gaji_bulanan"]').val(data.gaji_bulanan);
           $('[name="kerja_penuh_6x"]').val(data.kerja_penuh_6x);
           $('[name="tipe_form"]').val('1');
+        }
+      });
+    }
+    function del(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/delKaryawan/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            alert('Sukses Menghapus Karyawan');
+            $('#form-karyawan')[0].reset();
+            $('[name="tipe_form"]').val('');
+            reloadTb();
+          }
+          else
+          {
+            alert('Gagal Menghapus Karyawan');
+          }
         }
       });
     }

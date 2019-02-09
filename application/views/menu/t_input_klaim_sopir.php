@@ -57,11 +57,11 @@
                     </div>
                     <div class="form-group">
                       <label>Sisa Klaim</label>
-                      <input type="text" name="jml_klaim" class="form-control" readonly>
+                      <input type="text" name="jml_klaim" class="form-control num" readonly>
                     </div>
                     <div class="form-group">
                       <label>Nominal Klaim</label>
-                      <input type="text" name="nom_klaim" class="form-control">
+                      <input type="text" name="nom_klaim" class="form-control num">
                     </div>
                   </div>
                 </div>
@@ -147,6 +147,7 @@
       {
         pickSopir($('#dropSopir option:selected').val());
       });
+      $('.num').number(true,2);
     })
     function newKlaim()
     {
@@ -284,5 +285,10 @@
           $('#modal-edit').modal('hide');
         }
       });
+    }
+    function printDt()
+    {
+      key = ($('[name="no_klaim"]').val()!='')?$('[name="no_klaim"]').val():'';
+      window.open ( "<?= site_url('Crud/printKlaimSopir/')?>"+key,'_blank');
     }
   </script>

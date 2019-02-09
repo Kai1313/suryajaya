@@ -272,7 +272,7 @@
               $('<td></td>'),$('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
               ).appendTo('#tb_content');
           }
-          // $('td.chgnum').number(true,2);
+          $('td.chgnum').number(true,2);
         },
         error: function (jqXHR, textStatus, errorThrown)
         {

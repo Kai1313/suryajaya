@@ -252,4 +252,26 @@
         }
       });
     }
+    function del(id)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/delKendaraan/')?>'+id,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            alert('Sukses Menghapus Kendaraan');
+            $('#form-kendaraan')[0].reset();
+            $('[name="tipe_form"]').val('');
+            reloadTb();
+          }
+          else
+          {
+            alert('Gagal Menghapus Kendaraan');
+          }
+        }
+      });
+    }
   </script>

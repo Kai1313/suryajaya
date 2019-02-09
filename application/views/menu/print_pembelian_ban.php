@@ -191,7 +191,7 @@
               <tfoot>
                 <tr>
                   <th colspan="4" class="text-right">GRAND TOTAL</th>
-                  <th class="text-right chgnum-perc"><span name="printing_total"></span></th>
+                  <th class="text-right chgnum"><span name="printing_total"></span></th>
                 </tr>
                 <tr>
                   <th colspan="5" class="notice-row">
@@ -282,8 +282,8 @@
             var $tr = $('<tr>').append(
               $('<td class="text-center">'+jenis+'</td>'),
               $('<td class="text-center">'+data['b'][i]["ukuran_ban"]+' - '+data['b'][i]["merk_ban"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["qty_beli"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["harga_satuan"]+'</td>'),
+              $('<td class="text-center chgnum">'+data['b'][i]["qty_beli"]+'</td>'),
+              $('<td class="text-center chgnum">'+data['b'][i]["harga_satuan"]+'</td>'),
               $('<td class="text-right chgnum">'+data['b'][i]["jumlah"]+'</td>')
               ).appendTo('#tb_content');
           }
@@ -294,7 +294,8 @@
               $('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
               ).appendTo('#tb_content');
           }
-          // $('td.chgnum').number(true,2);
+          $('td.chgnum').number(true,2);
+          $('th.chgnum').number(true,2);
         },
         error: function (jqXHR, textStatus, errorThrown)
         {

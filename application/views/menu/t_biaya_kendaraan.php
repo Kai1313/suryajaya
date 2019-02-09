@@ -95,7 +95,7 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Jumlah</label>
-                      <input type="text" name="jumlah" class="form-control">
+                      <input type="text" name="jumlah" class="form-control num">
                     </div>
                     <div class="form-group">
                       <button type="button" class="btn btn-sm btn-primary" onclick="add()">Tambah</button>
@@ -117,7 +117,7 @@
                 <tfoot>
                   <tr>
                     <th colspan="2" class="text-center">Grand Total</th>
-                    <th class=""><span name="grand_total">0</span></th>
+                    <th class="num_"><span name="grand_total">0</span></th>
                   </tr>
                 </tfoot>
               </table>
@@ -211,6 +211,7 @@
       });
       dropsopir();
       dropkernet();
+      $('.num').number(true,2);
     })
     function newBiaya()
     {
@@ -497,6 +498,7 @@
         {
           $('[name="grand_total"]').text(data.subtotal);
           $('[name="g_total"]').val(data.subtotal);
+          $('th.num_').number(true,2);
         }
       });
     }
