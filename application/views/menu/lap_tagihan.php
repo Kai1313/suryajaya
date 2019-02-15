@@ -145,6 +145,20 @@
         <div class="col-sm-2 col-xs-3">
           <button class="btn btn-block btn-success addBtn" type="button">Tambah Kolom</button>
         </div>
+        <div class="col-sm-2 col-xs-3">
+          <label>Tanggal Muat Berangkat</label>
+          <div class="input-group date">
+            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+            <input type="text" name="tgl_muat_a" class="form-control pull-right" id="tgl_muat_a">
+          </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+          <label>Tanggal Muat Kembali</label>
+          <div class="input-group date">
+            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+            <input type="text" name="tgl_muat_b" class="form-control pull-right" id="tgl_muat_b">
+          </div>
+        </div>
       </div>
     </div>
     <div class="container printing" id="print-div">

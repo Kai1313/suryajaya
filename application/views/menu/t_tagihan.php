@@ -260,6 +260,11 @@
                   <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
                 </div>
               </div>
+              <div class="col-md-1 col-xs-1">
+                <div class="form-group">
+                  <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                </div>
+              </div>
             </div>
           </div>        
         </div>
@@ -707,5 +712,9 @@
     {
       key = ($('[name="no_tagihan"]').val()!='')?$('[name="no_tagihan"]').val():'';
       window.open ( "<?= site_url('Crud/printTagihan/')?>"+key,'_blank');
+    }
+    function reportDt()
+    {
+      window.open ( "<?= site_url('Crud/lapTagihan')?>",'_blank');
     }
   </script>

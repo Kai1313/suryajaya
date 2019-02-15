@@ -2586,7 +2586,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
-				'tgl_bon'=>$this->input->post('tgl_bon'),
+				'tgl_bon'=>($this->input->post('tgl_bon')!='')?$this->dateFix_($this->input->post('tgl_bon')):NULL,
 				'kode_sopir'=>$this->input->post('kode_sopir'),
 				'kode_kernet'=>$this->input->post('kode_kernet'),
 				'kode_sopir'=>$this->input->post('kode_sopir'),
@@ -2598,29 +2598,30 @@ class Crud extends CI_Controller
 				'uang_saku_b'=>$this->input->post('uang_saku_b'),
 				'uang_saku_c'=>$this->input->post('uang_saku_c'),
 				'uang_saku_d'=>$this->input->post('uang_saku_d'),
-				'tgl_bon_a'=>$this->input->post('tgl_bon_a'),
-				'tgl_bon_b'=>$this->input->post('tgl_bon_b'),
-				'tgl_bon_c'=>$this->input->post('tgl_bon_c'),
-				'tgl_bon_d'=>$this->input->post('tgl_bon_d'),
+				'tgl_bon_kota'=>($this->input->post('tgl_bon_kota')!='')?$this->dateFix_($this->input->post('tgl_bon_kota')):NULL,
+				'tgl_bon_a'=>($this->input->post('tgl_bon_a')!='')?$this->dateFix_($this->input->post('tgl_bon_a')):NULL,
+				'tgl_bon_b'=>($this->input->post('tgl_bon_b')!='')?$this->dateFix_($this->input->post('tgl_bon_b')):NULL,
+				'tgl_bon_c'=>($this->input->post('tgl_bon_c')!='')?$this->dateFix_($this->input->post('tgl_bon_c')):NULL,
+				'tgl_bon_d'=>($this->input->post('tgl_bon_d')!='')?$this->dateFix_($this->input->post('tgl_bon_d')):NULL,
 				'sub_uang_saku'=>$this->input->post('sub_uang_saku'),
 				'uang_solar'=>$this->input->post('uang_solar'),
-				'tgl_solar'=>$this->input->post('tgl_solar'),
+				'tgl_solar'=>($this->input->post('tgl_solar')!='')?$this->dateFix_($this->input->post('tgl_solar')):NULL,
 				'nama_pom'=>$this->input->post('nama_pom'),
 				'sub_bonall'=>$this->input->post('sub_bonall'),
-				'tgl_muat'=>$this->input->post('tgl_muat'),
-				'tgl_muat_b'=>$this->input->post('tgl_muat_b'),
-				'tgl_bongkar'=>$this->input->post('tgl_bongkar'),
-				'tgl_bongkar_b'=>$this->input->post('tgl_bongkar_b'),
+				'tgl_muat'=>($this->input->post('tgl_muat')!='')?$this->dateFix_($this->input->post('tgl_muat')):NULL,
+				'tgl_muat_b'=>($this->input->post('tgl_muat_b')!='')?$this->dateFix_($this->input->post('tgl_muat_b')):NULL,
+				'tgl_bongkar'=>($this->input->post('tgl_bongkar')!='')?$this->dateFix_($this->input->post('tgl_bongkar')):NULL,
+				'tgl_bongkar_b'=>($this->input->post('tgl_bongkar_b')!='')?$this->dateFix_($this->input->post('tgl_bongkar_b')):NULL,
 				'uang_makan'=>$this->input->post('uang_makan'),
 				'uang_makan_b'=>$this->input->post('uang_makan_b'),
-				'kode_customer_a'=>$this->input->post('kode_customer_a'),
-				'kode_customer_b'=>$this->input->post('kode_customer_b'),
-				'kode_customer_c'=>$this->input->post('kode_customer_c'),
-				'kode_customer_d'=>$this->input->post('kode_customer_d'),
-				'kode_customer_e'=>$this->input->post('kode_customer_e'),
-				'kode_customer_f'=>$this->input->post('kode_customer_f'),
-				'kode_customer_g'=>$this->input->post('kode_customer_g'),
-				'kode_customer_h'=>$this->input->post('kode_customer_h'),
+				'kode_customer_a'=>($this->input->post('kode_customer_a')!='')?$this->input->post('kode_customer_a'):NULL,
+				'kode_customer_b'=>($this->input->post('kode_customer_b')!='')?$this->input->post('kode_customer_b'):NULL,
+				'kode_customer_c'=>($this->input->post('kode_customer_c')!='')?$this->input->post('kode_customer_c'):NULL,
+				'kode_customer_d'=>($this->input->post('kode_customer_d')!='')?$this->input->post('kode_customer_d'):NULL,
+				'kode_customer_e'=>($this->input->post('kode_customer_e')!='')?$this->input->post('kode_customer_e'):NULL,
+				'kode_customer_f'=>($this->input->post('kode_customer_f')!='')?$this->input->post('kode_customer_f'):NULL,
+				'kode_customer_g'=>($this->input->post('kode_customer_g')!='')?$this->input->post('kode_customer_g'):NULL,
+				'kode_customer_h'=>($this->input->post('kode_customer_h')!='')?$this->input->post('kode_customer_h'):NULL,
 				'jenis_muatan_a'=>$this->input->post('jenis_muatan_a'),
 				'jenis_muatan_b'=>$this->input->post('jenis_muatan_b'),
 				'jenis_muatan_c'=>$this->input->post('jenis_muatan_c'),
@@ -3042,6 +3043,11 @@ class Crud extends CI_Controller
 		$data['key'] = $key;
 		$this->load->view('menu/print_tagihan',$data);
 	}
+
+	public function lapTagihan()
+	{
+		$this->load->view('menu/lap_tagihan');
+	}
 	
 	//Get Data Pencarian
 	public function getBeliBrg($key)
@@ -3151,6 +3157,7 @@ class Crud extends CI_Controller
 	{
 		$data['a'] = $this->db->join('master_customer b','b.kode_customer = a.kode_customer')->get_where('trx_tagihan a',array('a.no_tagihan'=>$key))->row();
 		$data['b'] = $this->db->get_where('trx_tagihan_det',array('no_tagihan'=>$key))->result();
+		$data['c'] = $this->db->select('SUM(a.ongkos_bruto) as subtotal')->join('trx_tagihan b','b.no_tagihan = a.no_tagihan')->get_where('trx_tagihan_det a',array('a.no_tagihan'=>$key))->row();
 		echo json_encode($data);
 	}
 
@@ -3241,5 +3248,12 @@ class Crud extends CI_Controller
 		$data['a'] = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_lepas_ban a',array('a.no_pelepasan'=>$key))->row();
 		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('trx_lepas_ban_det a',array('a.no_pelepasan'=>$key))->result();
 		echo json_encode($data);
+	}
+
+	//Date Fixer
+	function dateFix_($inp)
+	{
+		$date = str_replace('/', '-', $inp);
+		return date('Y-m-d', strtotime($date));
 	}
 }
