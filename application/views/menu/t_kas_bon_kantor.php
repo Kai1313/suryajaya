@@ -35,7 +35,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_bon" class="form-control pull-right" id="tgl_bon">
+                        <input type="text" name="tgl_bon" class="form-control pull-right" id="tgl_bon" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -44,7 +44,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_berangkat" class="form-control pull-right" id="tgl_berangkat">
+                        <input type="text" name="tgl_berangkat" class="form-control pull-right" onchange="diffPP()" id="tgl_berangkat" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -53,17 +53,16 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_kembali" class="form-control pull-right" id="tgl_kembali">
+                        <input type="text" name="tgl_kembali" class="form-control pull-right" onchange="diffPP()" id="tgl_kembali" placeholder="dd/mm/yyyy">
                       </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Hari PP</label>
+                      <input type="text" class="form-control diffPP" name="hari_pp" readonly>
                     </div>
                     <div class="form-group">
                       <label>Keterangan</label>
                       <textarea class="form-control" name="ket_kasbon"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <br>
-                      <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newBon()">Bon Baru</button>
-                      <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editBon()">Edit Bon</button>
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-12">
@@ -87,14 +86,19 @@
                     </div>
                     <div class="form-group">
                       <label>Tabungan Sopir</label>
-                      <input type="text" name="tab_sopir" class="form-control">
+                      <input type="text" name="tab_sopir" class="form-control num_" value="100000">
                     </div>
                     <div class="form-group">
                       <label>Berat Jenis</label>
-                      <select class="form-control" name="berat_jenis" id="berat_jenis">
+                      <select class="form-control" name="berat_jenis" id="berat_jenis" onchange="beratStat()">
                         <option value="0">Berat (Kg)</option>
-                        <option value="0">Volume (Dm3)</option>
+                        <option value="1">Volume (Dm3)</option>
                       </select>
+                    </div>
+                    <div class="form-group">
+                      <br>
+                      <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newBon()">Bon Baru</button>
+                      <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editBon()">Edit Bon</button>
                     </div>
                   </div>
                 </div>
@@ -117,138 +121,221 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Bon Uang Saku Kota</label>
-                        <input type="text" name="uang_saku_kota" class="form-control chgbonsaku">
+                        <label>Tanggal</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_bon_kota" class="form-control pull-right" id="tgl_bon_kota" placeholder="dd/mm/yyyy">
+                        </div>
                       </div>
                       <div class="form-group">
-                        <label>Bon Uang Saku 1</label>
-                        <input type="text" name="uang_saku_a" class="form-control chgbonsaku">
+                        <label>Tanggal</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_bon_a" class="form-control pull-right" id="tgl_bon_a" placeholder="dd/mm/yyyy">
+                        </div>
                       </div>
                       <div class="form-group">
-                        <label>Bon Uang Saku 2</label>
-                        <input type="text" name="uang_saku_b" class="form-control chgbonsaku">
+                        <label>Tanggal</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_bon_b" class="form-control pull-right" id="tgl_bon_b" placeholder="dd/mm/yyyy">
+                        </div>
                       </div>
                       <div class="form-group">
-                        <label>Bon Uang Saku 3</label>
-                        <input type="text" name="uang_saku_c" class="form-control chgbonsaku">
+                        <label>Tanggal</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_bon_c" class="form-control pull-right" id="tgl_bon_c" placeholder="dd/mm/yyyy">
+                        </div>
                       </div>
                       <div class="form-group">
-                        <label>Bon Uang Saku 4</label>
-                        <input type="text" name="uang_saku_d" class="form-control chgbonsaku">
-                      </div>
-                      <div class="form-group">
-                        <label>Total Bon Uang Saku</label>
-                        <input type="text" name="sub_uang_saku" class="form-control" readonly>
+                        <label>Tanggal</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_bon_d" class="form-control pull-right" id="tgl_bon_d" placeholder="dd/mm/yyyy">
+                        </div>
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                    <div class="col-md-8 col-xs-12">
+                      <div class="row">
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>Bon Uang Saku Kota</label>
+                            <input type="text" name="uang_saku_kota" class="form-control num_ chgbonsaku">
                           </div>
-                          <input type="text" name="tgl_bon_kota" class="form-control pull-right" id="tgl_bon_kota">
+                          <div class="form-group">
+                            <label>Bon Uang Saku 1</label>
+                            <input type="text" name="uang_saku_a" class="form-control num_ chgbonsaku">
+                          </div>
+                          <div class="form-group">
+                            <label>Bon Uang Saku 2</label>
+                            <input type="text" name="uang_saku_b" class="form-control num_ chgbonsaku">
+                          </div>
+                          <div class="form-group">
+                            <label>Bon Uang Saku 3</label>
+                            <input type="text" name="uang_saku_c" class="form-control num_ chgbonsaku">
+                          </div>
+                          <div class="form-group">
+                            <label>Bon Uang Saku 4</label>
+                            <input type="text" name="uang_saku_d" class="form-control num_ chgbonsaku">
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" name="uang_saku_kota_sum" class="form-control num_" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" name="uang_saku_a_sum" class="form-control num_" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" name="uang_saku_b_sum" class="form-control num_" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" name="uang_saku_c_sum" class="form-control num_" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" name="uang_saku_d_sum" class="form-control num_" readonly>
+                          </div>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                          <div class="form-group">
+                            <label>Total Bon Uang Saku</label>
+                            <input type="text" name="sub_uang_saku" class="form-control num_" readonly>
                           </div>
-                          <input type="text" name="tgl_bon_a" class="form-control pull-right" id="tgl_bon_a">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_b" class="form-control pull-right" id="tgl_bon_b">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_c" class="form-control pull-right" id="tgl_bon_c">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_d" class="form-control pull-right" id="tgl_bon_d">
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                      <div class="form-group">
-                        <label>Bon Solar</label>
-                        <input type="text" name="uang_solar" class="form-control chgbonsaku">
-                      </div>
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
                         <label>Nama Pom</label>
-                        <input type="text" name="nama_pom" class="form-control">
+                        <select class="form-control" name="nama_pom" id="nama_pom">
+                          <option value="0">Pom A</option>
+                          <option value="1">Pom B</option>
+                        </select>
                       </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Tanggal</label>
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" name="tgl_solar" class="form-control pull-right" id="tgl_solar">
+                          <input type="text" name="tgl_solar" class="form-control pull-right" id="tgl_solar" placeholder="dd/mm/yyyy">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Bon Solar</label>
+                            <input type="text" name="uang_solar" class="form-control num_ chgbonsaku">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" class="form-control num_ defSolar" value="100000" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" name="uang_solar_sum" class="form-control num_" readonly>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-offset-3 col-md-6 col-xs-12">
+                    <div class="col-md-offset-4 col-md-8 col-xs-12">
                       <div class="form-group">
                         <label>Total Bon Uang Saku & Solar</label>
-                        <input type="text" name="sub_bonall" class="form-control" readonly>
+                        <input type="text" name="sub_bonall" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab_2">
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                      <div class="form-group">
-                        <label>Tanggal Muat</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                    <div class="col-md-8 col-xs-12">
+                      <div class="row">
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>Tanggal Muat</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" name="tgl_muat" class="form-control pull-right" id="tgl_muat" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                            </div>
                           </div>
-                          <input type="text" name="tgl_muat" class="form-control pull-right" id="tgl_muat">
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal Bongkar</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>Tanggal Bongkar</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" name="tgl_bongkar" class="form-control pull-right" id="tgl_bongkar" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                            </div>
                           </div>
-                          <input type="text" name="tgl_bongkar" class="form-control pull-right" id="tgl_bongkar">
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>Hari</label>
+                            <input type="text" name="hari_berangkat" class="form-control" readonly>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
                         <label>Uang Makan</label>
-                        <input type="text" name="uang_makan" class="form-control">
+                        <input type="text" name="uang_makan" class="form-control num_">
                       </div>
                     </div>
                   </div>
@@ -278,7 +365,12 @@
                       </div>
                       <div class="form-group">
                         <label>Berat Muatan 1</label>
-                        <input type="text" name="berat_muatan_a" class="form-control chgberatbrgkt">
+                        <div class="input-group">
+                          <input type="text" name="berat_muatan_a" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -286,11 +378,11 @@
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Ongkos Angkut 1</label>
-                        <input type="text" name="ongkos_angkut" class="form-control">
+                        <input type="text" name="ongkos_angkut" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Ongkos Angkut Bruto 1</label>
-                        <input type="text" name="ongkos_bruto" class="form-control chgbrutobrgkt">
+                        <input type="text" name="ongkos_bruto" class="form-control num_ chgbrutobrgkt">
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
@@ -304,7 +396,12 @@
                       </div>
                       <div class="form-group">
                         <label>Tambah Borong 1</label>
-                        <input type="text" name="tambah_borong_a" class="form-control">
+                        <div class="input-group">
+                          <input type="text" name="tambah_borong_a" class="form-control num_">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -334,7 +431,12 @@
                       </div>
                       <div class="form-group">
                         <label>Berat Muatan 2</label>
-                        <input type="text" name="berat_muatan_b" class="form-control chgberatbrgkt">
+                        <div class="input-group">
+                          <input type="text" name="berat_muatan_b" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -342,11 +444,11 @@
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Ongkos Angkut 2</label>
-                        <input type="text" name="ongkos_angkut_2" class="form-control">
+                        <input type="text" name="ongkos_angkut_2" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Ongkos Angkut Bruto 2</label>
-                        <input type="text" name="ongkos_bruto_2" class="form-control chgbrutobrgkt">
+                        <input type="text" name="ongkos_bruto_2" class="form-control num_ chgbrutobrgkt">
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
@@ -360,7 +462,12 @@
                       </div>
                       <div class="form-group">
                         <label>Tambah Borong 2</label>
-                        <input type="text" name="tambah_borong_b" class="form-control">
+                        <div class="input-group">
+                          <input type="text" name="tambah_borong_b" class="form-control num_">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -368,41 +475,53 @@
                     <div class="col-md-offset-3 col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Total Berat Muat</label>
-                        <input type="text" name="sub_beratmuat" class="form-control" readonly>
+                        <input type="text" name="sub_beratmuat" class="form-control num_" readonly>
                       </div>
                       <div class="form-group">
                         <label>Total Ongkos Bruto</label>
-                        <input type="text" name="sub_bruto" class="form-control" readonly>
+                        <input type="text" name="sub_bruto" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab_3">
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                      <div class="form-group">
-                        <label>Tanggal Muat</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                    <div class="col-md-8 col-xs-12">
+                      <div class="row">
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>Tanggal Muat</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" name="tgl_muat_b" class="form-control pull-right" id="tgl_muat_b" placeholder="dd/mm/yyyy" onchange="diffKmb()">
+                            </div>
                           </div>
-                          <input type="text" name="tgl_muat_b" class="form-control pull-right" id="tgl_muat_b">
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal Bongkar</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>Tanggal Bongkar</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" name="tgl_bongkar_b" class="form-control pull-right" id="tgl_bongkar_b" placeholder="dd/mm/yyyy" onchange="diffKmb()">
+                            </div>
                           </div>
-                          <input type="text" name="tgl_bongkar_b" class="form-control pull-right" id="tgl_bongkar_b">
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                          <div class="form-group">
+                            <label>Hari</label>
+                            <input type="text" name="hari_berangkat_b" class="form-control" readonly>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
                         <label>Uang Makan</label>
-                        <input type="text" name="uang_makan_b" class="form-control">
+                        <input type="text" name="uang_makan_b" class="form-control num_">
                       </div>
                     </div>
                   </div>
@@ -703,58 +822,59 @@
   <script>
     $(function ()
     {
+      $('.num_').number(true,2);
       key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'0';
       $('#tgl_bon').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_berangkat').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_kembali').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_bon_kota').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_bon_a').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_bon_b').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_bon_c').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_bon_d').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_solar').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_muat').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_bongkar').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_muat_b').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_bongkar_b').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       bonsakuchg();
       beratBrgkt();
@@ -762,6 +882,7 @@
       brutoBrgkt();
       brutoKmb();
       $('#berat_jenis').select2({placeholder: 'Pilih Berat Jenis'});
+      $('#nama_pom').select2({placeholder: 'Pilih Pom'});
       $('#borSopir').select2({placeholder: 'Pilih Salah Satu'});
       $('#borSopir2').select2({placeholder: 'Pilih Salah Satu'});
       $('#borSopir3').select2({placeholder: 'Pilih Salah Satu'});
@@ -1238,14 +1359,21 @@
     }
     function hitungbonsaku_()
     {
-      uangSakuKota = $('[name="uang_saku_kota"]').val();
-      uangSakuA = $('[name="uang_saku_a"]').val();
-      uangSakuB = $('[name="uang_saku_b"]').val();
-      uangSakuC = $('[name="uang_saku_c"]').val();
-      uangSakuD = $('[name="uang_saku_d"]').val();
+      uangSakuKota = $('[name="uang_saku_kota"]').val()*100000;
+      uangSakuA = $('[name="uang_saku_a"]').val()*100000;
+      uangSakuB = $('[name="uang_saku_b"]').val()*100000;
+      uangSakuC = $('[name="uang_saku_c"]').val()*100000;
+      uangSakuD = $('[name="uang_saku_d"]').val()*100000;
       subUangSaku = parseFloat(uangSakuKota)+parseFloat(uangSakuA)+parseFloat(uangSakuB)+parseFloat(uangSakuC)+parseFloat(uangSakuD);
+      $('[name="uang_saku_kota_sum"]').val(uangSakuKota);
+      $('[name="uang_saku_a_sum"]').val(uangSakuA);
+      $('[name="uang_saku_b_sum"]').val(uangSakuB);
+      $('[name="uang_saku_c_sum"]').val(uangSakuC);
+      $('[name="uang_saku_d_sum"]').val(uangSakuD);
       $('[name="sub_uang_saku"]').val(subUangSaku);
-      uangSolar = $('[name="uang_solar"]').val();
+      $('[name="sub_uang_saku"]').val(subUangSaku);
+      uangSolar = $('[name="uang_solar"]').val()*100000;
+      $('[name="uang_solar_sum"]').val(uangSolar);
       subBonAll = parseFloat(subUangSaku)+parseFloat(uangSolar);
       $('[name="sub_bonall"]').val(subBonAll);
     }
@@ -1311,5 +1439,34 @@
       {
         hitungbrutokmb_();
       });
+    }
+    function diffPP()
+    {
+      st = moment($('[name="tgl_berangkat"]').val(),'DD/MM/YYYY');
+      ed = moment($('[name="tgl_kembali"]').val(),'DD/MM/YYYY');
+      $('[name="hari_pp"]').val(ed.diff(st,'days'));
+    }
+    function diffBrgkt()
+    {
+      st = moment($('[name="tgl_muat"]').val(),'DD/MM/YYYY');
+      ed = moment($('[name="tgl_bongkar"]').val(),'DD/MM/YYYY');
+      $('[name="hari_berangkat"]').val(ed.diff(st,'days'));
+    }
+    function diffKmb()
+    {
+      st = moment($('[name="tgl_muat_b"]').val(),'DD/MM/YYYY');
+      ed = moment($('[name="tgl_bongkar_b"]').val(),'DD/MM/YYYY');
+      $('[name="hari_berangkat_b"]').val(ed.diff(st,'days'));
+    }
+    function beratStat()
+    {
+      if($('[name="berat_jenis"]').val() != '0')
+      {
+        $('.beratSts').text('Dm3');
+      }
+      else
+      {
+        $('.beratSts').text('Kg');
+      }
     }
   </script>

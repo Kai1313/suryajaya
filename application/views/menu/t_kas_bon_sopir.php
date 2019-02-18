@@ -686,7 +686,7 @@
       beratBrgkt();
       beratKmb();
       $('#berat_jenis').select2({placeholder: 'Pilih Berat Jenis'});
-      $('#nama_pom').select2({placeholder: 'Pilih Berat Jenis'});
+      $('#nama_pom').select2({placeholder: 'Pilih Pom'});
       dropkendaraan();
       dropsopir();
       dropkernet();
