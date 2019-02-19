@@ -15,6 +15,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/show/ShowKaryawan','showKaryawan');
 		$this->load->model('Datatables/show/ShowKendaraan','showKendaraan');
 		$this->load->model('Datatables/show/ShowBan','showBan');
+		$this->load->model('Datatables/show/ShowRekening','showRekening');
 
 		$this->load->model('Datatables/details/DetPembelianBarang','detBeliBrg');
 		$this->load->model('Datatables/details/DetPemakaianBarang','detPakaiBrg');
@@ -25,6 +26,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/details/DetPemasanganBan','detPsgBan');
 		$this->load->model('Datatables/details/DetPelepasanBan','detLpsBan');
 		$this->load->model('Datatables/details/DetTagihan','detTgh');
+		$this->load->model('Datatables/details/DetKuitansi','detKui');
 
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
@@ -43,9 +45,37 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarPelepasanBan','listLpsBan');
 		$this->load->model('Datatables/search/SearchDaftarKasBonKantor','listKasBonKtr');
 		$this->load->model('Datatables/search/SearchDaftarTagihan','listTgh');
+		$this->load->model('Datatables/search/SearchDaftarKuitansi','listKui');
 	}
 
 	//Data Cari Transaksi
+	public function listKuitansi()
+	{
+		$list = $this->listKui->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_kuitansi;
+			$row[] = $dat->tgl_kuitansi;
+			$row[] = $dat->kode_rekening ;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihKuitansi('."'".$dat->no_kuitansi."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listKui->count_all(),
+				"recordsFiltered" => $this->listKui->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function listTagihan()
 	{
 		$list = $this->listTgh->get_datatables();
@@ -507,6 +537,30 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Detail Transaksi
+	public function detKuitansi($key)
+	{
+		$list = $this->detKui->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->ket_pembayaran;
+			$row[] = number_format($dat->nom_pembayaran,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detKui->count_all(),
+				"recordsFiltered" => $this->detKui->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function detTagihan($key)
 	{
 		$list = $this->detTgh->get_datatables($key);
@@ -815,6 +869,32 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Master
+	public function mRekening()
+	{
+		$list = $this->showRekening->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->kode_rekening;
+			$row[] = $dat->nama_bank;
+			$row[] = $dat->no_rekening;
+			$row[] = $dat->ket_rekening;
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_rekening."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_rekening."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->showRekening->count_all(),
+				"recordsFiltered" => $this->showRekening->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function mBarang()
 	{
 		$list = $this->showBarang->get_datatables();

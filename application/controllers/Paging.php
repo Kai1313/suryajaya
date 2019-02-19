@@ -13,6 +13,13 @@ class Paging extends CI_Controller
 	}
 
 	//Master
+	public function m_rekening()
+	{
+		$data['page_header']='Master Rekening';
+		$data['content']='menu/m_rekening';
+		$this->load->view('layout/wrapper',$data);
+	}
+
 	public function m_barang()
 	{
 		$data['page_header']='Master Barang';

@@ -335,6 +335,66 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noKuitansi()
+	{
+		$res = $this->gen_num_('trx_kuitansi','no_kuitansi','SJTK');
+		$check = $this->db->get_where('trx_kuitansi',array('no_kuitansi'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_kuitansi','no_kuitansi','SJTK');
+		}
+		$crt = array(
+			'no_kuitansi'=>$res,
+			'tgl_kuitansi'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_kuitansi',$crt);
+		$data['no_kuitansi'] = $res;
+		echo json_encode($data);
+	}
+
+	//CRUD Master Rekening
+	public function addRekening()
+	{
+		$ins = array(
+			'kode_rekening'=>$this->input->post('kode_rekening'),
+			'nama_bank'=>$this->input->post('nama_bank'),
+			'no_rekening'=>$this->input->post('no_rekening'),
+			'ket_rekening'=>$this->input->post('ket_rekening'),
+			'data_sts'=>'1'
+		);
+		$this->db->insert('master_rekening',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updRekening()
+	{
+		$upd = array(
+			'nama_bank'=>$this->input->post('nama_bank'),
+			'no_rekening'=>$this->input->post('no_rekening'),
+			'ket_rekening'=>$this->input->post('ket_rekening'),
+			'data_sts'=>'1'
+		);
+		$this->db->update('master_rekening',$upd,array('kode_rekening'=>$this->input->post('kode_rekening')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function delRekening($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_rekening',$upd,array('kode_rekening'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function getRekening($key)
+	{
+		$data = $this->db->get_where('master_rekening', array('kode_rekening'=>$key))->row();
+		echo json_encode($data);
+	}
+
 	//CRUD Master Barang
 	public function addBarang()
 	{
@@ -809,6 +869,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getDropRekening()
+	{
+		$data = $this->db->get_where('master_rekening',array('data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
 	//Pick Data From Dropdown
 	public function pickDropSupplier($key)
 	{
@@ -1162,6 +1228,120 @@ class Crud extends CI_Controller
 	{
 		$data['key'] = $key;
 		$this->load->view('menu/print_biaya_kendaraan',$data);
+	}
+
+	//Transaksi Kuitansi
+	public function addKuitansi()
+	{
+		$ins = array(
+			'no_kuitansi'=>$this->input->post('no_kuitansi'),
+			'ket_pembayaran'=>$this->input->post('keterangan'),
+			'nom_pembayaran'=>$this->input->post('jumlah')
+		);
+		$this->db->insert('trx_kuitansi_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Biaya</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Biaya</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function subTotalKuitansi($key)
+	{
+		$data = $this->db->select('SUM(a.nom_pembayaran) as subtotal')->join('trx_kuitansi b','b.no_kuitansi = a.no_kuitansi')->get_where('trx_kuitansi_det a',array('a.no_kuitansi'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function rmvKuitansi($key)
+	{
+		$this->db->delete('trx_kuitansi_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Kuitansi</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Kuitansi</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveKuitansi()
+	{
+		$getSts = $this->db->get_where('trx_kuitansi',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_rekening'=>$this->input->post('kode_rekening'),
+				'kode_customer'=>$this->input->post('kode_customer'),
+				'tgl_kuitansi'=>$this->dateFix_($this->input->post('tgl_kuitansi')),
+				'ket_kuitansi'=>$this->input->post('ket_kuitansi'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_kuitansi',$upd,array('no_kuitansi'=>$this->input->post('no_kuitansi')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Biaya Kuitansi</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Biaya Kuitansi</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelKuitansi()
+	{
+		$getSts = $this->db->get_where('trx_kuitansi',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_kuitansi',$can,array('no_kuitansi'=>$this->input->post('no_kuitansi')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Biaya Kuitansi</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Biaya Kuitansi</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function printKuitansi($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_kuitansi',$data);
 	}
 
 	//Transaksi Pemakaian Barang/Spare Part
@@ -3149,6 +3329,12 @@ class Crud extends CI_Controller
 	public function getLepasBan($key)
 	{
 		$data = $this->db->get_where('trx_lepas_ban',array('no_pelepasan'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getKuitansi($key)
+	{
+		$data = $this->db->get_where('trx_kuitansi',array('no_kuitansi'=>$key))->row();
 		echo json_encode($data);
 	}
 
