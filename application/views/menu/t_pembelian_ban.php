@@ -46,7 +46,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_pembelian" class="form-control pull-right" id="tgl_pembelian">
+                        <input type="text" name="tgl_pembelian" class="form-control pull-right" id="tgl_pembelian" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -200,7 +200,7 @@
       tbDetBeli(key);
       $('#tgl_pembelian').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       dropsupplier();
       dropban();
@@ -476,7 +476,7 @@
         {
           key = data.no_pembelian;
           $('[name="no_pembelian"]').val(data.no_pembelian);
-          $('[name="tgl_pembelian"]').val(data.tgl_pembelian);
+          $('[name="tgl_pembelian"]').val(moment(data.tgl_pembelian).format('DD/MM/YYYY'));
           $('[name="nota_toko"]').val(data.nota_toko);
           $('#dropSupplier').val(data.kode_supplier).trigger('change');
           tbDetBeli(key);

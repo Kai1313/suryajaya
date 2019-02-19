@@ -35,7 +35,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_retur" class="form-control pull-right" id="tgl_retur">
+                        <input type="text" name="tgl_retur" class="form-control pull-right" id="tgl_retur" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -57,7 +57,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_nota" class="form-control pull-right" id="tgl_nota" readonly>
+                        <input type="text" name="tgl_nota" class="form-control pull-right" id="tgl_nota" placeholder="dd/mm/yyyy" readonly>
                       </div>
                     </div>
                     <div class="form-group">
@@ -183,11 +183,11 @@
       tbDetRetur(key);
       $('#tgl_retur').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_nota').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       dropnota();
       $('#dropNota').change(function()
@@ -243,7 +243,7 @@
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="tgl_nota"]').val(data.tgl_nota);
+          $('[name="tgl_nota"]').val(moment(data.tgl_nota).format('DD/MM/YYYY'));
           $('[name="nota_toko"]').val(data.nota_toko);
         }
       });
@@ -432,7 +432,7 @@
         {
           key = data.no_retur;
           $('[name="no_retur"]').val(data.no_retur);
-          $('[name="tgl_retur"]').val(data.tgl_retur);
+          $('[name="tgl_retur"]').val(moment(data.tgl_retur).format('DD/MM/YYYY'));
           $('#dropNota').val(data.no_nota).trigger('change');
           tbDetRetur(key);
           $('#newBtn').prop('disabled',true);

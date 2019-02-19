@@ -551,7 +551,12 @@
                       </div>
                       <div class="form-group">
                         <label>Berat Muatan 3</label>
-                        <input type="text" name="berat_muatan_c" class="form-control chgberatkmb">
+                        <div class="input-group">
+                          <input type="text" name="berat_muatan_c" class="form-control num_ chgberatkmb">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -559,11 +564,11 @@
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Ongkos Angkut 3</label>
-                        <input type="text" name="ongkos_angkut_3" class="form-control">
+                        <input type="text" name="ongkos_angkut_3" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Ongkos Angkut Bruto 3</label>
-                        <input type="text" name="ongkos_bruto_3" class="form-control chgbrutokmb">
+                        <input type="text" name="ongkos_bruto_3" class="form-control num_ chgbrutokmb">
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
@@ -577,7 +582,12 @@
                       </div>
                       <div class="form-group">
                         <label>Tambah Borong 3</label>
-                        <input type="text" name="tambah_borong_c" class="form-control">
+                        <div class="input-group">
+                          <input type="text" name="tambah_borong_c" class="form-control num_">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -607,7 +617,12 @@
                       </div>
                       <div class="form-group">
                         <label>Berat Muatan 4</label>
-                        <input type="text" name="berat_muatan_d" class="form-control chgberatkmb">
+                        <div class="input-group">
+                          <input type="text" name="berat_muatan_d" class="form-control num_ chgberatkmb">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -615,11 +630,11 @@
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Ongkos Angkut 4</label>
-                        <input type="text" name="ongkos_angkut_4" class="form-control">
+                        <input type="text" name="ongkos_angkut_4" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Ongkos Angkut Bruto 4</label>
-                        <input type="text" name="ongkos_bruto_4" class="form-control chgbrutokmb">
+                        <input type="text" name="ongkos_bruto_4" class="form-control num_ chgbrutokmb">
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
@@ -633,7 +648,12 @@
                       </div>
                       <div class="form-group">
                         <label>Tambah Borong 4</label>
-                        <input type="text" name="tambah_borong_d" class="form-control">
+                        <div class="input-group">
+                          <input type="text" name="tambah_borong_d" class="form-control num_">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -641,11 +661,11 @@
                     <div class="col-md-offset-3 col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Total Berat Muat</label>
-                        <input type="text" name="sub_beratmuat_b" class="form-control" readonly>
+                        <input type="text" name="sub_beratmuat_b" class="form-control num_" readonly>
                       </div>
                       <div class="form-group">
                         <label>Total Ongkos Bruto</label>
-                        <input type="text" name="sub_bruto_b" class="form-control" readonly>
+                        <input type="text" name="sub_bruto_b" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
@@ -655,45 +675,45 @@
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Solar Berangkat</label>
-                        <input type="text" name="solar_berangkat" class="form-control">
+                        <input type="text" name="solar_berangkat" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Bantuan 1</label>
-                        <input type="text" name="bantuan_a" class="form-control">
+                        <input type="text" name="bantuan_a" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Bantuan 2</label>
-                        <input type="text" name="bantuan_b" class="form-control">
+                        <input type="text" name="bantuan_b" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Tambahan 1</label>
-                        <input type="text" name="tambah_a" class="form-control">
+                        <input type="text" name="tambah_a" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Tambahan 2</label>
-                        <input type="text" name="tambah_b" class="form-control">
+                        <input type="text" name="tambah_b" class="form-control num_">
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Solar Kembali</label>
-                        <input type="text" name="solar_kembali" class="form-control">
+                        <input type="text" name="solar_kembali" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Bantuan 3</label>
-                        <input type="text" name="bantuan_c" class="form-control">
+                        <input type="text" name="bantuan_c" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Bantuan 4</label>
-                        <input type="text" name="bantuan_d" class="form-control">
+                        <input type="text" name="bantuan_d" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Tambahan 3</label>
-                        <input type="text" name="tambah_c" class="form-control">
+                        <input type="text" name="tambah_c" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Tambahan 4</label>
-                        <input type="text" name="tambah_d" class="form-control">
+                        <input type="text" name="tambah_d" class="form-control num_">
                       </div>
                     </div>
                   </div>
@@ -703,37 +723,37 @@
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Uang Sopir Berangkat 1</label>
-                        <input type="text" name="uang_sopir_a" class="form-control">
+                        <input type="text" name="uang_sopir_a" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Uang Sopir Berangkat 2</label>
-                        <input type="text" name="uang_sopir_b" class="form-control">
+                        <input type="text" name="uang_sopir_b" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Uang Sopir Kembali 1</label>
-                        <input type="text" name="uang_sopir_c" class="form-control">
+                        <input type="text" name="uang_sopir_c" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Uang Sopir Kembali 2</label>
-                        <input type="text" name="uang_sopir_d" class="form-control">
+                        <input type="text" name="uang_sopir_d" class="form-control num_">
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Koreksi Berangkat 1</label>
-                        <input type="text" name="koreksi_sopir_a" class="form-control">
+                        <input type="text" name="koreksi_sopir_a" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Koreksi Berangkat 2</label>
-                        <input type="text" name="koreksi_sopir_b" class="form-control">
+                        <input type="text" name="koreksi_sopir_b" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Koreksi Kembali 1</label>
-                        <input type="text" name="koreksi_sopir_c" class="form-control">
+                        <input type="text" name="koreksi_sopir_c" class="form-control num_">
                       </div>
                       <div class="form-group">
                         <label>Koreksi Kembali 2</label>
-                        <input type="text" name="koreksi_sopir_d" class="form-control">
+                        <input type="text" name="koreksi_sopir_d" class="form-control num_">
                       </div>
                     </div>
                   </div>
@@ -741,11 +761,11 @@
                     <div class="col-md-offset-3 col-md-6 col-xs-12">
                       <div class="form-group">
                         <label>Total Uang Sopir</label>
-                        <input type="text" name="sub_uangsopir" class="form-control" readonly>
+                        <input type="text" name="sub_uangsopir" class="form-control num_" readonly>
                       </div>
                       <div class="form-group">
                         <label>Total Koreksi</label>
-                        <input type="text" name="sub_koreksi" class="form-control" readonly>
+                        <input type="text" name="sub_koreksi" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>

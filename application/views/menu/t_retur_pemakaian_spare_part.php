@@ -35,7 +35,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_retur" class="form-control pull-right" id="tgl_retur">
+                        <input type="text" name="tgl_retur" class="form-control pull-right" id="tgl_retur" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -57,7 +57,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_pemakaian" class="form-control pull-right" id="tgl_pemakaian" readonly>
+                        <input type="text" name="tgl_pemakaian" class="form-control pull-right" id="tgl_pemakaian" readonly placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -187,11 +187,11 @@
       tbDetRetur(key);
       $('#tgl_retur').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_pemakaian').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       droppakai();
       $('#dropPakai').change(function()
@@ -247,7 +247,7 @@
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="tgl_pemakaian"]').val(data.tgl_pakai_brg);
+          $('[name="tgl_pemakaian"]').val(moment(data.tgl_pakai_brg).format('DD/MM/YYYY'));
           $('[name="nopol"]').val(data.nopol);
           $('[name="jenis_kendaraan"]').val(data.tipe_kendaraan+' - '+data.jenis_kendaraan);
         }
@@ -437,7 +437,7 @@
         {
           key = data.no_retur;
           $('[name="no_retur"]').val(data.no_retur);
-          $('[name="tgl_retur"]').val(data.tgl_retur);
+          $('[name="tgl_retur"]').val(moment(data.tgl_retur).format('DD/MM/YYYY'));
           $('#dropPakai').val(data.no_pakai_brg).trigger('change');
           tbDetRetur(key);
           $('#newBtn').prop('disabled',true);

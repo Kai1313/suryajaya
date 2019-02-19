@@ -69,7 +69,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_pemasangan" class="form-control pull-right" id="tgl_pemasangan">
+                        <input type="text" name="tgl_pemasangan" class="form-control pull-right" id="tgl_pemasangan" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -113,7 +113,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_pelepasan" class="form-control pull-right" id="tgl_pelepasan">
+                        <input type="text" name="tgl_pelepasan" class="form-control pull-right" id="tgl_pelepasan" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -334,11 +334,11 @@
       tbDetLps(key2);
       $('#tgl_pemasangan').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#tgl_pelepasan').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       check_();
       dropkendaraanA();
@@ -872,7 +872,7 @@
         {
           key = data.no_pemasangan;
           $('[name="no_pemasangan"]').val(data.no_pemasangan);
-          $('[name="tgl_pemasangan"]').val(data.tgl_pemasangan);
+          $('[name="tgl_pemasangan"]').val(moment(data.tgl_pemasangan).format('DD/MM/YYYY'));
           $('[name="bengkel_pemasangan"]').val(data.bengkel_pemasangan);
           $('#dropKendaraanA').val(data.kode_kendaraan).trigger('change');
           tbDetPsg(key);
@@ -891,7 +891,7 @@
         {
           key = data.no_pelepasan;
           $('[name="no_pelepasan"]').val(data.no_pelepasan);
-          $('[name="tgl_pelepasan"]').val(data.tgl_pelepasan);
+          $('[name="tgl_pelepasan"]').val(moment(data.tgl_pelepasan).format('DD/MM/YYYY'));
           $('[name="bengkel_pelepasan"]').val(data.bengkel_pelepasan);
           $('#dropKendaraanB').val(data.kode_kendaraan).trigger('change');
           tbDetLps(key);

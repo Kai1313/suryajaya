@@ -36,7 +36,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_klaim" class="form-control pull-right" id="tgl_klaim">
+                        <input type="text" name="tgl_klaim" class="form-control pull-right" id="tgl_klaim" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -140,7 +140,7 @@
       key = ($('[name="no_klaim"]').val()!='')?$('[name="no_klaim"]').val():'0';
       $('#tgl_klaim').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       dropsopir();
       $('#dropSopir').change(function()
@@ -277,7 +277,7 @@
         {
           key = data.no_klaim;
           $('[name="no_klaim"]').val(data.no_klaim);
-          $('[name="tgl_klaim"]').val(data.tgl_klaim);
+          $('[name="tgl_klaim"]').val(moment(data.tgl_klaim).format('DD/MM/YYYY'));
           $('[name="ket_klaim"]').val(data.ket_klaim);
           $('[name="nom_klaim"]').val(data.nom_klaim);
           $('#dropSopir').val(data.kode_driver).trigger('change');

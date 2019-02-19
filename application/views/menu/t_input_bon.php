@@ -36,7 +36,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_bon" class="form-control pull-right" id="tgl_bon">
+                        <input type="text" name="tgl_bon" class="form-control pull-right" id="tgl_bon" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -140,7 +140,7 @@
       key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'0';
       $('#tgl_bon').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       dropkaryawan();
       $('#dropKaryawan').change(function()
@@ -277,7 +277,7 @@
         {
           key = data.no_bon;
           $('[name="no_bon"]').val(data.no_bon);
-          $('[name="tgl_bon"]').val(data.tgl_bon);
+          $('[name="tgl_bon"]').val(moment(data.tgl_bon).format('DD/MM/YYYY'));
           $('[name="ket_bon"]').val(data.ket_bon);
           $('[name="nom_bon"]').val(data.nom_bon);
           $('#dropKaryawan').val(data.kode_karyawan).trigger('change');

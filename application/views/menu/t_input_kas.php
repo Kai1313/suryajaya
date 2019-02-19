@@ -36,7 +36,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_kas" class="form-control pull-right" id="tgl_kas">
+                        <input type="text" name="tgl_kas" class="form-control pull-right" id="tgl_kas" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -134,7 +134,7 @@
       key = ($('[name="no_kas"]').val()!='')?$('[name="no_kas"]').val():'0';
       $('#tgl_kas').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('.num').number(true,2);
     })
@@ -229,7 +229,7 @@
         {
           key = data.no_kas;
           $('[name="no_kas"]').val(data.no_kas);
-          $('[name="tgl_kas"]').val(data.tgl_kas);
+          $('[name="tgl_kas"]').val(moment(data.tgl_kas).format('DD/MM/YYYY'));
           $('[name="ket_kas"]').val(data.ket_kas);
           $('[name="debet"]').val(data.debet);
           $('[name="kredit"]').val(data.kredit);

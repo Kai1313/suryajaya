@@ -938,7 +938,7 @@ class Crud extends CI_Controller
 			$upd = array(
 				'kode_supplier'=>$this->input->post('kode_supplier'),
 				'nota_toko'=>$this->input->post('nota_toko'),
-				'tgl_nota'=>$this->input->post('tgl_nota'),
+				'tgl_nota'=>$this->dateFix_($this->input->post('tgl_nota')),
 				'diskon'=>$this->input->post('diskon'),
 				'nom_diskon'=>$this->input->post('nom_diskon'),
 				'grand_total'=>$this->input->post('grand_total'),
@@ -1110,7 +1110,7 @@ class Crud extends CI_Controller
 				'kode_kendaraan'=>$this->input->post('nopol'),
 				'sopir_kendaraan'=>$this->input->post('sopir_kendaraan'),
 				'kernet_kendaraan'=>$this->input->post('kernet_kendaraan'),
-				'tgl_biaya'=>$this->input->post('tgl_biaya'),
+				'tgl_biaya'=>$this->dateFix_($this->input->post('tgl_biaya')),
 				'grand_total'=>$this->input->post('g_total'),
 				'data_sts'=>'1'
 			);
@@ -1252,7 +1252,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_karyawan'=>$this->input->post('kode_karyawan'),
-				'tgl_pakai_brg'=>$this->input->post('tgl_pemakaian'),
+				'tgl_pakai_brg'=>$this->dateFix_($this->input->post('tgl_pemakaian')),
 				'kode_kendaraan'=>$this->input->post('nopol'),
 				'kode_sopir'=>$this->input->post('sopir_kendaraan'),
 				'kode_kernet'=>$this->input->post('kernet_kendaraan'),
@@ -1390,7 +1390,7 @@ class Crud extends CI_Controller
 			$upd = array(
 				'kode_supplier'=>$this->input->post('kode_supplier'),
 				'nota_toko'=>$this->input->post('nota_toko'),
-				'tgl_pembelian'=>$this->input->post('tgl_pembelian'),
+				'tgl_pembelian'=>$this->dateFix_($this->input->post('tgl_pembelian')),
 				'grand_total'=>$this->input->post('g_total'),
 				'data_sts'=>'1'
 			);
@@ -1541,7 +1541,7 @@ class Crud extends CI_Controller
 			$upd = array(
 				'kode_kendaraan'=>$this->input->post('kode_kendaraan_pasang'),
 				'bengkel_pemasangan'=>$this->input->post('bengkel_pemasangan'),
-				'tgl_pemasangan'=>$this->input->post('tgl_pemasangan'),
+				'tgl_pemasangan'=>$this->dateFix_($this->input->post('tgl_pemasangan')),
 				'data_sts'=>'1'
 			);
 			$this->db->update('trx_pasang_ban',$upd,array('no_pemasangan'=>$this->input->post('no_pemasangan')));
@@ -1718,7 +1718,7 @@ class Crud extends CI_Controller
 			$upd = array(
 				'kode_kendaraan'=>$this->input->post('kode_kendaraan_lepas'),
 				'bengkel_pelepasan'=>$this->input->post('bengkel_pelepasan'),
-				'tgl_pelepasan'=>$this->input->post('tgl_pelepasan'),
+				'tgl_pelepasan'=>$this->dateFix_($this->input->post('tgl_pelepasan')),
 				'data_sts'=>'1'
 			);
 			$this->db->update('trx_lepas_ban',$upd,array('no_pelepasan'=>$this->input->post('no_pelepasan')));
@@ -1886,7 +1886,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'no_nota'=>$this->input->post('no_nota'),
-				'tgl_retur'=>$this->input->post('tgl_retur'),
+				'tgl_retur'=>$this->dateFix_($this->input->post('tgl_retur')),
 				'data_sts'=>'1'
 			);
 			$this->db->update('trx_retur_beli_barang',$upd,array('no_retur'=>$this->input->post('no_retur')));
@@ -2012,7 +2012,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'no_pakai_brg'=>$this->input->post('no_pemakaian'),
-				'tgl_retur'=>$this->input->post('tgl_retur'),
+				'tgl_retur'=>$this->dateFix_($this->input->post('tgl_retur')),
 				'data_sts'=>'1'
 			);
 			$this->db->update('trx_retur_pakai_barang',$upd,array('no_retur'=>$this->input->post('no_retur')));
@@ -2096,7 +2096,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_karyawan'=>$this->input->post('kode_karyawan'),
-				'tgl_bon'=>$this->input->post('tgl_bon'),
+				'tgl_bon'=>$this->dateFix_($this->input->post('tgl_bon')),
 				'nom_bon'=>$this->input->post('nom_bon'),
 				'ket_bon'=>$this->input->post('ket_bon'),
 				'data_sts'=>'1'
@@ -2176,7 +2176,7 @@ class Crud extends CI_Controller
 		else
 		{
 			$upd = array(
-				'tgl_kas'=>$this->input->post('tgl_kas'),
+				'tgl_kas'=>$this->dateFix_($this->input->post('tgl_kas')),
 				'debet'=>$this->input->post('debet'),
 				'kredit'=>$this->input->post('kredit'),
 				'ket_kas'=>$this->input->post('ket_kas'),
@@ -2244,7 +2244,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_driver'=>$this->input->post('kode_sopir'),
-				'tgl_bon'=>$this->input->post('tgl_bon'),
+				'tgl_bon'=>$this->dateFix_($this->input->post('tgl_bon')),
 				'nom_bon'=>$this->input->post('nom_bon'),
 				'ket_bon'=>$this->input->post('ket_bon'),
 				'data_sts'=>'1'
@@ -2325,7 +2325,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_driver'=>$this->input->post('kode_sopir'),
-				'tgl_klaim'=>$this->input->post('tgl_klaim'),
+				'tgl_klaim'=>$this->dateFix_($this->input->post('tgl_klaim')),
 				'nom_klaim'=>$this->input->post('nom_klaim'),
 				'ket_klaim'=>$this->input->post('ket_klaim'),
 				'data_sts'=>'1'
@@ -2406,7 +2406,7 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_karyawan'=>$this->input->post('kode_karyawan'),
-				'tgl_upah'=>$this->input->post('tgl_upah'),
+				'tgl_upah'=>$this->dateFix_($this->input->post('tgl_upah')),
 				'hari_kerja'=>$this->input->post('hari_kerja'),
 				'sub_harian'=>$this->input->post('sub_harian'),
 				'bonus_harian'=>$this->input->post('bonus_harian'),

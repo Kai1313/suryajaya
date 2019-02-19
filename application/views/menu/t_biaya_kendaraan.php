@@ -35,7 +35,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_biaya" class="form-control pull-right" id="tgl_pembelian">
+                        <input type="text" name="tgl_biaya" class="form-control pull-right" id="tgl_pembelian" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -201,7 +201,7 @@
       tbDetBiaya(key);
       $('#tgl_pembelian').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       dropkaryawan();
       dropkendaraan();
@@ -538,7 +538,7 @@
         {
           key = data.no_biaya;
           $('[name="no_kuitansi"]').val(data.no_biaya);
-          $('[name="tgl_biaya"]').val(data.tgl_biaya);
+          $('[name="tgl_biaya"]').val(moment(data.tgl_biaya).format('DD/MM/YYYY'));
           $('#dropKaryawan').val(data.kode_karyawan).trigger('change');
           $('#dropNopol').val(data.kode_kendaraan).trigger('change');
           $('#dropSopir').val(data.sopir_kendaraan).trigger('change');

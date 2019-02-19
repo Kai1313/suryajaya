@@ -42,7 +42,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_upah" class="form-control pull-right" id="tgl_upah">
+                        <input type="text" name="tgl_upah" class="form-control pull-right" id="tgl_upah" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -291,7 +291,7 @@
       key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'0';
       $('#tgl_upah').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       dropkaryawan();
       $('#dropKaryawan').change(function()
@@ -436,7 +436,7 @@
         {
           key = data.no_kuitansi;
           $('[name="no_kuitansi"]').val(data.no_kuitansi);
-          $('[name="tgl_upah"]').val(data.tgl_upah);
+          $('[name="tgl_upah"]').val(moment(data.tgl_upah).format('DD/MM/YYYY'));
           $('#dropKaryawan').val(data.kode_karyawan).trigger('change');
           $('[name="hari_kerja"]').val(data.hari_kerja);
           $('[name="bonus_harian"]').val(data.bonus_harian);

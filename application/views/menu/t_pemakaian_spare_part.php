@@ -40,7 +40,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_pemakaian" class="form-control pull-right" id="tgl_pemakaian">
+                        <input type="text" name="tgl_pemakaian" class="form-control pull-right" id="tgl_pemakaian" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -209,7 +209,7 @@
       tbDetPakai(key);
       $('#tgl_pemakaian').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       dropkaryawan();
       dropkendaraan();
@@ -570,7 +570,7 @@
         {
           key = data.no_pakai_brg;
           $('[name="no_pemakaian"]').val(data.no_pakai_brg);
-          $('[name="tgl_pemakaian"]').val(data.tgl_pakai_brg);
+          $('[name="tgl_pemakaian"]').val(moment(data.tgl_pakai_brg).format('DD/MM/YYYY'));
           $('[name="ket_pemakaian"]').val(data.ket_pakai_brg);
           $('#dropNopol').val(data.kode_kendaraan).trigger('change');
           $('#dropKaryawan').val(data.kode_karyawan).trigger('change');

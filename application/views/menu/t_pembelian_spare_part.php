@@ -46,7 +46,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="tgl_nota" class="form-control pull-right" id="tgl_nota">
+                        <input type="text" name="tgl_nota" class="form-control pull-right" id="tgl_nota" placeholder="dd/mm/yyyy">
                       </div>
                     </div>
                     <div class="form-group">
@@ -108,7 +108,7 @@
                 <tfoot>
                   <tr>
                     <th colspan="5" class="text-center">Sub Total</th>
-                    <th class="num_"><span name="sub_total">0</span></th>
+                    <th class="num_" name="sub_total"></th>
                   </tr>
                 </tfoot>
               </table>
@@ -124,6 +124,7 @@
                     </div>
                   </div>
                   <div class="col-md-6 col-xs-6">
+                    <input type="hidden" name="subs_total">
                     <div class="form-group">
                       <label>Nominal Diskon</label>
                       <input type="text" name="nom_diskon" class="form-control num" readonly>
@@ -220,7 +221,7 @@
       tbDetBeli(key);
       $('#tgl_nota').datepicker({
         autoclose: true,
-        format: 'yyyy-m-d'
+        format: 'dd/mm/yyyy'
       });
       $('#diskon').on('input',function(){
         hitung();
@@ -426,13 +427,14 @@
         success: function(data)
         {
           $('[name="sub_total"]').text(data.subtotal);
+          $('[name="subs_total"]').val(data.subtotal);
           $('th.num_').number(true,2);
         }
       });
     }
     function hitung()
     {
-      sub = parseFloat($('[name="sub_total"]').text());
+      sub = parseFloat($('[name="subs_total"]').val());
       dis = parseFloat($('[name="diskon"]').val())/100*sub;
       tot = parseFloat(sub*1)-parseFloat(dis*1);
       $('[name="nom_diskon"]').val(dis);
@@ -475,7 +477,7 @@
           key = data.no_nota;
           $('[name="no_nota"]').val(data.no_nota);
           $('[name="nota_toko"]').val(data.nota_toko);
-          $('[name="tgl_nota"]').val(data.tgl_nota);
+          $('[name="tgl_nota"]').val(moment(data.tgl_nota).format('DD/MM/YYYY'));
           $('[name="diskon"]').val(data.diskon);
           $('[name="nom_diskon"]').val(data.nom_diskon);
           $('[name="grand_total"]').val(data.grand_total);
