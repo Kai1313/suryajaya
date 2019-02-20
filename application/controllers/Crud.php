@@ -353,6 +353,24 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noLunas()
+	{
+		$res = $this->gen_num_('trx_pelunasan','no_lunas','KWP');
+		$check = $this->db->get_where('trx_pelunasan',array('no_lunas'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_pelunasan','no_lunas','KWP');
+		}
+		$crt = array(
+			'no_lunas'=>$res,
+			'tgl_lunas'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_pelunasan',$crt);
+		$data['no_lunas'] = $res;
+		echo json_encode($data);
+	}
+
 	//CRUD Master Rekening
 	public function addRekening()
 	{
@@ -875,6 +893,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getDropTagihan()
+	{
+		$data = $this->db->join('trx_tagihan b','b.no_tagihan = a.no_tagihan')->get_where('trx_tagihan_det a',array('b.data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
 	//Pick Data From Dropdown
 	public function pickDropSupplier($key)
 	{
@@ -927,6 +951,12 @@ class Crud extends CI_Controller
 	public function pickDropKasBonKantor($key)
 	{
 		$data = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_kas_bon_kantor a',array('a.no_bon'=>$key,'a.data_sts'=>'1'))->row();
+		echo json_encode($data);
+	}
+
+	public function pickDropTagihan($key)
+	{
+		$data = $this->db->join('trx_tagihan b','b.no_tagihan = a.no_tagihan')->get_where('trx_tagihan_det a',array('a.det_id'=>$key,'b.data_sts'=>'1'))->row();
 		echo json_encode($data);
 	}
 

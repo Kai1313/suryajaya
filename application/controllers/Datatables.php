@@ -27,6 +27,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/details/DetPelepasanBan','detLpsBan');
 		$this->load->model('Datatables/details/DetTagihan','detTgh');
 		$this->load->model('Datatables/details/DetKuitansi','detKui');
+		$this->load->model('Datatables/details/DetPelunasan','detLns');
 
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
@@ -46,9 +47,37 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarKasBonKantor','listKasBonKtr');
 		$this->load->model('Datatables/search/SearchDaftarTagihan','listTgh');
 		$this->load->model('Datatables/search/SearchDaftarKuitansi','listKui');
+		$this->load->model('Datatables/search/SearchDaftarPelunasan','listLns');
 	}
 
 	//Data Cari Transaksi
+	public function listLunas()
+	{
+		$list = $this->listLns->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_lunas;
+			$row[] = $dat->tgl_lunas;
+			$row[] = $dat->nama_customer;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihLunas('."'".$dat->no_lunas."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listLns->count_all(),
+				"recordsFiltered" => $this->listLns->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}	
+
 	public function listKuitansi()
 	{
 		$list = $this->listKui->get_datatables();
@@ -537,6 +566,33 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Detail Transaksi
+	public function detLunas($key)
+	{
+		$list = $this->detLns->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->no_tagihan;
+			$row[] = $dat->no_bon;
+			$row[] = $dat->surat_jalan;
+			$row[] = $dat->tgl_tagihan;
+			$row[] = number_format($dat->ongkos_bruto,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detLns->count_all(),
+				"recordsFiltered" => $this->detLns->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function detKuitansi($key)
 	{
 		$list = $this->detKui->get_datatables($key);

@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
+-- Server version:               10.1.37-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
 -- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `master_barang` (
   PRIMARY KEY (`kode_barang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.master_barang: ~5 rows (approximately)
+-- Dumping data for table suryajaya.master_barang: ~6 rows (approximately)
 /*!40000 ALTER TABLE `master_barang` DISABLE KEYS */;
 INSERT INTO `master_barang` (`kode_barang`, `nama_barang`, `part_number`, `nama_satuan`, `min_qty`, `qty_perset`, `no_rak`, `stok_barang`, `data_sts`, `updated_at`, `created_at`) VALUES
 	('BRG0001', 'Barang A', '123456', 'Pcs', 1.00, 4.00, '1A', 4.00, '1', '2018-12-16 05:16:38', '2018-12-16 05:16:38'),
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `master_karyawan` (
   PRIMARY KEY (`kode_karyawan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.master_karyawan: ~1 rows (approximately)
+-- Dumping data for table suryajaya.master_karyawan: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_karyawan` DISABLE KEYS */;
 INSERT INTO `master_karyawan` (`kode_karyawan`, `nama_karyawan`, `alamat_karyawan`, `kota_karyawan`, `tlp_karyawan`, `upah_makan`, `upah_harian`, `upah_hari_besar`, `upah_hari_minggu`, `min_jam_lembur`, `upah_lembur`, `gaji_bulanan`, `kerja_penuh_6x`, `jml_bon`, `data_sts`) VALUES
 	('KRY00001', 'Hendro', 'Semolowaru Utara No.42, Sukolilo', 'Surabaya', '083335335627', 10000.00, 100000.00, 150000.00, 120000.00, 2.00, 50000.00, 3000000.00, 500000.00, 10000.00, '1');
@@ -330,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `trx_beli_ban_det` (
   CONSTRAINT `FK_trx_beli_ban_det_trx_beli_ban` FOREIGN KEY (`no_pembelian`) REFERENCES `trx_beli_ban` (`no_pembelian`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_beli_ban_det: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_beli_ban_det: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_beli_ban_det` DISABLE KEYS */;
 INSERT INTO `trx_beli_ban_det` (`det_id`, `no_pembelian`, `kode_ban`, `qty_beli`, `harga_satuan`, `jumlah`) VALUES
 	(2, 'BL1901-000002', 'BAN0001', 2.00, 1000000.00, 2000000.00),
@@ -449,7 +449,7 @@ CREATE TABLE IF NOT EXISTS `trx_input_bon_karyawan` (
   CONSTRAINT `FK_trx_input_bon_karyawan_master_karyawan` FOREIGN KEY (`kode_karyawan`) REFERENCES `master_karyawan` (`kode_karyawan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_input_bon_karyawan: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_input_bon_karyawan: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_input_bon_karyawan` DISABLE KEYS */;
 INSERT INTO `trx_input_bon_karyawan` (`no_bon`, `kode_karyawan`, `tgl_bon`, `nom_bon`, `ket_bon`, `data_sts`) VALUES
 	('BON1901-000001', 'KRY00001', '2019-01-11', 10000.00, 'Tes Bon', '1');
@@ -509,7 +509,7 @@ CREATE TABLE IF NOT EXISTS `trx_input_klaim_sopir` (
   CONSTRAINT `FK_trx_input_klaim_sopir_master_driver` FOREIGN KEY (`kode_driver`) REFERENCES `master_driver` (`kode_driver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_input_klaim_sopir: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_input_klaim_sopir: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_input_klaim_sopir` DISABLE KEYS */;
 INSERT INTO `trx_input_klaim_sopir` (`no_klaim`, `kode_driver`, `tgl_klaim`, `ket_klaim`, `nom_klaim`, `data_sts`) VALUES
 	('KLM1901-000001', 'DRV0001', '2019-01-12', 'tes klaim', 10000.00, '1');
@@ -816,7 +816,7 @@ CREATE TABLE IF NOT EXISTS `trx_lepas_ban_det` (
   CONSTRAINT `FK_trx_lepas_ban_det_trx_lepas_ban` FOREIGN KEY (`no_pelepasan`) REFERENCES `trx_lepas_ban` (`no_pelepasan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_lepas_ban_det: ~2 rows (approximately)
+-- Dumping data for table suryajaya.trx_lepas_ban_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_lepas_ban_det` DISABLE KEYS */;
 INSERT INTO `trx_lepas_ban_det` (`det_id`, `no_pelepasan`, `kode_ban`, `qty_lepas`, `status_lepas`) VALUES
 	(1, 'LPS1902-000001', 'BAN0001', '1', '0');
@@ -844,7 +844,7 @@ CREATE TABLE IF NOT EXISTS `trx_pakai_barang` (
   CONSTRAINT `FK_trx_pakai_barang_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_pakai_barang: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_pakai_barang: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_pakai_barang` DISABLE KEYS */;
 INSERT INTO `trx_pakai_barang` (`no_pakai_brg`, `kode_karyawan`, `kode_kendaraan`, `kode_sopir`, `kode_kernet`, `tgl_pakai_brg`, `ket_pakai_brg`, `data_sts`) VALUES
 	('JL1901-000001', 'KRY00001', 1, 'DRV0001', 'DRV0002', '2019-01-06', 'tes a', '1');
@@ -912,6 +912,42 @@ INSERT INTO `trx_pasang_ban_det` (`det_id`, `no_pemasangan`, `kode_ban`, `qty_pa
 	(3, 'PSG1902-000001', 'BAN0001', 1.00, '0');
 /*!40000 ALTER TABLE `trx_pasang_ban_det` ENABLE KEYS */;
 
+-- Dumping structure for table suryajaya.trx_pelunasan
+DROP TABLE IF EXISTS `trx_pelunasan`;
+CREATE TABLE IF NOT EXISTS `trx_pelunasan` (
+  `no_lunas` char(20) NOT NULL,
+  `kode_customer` char(10) DEFAULT NULL,
+  `tgl_lunas` date DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`no_lunas`),
+  KEY `FK_trx_pelunasan_master_customer` (`kode_customer`),
+  CONSTRAINT `FK_trx_pelunasan_master_customer` FOREIGN KEY (`kode_customer`) REFERENCES `master_customer` (`kode_customer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_pelunasan: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_pelunasan` DISABLE KEYS */;
+INSERT INTO `trx_pelunasan` (`no_lunas`, `kode_customer`, `tgl_lunas`, `data_sts`) VALUES
+	('KWP1902-000001', NULL, '2019-02-20', '0');
+/*!40000 ALTER TABLE `trx_pelunasan` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_pelunasan_det
+DROP TABLE IF EXISTS `trx_pelunasan_det`;
+CREATE TABLE IF NOT EXISTS `trx_pelunasan_det` (
+  `det_id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_lunas` char(20) DEFAULT '0',
+  `det_tagihan` int(11) DEFAULT '0',
+  `jumlah` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`det_id`),
+  KEY `FK_trx_pelunasan_det_trx_pelunasan` (`no_lunas`),
+  KEY `FK_trx_pelunasan_det_trx_tagihan_det` (`det_tagihan`),
+  CONSTRAINT `FK_trx_pelunasan_det_trx_pelunasan` FOREIGN KEY (`no_lunas`) REFERENCES `trx_pelunasan` (`no_lunas`),
+  CONSTRAINT `FK_trx_pelunasan_det_trx_tagihan_det` FOREIGN KEY (`det_tagihan`) REFERENCES `trx_tagihan_det` (`det_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_pelunasan_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_pelunasan_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_pelunasan_det` ENABLE KEYS */;
+
 -- Dumping structure for table suryajaya.trx_retur_beli_barang
 DROP TABLE IF EXISTS `trx_retur_beli_barang`;
 CREATE TABLE IF NOT EXISTS `trx_retur_beli_barang` (
@@ -924,7 +960,7 @@ CREATE TABLE IF NOT EXISTS `trx_retur_beli_barang` (
   CONSTRAINT `FK_trx_retur_beli_barang_trx_beli_barang` FOREIGN KEY (`no_nota`) REFERENCES `trx_beli_barang` (`no_nota`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_retur_beli_barang: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_retur_beli_barang: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_retur_beli_barang` DISABLE KEYS */;
 INSERT INTO `trx_retur_beli_barang` (`no_retur`, `no_nota`, `tgl_retur`, `data_sts`) VALUES
 	('RBL1901-000001', 'SK1901-000002', '2019-01-08', '1');
@@ -963,7 +999,7 @@ CREATE TABLE IF NOT EXISTS `trx_retur_pakai_barang` (
   CONSTRAINT `FK_trx_retur_pakai_barang_trx_pakai_barang` FOREIGN KEY (`no_pakai_brg`) REFERENCES `trx_pakai_barang` (`no_pakai_brg`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_retur_pakai_barang: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_retur_pakai_barang: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_retur_pakai_barang` DISABLE KEYS */;
 INSERT INTO `trx_retur_pakai_barang` (`no_retur`, `no_pakai_brg`, `tgl_retur`, `data_sts`) VALUES
 	('RJL1901-000001', 'JL1901-000001', '2019-01-08', '1');
@@ -1029,7 +1065,7 @@ CREATE TABLE IF NOT EXISTS `trx_tagihan_det` (
   CONSTRAINT `FK_trx_tagihan_det_trx_tagihan` FOREIGN KEY (`no_tagihan`) REFERENCES `trx_tagihan` (`no_tagihan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_tagihan_det: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_tagihan_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_tagihan_det` DISABLE KEYS */;
 INSERT INTO `trx_tagihan_det` (`det_id`, `no_tagihan`, `no_bon`, `tgl_muat`, `tgl_bongkar`, `nopol`, `surat_jalan`, `jenis_muatan`, `berat_muatan`, `ongkos_bruto`) VALUES
 	(3, 'SJT1901-000002', 'AS1901-000002', '2019-01-28', '2019-01-31', 'B2345XS', 'SJ00001', 'Keramik', 20.00, 40000.00);

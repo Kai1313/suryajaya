@@ -66,7 +66,6 @@
                 <div class="row">
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
-                      <input type="hidden" name="cust_tagihan">
                       <label>Tagihan</label>
                       <select class="form-control" name="no_tagihan" id="dropTagihan" style="width: 100%;">
                         <option value=""></option>
@@ -96,7 +95,7 @@
                 <tbody></tbody>
                 <tfoot>
                   <tr>
-                    <th colspan="5" class="text-center">Grand Total</th>
+                    <th colspan="2" class="text-center">Grand Total</th>
                     <th class="num_" name="grand_total">0</th>
                   </tr>
                 </tfoot>
@@ -180,10 +179,6 @@
       });
       droptagihan();
       dropcustomer();
-      $('#dropTagihan').change(function()
-      {
-        pickTagihan($('#dropTagihan option:selected').val());
-      });
       $('.num').number(true,2);
     })
     function newLunas()
@@ -202,37 +197,25 @@
     function droptagihan()
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getDropTagihan')?>",
+        url : "<?php echo site_url('Crud/getDropRekening')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {   
-          var select = document.getElementById('dropTagihan');
+          var select = document.getElementById('dropRekening');
           var option;
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['det_id']
-            option.text = data[i]['no_tagihan']+'_'+data[i]['no_bon'];
+            option.value = data[i]['kode_rekening']
+            option.text = data[i]['nama_bank']+' - '+data[i]['no_rekening'];
             select.add(option);
           }
-          $('#dropTagihan').select2({placeholder: 'Pilih Tagihan'});
+          $('#dropRekening').select2({placeholder: 'Pilih Rekening'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
-          alert('Error get tagihan data');
-        }
-      });
-    }
-    function pickTagihan(key)
-    {
-      $.ajax({
-        type: 'GET',
-        url: '<?= site_url('Crud/pickDropTagihan/')?>'+key,
-        dataType: 'JSON',
-        success: function(data)
-        {
-          $('[name="cust_tagihan"]').val(data.kode_customer);
+          alert('Error get rekening data');
         }
       });
     }
@@ -287,36 +270,29 @@
     }
     function add()
     {
-      key = ($('[name="no_lunas"]').val()!='')?$('[name="no_lunas"]').val():'';
+      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
       if(key!='')
       {
-        if($('[name="cust_tagihan"]').val() != $('#dropTagihan option:selected').val())
-        {
-          $.ajax({
-            type: 'POST',
-            url: '<?= site_url('Crud/addLunas')?>',
-            data: $('form').serialize(),
-            dataType: 'JSON',
-            success: function(data)
+        $.ajax({
+          type: 'POST',
+          url: '<?= site_url('Crud/addKuitansi')?>',
+          data: $('form').serialize(),
+          dataType: 'JSON',
+          success: function(data)
+          {
+            if(data.status)
             {
-              if(data.status)
-              {
-                msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-                $('#form-detail-biaya')[0].reset();
-                tbDetLunas(key);
-                subTotal(key);
-              }
-              else
-              {
-                msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-              }
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+              $('#form-detail-biaya')[0].reset();
+              tbDetKuitansi(key);
+              subTotal(key);
             }
-          });
-        }
-        else
-        {
-          alert('Tagihan Bukan Milik Klien Yang Dipilih');
-        }
+            else
+            {
+              msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+            }
+          }
+        });
       }
       else
       {
@@ -325,10 +301,10 @@
     }
     function remove(id)
     {
-      key = ($('[name="no_lunas"]').val()!='')?$('[name="no_lunas"]').val():'';
+      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/rmvLunas/')?>'+id,
+        url: '<?= site_url('Crud/rmvKuitansi/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
@@ -336,7 +312,7 @@
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
             $('#form-detail-biaya')[0].reset();
-            tbDetLunas(key);
+            tbDetKuitansi(key);
             subTotal(key);
           }
           else
