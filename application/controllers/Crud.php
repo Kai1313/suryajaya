@@ -1374,6 +1374,118 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_kuitansi',$data);
 	}
 
+	//Transaksi Kuitansi
+	public function addLunas()
+	{
+		$ins = array(
+			'no_lunas'=>$this->input->post('no_lunas'),
+			'det_tagihan'=>$this->input->post('no_tagihan'),
+			'jumlah'=>$this->input->post('jumlah')
+		);
+		$this->db->insert('trx_kuitansi_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Pelunasan Piutang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Pelunasan Piutang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function subTotalLunas($key)
+	{
+		$data = $this->db->select('SUM(a.jumlah) as subtotal')->join('trx_pelunasan b','b.no_lunas = a.no_lunas')->get_where('trx_pelunasan_det a',array('a.no_lunas'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function rmvLunas($key)
+	{
+		$this->db->delete('trx_pelunasan_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Detail Pelunasan Piutang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Detail Pelunasan Piutang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveLunas()
+	{
+		$getSts = $this->db->get_where('trx_pelunasan',array('no_lunas'=>$this->input->post('no_lunas')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'kode_customer'=>$this->input->post('kode_customer'),
+				'tgl_lunas'=>$this->dateFix_($this->input->post('tgl_lunas')),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_pelunasan',$upd,array('no_lunas'=>$this->input->post('no_lunas')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Pelunasan Piutang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Pelunasan Piutang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelLunas()
+	{
+		$getSts = $this->db->get_where('trx_pelunasan',array('no_lunas'=>$this->input->post('no_lunas')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_pelunasan',$can,array('no_lunas'=>$this->input->post('no_lunas')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Pelunasan Piutang</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Pelunasan Piutang</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function printLunas($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_pelunasan',$data);
+	}
+
 	//Transaksi Pemakaian Barang/Spare Part
 	public function addPakaiBarang()
 	{

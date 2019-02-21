@@ -320,7 +320,7 @@
       }
       else
       {
-        alert('No Kuitansi Masih Kosong');
+        alert('No Pelunasan Masih Kosong');
       }
     }
     function remove(id)
@@ -348,10 +348,10 @@
     }
     function saveDt()
     {
-      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
+      key = ($('[name="no_lunas"]').val()!='')?$('[name="no_lunas"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/saveKuitansi')?>',
+        url: '<?= site_url('Crud/saveLunas')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -360,7 +360,7 @@
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
             $('#form-detail-biaya')[0].reset();
-            tbDetKuitansi(key);
+            tbDetLunas(key);
             subTotal(key);
           }
           else
@@ -372,10 +372,10 @@
     }
     function cancelDt()
     {
-      key = ($('[name="no_kuitansi"]').val()!='')?$('[name="no_kuitansi"]').val():'';
+      key = ($('[name="no_lunas"]').val()!='')?$('[name="no_lunas"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/cancelKuitansi')?>',
+        url: '<?= site_url('Crud/cancelLunas')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -384,7 +384,7 @@
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
             $('#form-detail-biaya')[0].reset();
-            tbDetKuitansi(key);
+            tbDetLunas(key);
             subTotal(key);
           }
           else
@@ -398,7 +398,7 @@
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/subTotalKuitansi/')?>'+id,
+        url: '<?= site_url('Crud/subTotalLunas/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
@@ -442,13 +442,11 @@
         dataType: 'JSON',
         success: function(data)
         {
-          key = data.no_kuitansi;
-          $('[name="no_kuitansi"]').val(data.no_kuitansi);
-          $('[name="tgl_kuitansi"]').val(moment(data.tgl_kuitansi).format('DD/MM/YYYY'));
-          $('[name="ket_kuitansi"]').val(data.ket_kuitansi);
-          $('#dropRekening').val(data.kode_rekening).trigger('change');
+          key = data.no_lunas;
+          $('[name="no_lunas"]').val(data.no_lunas);
+          $('[name="tgl_lunas"]').val(moment(data.tgl_lunas).format('DD/MM/YYYY'));
           $('#dropCustomer').val(data.kode_customer).trigger('change');
-          tbDetKuitansi(key);
+          tbDetLunas(key);
           subTotal(key);
           $('#newBtn').prop('disabled',true);
           $('#modal-edit').modal('hide');
