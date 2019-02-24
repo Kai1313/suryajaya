@@ -494,4 +494,8 @@
       key = ($('[name="no_nota"]').val()!='')?$('[name="no_nota"]').val():'';
       window.open ( "<?= site_url('Crud/printBeliBarang/')?>"+key,'_blank');
     }
+    function reportDt()
+    {
+      window.open ( "<?= site_url('Crud/reportBeliBarang')?>",'_blank');
+    }
   </script>

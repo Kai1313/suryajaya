@@ -78,6 +78,10 @@
                     <input type="hidden" name="g_total">
                   </div>
                   <div class="col-md-6 col-xs-6">
+                    <div class="form-group">
+                      <label>Jumlah</label>
+                      <input type="text" name="jumlah" class="form-control num" readonly>
+                    </div>
                   </div>
                 </div>
               </form>
@@ -233,6 +237,8 @@
         success: function(data)
         {
           $('[name="cust_tagihan"]').val(data.kode_customer);
+          $('[name="jumlah"]').val(data.ongkos_bruto);
+          $('.num').number(true,2);
         }
       });
     }
@@ -438,7 +444,7 @@
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/getKuitansi/')?>'+id,
+        url: '<?= site_url('Crud/getLunas/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {

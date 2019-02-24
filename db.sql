@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.37-MariaDB - mariadb.org binary distribution
+-- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
 -- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
@@ -927,7 +927,7 @@ CREATE TABLE IF NOT EXISTS `trx_pelunasan` (
 -- Dumping data for table suryajaya.trx_pelunasan: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_pelunasan` DISABLE KEYS */;
 INSERT INTO `trx_pelunasan` (`no_lunas`, `kode_customer`, `tgl_lunas`, `data_sts`) VALUES
-	('KWP1902-000001', NULL, '2019-02-20', '0');
+	('KWP1902-000001', 'CUST0001', '2019-02-20', '1');
 /*!40000 ALTER TABLE `trx_pelunasan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_pelunasan_det
@@ -942,10 +942,12 @@ CREATE TABLE IF NOT EXISTS `trx_pelunasan_det` (
   KEY `FK_trx_pelunasan_det_trx_tagihan_det` (`det_tagihan`),
   CONSTRAINT `FK_trx_pelunasan_det_trx_pelunasan` FOREIGN KEY (`no_lunas`) REFERENCES `trx_pelunasan` (`no_lunas`),
   CONSTRAINT `FK_trx_pelunasan_det_trx_tagihan_det` FOREIGN KEY (`det_tagihan`) REFERENCES `trx_tagihan_det` (`det_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.trx_pelunasan_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_pelunasan_det` DISABLE KEYS */;
+INSERT INTO `trx_pelunasan_det` (`det_id`, `no_lunas`, `det_tagihan`, `jumlah`) VALUES
+	(1, 'KWP1902-000001', 3, 40000.00);
 /*!40000 ALTER TABLE `trx_pelunasan_det` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_retur_beli_barang

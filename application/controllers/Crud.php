@@ -1109,6 +1109,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_pembelian_spare_part',$data);
 	}
 
+	public function reportBeliBarang()
+	{
+		$this->load->view('menu/lap_pembelian_spare_part');
+	}
+
 	//Transaksi Biaya Kendaraan
 	public function addBiayaKdr()
 	{
@@ -1260,6 +1265,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_biaya_kendaraan',$data);
 	}
 
+	public function reportBiayaKendaraan()
+	{
+		$this->load->view('menu/lap_biaya_kendaraan');
+	}
+
 	//Transaksi Kuitansi
 	public function addKuitansi()
 	{
@@ -1382,7 +1392,7 @@ class Crud extends CI_Controller
 			'det_tagihan'=>$this->input->post('no_tagihan'),
 			'jumlah'=>$this->input->post('jumlah')
 		);
-		$this->db->insert('trx_kuitansi_det',$ins);
+		$this->db->insert('trx_pelunasan_det',$ins);
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
 		'<div class="alert alert-success alert-dismissible" id="alert_success">
@@ -1650,6 +1660,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_pemakaian_spare_part',$data);
 	}
 
+	public function reportPakaiBarang()
+	{
+		$this->load->view('menu/lap_pemakaian_spare_part');
+	}
+
 	//Transaksi Pembelian Ban
 	public function addBeliBan()
 	{
@@ -1783,6 +1798,11 @@ class Crud extends CI_Controller
 	{
 		$data['key'] = $key;
 		$this->load->view('menu/print_pembelian_ban',$data);
+	}
+
+	public function reportBeliBan()
+	{
+		$this->load->view('menu/lap_pembelian_ban');
 	}
 
 	//Transaksi Pemasangan Ban
@@ -2280,6 +2300,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_retur_pembelian_spare_part',$data);
 	}
 
+	public function reportReturBeliBarang()
+	{
+		$this->load->view('menu/lap_retur_pembelian_spare_part');
+	}
+
 	//Transaksi Retur Pemakaian Barang/Spare Part
 	public function addReturPakaiBarang()
 	{
@@ -2406,6 +2431,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_retur_pemakaian_spare_part',$data);
 	}
 
+	public function reportReturPakaiBarang()
+	{
+		$this->load->view('menu/lap_retur_pemakaian_spare_part');
+	}
+
 	//Transaksi Input Bon Karyawan
 	public function saveBonKaryawan()
 	{
@@ -2485,6 +2515,11 @@ class Crud extends CI_Controller
 	{
 		$data['key'] = $key;
 		$this->load->view('menu/print_input_bon',$data);
+	}
+
+	public function reportInputBon()
+	{
+		$this->load->view('menu/lap_input_bon');
 	}
 
 	//Transaksi Input Kas
@@ -2635,6 +2670,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_input_bon_sopir',$data);
 	}
 
+	public function reportBonSopir()
+	{
+		$this->load->view('menu/lap_bon_sopir');
+	}
+
 	//Transaksi Input Klaim Sopir
 	public function saveKlaimSopir()
 	{
@@ -2714,6 +2754,11 @@ class Crud extends CI_Controller
 	{
 		$data['key'] = $key;
 		$this->load->view('menu/print_input_klaim_sopir',$data);
+	}
+
+	public function reportKlaimSopir()
+	{
+		$this->load->view('menu/lap_klaim_sopir');
 	}
 
 	//Transaksi Bayar Upah Karyawan
@@ -2809,6 +2854,11 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function reportBayarUpahKaryawan()
+	{
+		$this->load->view('menu/lap_upah_karyawan');
 	}
 
 	//Transaksi Bayar Bon Klaim Sopir
@@ -3477,6 +3527,12 @@ class Crud extends CI_Controller
 	public function getKuitansi($key)
 	{
 		$data = $this->db->get_where('trx_kuitansi',array('no_kuitansi'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getLunas($key)
+	{
+		$data = $this->db->get_where('trx_pelunasan',array('no_lunas'=>$key))->row();
 		echo json_encode($data);
 	}
 

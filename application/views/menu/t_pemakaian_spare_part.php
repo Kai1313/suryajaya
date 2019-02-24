@@ -154,6 +154,11 @@
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
+                  <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                </div>
+              </div>
+              <div class="col-md-1 col-xs-1">
+                <div class="form-group">
                   <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
                 </div>
               </div>
@@ -587,5 +592,9 @@
     {
       key = ($('[name="no_pemakaian"]').val()!='')?$('[name="no_pemakaian"]').val():'';
       window.open ( "<?= site_url('Crud/printPakaiBarang/')?>"+key,'_blank');
+    }
+    function reportDt()
+    {
+      window.open ( "<?= site_url('Crud/reportPakaiBarang')?>",'_blank');
     }
   </script>
