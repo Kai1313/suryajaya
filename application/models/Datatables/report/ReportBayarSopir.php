@@ -1,11 +1,11 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class ReportKlaimSopir extends CI_Model 
+	class ReportBayarSopir extends CI_Model 
 	{
-		var $table = 'trx_input_klaim_sopir a';
-		var $column_order = array('tgl_klaim','no_klaim','nama_driver','ket_klaim','nom_klaim');
-		var $column_search = array('tgl_klaim','no_klaim','nama_driver','ket_klaim','nom_klaim');
-		var $order = array('tgl_bon' => 'asc'); 
+		var $table = 'trx_bayar_bonklaim_sopir a';
+		var $column_order = array('tgl_bayar','no_bayar','nama_driver','nom_bon','nom_klaim');
+		var $column_search = array('tgl_bayar','no_bayar','nama_driver','nom_bon','nom_klaim');
+		var $order = array('tgl_bayar' => 'asc'); 
 		public function __construct()
 		{
 			parent::__construct();		
@@ -18,8 +18,8 @@
 			}
 			if ($this->input->post('tgl_awal') != null AND $this->input->post('tgl_akhir') != null )
 			{
-				$this->db->where('a.tgl_klaim >=', $this->dateFix_($this->input->post('tgl_awal')));
-        $this->db->where('a.tgl_klaim <=', $this->dateFix_($this->input->post('tgl_akhir')));
+				$this->db->where('a.tgl_bayar >=', $this->dateFix_($this->input->post('tgl_awal')));
+        $this->db->where('a.tgl_bayar <=', $this->dateFix_($this->input->post('tgl_akhir')));
 			}
 			$this->db->from($this->table);
 			$this->db->join('master_driver b','b.kode_driver = a.kode_driver');

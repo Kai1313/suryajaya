@@ -58,9 +58,202 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/report/ReportInputBon','rptInpBon');
 		$this->load->model('Datatables/report/ReportBayarUpahKaryawan','rptUpahKry');
 		$this->load->model('Datatables/report/ReportBonSopir','rptBonSopir');
+		$this->load->model('Datatables/report/ReportKlaimSopir','rptKlaimSopir');
+		$this->load->model('Datatables/report/ReportBayarSopir','rptBayarSopir');
+		$this->load->model('Datatables/report/ReportPasangBan','rptPasangBan');
+		$this->load->model('Datatables/report/ReportLepasBan','rptLepasBan');
+		$this->load->model('Datatables/report/ReportKuitansi','rptKui');
 	}
 
 	//Data Report Transaksi
+	public function rptKuitansi()
+	{
+		$list = $this->rptKui->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_kuitansi));
+			$row[] = $dat->no_kuitansi;
+			$row[] = $dat->nama_bank.' - '.$dat->no_rekening;
+			$row[] = $dat->nama_customer;
+			$row[] = $dat->ket_pembayaran;
+			$row[] = number_format($dat->nom_pembayaran,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptKui->count_all(),
+				"recordsFiltered" => $this->rptKui->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function rptLepasBan()
+	{
+		$list = $this->rptLepasBan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset Ban';
+					break;
+				default:
+					break;
+			}
+			switch ($dat->status_lepas)
+			{
+				case '0':
+					$sts = 'Bekas';
+					break;
+				case '1':
+					$sts = 'Vulkanisir';
+					break;
+				case '2':
+					$sts = 'Afkir/Buang';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_pelepasan));
+			$row[] = $dat->no_pelepasan;
+			$row[] = $dat->nopol.' - '.$dat->tipe_kendaraan.' - '.$dat->jenis_kendaraan;
+			$row[] = $dat->bengkel_pelepasan;
+			$row[] = $dat->nama_ban.' - '.$dat->merk_ban.' ('.$dat->ukuran_ban.')';
+			$row[] = $jenis;
+			$row[] = $sts;
+			$row[] = number_format($dat->qty_lepas,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptLepasBan->count_all(),
+				"recordsFiltered" => $this->rptLepasBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function rptPasangBan()
+	{
+		$list = $this->rptPasangBan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset Ban';
+					break;
+				default:
+					break;
+			}
+			switch ($dat->status_pasang)
+			{
+				case '0':
+					$sts = 'Baru';
+					break;
+				case '1':
+					$sts = 'Bekas';
+					break;
+				case '2':
+					$sts = 'Vulkanisir';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_pemasangan));
+			$row[] = $dat->no_pemasangan;
+			$row[] = $dat->nopol.' - '.$dat->tipe_kendaraan.' - '.$dat->jenis_kendaraan;
+			$row[] = $dat->bengkel_pemasangan;
+			$row[] = $dat->nama_ban.' - '.$dat->merk_ban.' ('.$dat->ukuran_ban.')';
+			$row[] = $jenis;
+			$row[] = $sts;
+			$row[] = number_format($dat->qty_pasang,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptPasangBan->count_all(),
+				"recordsFiltered" => $this->rptPasangBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function rptBayarSopir()
+	{
+		$list = $this->rptBayarSopir->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_bayar));
+			$row[] = $dat->no_bayar;
+			$row[] = $dat->nama_driver;
+			$row[] = number_format($dat->nom_bon,2);
+			$row[] = number_format($dat->nom_klaim,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptBayarSopir->count_all(),
+				"recordsFiltered" => $this->rptBayarSopir->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function rptKlaimSopir()
+	{
+		$list = $this->rptKlaimSopir->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_klaim));
+			$row[] = $dat->no_klaim;
+			$row[] = $dat->nama_driver;
+			$row[] = $dat->ket_klaim;
+			$row[] = number_format($dat->nom_klaim,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptKlaimSopir->count_all(),
+				"recordsFiltered" => $this->rptKlaimSopir->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function rptBonSopir()
 	{
 		$list = $this->rptBonSopir->get_datatables();

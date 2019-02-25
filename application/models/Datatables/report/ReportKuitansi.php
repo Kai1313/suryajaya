@@ -1,29 +1,31 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class ReportKlaimSopir extends CI_Model 
+	class ReportKuitansi extends CI_Model 
 	{
-		var $table = 'trx_input_klaim_sopir a';
-		var $column_order = array('tgl_klaim','no_klaim','nama_driver','ket_klaim','nom_klaim');
-		var $column_search = array('tgl_klaim','no_klaim','nama_driver','ket_klaim','nom_klaim');
-		var $order = array('tgl_bon' => 'asc'); 
+		var $table = 'trx_kuitansi_det a';
+		var $column_order = array('b.tgl_kuitansi','b.no_kuitansi','c.nama_bank','d.nama_customer','a.ket_pembayaran','a.nom_pembayaran');
+		var $column_search = array('b.tgl_kuitansi','b.no_kuitansi','c.nama_bank','d.nama_customer','a.ket_pembayaran','a.nom_pembayaran');
+		var $order = array('tgl_kuitansi' => 'asc'); 
 		public function __construct()
 		{
 			parent::__construct();		
 		}
 		private function _get_datatables_query()
 		{
-			if($this->input->post('kode_driver'))
+			if($this->input->post('kode_customer'))
 			{
-				$this->db->where('a.kode_driver',$this->input->post('kode_driver'));
+				$this->db->where('b.kode_customer',$this->input->post('kode_customer'));
 			}
 			if ($this->input->post('tgl_awal') != null AND $this->input->post('tgl_akhir') != null )
 			{
-				$this->db->where('a.tgl_klaim >=', $this->dateFix_($this->input->post('tgl_awal')));
-        $this->db->where('a.tgl_klaim <=', $this->dateFix_($this->input->post('tgl_akhir')));
+				$this->db->where('b.tgl_kuitansi >=', $this->dateFix_($this->input->post('tgl_awal')));
+        $this->db->where('b.tgl_kuitansi <=', $this->dateFix_($this->input->post('tgl_akhir')));
 			}
 			$this->db->from($this->table);
-			$this->db->join('master_driver b','b.kode_driver = a.kode_driver');
-			$this->db->where('a.data_sts','1');
+			$this->db->join('trx_kuitansi b','b.no_kuitansi = a.no_kuitansi');
+			$this->db->join('master_rekening c','c.kode_rekening = b.kode_rekening');
+			$this->db->join('master_customer d','d.kode_customer = b.kode_customer');
+			$this->db->where('b.data_sts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{

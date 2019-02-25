@@ -1,29 +1,31 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class ReportKlaimSopir extends CI_Model 
+	class ReportPasangBan extends CI_Model 
 	{
-		var $table = 'trx_input_klaim_sopir a';
-		var $column_order = array('tgl_klaim','no_klaim','nama_driver','ket_klaim','nom_klaim');
-		var $column_search = array('tgl_klaim','no_klaim','nama_driver','ket_klaim','nom_klaim');
-		var $order = array('tgl_bon' => 'asc'); 
+		var $table = 'trx_pasang_ban_det a';
+		var $column_order = array('b.tgl_pemasangan','b.no_pemasangan','c.nopol','c.bengkel_pemasangan','d.nama_ban','d.jenis_ban','a.status_pasang','a.qty_pasang');
+		var $column_search = array('b.tgl_pemasangan','b.no_pemasangan','c.nopol','c.bengkel_pemasangan','d.nama_ban','d.jenis_ban','a.status_pasang','a.qty_pasang');
+		var $order = array('tgl_pemasangan' => 'asc'); 
 		public function __construct()
 		{
 			parent::__construct();		
 		}
 		private function _get_datatables_query()
 		{
-			if($this->input->post('kode_driver'))
+			if($this->input->post('kode_kendaraan'))
 			{
-				$this->db->where('a.kode_driver',$this->input->post('kode_driver'));
+				$this->db->where('b.kode_kendaraan',$this->input->post('kode_kendaraan'));
 			}
 			if ($this->input->post('tgl_awal') != null AND $this->input->post('tgl_akhir') != null )
 			{
-				$this->db->where('a.tgl_klaim >=', $this->dateFix_($this->input->post('tgl_awal')));
-        $this->db->where('a.tgl_klaim <=', $this->dateFix_($this->input->post('tgl_akhir')));
+				$this->db->where('b.tgl_pemasangan >=', $this->dateFix_($this->input->post('tgl_awal')));
+        $this->db->where('b.tgl_pemasangan <=', $this->dateFix_($this->input->post('tgl_akhir')));
 			}
 			$this->db->from($this->table);
-			$this->db->join('master_driver b','b.kode_driver = a.kode_driver');
-			$this->db->where('a.data_sts','1');
+			$this->db->join('trx_pasang_ban b','b.no_pemasangan = a.no_pemasangan');
+			$this->db->join('master_kendaraan c','c.kode_kendaraan = b.kode_kendaraan');
+			$this->db->join('master_ban d','d.kode_ban = a.kode_ban');
+			$this->db->where('b.data_sts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{

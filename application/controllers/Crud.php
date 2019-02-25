@@ -1384,7 +1384,12 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_kuitansi',$data);
 	}
 
-	//Transaksi Kuitansi
+	public function reportKuitansi()
+	{
+		$this->load->view('menu/lap_kuitansi');
+	}
+
+	//Transaksi Pelunasan Tagihan
 	public function addLunas()
 	{
 		$ins = array(
@@ -1997,6 +2002,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_pemasangan_ban',$data);
 	}
 
+	public function reportPasangBan()
+	{
+		$this->load->view('menu/lap_pemasangan_ban');
+	}
+
 	//Transaksi Pelepasan Ban
 	public function addLepasBan()
 	{
@@ -2172,6 +2182,11 @@ class Crud extends CI_Controller
 	{
 		$data['key'] = $key;
 		$this->load->view('menu/print_pelepasan_ban',$data);
+	}
+
+	public function reportLepasBan()
+	{
+		$this->load->view('menu/lap_pelepasan_ban');
 	}
 
 	//Transaksi Retur Pembelian Barang/Spare Part
@@ -2946,6 +2961,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_bayar_bon_klaim_sopir',$data);
 	}
 
+	public function reportBayarSopir()
+	{
+		$this->load->view('menu/lap_bayar_sopir');
+	}
+
 	//Transaksi Kas Bon Sopir
 	public function saveKasBonSopir()
 	{
@@ -3062,6 +3082,11 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function reportKasBonSopir()
+	{
+		$this->load->view('menu/lap_kas_bon_sopir');
 	}
 
 	//Transaksi Kas Bon Kantor

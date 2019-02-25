@@ -277,6 +277,11 @@
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
+                  <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                </div>
+              </div>
+              <div class="col-md-1 col-xs-1">
+                <div class="form-group">
                   <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
                 </div>
               </div>
@@ -911,6 +916,17 @@
       {
         key = ($('[name="no_pelepasan"]').val()!='')?$('[name="no_pelepasan"]').val():'';
         window.open ( "<?= site_url('Crud/printLepasBan/')?>"+key,'_blank');
+      }
+    }
+    function reportDt()
+    {
+      if($('#sts_trx0').is(':checked'))
+      {
+        window.open ( "<?= site_url('Crud/reportPasangBan')?>",'_blank');
+      }
+      else
+      {
+        window.open ( "<?= site_url('Crud/reportLepasBan')?>",'_blank');
       }
     }
   </script>
