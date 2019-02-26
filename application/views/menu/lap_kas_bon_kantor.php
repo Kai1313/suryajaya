@@ -283,7 +283,7 @@
         "paging": false,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/rptKasBonSopir')?>",
+          "url": "<?php echo site_url('Datatables/rptKasBonKantor')?>",
           "type": "POST",
           "data": function(data)
             {

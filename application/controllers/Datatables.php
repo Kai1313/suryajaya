@@ -63,9 +63,65 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/report/ReportPasangBan','rptPasangBan');
 		$this->load->model('Datatables/report/ReportLepasBan','rptLepasBan');
 		$this->load->model('Datatables/report/ReportKuitansi','rptKui');
+		$this->load->model('Datatables/report/ReportKasBonSopir','rptKasBonSopir');
+		$this->load->model('Datatables/report/ReportKasBonKantor','rptKasBonKantor');
 	}
 
 	//Data Report Transaksi
+	public function rptKasBonKantor()
+	{
+		$list = $this->rptKasBonKantor->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_bon));
+			$row[] = $dat->no_bon;
+			$row[] = $dat->nopol.' - '.$dat->tipe_kendaraan.' - '.$dat->jenis_kendaraan;
+			$row[] = $dat->sopir.' - '.$dat->kernet;
+			$row[] = number_format($dat->sub_bonall,2);
+			$row[] = date('d/m/Y', strtotime($dat->tgl_muat)).' - '.number_format($dat->sub_beratmuat,2).' - '.date('d/m/Y', strtotime($dat->tgl_bongkar));
+			$row[] = date('d/m/Y', strtotime($dat->tgl_muat_b)).' - '.number_format($dat->sub_beratmuat_b,2).' - '.date('d/m/Y', strtotime($dat->tgl_bongkar_b));
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptKasBonKantor->count_all(),
+				"recordsFiltered" => $this->rptKasBonKantor->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function rptKasBonSopir()
+	{
+		$list = $this->rptKasBonSopir->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_bon));
+			$row[] = $dat->no_bon;
+			$row[] = $dat->nopol.' - '.$dat->tipe_kendaraan.' - '.$dat->jenis_kendaraan;
+			$row[] = $dat->sopir.' - '.$dat->kernet;
+			$row[] = number_format($dat->sub_bonall,2);
+			$row[] = date('d/m/Y', strtotime($dat->tgl_muat)).' - '.number_format($dat->sub_beratmuat,2).' - '.date('d/m/Y', strtotime($dat->tgl_bongkar));
+			$row[] = date('d/m/Y', strtotime($dat->tgl_muat_b)).' - '.number_format($dat->sub_beratmuat_b,2).' - '.date('d/m/Y', strtotime($dat->tgl_bongkar_b));
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptKasBonSopir->count_all(),
+				"recordsFiltered" => $this->rptKasBonSopir->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function rptKuitansi()
 	{
 		$list = $this->rptKui->get_datatables();

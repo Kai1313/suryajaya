@@ -3101,9 +3101,9 @@ class Crud extends CI_Controller
 		{
 			$upd = array(
 				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
-				'tgl_bon'=>$this->input->post('tgl_bon'),
-				'tgl_berangkat'=>$this->input->post('tgl_berangkat'),
-				'tgl_kembali'=>$this->input->post('tgl_kembali'),
+				'tgl_bon'=>($this->input->post('tgl_bon')!='')?$this->dateFix_($this->input->post('tgl_bon')):NULL,
+				'tgl_berangkat'=>($this->input->post('tgl_berangkat')!='')?$this->dateFix_($this->input->post('tgl_berangkat')):NULL,
+				'tgl_kembali'=>($this->input->post('tgl_kembali')!='')?$this->dateFix_($this->input->post('tgl_kembali')):NULL,
 				'kode_sopir'=>$this->input->post('kode_sopir'),
 				'kode_kernet'=>$this->input->post('kode_kernet'),
 				'kode_sopir'=>$this->input->post('kode_sopir'),
@@ -3115,19 +3115,20 @@ class Crud extends CI_Controller
 				'uang_saku_b'=>$this->input->post('uang_saku_b'),
 				'uang_saku_c'=>$this->input->post('uang_saku_c'),
 				'uang_saku_d'=>$this->input->post('uang_saku_d'),
-				'tgl_bon_a'=>$this->input->post('tgl_bon_a'),
-				'tgl_bon_b'=>$this->input->post('tgl_bon_b'),
-				'tgl_bon_c'=>$this->input->post('tgl_bon_c'),
-				'tgl_bon_d'=>$this->input->post('tgl_bon_d'),
+				'tgl_bon_kota'=>($this->input->post('tgl_bon_kota')!='')?$this->dateFix_($this->input->post('tgl_bon_kota')):NULL,
+				'tgl_bon_a'=>($this->input->post('tgl_bon_a')!='')?$this->dateFix_($this->input->post('tgl_bon_a')):NULL,
+				'tgl_bon_b'=>($this->input->post('tgl_bon_b')!='')?$this->dateFix_($this->input->post('tgl_bon_b')):NULL,
+				'tgl_bon_c'=>($this->input->post('tgl_bon_c')!='')?$this->dateFix_($this->input->post('tgl_bon_c')):NULL,
+				'tgl_bon_d'=>($this->input->post('tgl_bon_d')!='')?$this->dateFix_($this->input->post('tgl_bon_d')):NULL,
 				'sub_uang_saku'=>$this->input->post('sub_uang_saku'),
 				'uang_solar'=>$this->input->post('uang_solar'),
-				'tgl_solar'=>$this->input->post('tgl_solar'),
+				'tgl_solar'=>($this->input->post('tgl_solar')!='')?$this->dateFix_($this->input->post('tgl_solar')):NULL,
 				'nama_pom'=>$this->input->post('nama_pom'),
 				'sub_bonall'=>$this->input->post('sub_bonall'),
-				'tgl_muat'=>$this->input->post('tgl_muat'),
-				'tgl_muat_b'=>$this->input->post('tgl_muat_b'),
-				'tgl_bongkar'=>$this->input->post('tgl_bongkar'),
-				'tgl_bongkar_b'=>$this->input->post('tgl_bongkar_b'),
+				'tgl_muat'=>($this->input->post('tgl_muat')!='')?$this->dateFix_($this->input->post('tgl_muat')):NULL,
+				'tgl_muat_b'=>($this->input->post('tgl_muat_b')!='')?$this->dateFix_($this->input->post('tgl_muat_b')):NULL,
+				'tgl_bongkar'=>($this->input->post('tgl_bongkar')!='')?$this->dateFix_($this->input->post('tgl_bongkar')):NULL,
+				'tgl_bongkar_b'=>($this->input->post('tgl_bongkar_b')!='')?$this->dateFix_($this->input->post('tgl_bongkar_b')):NULL,
 				'uang_makan'=>$this->input->post('uang_makan'),
 				'uang_makan_b'=>$this->input->post('uang_makan_b'),
 				'kode_customer_a'=>($this->input->post('kode_customer_a')!='')?$this->input->post('kode_customer_a'):NULL,
@@ -3234,6 +3235,11 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function reportKasBonKantor()
+	{
+		$this->load->view('menu/lap_kas_bon_kantor');
 	}
 
 	//Transaksi Tagihan
@@ -3659,10 +3665,75 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getPrintKuitansi($key)
+	{
+		$data['a'] = $this->db->join('master_customer b','b.kode_customer = a.kode_customer')->join('master_rekening c','c.kode_rekening = a.kode_rekening')->get_where('trx_kuitansi a',array('a.no_kuitansi'=>$key))->row();
+		$data['b'] = $this->db->select('SUM(a.nom_pembayaran) as subtotal')->join('trx_kuitansi b','b.no_kuitansi = a.no_kuitansi')->get_where('trx_kuitansi_det a',array('a.no_kuitansi'=>$key))->row();
+		$data['c'] = $this->number_conv($data['b']->subtotal);
+		echo json_encode($data);
+	}
+
 	//Date Fixer
 	function dateFix_($inp)
 	{
 		$date = str_replace('/', '-', $inp);
 		return date('Y-m-d', strtotime($date));
+	}
+
+	//Terbilang
+	public function number_conv($value)
+	{
+		$nilai = abs($value);
+		$huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
+		$temp = "";
+		if ($nilai < 12) 
+		{
+			$temp = " ". $huruf[$nilai];
+		} 
+		else if ($nilai <20) 
+		{
+			$temp = $this->number_conv($nilai - 10). " Belas ";
+		} 
+		else if ($nilai < 100) 
+		{
+			$temp = $this->number_conv($nilai/10)." Puluh ". $this->number_conv($nilai % 10);
+		} 
+		else if ($nilai < 200) 
+		{
+			$temp = " Seratus " . $this->number_conv($nilai - 100);
+		} 
+		else if ($nilai < 1000) 
+		{
+			$temp = $this->number_conv($nilai/100) . " Ratus " . $this->number_conv($nilai % 100);
+		} 
+		else if ($nilai < 2000) 
+		{
+			$temp = " Seribu " . $this->number_conv($nilai - 1000);
+		} 
+		else if ($nilai < 1000000) 
+		{
+			$temp = $this->number_conv($nilai/1000) . " Ribu " . $this->number_conv($nilai % 1000);
+		} 
+		else if ($nilai < 1000000000) 
+		{
+			$temp = $this->number_conv($nilai/1000000) . " Juta " . $this->number_conv($nilai % 1000000);
+		} 
+		else if ($nilai < 1000000000000) 
+		{
+			$temp = $this->number_conv($nilai/1000000000) . " Milyar " . $this->number_conv(fmod($nilai,1000000000));
+		} 
+		else if ($nilai < 1000000000000000) 
+		{
+			$temp = $this->number_conv($nilai/1000000000000) . " Trilyun " . $this->number_conv(fmod($nilai,1000000000000));
+		}
+		if($value<0) 
+		{
+			$hasil = "Minus ". trim($temp);
+		} 
+		else 
+		{
+			$hasil = trim($temp);
+		}
+		return $hasil;
 	}
 }

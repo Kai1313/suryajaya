@@ -791,6 +791,11 @@
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
+                  <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                </div>
+              </div>
+              <div class="col-md-1 col-xs-1">
+                <div class="form-group">
                   <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
                 </div>
               </div>
@@ -1308,6 +1313,7 @@
           $('[name="uang_solar"]').val(data.uang_solar);
           $('[name="nama_pom"]').val(data.nama_pom);
           $('[name="tgl_solar"]').val(data.tgl_solar);
+          $('[name="sub_bonall"]').val(data.sub_bonall);
           //Berangkat
           $('[name="tgl_muat"]').val(data.tgl_muat);
           $('[name="tgl_bongkar"]').val(data.tgl_bongkar);
@@ -1488,5 +1494,14 @@
       {
         $('.beratSts').text('Kg');
       }
+    }
+    function printDt()
+    {
+      key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'';
+      window.open ( "<?= site_url('Crud/printKasBonKantor/')?>"+key,'_blank');
+    }
+    function reportDt()
+    {
+      window.open ( "<?= site_url('Crud/reportKasBonKantor')?>",'_blank');
     }
   </script>
