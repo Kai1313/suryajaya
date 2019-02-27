@@ -65,9 +65,36 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/report/ReportKuitansi','rptKui');
 		$this->load->model('Datatables/report/ReportKasBonSopir','rptKasBonSopir');
 		$this->load->model('Datatables/report/ReportKasBonKantor','rptKasBonKantor');
+		$this->load->model('Datatables/report/ReportPelunasanPiutang','rptLunas');
 	}
 
 	//Data Report Transaksi
+	public function rptPelunasanPiutang()
+	{
+		$list = $this->rptLunas->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_lunas));
+			$row[] = $dat->no_lunas;
+			$row[] = $dat->nama_customer;
+			$row[] = $dat->no_tagihan;
+			$row[] = $dat->no_bon;
+			$row[] = number_format($dat->jumlah,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptLunas->count_all(),
+				"recordsFiltered" => $this->rptLunas->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function rptKasBonKantor()
 	{
 		$list = $this->rptKasBonKantor->get_datatables();

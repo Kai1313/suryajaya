@@ -125,6 +125,11 @@
               </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
+                  <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                </div>
+              </div>
+              <div class="col-md-1 col-xs-1">
+                <div class="form-group">
                   <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
                 </div>
               </div>
@@ -463,5 +468,9 @@
     {
       key = ($('[name="no_lunas"]').val()!='')?$('[name="no_lunas"]').val():'';
       window.open ( "<?= site_url('Crud/printLunas/')?>"+key,'_blank');
+    }
+    function reportDt()
+    {
+      window.open ( "<?= site_url('Crud/reportLunas')?>",'_blank');
     }
   </script>

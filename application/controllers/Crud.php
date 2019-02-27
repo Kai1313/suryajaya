@@ -1501,6 +1501,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_pelunasan',$data);
 	}
 
+	public function reportLunas()
+	{
+		$this->load->view('menu/lap_pelunasan_piutang');
+	}
+
 	//Transaksi Pemakaian Barang/Spare Part
 	public function addPakaiBarang()
 	{
@@ -2871,6 +2876,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function printBayarUpahKaryawan($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_upah',$data);
+	}
+
 	public function reportBayarUpahKaryawan()
 	{
 		$this->load->view('menu/lap_upah_karyawan');
@@ -3670,6 +3681,13 @@ class Crud extends CI_Controller
 		$data['a'] = $this->db->join('master_customer b','b.kode_customer = a.kode_customer')->join('master_rekening c','c.kode_rekening = a.kode_rekening')->get_where('trx_kuitansi a',array('a.no_kuitansi'=>$key))->row();
 		$data['b'] = $this->db->select('SUM(a.nom_pembayaran) as subtotal')->join('trx_kuitansi b','b.no_kuitansi = a.no_kuitansi')->get_where('trx_kuitansi_det a',array('a.no_kuitansi'=>$key))->row();
 		$data['c'] = $this->number_conv($data['b']->subtotal);
+		echo json_encode($data);
+	}
+
+	public function getPrintUpah($key)
+	{
+		$data['a'] = $this->db->join('master_karyawan b','b.kode_karyawan = a.kode_karyawan')->get_where('trx_bayar_upah_karyawan a',array('a.no_kuitansi'=>$key))->row();
+		$data['b'] = $this->number_conv($data['a']->grand_total);
 		echo json_encode($data);
 	}
 
