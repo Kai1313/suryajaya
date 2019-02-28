@@ -2609,6 +2609,11 @@ class Crud extends CI_Controller
 		$this->load->view('menu/print_input_kas',$data);
 	}
 
+	public function reportKas()
+	{
+		$this->load->view('menu/lap_input_kas');
+	}
+
 	//Transaksi Input Bon Sopir
 	public function saveBonSopir()
 	{
@@ -3093,6 +3098,12 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function printKasBonSopir($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_kas_bon_sopir',$data);
 	}
 
 	public function reportKasBonSopir()

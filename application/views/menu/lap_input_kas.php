@@ -66,7 +66,7 @@
       margin-top: 0;
       margin-bottom: 0;
     }
-    .table thead th
+    /*.table thead th
     {
       margin: 0 !important;
       padding-top: 0 !important;
@@ -99,7 +99,7 @@
       height: 25px !important;
       background-color: #FFFFFF;
       border: none;
-    }
+    }*/
     .printing .loc-info .loc-notice
     {
       margin-top: 0;
@@ -135,15 +135,27 @@
         display: none;
       }
     }
-    </style>
+  </style>
   <body>
     <div class="container hidden-print">
       <div class="row">
         <div class="col-sm-2 col-xs-3">
-          <button class="btn btn-block btn-primary" type="button" onclick="printDiv()">Print</button>
+          <label>Tanggal Awal</label>
+          <div class="input-group date">
+            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+            <input type="text" name="tgl_awal" class="form-control pull-right" id="tgl_awal" placeholder="dd/mm/yyyy">
+          </div>
         </div>
         <div class="col-sm-2 col-xs-3">
-          <button class="btn btn-block btn-success addBtn" type="button">Tambah Kolom</button>
+          <label>Tanggal Akhir</label>
+          <div class="input-group date">
+            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+            <input type="text" name="tgl_akhir" class="form-control pull-right" id="tgl_akhir" placeholder="dd/mm/yyyy">
+          </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+          <label>&nbsp;</label>
+          <button type="button" class="btn btn-block btn-primary" onclick="reloadTb()">Filter</button>
         </div>
       </div>
     </div>
@@ -177,35 +189,17 @@
         </div>
         <div class="row">
           <div class="col-sm-12 col-xs-12 table-responsive">
-            <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
+            <table id="rptInputKas" class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
               <thead>
                 <tr>
-                  <th class="text-center col-xs-1 col-sm-1">No Bon</th>
-                  <th class="text-center col-xs-1 col-sm-1">Nopol</th>
-                  <th class="text-center col-xs-1 col-sm-1">Tgl Muat</th>
-                  <th class="text-center col-xs-1 col-sm-1">Tgl Bongkar</th>
-                  <th class="text-center col-xs-1 col-sm-1">Surat Jalan</th>
-                  <th class="text-center col-xs-1 col-sm-1">Jenis Muatan</th>
-                  <th class="text-center col-xs-2 col-sm-2">Berat</th>
-                  <th class="text-center col-xs-2 col-sm-2">Ongkos</th>
-                  <th class="text-center col-xs-2 col-sm-2">Jumlah</th>
+                  <th class="text-center col-xs-1 col-sm-1">Tanggal</th>
+                  <th class="text-center col-xs-3 col-sm-3">No Kas</th>
+                  <th class="text-center col-xs-3 col-sm-4">Keterangan</th>
+                  <th class="text-center col-xs-3 col-sm-2">Debet</th>
+                  <th class="text-center col-xs-2 col-sm-2">Kredit</th>
                 </tr>
               </thead>
               <tbody id="tb_content"></tbody>
-              <tfoot>
-                <tr>
-                  <th colspan="8" class="text-right">TOTAL</th>
-                  <th class="text-right chgnum"><span name="printing_total"></span></th>
-                </tr>
-                <tr>
-                  <th colspan="9" class="notice-row">
-                    <div class="row">
-                      <div class="col-sm-2 col-xs-2">TERBILANG<br>KETERANGAN</div>
-                      <div class="col-sm-9 col-xs-9"><span name="printing_spelled"></span><br><span name="printing_info"></span></div>
-                    </div>
-                  </th>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>
@@ -235,66 +229,61 @@
   <script>
     $(function ()
     {
-      key = '<?= $key ;?>';
-      fetchData(key);
+      fetchData();
+      $('#tgl_awal').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+      });
+      $('#tgl_akhir').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+      });
     })
-    function newTagihan()
+    function fetchData()
     {
-      $.ajax({
-        type: 'GET',
-        url: '<?= site_url('Crud/gen_noTagihan')?>',
-        dataType: 'JSON',
-        success: function(data)
-        {
-          $('[name="no_tagihan"]').val(data.no_tagihan);
-          $('#newBtn').prop('disabled',true);
-        }
+      table = $('#rptInputKas').DataTable({
+        "info": false,
+        "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "paging": false,
+        "order": [],
+        "ajax": {
+          "url": "<?php echo site_url('Datatables/rptInputKas')?>",
+          "type": "POST",
+          "data": function(data)
+            {
+              data.tgl_awal = $('[name="tgl_awal"]').val();
+              data.tgl_akhir = $('[name="tgl_akhir"]').val();
+            },
+          },
+        "columnDefs": [
+          { 
+            "targets": [ 0 ],
+            "orderable": false,
+          },
+          {
+            "className": "text-center", "targets": ['_all']
+          }
+        ],
+        "dom": 'Bfrtip',
+          "buttons": 
+          {
+            "dom": 
+            {
+              "button": 
+              {
+                "tag": 'button',
+                "className": 'btn btn-sm btn-info'
+              }
+            },
+            "buttons": ['excelHtml5','print']
+          }
       });
     }
-    function fetchData(key)
+    function reloadTb()
     {
-      $.ajax({
-        url : "<?php echo site_url('Crud/getPrintTagihan/')?>"+key,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-          $('[name="to_name"]').text(data['a'].nama_customer);
-          $('[name="to_phone"]').text(data['a'].tlp_customer);
-          $('[name="to_address"]').text(data['a'].alamat_customer+', '+data['a'].kota_customer);
-          $('[name="data_code"]').text(data['a'].no_tagihan);
-          $('[name="data_date"]').text(data['a'].tgl_tagihan);
-          $('[name="printing_total"]').text(data['c'].subtotal);
-          var blankrow = 7-data['b'].length;
-          for (var i = 0; i < data['b'].length; i++)
-          {
-            var $tr = $('<tr>').append(
-              $('<td class="text-center">'+data['b'][i]["no_bon"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["nopol"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["tgl_muat"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["tgl_bongkar"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["surat_jalan"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["jenis_muatan"]+'</td>'),
-              $('<td class="text-center chgnum">'+data['b'][i]["berat_muatan"]+'</td>'),
-              $('<td class="text-center chgnum">'+parseFloat(data['b'][i]["ongkos_bruto"])/parseFloat(data['b'][i]["berat_muatan"])+'</td>'),
-              $('<td class="text-right chgnum">'+data['b'][i]["ongkos_bruto"]+'</td>')
-              ).appendTo('#tb_content');
-          }
-          for (var j = 0; j < blankrow; j++)
-          {
-            var $tr = $('<tr>').append(
-              $('<td class="blank-row"></td>'),
-              $('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
-              ).appendTo('#tb_content');
-          }
-          $('td.chgnum').number(true,2);
-          $('th.chgnum').number(true,2);
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-          alert('Error get data from ajax');
-        }
-      });
+      table.ajax.reload(null,false);
     }
     function printDiv()
     {
