@@ -293,7 +293,7 @@
     function fetchData(key)
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getPrintKasBonSopir/')?>"+key,
+        url : "<?php echo site_url('Crud/getPrintKasBonKantor/')?>"+key,
         type: "GET",
         dataType: "JSON",
         success: function(data)

@@ -3259,6 +3259,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function printKasBonKantor($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_kas_bon_kantor',$data);
+	}
+
 	public function reportKasBonKantor()
 	{
 		$this->load->view('menu/lap_kas_bon_kantor');
@@ -3595,6 +3601,18 @@ class Crud extends CI_Controller
 		$data['a'] = $this->db->join('master_customer b','b.kode_customer = a.kode_customer')->get_where('trx_tagihan a',array('a.no_tagihan'=>$key))->row();
 		$data['b'] = $this->db->get_where('trx_tagihan_det',array('no_tagihan'=>$key))->result();
 		$data['c'] = $this->db->select('SUM(a.ongkos_bruto) as subtotal')->join('trx_tagihan b','b.no_tagihan = a.no_tagihan')->get_where('trx_tagihan_det a',array('a.no_tagihan'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintKasBonSopir($key)
+	{
+		$data['a'] = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->join('master_driver c','c.kode_driver = a.kode_sopir')->join('master_driver d','d.kode_driver = a.kode_kernet')->select('a.*,b.*,c.nama_driver as sopir,d.nama_driver as kernet')->get_where('trx_kas_bon_sopir a',array('no_bon'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getPrintKasBonKantor($key)
+	{
+		$data['a'] = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->join('master_driver c','c.kode_driver = a.kode_sopir')->join('master_driver d','d.kode_driver = a.kode_kernet')->select('a.*,b.*,c.nama_driver as sopir,d.nama_driver as kernet')->get_where('trx_kas_bon_kantor a',array('no_bon'=>$key))->row();
 		echo json_encode($data);
 	}
 
