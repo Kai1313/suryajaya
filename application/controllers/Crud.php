@@ -371,6 +371,24 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noKatalog()
+	{
+		$res = $this->gen_num_('trx_katalog','no_katalog','KT');
+		$check = $this->db->get_where('trx_katalog',array('no_katalog'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_katalog','no_katalog','KT');
+		}
+		$crt = array(
+			'no_katalog'=>$res,
+			'tgl_katalog'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_katalog',$crt);
+		$data['no_katalog'] = $res;
+		echo json_encode($data);
+	}
+
 	//CRUD Master Rekening
 	public function addRekening()
 	{
@@ -898,6 +916,7 @@ class Crud extends CI_Controller
 		$data = $this->db->join('trx_tagihan b','b.no_tagihan = a.no_tagihan')->get_where('trx_tagihan_det a',array('b.data_sts'=>'1'))->result();
 		echo json_encode($data);
 	}
+
 
 	//Pick Data From Dropdown
 	public function pickDropSupplier($key)

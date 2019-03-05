@@ -28,6 +28,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/details/DetTagihan','detTgh');
 		$this->load->model('Datatables/details/DetKuitansi','detKui');
 		$this->load->model('Datatables/details/DetPelunasan','detLns');
+		$this->load->model('Datatables/details/DetKatalog','detKtl');
 
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
@@ -48,6 +49,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarTagihan','listTgh');
 		$this->load->model('Datatables/search/SearchDaftarKuitansi','listKui');
 		$this->load->model('Datatables/search/SearchDaftarPelunasan','listLns');
+		$this->load->model('Datatables/search/SearchDaftarKatalog','listKtl');
 
 		$this->load->model('Datatables/report/ReportBeliBarang','rptBeliBrg');
 		$this->load->model('Datatables/report/ReportPakaiBarang','rptPakaiBrg');
@@ -614,6 +616,33 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Cari Transaksi
+	public function listKatalog()
+	{
+		$list = $this->listKtl->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_katalog;
+			$row[] = $dat->tgl_katalog;
+			$row[] = $dat->nopol.' - '.$dat->tipe_kendaraan.' - '.$dat->jenis_kendaraan;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihKatalog('."'".$dat->no_katalog."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listKtl->count_all(),
+				"recordsFiltered" => $this->listKtl->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}	
+
 	public function listLunas()
 	{
 		$list = $this->listLns->get_datatables();
@@ -1129,6 +1158,30 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Detail Transaksi
+	public function detKatalog($key)
+	{
+		$list = $this->detKtl->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->ket_det;
+			$row[] = number_format($dat->qty_det,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detKtl->count_all(),
+				"recordsFiltered" => $this->detKtl->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function detLunas($key)
 	{
 		$list = $this->detLns->get_datatables($key);
