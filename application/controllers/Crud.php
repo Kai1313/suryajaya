@@ -1526,6 +1526,142 @@ class Crud extends CI_Controller
 	}
 
 	//Transaksi Pemakaian Barang/Spare Part
+	public function addKatalog1()
+	{
+		$ins = array(
+			'no_katalog'=>$this->input->post('no_katalog'),
+			'ket_det'=>$this->input->post('kode_barang'),
+			'qty_det'=>$this->input->post('qty_barang')
+		);
+		$this->db->insert('trx_katalog_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Katalog Kendaraan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Katalog Kendaraan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function addKatalog2()
+	{
+		$ins = array(
+			'no_katalog'=>$this->input->post('no_katalog'),
+			'ket_det'=>$this->input->post('kode_ban'),
+			'qty_det'=>$this->input->post('qty_ban')
+		);
+		$this->db->insert('trx_katalog_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Katalog Kendaraan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Katalog Kendaraan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function rmvKatalog($key)
+	{
+		$this->db->delete('trx_katalog_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Katalog Kendaraan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Katalog Kendaraan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveKatalog()
+	{
+		$getSts = $this->db->get_where('trx_katalog',array('no_katalog'=>$this->input->post('no_katalog')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'tgl_katalog'=>$this->dateFix_($this->input->post('tgl_katalog')),
+				'kode_kendaraan'=>$this->input->post('nopol'),
+				'kode_sopir'=>$this->input->post('sopir_kendaraan'),
+				'kode_kernet'=>$this->input->post('kernet_kendaraan'),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_katalog',$upd,array('no_katalog'=>$this->input->post('no_katalog')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Katalog Kendaraan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Katalog Kendaraan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelKatalog()
+	{
+		$getSts = $this->db->get_where('trx_katalog',array('no_katalog'=>$this->input->post('no_katalog')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_katalog',$can,array('no_katalog'=>$this->input->post('no_katalog')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Katalog Kendaraan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Katalog Kendaraan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function printKatalog($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_katalog_kendaraan',$data);
+	}
+
+	public function reportKatalog()
+	{
+		$this->load->view('menu/lap_katalog_kendaraan');
+	}
+
+	//Transaksi Pemakaian Barang/Spare Part
 	public function addPakaiBarang()
 	{
 		$ins = array(
@@ -3500,6 +3636,12 @@ class Crud extends CI_Controller
 	}
 	
 	//Get Data Pencarian
+	public function getKatalog($key)
+	{
+		$data = $this->db->get_where('trx_katalog',array('no_katalog'=>$key))->row();
+		echo json_encode($data);
+	}
+
 	public function getBeliBrg($key)
 	{
 		$data = $this->db->get_where('trx_beli_barang',array('no_nota'=>$key))->row();
@@ -3736,6 +3878,13 @@ class Crud extends CI_Controller
 	{
 		$data['a'] = $this->db->join('master_karyawan b','b.kode_karyawan = a.kode_karyawan')->get_where('trx_bayar_upah_karyawan a',array('a.no_kuitansi'=>$key))->row();
 		$data['b'] = $this->number_conv($data['a']->grand_total);
+		echo json_encode($data);
+	}
+
+	public function getPrintKatalog($key)
+	{
+		$data['a'] = $this->db->select('a.tgl_katalog, a.no_katalog, c.nopol, d.nama_driver as sopir, e.nama_driver as kernet')->join('master_kendaraan c','c.kode_kendaraan = a.kode_kendaraan')->join('master_driver d','d.kode_driver = a.kode_sopir')->join('master_driver e','e.kode_driver = a.kode_kernet')->get_where('trx_katalog a',array('a.no_katalog'=>$key))->row();
+		$data['b'] = $this->db->get_where('trx_katalog_det a',array('a.no_katalog'=>$key))->result();
 		echo json_encode($data);
 	}
 

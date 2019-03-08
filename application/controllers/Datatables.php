@@ -69,6 +69,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/report/ReportKasBonKantor','rptKasBonKantor');
 		$this->load->model('Datatables/report/ReportPelunasanPiutang','rptLunas');
 		$this->load->model('Datatables/report/ReportInputKas','rptKas');
+		$this->load->model('Datatables/report/ReportKatalog','rptKtl');
 	}
 
 	//Data Report Transaksi
@@ -557,6 +558,32 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->rptBeliBan->count_all(),
 				"recordsFiltered" => $this->rptBeliBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}	
+
+	public function rptKatalog()
+	{
+		$list = $this->rptKtl->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_katalog));
+			$row[] = $dat->nopol.' - '.$dat->tipe_kendaraan.' - '.$dat->jenis_kendaraan;
+			$row[] = $dat->nama_sopir;
+			$row[] = $dat->nama_kernet;
+			$row[] = $dat->ket_det;
+			$row[] = number_format($dat->qty_det,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptKtl->count_all(),
+				"recordsFiltered" => $this->rptKtl->count_filtered(),
 				"data" => $data,
 			);
 		echo json_encode($output);

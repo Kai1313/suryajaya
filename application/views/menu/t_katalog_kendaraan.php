@@ -139,11 +139,6 @@
         <div class="col-md-12 col-xs-12">
           <div class="box">
             <div class="box-body">
-              <div class="col-md-2 col-xs-2">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="tempsaveDt()">Simpan Sementara</button>
-                </div>
-              </div>
               <div class="col-md-1 col-xs-1">
                 <div class="form-group">
                   <button type="button" class="btn btn-md btn-primary" onclick="saveDt()">Simpan</button>
@@ -214,7 +209,7 @@
     {
       key = ($('[name="no_katalog"]').val()!='')?$('[name="no_katalog"]').val():'0';
       tbDetKatalog(key);
-      $('#tgl_pemakaian').datepicker({
+      $('#tgl_katalog').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
       });
@@ -342,7 +337,7 @@
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_barang']
+            option.value = data[i]['nama_barang'];
             option.text = data[i]['kode_barang']+' - '+data[i]['nama_barang'];
             select.add(option);
           }
@@ -367,7 +362,7 @@
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_ban']
+            option.value = data[i]['nama_ban']+' - '+data[i]['merk_ban'];
             option.text = data[i]['nama_ban']+' - '+data[i]['merk_ban'];
             select.add(option);
           }
@@ -405,12 +400,12 @@
     }
     function addBrg()
     {
-      key = ($('[name="no_pemakaian"]').val()!='')?$('[name="no_pemakaian"]').val():'';
+      key = ($('[name="no_katalog"]').val()!='')?$('[name="no_katalog"]').val():'';
       if(key!='')
       {
         $.ajax({
           type: 'POST',
-          url: '<?= site_url('Crud/addPakaiBarang')?>',
+          url: '<?= site_url('Crud/addKatalog1')?>',
           data: $('form').serialize(),
           dataType: 'JSON',
           success: function(data)
@@ -418,9 +413,9 @@
             if(data.status)
             {
               msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-              $('#form-detail-pemakaian')[0].reset();
+              $('#form-detail-spare')[0].reset();
               $('#dropBarang').select2({placeholder: 'Select an option'});
-              tbDetPakai(key);
+              tbDetKatalog(key);
             }
             else
             {
@@ -436,12 +431,12 @@
     }
     function addBan()
     {
-      key = ($('[name="no_pemakaian"]').val()!='')?$('[name="no_pemakaian"]').val():'';
+      key = ($('[name="no_katalog"]').val()!='')?$('[name="no_katalog"]').val():'';
       if(key!='')
       {
         $.ajax({
           type: 'POST',
-          url: '<?= site_url('Crud/addPakaiBarang')?>',
+          url: '<?= site_url('Crud/addKatalog2')?>',
           data: $('form').serialize(),
           dataType: 'JSON',
           success: function(data)
@@ -449,9 +444,9 @@
             if(data.status)
             {
               msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-              $('#form-detail-pemakaian')[0].reset();
+              $('#form-detail-ban')[0].reset();
               $('#dropBarang').select2({placeholder: 'Select an option'});
-              tbDetPakai(key);
+              tbDetKatalog(key);
             }
             else
             {
@@ -570,16 +565,13 @@
         dataType: 'JSON',
         success: function(data)
         {
-          key = data.no_pakai_brg;
-          $('[name="no_pemakaian"]').val(data.no_pakai_brg);
-          $('[name="tgl_pemakaian"]').val(moment(data.tgl_pakai_brg).format('DD/MM/YYYY'));
-          $('[name="ket_pemakaian"]').val(data.ket_pakai_brg);
+          key = data.no_katalog;
+          $('[name="no_katalog"]').val(data.no_katalog);
+          $('[name="tgl_katalog"]').val(moment(data.tgl_katalog).format('DD/MM/YYYY'));
           $('#dropNopol').val(data.kode_kendaraan).trigger('change');
-          $('#dropKaryawan').val(data.kode_karyawan).trigger('change');
-          $('#dropKendaraan').val(data.kode_kendaraan).trigger('change');
           $('#dropSopir').val(data.kode_sopir).trigger('change');
           $('#dropKernet').val(data.kode_kernet).trigger('change');
-          tbDetPakai(key);
+          tbDetKatalog(key);
           $('#newBtn').prop('disabled',true);
           $('#modal-edit').modal('hide');
         }

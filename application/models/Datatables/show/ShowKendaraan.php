@@ -4,7 +4,7 @@
 	{
 		var $table = 'master_kendaraan a';
 		var $column_order = array(null,'a.nopol','a.tipe_kendaraan','a.jenis_kendaraan','a.warna_kendaraan','nama_sopir','nama_kernet',null);
-		var $column_search = array('a.nopol','a.tipe_kendaraan','a.jenis_kendaraan','a.warna_kendaraan','nama_sopir','nama_kernet');
+		var $column_search = array('a.nopol','a.tipe_kendaraan','a.jenis_kendaraan','a.warna_kendaraan','b.nama_driver','c.nama_driver');
 		var $order = array('a.nopol' => 'asc'); 
 		public function __construct()
 		{
@@ -14,8 +14,8 @@
 		{
 			$this->db->select('a.*,b.nama_driver as nama_sopir,c.nama_driver as nama_kernet');
 			$this->db->from($this->table);
-			$this->db->join('master_driver b','b.kode_driver = a.sopir_kendaraan');
-			$this->db->join('master_driver c','c.kode_driver = a.kernet_kendaraan');
+			$this->db->join('master_driver b','b.kode_driver = a.sopir_kendaraan','left');
+			$this->db->join('master_driver c','c.kode_driver = a.kernet_kendaraan','left');
 			$this->db->where('a.data_sts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
