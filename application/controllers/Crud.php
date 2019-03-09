@@ -740,6 +740,14 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function delKaryawan($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_karyawan',$upd,array('kode_karyawan'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
 	public function getKaryawan($key)
 	{
 		$data = $this->db->get_where('master_karyawan', array('kode_karyawan'=>$key))->row();
@@ -792,6 +800,14 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function delKendaraan($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_kendaraan',$upd,array('kode_kendaraan'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
 	public function getKendaraan($key)
 	{
 		$data = $this->db->get_where('master_kendaraan', array('kode_kendaraan'=>$key))->row();
@@ -828,6 +844,14 @@ class Crud extends CI_Controller
 			'data_sts'=>'1'
 		);
 		$this->db->update('master_ban',$upd,array('kode_ban'=>$this->input->post('kode_ban')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function delBan($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_ban',$upd,array('kode_ban'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		echo json_encode($data);
 	}
