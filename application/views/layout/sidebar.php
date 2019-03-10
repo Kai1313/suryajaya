@@ -77,14 +77,15 @@
             <li class="<?php if($this->uri->segment(1)=='transaksi-pembayaran-bon-klaim-sopir'){echo 'active';}?>"><a href="<?= base_url('transaksi-pembayaran-bon-klaim-sopir')?>">Pembayaran Bon/Klaim</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview <?php $arr=array('stok-ban','stok-spare-part'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
           <a href="#"><i class="fa fa-cubes"></i> <span>Stock</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Ban</a></li>
+            <li <?php if($this->uri->segment(1)=='stok-ban'){echo 'active';}?>><a href="<?= base_url('stok-ban')?>">Ban</a></li>
+            <li <?php if($this->uri->segment(1)=='stok-spare-part'){echo 'active';}?>><a href="<?= base_url('stok-spare-part')?>">Barang</a></li>
           </ul>
         </li>
         <li class="treeview <?php $arr=array('laporan-master-barang','laporan-master-customer','laporan-master-kendaraan','laporan-master-karyawan','laporan-master-driver','laporan-master-biaya-driver','laporan-master-tujuan','laporan-master-supplier','laporan-master-ban'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">

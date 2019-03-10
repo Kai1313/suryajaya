@@ -287,4 +287,19 @@ class Paging extends CI_Controller
 		$data['content']='menu/lap_master_ban';
 		$this->load->view('layout/wrapper',$data);
 	}
+
+	//Stok
+	public function stok_ban()
+	{
+		$data['page_header']='Stok Ban';
+		$data['content']='menu/stok_ban';
+		$this->load->view('layout/wrapper',$data);
+	}
+
+	public function stok_spare_part()
+	{
+		$data['page_header']='Stok Spare Part';
+		$data['content']='menu/stok_spare_part';
+		$this->load->view('layout/wrapper',$data);
+	}
 }

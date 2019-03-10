@@ -92,3 +92,5 @@ $route['laporan-master-biaya-sopir'] = 'Paging/lap_master_biaya_sopir';
 $route['laporan-master-tujuan'] = 'Paging/lap_master_tujuan';
 $route['laporan-master-ban'] = 'Paging/lap_master_ban';
 $route['laporan-master-supplier'] = 'Paging/lap_master_supplier';
+$route['stok-ban'] = 'Paging/stok_ban';
+$route['stok-spare-part'] = 'Paging/stok_spare_part';

@@ -69,55 +69,55 @@
                       <label>Masuk Kerja</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="hari_kerja" id="hari_kerja" class="form-control chgcount num">
+                        <input type="text" name="hari_kerja" id="hari_kerja" class="form-control chgcount num" value="0">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Bonus Harian</label>
-                      <input type="text" name="bonus_harian" class="form-control chgcount num">
+                      <input type="text" name="bonus_harian" class="form-control chgcount num" value="0" readonly>
                     </div>
                     <div class="form-group">
                       <label>Uang Makan</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_makan" id="uang_makan" class="form-control chgcount num">
+                        <input type="text" name="uang_makan" id="uang_makan" class="form-control chgcount num" value="0">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Uang Lembur</label>
                       <div class="input-group">
                         <span class="input-group-addon">Jam</span>
-                        <input type="text" name="uang_lembur" id="uang_lembur" class="form-control chgcount num">
+                        <input type="text" name="uang_lembur" id="uang_lembur" class="form-control chgcount num" value="0">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Hari Minggu</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_minggu" id="uang_minggu" class="form-control chgcount num">
+                        <input type="text" name="uang_minggu" id="uang_minggu" class="form-control chgcount num" value="0">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Hari Besar</label>
                       <div class="input-group">
                         <span class="input-group-addon">Hari</span>
-                        <input type="text" name="uang_haribesar" id="uang_haribesar" class="form-control chgcount num">
+                        <input type="text" name="uang_haribesar" id="uang_haribesar" class="form-control chgcount num" value="0">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Gaji Bulanan</label>
                       <div class="input-group">
                         <span class="input-group-addon">Bulan</span>
-                        <input type="text" name="uang_bulanan" id="uang_bulanan" class="form-control chgcount num">
+                        <input type="text" name="uang_bulanan" id="uang_bulanan" class="form-control chgcount num" value="0">
                       </div>
                     </div>
                     <div class="form-group">
                       <label>Bonus Bulanan</label>
-                      <input type="text" name="bonus_bulanan" class="form-control chgcount num">
+                      <input type="text" name="bonus_bulanan" class="form-control chgcount num" value="0" readonly>
                     </div>
                     <div class="form-group">
                       <label>Lain-Lain</label>
-                      <input type="text" name="uang_lain" class="form-control chgcount num">
+                      <input type="text" name="uang_lain" class="form-control chgcount num" value="0">
                     </div>
                     <div class="form-group">
                       <label>Minimum Lembur</label>
@@ -208,7 +208,7 @@
                     </div>
                     <div class="form-group">
                       <label>Potong Bon</label>
-                      <input type="text" name="sub_bon" class="form-control chgcount num">
+                      <input type="text" name="sub_bon" class="form-control chgcount num" value="0">
                     </div>
                     <div class="form-group">
                       <label>Grand Total</label>
@@ -471,6 +471,7 @@
     }
     function hitung_()
     {
+      checkBonus();
       subHarian = parseFloat($('[name="hari_kerja"]').val())*parseFloat($('[name="upah_harian"]').val());
       $('[name="sub_harian"]').val(subHarian);
       subBonusHarian = parseFloat($('[name="bonus_harian"]').val());
@@ -501,6 +502,25 @@
       {
         hitung_();
       });
+    }
+    function checkBonus()
+    {
+      if(parseFloat($('[name="hari_kerja"]').val())<6)
+      {
+        $('[name="bonus_harian"]').prop('readonly',true);
+      }
+      else
+      {
+        $('[name="bonus_harian"]').prop('readonly',false);
+      }
+      if(parseFloat($('[name="uang_bulanan"]').val())>0)
+      {
+        $('[name="bonus_bulanan"]').prop('readonly',false);
+      }
+      else
+      {
+        $('[name="bonus_bulanan"]').prop('readonly',true);
+      }
     }
     function printDt()
     {

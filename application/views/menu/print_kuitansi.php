@@ -172,6 +172,7 @@
             <div>Kepada :</div>
             <div class="to-name" name="customer"></div>
             <div class="to-phone" name="keterangan"></div>
+            <div class="to-phone" name="rekening"></div>
             <h3>Jumlah <span name="jml_nom" class="chgnum"></span></h3>
             <h3><span name="terbilang"></span></h3>
           </div>
@@ -219,6 +220,7 @@
         {
           $('[name="customer"]').text('Nama '+data['a'].nama_customer);
           $('[name="keterangan"]').text('Keterangan '+data['a'].ket_kuitansi);
+          $('[name="keterangan"]').text('Telah Diterima Pada Rekening '+data['a'].nama_bank+' No. Rek '+data['a'].no_rekening+' Uang Dengan Jumlah');
           $('[name="jml_nom"]').text('Jumlah '+data['b'].subtotal);
           $('[name="data_code"]').text(data['a'].no_kuitansi);
           $('[name="data_date"]').text(data['a'].tgl_kuitansi);
