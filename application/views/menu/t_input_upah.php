@@ -508,6 +508,7 @@
       if(parseFloat($('[name="hari_kerja"]').val())<6)
       {
         $('[name="bonus_harian"]').prop('readonly',true);
+        $('[name="bonus_harian"]').val('0');
       }
       else
       {
@@ -520,6 +521,7 @@
       else
       {
         $('[name="bonus_bulanan"]').prop('readonly',true);
+        $('[name="bonus_bulanan"]').val('0');
       }
     }
     function printDt()

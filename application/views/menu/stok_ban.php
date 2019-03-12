@@ -18,7 +18,7 @@
         <div class="col-md-12 col-xs-12">
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Form Stok Spare Part</h3>
+              <h3 class="box-title">Form Stok Ban</h3>
             </div>
             <form role="form" id="form-master-pembelian">
               <input type="hidden" name="tipe_form" value="">

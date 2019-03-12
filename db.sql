@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `master_barang` (
 -- Dumping data for table suryajaya.master_barang: ~6 rows (approximately)
 /*!40000 ALTER TABLE `master_barang` DISABLE KEYS */;
 INSERT INTO `master_barang` (`kode_barang`, `nama_barang`, `part_number`, `nama_satuan`, `min_qty`, `qty_perset`, `no_rak`, `stok_barang`, `data_sts`, `updated_at`, `created_at`) VALUES
-	('BRG0001', 'Barang A', '123456', 'Pcs', 1.00, 4.00, '1A', 4.00, '1', '2018-12-16 05:16:38', '2018-12-16 05:16:38'),
+	('BRG0001', 'Barang A', '123456', 'Pcs', 1.00, 4.00, '1A', 7.00, '1', '2018-12-16 05:16:38', '2018-12-16 05:16:38'),
 	('BRG0002', 'Barang B', '987652', 'Pcs', 1.00, 6.00, '1B', 15.00, '1', NULL, NULL),
 	('BRG0003', 'Barang C', '987652', 'Pcs', 1.00, 6.00, '1B', 6.00, '1', NULL, NULL),
 	('BRG0004', 'Barang D', '987652', 'Pcs', 1.00, 6.00, '1D', 0.00, '1', NULL, NULL),
@@ -171,13 +171,14 @@ CREATE TABLE IF NOT EXISTS `master_kendaraan` (
   `cc_kendaraan` char(100) DEFAULT NULL,
   `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`kode_kendaraan`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.master_kendaraan: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_kendaraan` DISABLE KEYS */;
 INSERT INTO `master_kendaraan` (`kode_kendaraan`, `nopol`, `sopir_kendaraan`, `kernet_kendaraan`, `no_mesin`, `no_rangka`, `tipe_kendaraan`, `jenis_kendaraan`, `nama_pemilik`, `thn_pembuatan`, `no_bpkb`, `warna_kendaraan`, `masa_stnk`, `cc_kendaraan`, `data_sts`) VALUES
-	(1, 'P3251ZS', 'DRV0001', 'DRV0002', '12831991', '10230301', 'Honda', 'Pick Up', 'Joko', '2000', '12023391', 'Hitam', '2020', '2500', '1'),
-	(2, 'B2345XS', 'DRV0001', 'DRV0002', '01010291', '29304813', 'Dino', 'Dump Truck', 'Kuri', '2012', '4944505', 'Kuning', '2020', '5000', '1');
+	(1, 'P3251ZS', 'DRV0001', 'DRV0002', '12831991', '10230301', 'Honda', 'Pick Up', 'Joko', '2000', '12023391', 'Hitam', '2020', '2500', '0'),
+	(2, 'B2345XS', 'DRV0001', 'DRV0002', '01010291', '29304813', 'Dino', 'Dump Truck', 'Kuri', '2012', '4944505', 'Kuning', '2020', '5000', '1'),
+	(3, 'B2345XX', 'DRV0001', 'DRV0002', '0987654', '0987654', 'Toyota', 'Pick Up', 'Joni', '2015', '098765', 'Hitam', '2019', '2000', '1');
 /*!40000 ALTER TABLE `master_kendaraan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_rekening
@@ -758,10 +759,11 @@ CREATE TABLE IF NOT EXISTS `trx_katalog` (
   CONSTRAINT `FK_trx_katalog_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_katalog: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_katalog: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_katalog` DISABLE KEYS */;
 INSERT INTO `trx_katalog` (`no_katalog`, `kode_kendaraan`, `kode_sopir`, `kode_kernet`, `tgl_katalog`, `data_sts`) VALUES
-	('KT1903-000001', NULL, NULL, NULL, '2019-03-05', '0');
+	('KT1903-000001', NULL, NULL, NULL, '2019-03-05', '0'),
+	('KT1903-000002', 3, 'DRV0001', 'DRV0002', '2019-03-07', '1');
 /*!40000 ALTER TABLE `trx_katalog` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_katalog_det
@@ -772,10 +774,13 @@ CREATE TABLE IF NOT EXISTS `trx_katalog_det` (
   `ket_det` varchar(1024) DEFAULT NULL,
   `qty_det` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`det_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_katalog_det: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_katalog_det: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_katalog_det` DISABLE KEYS */;
+INSERT INTO `trx_katalog_det` (`det_id`, `no_katalog`, `ket_det`, `qty_det`) VALUES
+	(1, 'KT1903-000002', 'Barang A', 5.00),
+	(3, 'KT1903-000002', 'Ban A - Dunlop', 5.00);
 /*!40000 ALTER TABLE `trx_katalog_det` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_kuitansi
@@ -860,6 +865,75 @@ CREATE TABLE IF NOT EXISTS `trx_lepas_ban_det` (
 INSERT INTO `trx_lepas_ban_det` (`det_id`, `no_pelepasan`, `kode_ban`, `qty_lepas`, `status_lepas`) VALUES
 	(1, 'LPS1902-000001', 'BAN0001', '1', '0');
 /*!40000 ALTER TABLE `trx_lepas_ban_det` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_opname_ban
+DROP TABLE IF EXISTS `trx_opname_ban`;
+CREATE TABLE IF NOT EXISTS `trx_opname_ban` (
+  `no_opname` char(20) NOT NULL,
+  `tgl_opname` date DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`no_opname`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_opname_ban: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_opname_ban` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_opname_ban` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_opname_ban_det
+DROP TABLE IF EXISTS `trx_opname_ban_det`;
+CREATE TABLE IF NOT EXISTS `trx_opname_ban_det` (
+  `det_id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_opname` char(20) DEFAULT NULL,
+  `kode_ban` char(10) DEFAULT NULL,
+  `sts_ban` char(1) DEFAULT NULL,
+  `qty_opname` decimal(10,2) DEFAULT NULL,
+  `qty_lama` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`det_id`),
+  KEY `FK_trx_opname_ban_det_trx_opname_ban` (`no_opname`),
+  KEY `FK_trx_opname_ban_det_master_ban` (`kode_ban`),
+  CONSTRAINT `FK_trx_opname_ban_det_master_ban` FOREIGN KEY (`kode_ban`) REFERENCES `master_ban` (`kode_ban`),
+  CONSTRAINT `FK_trx_opname_ban_det_trx_opname_ban` FOREIGN KEY (`no_opname`) REFERENCES `trx_opname_ban` (`no_opname`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_opname_ban_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_opname_ban_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_opname_ban_det` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_opname_barang
+DROP TABLE IF EXISTS `trx_opname_barang`;
+CREATE TABLE IF NOT EXISTS `trx_opname_barang` (
+  `no_opname` char(20) NOT NULL,
+  `tgl_opname` date DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`no_opname`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_opname_barang: ~1 rows (approximately)
+/*!40000 ALTER TABLE `trx_opname_barang` DISABLE KEYS */;
+INSERT INTO `trx_opname_barang` (`no_opname`, `tgl_opname`, `data_sts`) VALUES
+	('OSP1903-000001', '2019-03-12', '1');
+/*!40000 ALTER TABLE `trx_opname_barang` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_opname_barang_det
+DROP TABLE IF EXISTS `trx_opname_barang_det`;
+CREATE TABLE IF NOT EXISTS `trx_opname_barang_det` (
+  `det_id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_opname` char(20) DEFAULT '0',
+  `kode_barang` char(10) DEFAULT '0',
+  `qty_opname` decimal(10,2) DEFAULT '0.00',
+  `qty_lama` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`det_id`),
+  KEY `FK_trx_opname_barang_det_trx_opname_barang` (`no_opname`),
+  KEY `FK_trx_opname_barang_det_master_barang` (`kode_barang`),
+  CONSTRAINT `FK_trx_opname_barang_det_master_barang` FOREIGN KEY (`kode_barang`) REFERENCES `master_barang` (`kode_barang`),
+  CONSTRAINT `FK_trx_opname_barang_det_trx_opname_barang` FOREIGN KEY (`no_opname`) REFERENCES `trx_opname_barang` (`no_opname`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_opname_barang_det: ~1 rows (approximately)
+/*!40000 ALTER TABLE `trx_opname_barang_det` DISABLE KEYS */;
+INSERT INTO `trx_opname_barang_det` (`det_id`, `no_opname`, `kode_barang`, `qty_opname`, `qty_lama`) VALUES
+	(2, 'OSP1903-000001', 'BRG0001', 7.00, 4.00);
+/*!40000 ALTER TABLE `trx_opname_barang_det` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_pakai_barang
 DROP TABLE IF EXISTS `trx_pakai_barang`;
