@@ -60,10 +60,22 @@
                 <div class="row">
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
-                      <label>Kode Barang</label>
-                      <select class="form-control" name="kode_barang" id="dropBarang" style="width: 100%;">
-                        <option value="">Pilih Barang</option>
+                      <label>Kode Ban</label>
+                      <select class="form-control" name="kode_ban" id="dropBan" style="width: 100%;">
+                        <option value="">Pilih Ban</option>
                       </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Status Ban</label><br>
+                      <label>
+                        <input type="radio" name="status_lepas" value="0" checked> Bekas
+                      </label>
+                      <label>
+                        <input type="radio" name="status_lepas" value="1"> Vulkanisir
+                      </label>
+                      <label>
+                        <input type="radio" name="status_lepas" value="2"> Afkir/Buang
+                      </label>
                     </div>
                     <div class="form-group">
                       <label>Qty Opname</label>
