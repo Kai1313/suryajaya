@@ -30,6 +30,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/details/DetPelunasan','detLns');
 		$this->load->model('Datatables/details/DetKatalog','detKtl');
 		$this->load->model('Datatables/details/DetOpnameBarang','detOpnameBrg');
+		$this->load->model('Datatables/details/DetOpnameBan','detOpnameBan');
 
 		$this->load->model('Datatables/search/SearchDaftarPembelianBarang','listBeliBrg');
 		$this->load->model('Datatables/search/SearchDaftarPemakaianBarang','listPakaiBrg');
@@ -52,6 +53,7 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/search/SearchDaftarPelunasan','listLns');
 		$this->load->model('Datatables/search/SearchDaftarKatalog','listKtl');
 		$this->load->model('Datatables/search/SearchDaftarOpnameBarang','listOpnameBrg');
+		$this->load->model('Datatables/search/SearchDaftarOpnameBan','listOpnameBan');
 
 		$this->load->model('Datatables/report/ReportBeliBarang','rptBeliBrg');
 		$this->load->model('Datatables/report/ReportPakaiBarang','rptPakaiBrg');
@@ -645,6 +647,32 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Cari Transaksi
+	public function listOpnameBan()
+	{
+		$list = $this->listOpnameBan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$sts = ($dat->data_sts!='1')?'Void':'Posted';
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->no_opname;
+			$row[] = $dat->tgl_opname;
+			$row[] = $sts;
+			$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-primary btn-responsive" onclick="pilihOpnameBan('."'".$dat->no_opname."'".')"><span class="glyphicon glyphicon-ok"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->listOpnameBan->count_all(),
+				"recordsFiltered" => $this->listOpnameBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function listOpnameBarang()
 	{
 		$list = $this->listOpnameBrg->get_datatables();
@@ -1213,6 +1241,31 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Detail Transaksi
+	public function detOpnameBan($key)
+	{
+		$list = $this->detOpnameBan->get_datatables($key);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$btn = ($dat->data_sts!='1')?'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="remove('."'".$dat->det_id."'".')"><span class="glyphicon glyphicon-trash"></span></a>':'<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span></a>';
+			$no++;
+			$row = array();
+			$row[] = $btn;
+			$row[] = $dat->merk_ban;
+			$row[] = $dat->nama_ban;
+			$row[] = number_format($dat->qty_opname,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->detOpnameBan->count_all(),
+				"recordsFiltered" => $this->detOpnameBan->count_filtered($key),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function detOpnameBarang($key)
 	{
 		$list = $this->detOpnameBrg->get_datatables($key);

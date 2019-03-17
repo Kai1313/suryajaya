@@ -83,6 +83,24 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function gen_noOpnameBan()
+	{
+		$res = $this->gen_num_('trx_opname_ban','no_opname','OPB');
+		$check = $this->db->get_where('trx_opname_ban',array('no_opname'=>$res));
+		if($check->num_rows() > 0)
+		{
+			$res = $this->gen_num_('trx_opname_ban','no_opname','OPB');
+		}
+		$crt = array(
+			'no_opname'=>$res,
+			'tgl_opname'=>date('Y-m-d'),
+			'data_sts'=>'0'
+		);			
+		$this->db->insert('trx_opname_ban',$crt);
+		$data['no_opname'] = $res;
+		echo json_encode($data);
+	}
+
 	public function gen_noBeliBan()
 	{
 		$res = $this->gen_num_('trx_beli_ban','no_pembelian','BL');
@@ -1829,6 +1847,173 @@ class Crud extends CI_Controller
 	public function reportOpnameBarang()
 	{
 		$this->load->view('menu/lap_opname_spare_part');
+	}
+
+	//Transaksi Opname Ban
+	public function addOpnameBan()
+	{
+		$ins = array(
+			'no_opname'=>$this->input->post('no_opname'),
+			'kode_ban'=>$this->input->post('kode_ban'),
+			'sts_ban'=>$this->input->post('sts_ban'),
+			'qty_opname'=>$this->input->post('qty_opname'),
+			'qty_lama'=>$this->input->post('stok')
+		);
+		$this->db->insert('trx_opname_ban_det',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menambah Opname Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menambah Opname Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function rmvOpnameBan($key)
+	{
+		$this->db->delete('trx_opname_ban_det',array('det_id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Opname Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Opname Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function saveOpnameBan()
+	{
+		$getSts = $this->db->get_where('trx_opname_ban',array('no_opname'=>$this->input->post('no_opname')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$upd = array(
+				'tgl_opname'=>$this->dateFix_($this->input->post('tgl_opname')),
+				'data_sts'=>'1'
+			);
+			$this->db->update('trx_opname_ban',$upd,array('no_opname'=>$this->input->post('no_opname')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+			if($data['status']!=FALSE)
+			{
+				$detAll = $this->db->get_where('trx_opname_ban_det',array('no_opname'=>$this->input->post('no_opname')))->result();
+				foreach ($detAll as $det)
+				{
+					$upStok = $det->qty_opname;
+					switch ($detAll->sts_ban)
+					{
+						case '0':
+							$upd = array('stok_baru'=>$upStok);
+							break;
+						case '1':
+							$upd = array('stok_bekas'=>$upStok);
+							break;
+						case '2':
+							$upd = array('stok_vulkanisir'=>$upStok);
+							break;
+						case '3':
+							$upd = array('stok_afkir'=>$upStok);
+							break;
+						case '4':
+							$upd = array('stok_pasang'=>$upStok);
+							break;
+						default:
+							break;
+					}
+					$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_barang));
+				}
+			}
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menyimpan Opname Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menyimpan Opname Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function cancelOpnameBan()
+	{
+		$getSts = $this->db->get_where('trx_opname_ban',array('no_opname'=>$this->input->post('no_opname')))->row();
+		if($getSts->data_sts != '1')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$detAll = $this->db->get_where('trx_opname_ban_det',array('no_opname'=>$this->input->post('no_opname')))->result();
+			foreach ($detAll as $det)
+			{
+				$upStok = $det->qty_lama;
+				switch ($detAll->sts_ban)
+					{
+						case '0':
+							$upd = array('stok_baru'=>$upStok);
+							break;
+						case '1':
+							$upd = array('stok_bekas'=>$upStok);
+							break;
+						case '2':
+							$upd = array('stok_vulkanisir'=>$upStok);
+							break;
+						case '3':
+							$upd = array('stok_afkir'=>$upStok);
+							break;
+						case '4':
+							$upd = array('stok_pasang'=>$upStok);
+							break;
+						default:
+							break;
+					}
+				$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_barang));
+			}
+			$can = array('data_sts'=>'0');
+			$this->db->update('trx_opname_ban',$can,array('no_opname'=>$this->input->post('no_opname')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Opname Ban</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Opname Ban</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
+	public function printOpnameBan($key)
+	{
+		$data['key'] = $key;
+		$this->load->view('menu/print_opname_ban',$data);
+	}
+
+	public function reportOpnameBan()
+	{
+		$this->load->view('menu/lap_opname_ban');
 	}
 
 	//Transaksi Pemakaian Barang/Spare Part

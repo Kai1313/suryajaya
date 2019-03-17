@@ -68,13 +68,19 @@
                     <div class="form-group">
                       <label>Status Ban</label><br>
                       <label>
-                        <input type="radio" name="status_lepas" value="0" checked> Bekas
+                        <input type="radio" name="sts_ban" value="0" checked> Baru
                       </label>
                       <label>
-                        <input type="radio" name="status_lepas" value="1"> Vulkanisir
+                        <input type="radio" name="sts_ban" value="1"> Bekas
                       </label>
                       <label>
-                        <input type="radio" name="status_lepas" value="2"> Afkir/Buang
+                        <input type="radio" name="sts_ban" value="2"> Vulkanisir
+                      </label>
+                      <label>
+                        <input type="radio" name="sts_ban" value="3"> Afkir/Buang
+                      </label>
+                      <label>
+                        <input type="radio" name="sts_ban" value="4"> Terpasang
                       </label>
                     </div>
                     <div class="form-group">
@@ -187,10 +193,10 @@
         autoclose: true,
         format: 'dd/mm/yyyy'
       });
-      dropbarang();
-      $('#dropBarang').change(function()
+      dropban();
+      $('#dropBan').change(function()
       {
-        pickBarang($('#dropBarang option:selected').val());
+        pickBan($('#dropBan option:selected').val());
       });
       $('.num').number(true,2);
     })
@@ -198,7 +204,7 @@
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/gen_noOpnameBarang')?>',
+        url: '<?= site_url('Crud/gen_noOpnameBan')?>',
         dataType: 'JSON',
         success: function(data)
         {
@@ -207,24 +213,24 @@
         }
       });
     }
-    function dropbarang()
+    function dropban()
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getDropBarang')?>",
+        url : "<?php echo site_url('Crud/getDropBan')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {   
-          var select = document.getElementById('dropBarang');
+          var select = document.getElementById('dropBan');
           var option;
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_barang']
-            option.text = data[i]['kode_barang']+' - '+data[i]['nama_barang'];
+            option.value = data[i]['kode_ban']
+            option.text = data[i]['nama_ban']+' - '+data[i]['merk_ban']+' - '+data[i]['ukuran_ban'];
             select.add(option);
           }
-          $('#dropBarang').select2({placeholder: 'Pilih Barang'});
+          $('#dropBan').select2({placeholder: 'Pilih Ban'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
@@ -232,15 +238,34 @@
         }
       });
     }
-    function pickBarang(key)
+    function pickBan(key)
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/pickDropBarang/')?>'+key,
+        url: '<?= site_url('Crud/pickDropBan/')?>'+key,
         dataType: 'JSON',
         success: function(data)
         {
-          $('[name="stok"]').val(data.stok_barang+' '+data.nama_satuan);
+          switch()
+          {
+            case '0':
+            $('[name="stok"]').val(data.stok_baru);
+            break;
+            case '1':
+            $('[name="stok"]').val(data.stok_bekas);
+            break;
+            case '2':
+            $('[name="stok"]').val(data.stok_vulkanisir);
+            break;
+            case '3':
+            $('[name="stok"]').val(data.stok_afkir);
+            break;
+            case '4':
+            $('[name="stok"]').val(data.stok_pasang);
+            break;
+            default:
+            break;
+          }
         }
       });
     }
@@ -254,7 +279,7 @@
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/detOpnameBarang/')?>"+key,
+          "url": "<?php echo site_url('Datatables/detOpnameBan/')?>"+key,
           "type": "POST",
           },
         "columnDefs": [
@@ -275,7 +300,7 @@
       {
         $.ajax({
           type: 'POST',
-          url: '<?= site_url('Crud/addOpnameBarang')?>',
+          url: '<?= site_url('Crud/addOpnameBan')?>',
           data: $('form').serialize(),
           dataType: 'JSON',
           success: function(data)
@@ -284,7 +309,7 @@
             {
               msg = $('<div>').append(data.msg).appendTo('#alertMsg');
               $('#form-detail-pembelian')[0].reset();
-              $('#dropBarang').select2({placeholder: 'Select an option'});
+              $('#dropBan').select2({placeholder: 'Select an option'});
               tbDetOpname(key);
             }
             else
@@ -304,7 +329,7 @@
       key = ($('[name="no_opname"]').val()!='')?$('[name="no_opname"]').val():'';
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/rmvOpnameBarang/')?>'+id,
+        url: '<?= site_url('Crud/rmvOpnameBan/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
@@ -326,7 +351,7 @@
       key = ($('[name="no_opname"]').val()!='')?$('[name="no_opname"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/saveOpnameBarang')?>',
+        url: '<?= site_url('Crud/saveOpnameBan')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -349,7 +374,7 @@
       key = ($('[name="no_opname"]').val()!='')?$('[name="no_opname"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/cancelOpnameBarang')?>',
+        url: '<?= site_url('Crud/cancelOpnameBan')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -370,7 +395,7 @@
     function editOpname()
     {
       $('#modal-edit').modal('show');
-      $('.modal-title').text('Daftar Opname Barang');
+      $('.modal-title').text('Daftar Opname Ban');
       table = $('#daftarOpname').DataTable({
         "info": false,
         "destroy": true,
@@ -379,7 +404,7 @@
         "serverSide": true,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/listOpnameBarang')?>",
+          "url": "<?php echo site_url('Datatables/listOpnameBan')?>",
           "type": "POST",
           },
         "columnDefs": [
@@ -393,11 +418,11 @@
         ],
       });
     }
-    function pilihOpnameBrg(id)
+    function pilihOpnameBan(id)
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/getOpnameBrg/')?>'+id,
+        url: '<?= site_url('Crud/getOpnameBan/')?>'+id,
         dataType: 'JSON',
         success: function(data)
         {
@@ -413,10 +438,10 @@
     function printDt()
     {
       key = ($('[name="no_opname"]').val()!='')?$('[name="no_opname"]').val():'';
-      window.open ( "<?= site_url('Crud/printOpnameBarang/')?>"+key,'_blank');
+      window.open ( "<?= site_url('Crud/printOpnameBan/')?>"+key,'_blank');
     }
     function reportDt()
     {
-      window.open ( "<?= site_url('Crud/reportOpnameBarang')?>",'_blank');
+      window.open ( "<?= site_url('Crud/reportOpnameBan')?>",'_blank');
     }
   </script>
