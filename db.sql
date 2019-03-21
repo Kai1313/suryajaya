@@ -11,6 +11,24 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+-- Dumping structure for table suryajaya.inv_ban
+DROP TABLE IF EXISTS `inv_ban`;
+CREATE TABLE IF NOT EXISTS `inv_ban` (
+  `inv_id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode_transaksi` char(20) DEFAULT NULL,
+  `kode_ban` char(10) DEFAULT NULL,
+  `bkl` int(11) DEFAULT NULL,
+  `sts_stok` char(1) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`inv_id`),
+  KEY `FK_inv_ban_master_ban` (`kode_ban`),
+  CONSTRAINT `FK_inv_ban_master_ban` FOREIGN KEY (`kode_ban`) REFERENCES `master_ban` (`kode_ban`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.inv_ban: ~0 rows (approximately)
+/*!40000 ALTER TABLE `inv_ban` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inv_ban` ENABLE KEYS */;
+
 -- Dumping structure for table suryajaya.master_ban
 DROP TABLE IF EXISTS `master_ban`;
 CREATE TABLE IF NOT EXISTS `master_ban` (
@@ -233,6 +251,27 @@ INSERT INTO `master_tujuan` (`kode_tujuan`, `ket_tujuan`, `data_sts`) VALUES
 	('DST0001', 'SBY->JKT', '1'),
 	('DST0002', 'JKT->SBY', '1');
 /*!40000 ALTER TABLE `master_tujuan` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.profile_settings
+DROP TABLE IF EXISTS `profile_settings`;
+CREATE TABLE IF NOT EXISTS `profile_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bkl_ban_dalam` int(11) DEFAULT NULL,
+  `bkl_ban_luar` int(11) DEFAULT NULL,
+  `bkl_manset` int(11) DEFAULT NULL,
+  `nama` char(100) DEFAULT NULL,
+  `alamat` varchar(100) DEFAULT NULL,
+  `kota` char(100) DEFAULT NULL,
+  `provinsi` char(100) DEFAULT NULL,
+  `kodepos` char(100) DEFAULT NULL,
+  `logo` char(100) DEFAULT NULL,
+  `satuan_kasbon` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.profile_settings: ~0 rows (approximately)
+/*!40000 ALTER TABLE `profile_settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profile_settings` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_bayar_bonklaim_sopir
 DROP TABLE IF EXISTS `trx_bayar_bonklaim_sopir`;
@@ -908,7 +947,7 @@ CREATE TABLE IF NOT EXISTS `trx_opname_barang` (
   PRIMARY KEY (`no_opname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_opname_barang: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_opname_barang: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_opname_barang` DISABLE KEYS */;
 INSERT INTO `trx_opname_barang` (`no_opname`, `tgl_opname`, `data_sts`) VALUES
 	('OSP1903-000001', '2019-03-12', '1');
@@ -929,7 +968,7 @@ CREATE TABLE IF NOT EXISTS `trx_opname_barang_det` (
   CONSTRAINT `FK_trx_opname_barang_det_trx_opname_barang` FOREIGN KEY (`no_opname`) REFERENCES `trx_opname_barang` (`no_opname`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_opname_barang_det: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_opname_barang_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_opname_barang_det` DISABLE KEYS */;
 INSERT INTO `trx_opname_barang_det` (`det_id`, `no_opname`, `kode_barang`, `qty_opname`, `qty_lama`) VALUES
 	(2, 'OSP1903-000001', 'BRG0001', 7.00, 4.00);
@@ -1185,6 +1224,19 @@ CREATE TABLE IF NOT EXISTS `trx_tagihan_det` (
 INSERT INTO `trx_tagihan_det` (`det_id`, `no_tagihan`, `no_bon`, `tgl_muat`, `tgl_bongkar`, `nopol`, `surat_jalan`, `jenis_muatan`, `berat_muatan`, `ongkos_bruto`) VALUES
 	(3, 'SJT1901-000002', 'AS1901-000002', '2019-01-28', '2019-01-31', 'B2345XS', 'SJ00001', 'Keramik', 20.00, 40000.00);
 /*!40000 ALTER TABLE `trx_tagihan_det` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.users
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` char(50) DEFAULT '0',
+  `password` char(50) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.users: ~0 rows (approximately)
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

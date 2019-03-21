@@ -2259,6 +2259,7 @@ class Crud extends CI_Controller
 				foreach ($detAll as $det)
 				{
 					$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_baru;
+					$this->beliBanUpInv($det->kode_ban,$det->qty_beli,$det->no_pembelian);
 					$upStok = $getStok+$det->qty_beli;
 					$upd = array('stok_baru'=>$upStok);
 					$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
@@ -2277,6 +2278,42 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function beliBanUpInv($key,$count,$trxCode)
+	{
+		$getJnsBan = $this->db->get_where('master_ban',array('kode_ban'=>$key))->row()->jenis_ban;
+		switch ($getJnsBan)
+		{
+			case '0':
+				$getBklNo = $this->db->get_where('profile_settings',array('id'=>'1'))->row()->bkl_ban_dalam;
+				$upBkl = array('bkl_ban_dalam'=>($getBklNo+$count));
+				break;
+			case '1':
+				$getBklNo = $this->db->get_where('profile_settings',array('id'=>'1'))->row()->bkl_ban_luar;
+				$upBkl = array('bkl_ban_luar'=>($getBklNo+$count));
+				break;
+			case '2':
+				$getBklNo = $this->db->get_where('profile_settings',array('id'=>'1'))->row()->bkl_marset;
+				$upBkl = array('bkl_marset'=>($getBklNo+$count));
+				break;
+			default:
+				break;
+		}
+		for ($i=0; $i < $count; $i++)
+		{
+			$bklPlus = (int)$getBklNo+$i+1;
+			$ins = array(
+				'kode_transaksi'=>$trxCode,
+				'kode_ban'=>$key,
+				'kode_transaksi'=>$trxCode,
+				'bkl'=>$bklPlus,
+				'sts_stok'=>'0',
+				'data_sts'=>'1'
+			);
+			$this->db->insert('inv_ban',$ins);
+		}
+		$this->db->update('profile_settings',$upBkl,array('id'=>'1'));
 	}
 
 	public function cancelBeliBan()
@@ -2298,6 +2335,7 @@ class Crud extends CI_Controller
 			}
 			$can = array('data_sts'=>'0');
 			$this->db->update('trx_beli_ban',$can,array('no_pembelian'=>$this->input->post('no_pembelian')));
+			$this->cancelBanUpInv($this->input->post('no_pembelian'));
 			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		}
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -2312,6 +2350,11 @@ class Crud extends CI_Controller
       </div>'
 		 ;
 		echo json_encode($data);
+	}
+
+	public function cancelBanUpInv($trxCode)
+	{
+		$this->db->delete('inv_ban',array('kode_transaksi'=>$trxCode));
 	}
 
 	public function printBeliBan($key)
@@ -4012,6 +4055,12 @@ class Crud extends CI_Controller
 	public function getOpnameBrg($key)
 	{
 		$data = $this->db->get_where('trx_opname_barang',array('no_opname'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getOpnameBan($key)
+	{
+		$data = $this->db->get_where('trx_opname_ban',array('no_opname'=>$key))->row();
 		echo json_encode($data);
 	}
 
