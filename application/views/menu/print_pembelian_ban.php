@@ -281,7 +281,7 @@
             }
             var $tr = $('<tr>').append(
               $('<td class="text-center">'+jenis+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["ukuran_ban"]+' - '+data['b'][i]["merk_ban"]+'</td>'),
+              $('<td class="text-center">'+data['b'][i]["ukuran_ban"]+' - '+data['b'][i]["merk_ban"]+' Nomor BKL : '+data['d']+'</td>'),
               $('<td class="text-center chgnum">'+data['b'][i]["qty_beli"]+'</td>'),
               $('<td class="text-center chgnum">'+data['b'][i]["harga_satuan"]+'</td>'),
               $('<td class="text-right chgnum">'+data['b'][i]["jumlah"]+'</td>')
