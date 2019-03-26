@@ -2,9 +2,9 @@
 	defined('BASEPATH') OR exit('No direct script access allowed');
 	class ReportBeliBan extends CI_Model 
 	{
-		var $table = 'trx_beli_ban_det a';
-		var $column_order = array('b.tgl_pembelian','c.nama_supplier','d.nama_ban','d.jenis_ban','a.qty_beli','a.harga_satuan','a.jumlah');
-		var $column_search = array('b.tgl_pembelian','c.nama_supplier','d.nama_ban','d.jenis_ban','a.qty_beli','a.harga_satuan','a.jumlah');
+		var $table = 'inv_ban a';
+		var $column_order = array('b.tgl_pembelian','d.nama_supplier','e.nama_ban','e.jenis_ban','c.qty_beli','c.harga_satuan','a.bkl');
+		var $column_search = array('b.tgl_pembelian','d.nama_supplier','e.nama_ban','e.jenis_ban','c.qty_beli','c.harga_satuan','a.bkl');
 		var $order = array('b.tgl_pembelian' => 'asc'); 
 		public function __construct()
 		{
@@ -14,7 +14,7 @@
 		{
 			if($this->input->post('kode_supplier'))
 			{
-				$this->db->where('b.kode_supplier',$this->input->post('kode_supplier'));
+				$this->db->where('d.kode_supplier',$this->input->post('kode_supplier'));
 			}
 			if ($this->input->post('tgl_awal') != null AND $this->input->post('tgl_akhir') != null )
 			{
@@ -22,9 +22,10 @@
         $this->db->where('b.tgl_pembelian <=', $this->dateFix_($this->input->post('tgl_akhir')));
 			}
 			$this->db->from($this->table);
-			$this->db->join('trx_beli_ban b','b.no_pembelian = a.no_pembelian');
-			$this->db->join('master_supplier c','c.kode_supplier = b.kode_supplier');
-			$this->db->join('master_ban d','d.kode_ban = a.kode_ban');
+			$this->db->join('trx_beli_ban b','b.no_pembelian = a.kode_transaksi');
+			$this->db->join('trx_beli_ban_det c','c.no_pembelian = b.no_pembelian');
+			$this->db->join('master_supplier d','d.kode_supplier = b.kode_supplier');
+			$this->db->join('master_ban e','e.kode_ban = a.kode_ban');
 			$this->db->where('b.data_sts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)

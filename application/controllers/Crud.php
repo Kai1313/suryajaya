@@ -941,6 +941,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getDropInventory()
+	{
+		$data = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('inv_ban a',array('a.data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
 	public function getDropNota()
 	{
 		$data = $this->db->get_where('trx_beli_barang',array('data_sts'=>'1'))->result();

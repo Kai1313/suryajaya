@@ -138,9 +138,13 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Kode Ban</label>
-                      <select class="form-control" name="kode_ban_pasang" id="dropBanPsg" style="width: 100%;">
+                      <select class="form-control" name="kode_inv_pasang" id="dropBanPsg" style="width: 100%;">
                         <option value="">Pilih Ban</option>
                       </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Kode Ban</label>
+                      <input type="text" name="kode_ban_pasang" class="form-control num">
                     </div>
                     <div class="form-group">
                       <label>Qty Pasang</label>
@@ -202,9 +206,13 @@
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
                       <label>Kode Ban</label>
-                      <select class="form-control" name="kode_ban_lepas" id="dropBanLps" style="width: 100%;">
+                      <select class="form-control" name="kode_inv_lepas" id="dropBanLps" style="width: 100%;">
                         <option value="">Pilih Ban</option>
                       </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Kode Ban</label>
+                      <input type="text" name="kode_ban_lepas" class="form-control num">
                     </div>
                     <div class="form-group">
                       <label>Qty Lepas</label>
@@ -460,7 +468,7 @@
     function dropbanpsg()
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getDropBan')?>",
+        url : "<?php echo site_url('Crud/getDropInventory')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)

@@ -204,7 +204,7 @@
                   <th class="text-center col-xs-1 col-sm-1">Jenis</th>
                   <th class="text-center col-xs-1 col-sm-1">Qty</th>
                   <th class="text-center col-xs-2 col-sm-2">Harga</th>
-                  <th class="text-center col-xs-2 col-sm-2">Jumlah</th>
+                  <th class="text-center col-xs-2 col-sm-2">No BKL</th>
                 </tr>
               </thead>
               <tbody id="tb_content"></tbody>

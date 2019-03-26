@@ -555,7 +555,7 @@ class Datatables extends CI_Controller
 			$row[] = $jenis;
 			$row[] = number_format($dat->qty_beli,2);
 			$row[] = number_format($dat->harga_satuan,2);
-			$row[] = number_format($dat->jumlah,2);
+			$row[] = $dat->bkl;
 			$data[] = $row;
 		}
 		$output = array(
