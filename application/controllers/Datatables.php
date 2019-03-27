@@ -250,8 +250,8 @@ class Datatables extends CI_Controller
 			$row[] = $dat->nopol.' - '.$dat->tipe_kendaraan.' - '.$dat->jenis_kendaraan;
 			$row[] = $dat->bengkel_pelepasan;
 			$row[] = $dat->nama_ban.' - '.$dat->merk_ban.' ('.$dat->ukuran_ban.')';
-			$row[] = $jenis;
-			$row[] = $sts;
+			$row[] = $jenis.' - '.$sts;
+			$row[] = $dat->bkl;
 			$row[] = number_format($dat->qty_lepas,2);
 			$data[] = $row;
 		}
@@ -306,8 +306,8 @@ class Datatables extends CI_Controller
 			$row[] = $dat->nopol.' - '.$dat->tipe_kendaraan.' - '.$dat->jenis_kendaraan;
 			$row[] = $dat->bengkel_pemasangan;
 			$row[] = $dat->nama_ban.' - '.$dat->merk_ban.' ('.$dat->ukuran_ban.')';
-			$row[] = $jenis;
-			$row[] = $sts;
+			$row[] = $jenis.' - '.$sts;
+			$row[] = $dat->bkl;
 			$row[] = number_format($dat->qty_pasang,2);
 			$data[] = $row;
 		}
@@ -1433,9 +1433,9 @@ class Datatables extends CI_Controller
 			$no++;
 			$row = array();
 			$row[] = $btn;
-			$row[] = $jenis;
+			$row[] = $jenis.' - '.$dat->merk_ban;
 			$row[] = $dat->ukuran_ban;
-			$row[] = $dat->merk_ban;
+			$row[] = $dat->bkl;
 			$row[] = $status;
 			$row[] = $dat->qty_pasang;
 			$data[] = $row;
@@ -1488,9 +1488,9 @@ class Datatables extends CI_Controller
 			$no++;
 			$row = array();
 			$row[] = $btn;
-			$row[] = $jenis;
+			$row[] = $jenis.' - '.$dat->merk_ban;
 			$row[] = $dat->ukuran_ban;
-			$row[] = $dat->merk_ban;
+			$row[] = $dat->bkl;
 			$row[] = $status;
 			$row[] = $dat->qty_lepas;
 			$data[] = $row;

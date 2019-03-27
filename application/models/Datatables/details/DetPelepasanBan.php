@@ -12,10 +12,11 @@
 		}
 		private function _get_datatables_query($key)
 		{
-			$this->db->select('a.det_id,b.data_sts,c.nama_ban,c.ukuran_ban,c.jenis_ban,c.merk_ban,a.status_lepas,a.qty_lepas');
+			$this->db->select('a.det_id,b.data_sts,c.nama_ban,c.ukuran_ban,c.jenis_ban,c.merk_ban,a.status_lepas,a.qty_lepas,d.bkl');
 			$this->db->from($this->table);
 			$this->db->join('trx_lepas_ban b','b.no_pelepasan = a.no_pelepasan');
 			$this->db->join('master_ban c','c.kode_ban = a.kode_ban');
+			$this->db->join('inv_ban d','d.inv_id = a.kode_inventory');
 			$this->db->where('a.no_pelepasan',$key);
 			$i = 0;
 			foreach ($this->column_search as $item)

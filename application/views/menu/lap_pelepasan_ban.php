@@ -203,8 +203,8 @@
                   <th class="text-center col-xs-2 col-sm-2">Kendaraan</th>
                   <th class="text-center col-xs-2 col-sm-2">Bengkel</th>
                   <th class="text-center col-xs-3 col-sm-3">Keterangan</th>
-                  <th class="text-center col-xs-1 col-sm-1">Jenis</th>
-                  <th class="text-center col-xs-1 col-sm-1">Status</th>
+                  <th class="text-center col-xs-1 col-sm-1">Jenis-Status</th>
+                  <th class="text-center col-xs-1 col-sm-1">No BKL</th>
                   <th class="text-center col-xs-1 col-sm-1">Qty</th>
                 </tr>
               </thead>

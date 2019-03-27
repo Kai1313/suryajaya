@@ -151,6 +151,11 @@
                       <input type="text" name="qty_pasang" class="form-control num" value="1" readonly>
                     </div>
                     <div class="form-group">
+                      <label>Status Ban</label>
+                      <input type="text" name="status_pasang" class="form-control" readonly>
+                      <input type="hidden" name="status_ban_psg">
+                    </div>
+                    <!-- <div class="form-group">
                       <label>Status Ban</label><br>
                       <label>
                         <input type="radio" name="status_pasang" value="0" checked> Baru
@@ -161,7 +166,7 @@
                       <label>
                         <input type="radio" name="status_pasang" value="2"> Vulkanisir
                       </label>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                       <button type="button" class="btn btn-sm btn-primary" onclick="addPasang()">Tambah</button>
                     </div>
@@ -188,9 +193,9 @@
                 <thead>
                   <tr>
                     <th class="col-xs-2 text-center">Action</th>
-                    <th class="col-xs-2 text-center">Jenis</th>
+                    <th class="col-xs-2 text-center">Jenis - Merk</th>
                     <th class="col-xs-2 text-center">Ukuran</th>
-                    <th class="col-xs-2 text-center">Merk</th>
+                    <th class="col-xs-2 text-center">No BKL</th>
                     <th class="col-xs-2 text-center">Status</th>
                     <th class="col-xs-2 text-center">Qty</th>
                   </tr>
@@ -256,9 +261,9 @@
                 <thead>
                   <tr>
                     <th class="col-xs-2 text-center">Action</th>
-                    <th class="col-xs-2 text-center">Jenis</th>
+                    <th class="col-xs-2 text-center">Jenis - Merk</th>
                     <th class="col-xs-2 text-center">Ukuran</th>
-                    <th class="col-xs-2 text-center">Merk</th>
+                    <th class="col-xs-2 text-center">No BKL</th>
                     <th class="col-xs-2 text-center">Status</th>
                     <th class="col-xs-2 text-center">Qty</th>
                   </tr>
@@ -478,7 +483,7 @@
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_ban']
+            option.value = data[i]['inv_id']
             option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban']+' - '+data[i]['bkl'];
             select.add(option);
           }
@@ -492,18 +497,24 @@
     }
     function dropbanlps()
     {
+      $('#dropBanLps').empty();
       $.ajax({
-        url : "<?php echo site_url('Crud/getDropBan')?>",
+        url : "<?php echo site_url('Crud/getDropInvLps')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {   
           var select = document.getElementById('dropBanLps');
+          var opt;
+          opt = document.createElement('option');
+          opt.value = ''
+          opt.text = 'Pilih Ban';
+          select.add(opt);
           var option;
           for (var i = 0; i < data.length; i++)
           {
             option = document.createElement('option');
-            option.value = data[i]['kode_ban']
+            option.value = data[i]['inv_id']
             option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban']+' - '+data[i]['bkl'];
             select.add(option);
           }
@@ -519,7 +530,7 @@
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/pickDropBan/')?>'+key,
+        url: '<?= site_url('Crud/pickDropInventory/')?>'+key,
         dataType: 'JSON',
         success: function(data)
         {
@@ -536,10 +547,33 @@
           {
             jenis = 'Marset Ban';
           }
+          var sts_ban;
+          switch(data.sts_stok)
+          {
+            case '0':
+            sts_ban = 'Baru';
+            break;
+            case '1':
+            sts_ban = 'Bekas';
+            break;
+            case '2':
+            sts_ban = 'Vulkanisir';
+            break;
+            case '3':
+            sts_ban = 'Afkir/Buang';
+            break;
+            case '4':
+            sts_ban = 'Terpasang';
+            break;
+            default:
+            break;
+          }
           $('[name="kode_ban_pasang"]').val(data.kode_ban);
           $('[name="jenis_ban_psg"]').val(jenis);
           $('[name="ukuran_ban_psg"]').val(data.ukuran_ban);
           $('[name="merk_ban_psg"]').val(data.merk_ban);
+          $('[name="status_ban_psg"]').val(data.sts_stok);
+          $('[name="status_pasang"]').val(sts_ban);
         }
       });
     }
@@ -547,7 +581,7 @@
     {
       $.ajax({
         type: 'GET',
-        url: '<?= site_url('Crud/pickDropBan/')?>'+key,
+        url: '<?= site_url('Crud/pickDropInventory/')?>'+key,
         dataType: 'JSON',
         success: function(data)
         {
@@ -637,6 +671,7 @@
               $('#form-detail-pemasangan')[0].reset();
               $('#dropBanPsg').select2({placeholder: 'Pilih Ban'});
               tbDetPsg(key);
+              dropBanLps();
             }
             else
             {
@@ -664,6 +699,7 @@
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
             $('#form-detail-pemasangan')[0].reset();
             tbDetPsg(key);
+            dropBanLps();
           }
           else
           {
@@ -690,6 +726,7 @@
               $('#form-detail-pelepasan')[0].reset();
               $('#dropBanLps').select2({placeholder: 'Pilih Ban'});
               tbDetLps(key);
+              dropbanlps();
             }
             else
             {
@@ -717,6 +754,7 @@
             msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
             $('#form-detail-pelepasan')[0].reset();
             tbDetLps(key);
+            dropbanlps();
           }
           else
           {
@@ -743,6 +781,7 @@
               msg = $('<div>').append(data.msg).appendTo('#alertMsg');
               $('#form-detail-pemasangan')[0].reset();
               tbDetPsg(key);
+              dropbanlps();
             }
             else
             {
@@ -767,6 +806,7 @@
               msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
               $('#form-detail-pelepasan')[0].reset();
               tbDetLps(key);
+              dropbanlps();
             }
             else
             {
@@ -793,6 +833,7 @@
               msg = $('<div>').append(data.msg).appendTo('#alertMsg');
               $('#form-detail-pemasangan')[0].reset();
               tbDetPsg(key);
+              dropbanlps();
             }
             else
             {
@@ -816,6 +857,7 @@
               msg = $('<div>').append(data.msg).appendTo('#alertMsgLps');
               $('#form-detail-pelepasan')[0].reset();
               tbDetLps(key);
+              dropbanlps();
             }
             else
             {

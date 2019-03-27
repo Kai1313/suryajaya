@@ -25,6 +25,7 @@
 			$this->db->join('trx_pasang_ban b','b.no_pemasangan = a.no_pemasangan');
 			$this->db->join('master_kendaraan c','c.kode_kendaraan = b.kode_kendaraan');
 			$this->db->join('master_ban d','d.kode_ban = a.kode_ban');
+			$this->db->join('inv_ban e','e.inv_id = a.kode_inventory');
 			$this->db->where('b.data_sts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)

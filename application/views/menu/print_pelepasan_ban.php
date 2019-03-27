@@ -179,9 +179,9 @@
             <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
               <thead>
                 <tr>
-                  <th class="text-center col-xs-3 col-sm-3">Jenis</th>
+                  <th class="text-center col-xs-3 col-sm-3">Jenis - Ukuran</th>
                   <th class="text-center col-xs-2 col-sm-2">Merk</th>
-                  <th class="text-center col-xs-2 col-sm-2">Ukuran</th>
+                  <th class="text-center col-xs-2 col-sm-2">No BKL</th>
                   <th class="text-center col-xs-3 col-sm-3">Status</th>
                   <th class="text-center col-xs-2 col-sm-2">Qty</th>
                 </tr>
@@ -286,9 +286,9 @@
               break;
             }
             var $tr = $('<tr>').append(
-              $('<td class="text-center">'+jenis+'</td>'),
+              $('<td class="text-center">'+jenis+' - '+data['b'][i]["ukuran_ban"]+'</td>'),
               $('<td class="text-center">'+data['b'][i]["merk_ban"]+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["ukuran_ban"]+'</td>'),
+              $('<td class="text-center">'+data['b'][i]["bkl"]+'</td>'),
               $('<td class="text-center">'+sts+'</td>'),
               $('<td class="text-right chgnum">'+data['b'][i]["qty_lepas"]+'</td>')
               ).appendTo('#tb_content');

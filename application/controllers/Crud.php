@@ -947,6 +947,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getDropInvLps()
+	{
+		$data = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('inv_ban a',array('a.data_sts'=>'1','a.sts_stok'=>'4'))->result();
+		echo json_encode($data);
+	}
+
 	public function getDropNota()
 	{
 		$data = $this->db->get_where('trx_beli_barang',array('data_sts'=>'1'))->result();
@@ -1012,6 +1018,12 @@ class Crud extends CI_Controller
 	public function pickDropBan($key)
 	{
 		$data = $this->db->get_where('master_ban',array('kode_ban'=>$key,'data_sts'=>'1'))->row();
+		echo json_encode($data);
+	}
+
+	public function pickDropInventory($key)
+	{
+		$data = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('inv_ban a',array('inv_id'=>$key,'a.data_sts'=>'1'))->row();
 		echo json_encode($data);
 	}
 
@@ -2378,7 +2390,7 @@ class Crud extends CI_Controller
 	public function addPasangBan()
 	{
 		$getBan = $this->db->get_where('master_ban',array('kode_ban'=>$this->input->post('kode_ban_pasang')))->row();
-		$stsBan = $this->input->post('status_pasang');
+		$stsBan = $this->input->post('status_ban_psg');
 		switch($stsBan)
 		{
 			case '0':
@@ -2402,8 +2414,9 @@ class Crud extends CI_Controller
 			$ins = array(
 				'no_pemasangan'=>$this->input->post('no_pemasangan'),
 				'kode_ban'=>$this->input->post('kode_ban_pasang'),
+				'kode_inventory'=>$this->input->post('kode_inv_pasang'),
 				'qty_pasang'=>$this->input->post('qty_pasang'),
-				'status_pasang'=>$this->input->post('status_pasang')
+				'status_pasang'=>$this->input->post('status_ban_psg')
 			);
 			$this->db->insert('trx_pasang_ban_det',$ins);
 			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -2487,6 +2500,8 @@ class Crud extends CI_Controller
 							break;
 					}
 					$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
+					$upInv = array('sts_stok'=>'4');
+					$this->db->update('inv_ban',$upInv,array('inv_id'=>$det->kode_inventory));
 				}
 			}
 		}
@@ -2524,23 +2539,27 @@ class Crud extends CI_Controller
 						$upStok = ($getStok->stok_baru*1)+($det->qty_pasang*1);
 						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
 						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+						$upInv = array('sts_stok'=>'0');
 						break;
 					case '1':
 						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_bekas;
 						$upStok = ($getStok->stok_bekas*1)+($det->qty_pasang*1);
 						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
 						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+						$upInv = array('sts_stok'=>'1');
 						break;
 					case '2':
 						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_vulkanisir;
 						$upStok = ($getStok->stok_vulkanisir*1)+($det->qty_pasang*1);
 						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
 						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+						$upInv = array('sts_stok'=>'2');
 						break;
 					default:
 						break;
 				}
 				$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
+				$this->db->update('inv_ban',$upInv,array('inv_id'=>$det->kode_inventory));
 			}
 			$can = array('data_sts'=>'0');
 			$this->db->update('trx_pasang_ban',$can,array('no_pemasangan'=>$this->input->post('no_pemasangan')));
@@ -2575,7 +2594,8 @@ class Crud extends CI_Controller
 	public function addLepasBan()
 	{
 		$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$this->input->post('kode_ban_lepas')))->row()->stok_pasang;
-		if($getStok < $this->input->post('qty_lepas'))
+		$cekStok = $this->db->get_where('inv_ban',array('inv_id'=>$this->input->post('kode_inv_lepas')))->row()->sts_stok;
+		if($cekStok != '4')
 		{
 			$data['status'] = FALSE;
 		}
@@ -2584,6 +2604,7 @@ class Crud extends CI_Controller
 			$ins = array(
 				'no_pelepasan'=>$this->input->post('no_pelepasan'),
 				'kode_ban'=>$this->input->post('kode_ban_lepas'),
+				'kode_inventory'=>$this->input->post('kode_inv_lepas'),
 				'qty_lepas'=>$this->input->post('qty_lepas'),
 				'status_lepas'=>$this->input->post('status_lepas')
 			);
@@ -2652,23 +2673,27 @@ class Crud extends CI_Controller
 							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
 							$upStok = ($getStok->stok_bekas*1)+($det->qty_lepas*1);
 							$upd = array('stok_bekas'=>$upStok,'stok_pasang'=>$upLps);
+							$upInv = array('sts_stok'=>'1');
 							break;
 						case '1':
 							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
 							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
 							$upStok = ($getStok->stok_vulkanisir*1)+($det->qty_lepas*1);
 							$upd = array('stok_vulkanisir'=>$upStok,'stok_pasang'=>$upLps);
+							$upInv = array('sts_stok'=>'2');
 							break;
 						case '2':
 							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
 							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
 							$upStok = ($getStok->stok_afkir*1)+($det->qty_lepas*1);
 							$upd = array('stok_afkir'=>$upStok,'stok_pasang'=>$upLps);
+							$upInv = array('sts_stok'=>'3');
 							break;
 						default:
 							break;
 					}
 					$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
+					$this->db->update('inv_ban',$upInv,array('inv_id'=>$det->kode_inventory));
 				}
 			}
 		}
@@ -2722,7 +2747,9 @@ class Crud extends CI_Controller
 					default:
 						break;
 				}
+				$upInv = array('sts_stok'=>'4');
 				$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
+				$this->db->update('inv_ban',$upInv,array('inv_id'=>$det->kode_inventory));
 			}
 			$can = array('data_sts'=>'0');
 			$this->db->update('trx_lepas_ban',$can,array('no_pelepasan'=>$this->input->post('no_pelepasan')));
@@ -4272,14 +4299,14 @@ class Crud extends CI_Controller
 	public function getPrintPasangBan($key)
 	{
 		$data['a'] = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_pasang_ban a',array('a.no_pemasangan'=>$key))->row();
-		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('trx_pasang_ban_det a',array('a.no_pemasangan'=>$key))->result();
+		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->join('inv_ban c','c.inv_id = a.kode_inventory')->get_where('trx_pasang_ban_det a',array('a.no_pemasangan'=>$key))->result();
 		echo json_encode($data);
 	}
 
 	public function getPrintLepasBan($key)
 	{
 		$data['a'] = $this->db->join('master_kendaraan b','b.kode_kendaraan = a.kode_kendaraan')->get_where('trx_lepas_ban a',array('a.no_pelepasan'=>$key))->row();
-		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('trx_lepas_ban_det a',array('a.no_pelepasan'=>$key))->result();
+		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->join('inv_ban c','c.inv_id = a.kode_inventory')->get_where('trx_lepas_ban_det a',array('a.no_pelepasan'=>$key))->result();
 		echo json_encode($data);
 	}
 
