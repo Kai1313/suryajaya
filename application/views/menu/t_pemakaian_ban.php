@@ -137,18 +137,18 @@
                 <div class="row">
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
-                      <label>Kode Ban</label>
+                      <label>Inventory Ban</label>
                       <select class="form-control" name="kode_inv_pasang" id="dropBanPsg" style="width: 100%;">
                         <option value="">Pilih Ban</option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label>Kode Ban</label>
-                      <input type="text" name="kode_ban_pasang" class="form-control num">
+                      <input type="text" name="kode_ban_pasang" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                       <label>Qty Pasang</label>
-                      <input type="text" name="qty_pasang" class="form-control num">
+                      <input type="text" name="qty_pasang" class="form-control num" value="1" readonly>
                     </div>
                     <div class="form-group">
                       <label>Status Ban</label><br>
@@ -205,18 +205,18 @@
                 <div class="row">
                   <div class="col-md-6 col-xs-6">
                     <div class="form-group">
-                      <label>Kode Ban</label>
+                      <label>Inventory Ban</label>
                       <select class="form-control" name="kode_inv_lepas" id="dropBanLps" style="width: 100%;">
                         <option value="">Pilih Ban</option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label>Kode Ban</label>
-                      <input type="text" name="kode_ban_lepas" class="form-control num">
+                      <input type="text" name="kode_ban_lepas" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                       <label>Qty Lepas</label>
-                      <input type="text" name="qty_lepas" class="form-control num">
+                      <input type="text" name="qty_lepas" class="form-control num" value="1" readonly>
                     </div>
                     <div class="form-group">
                       <label>Status Ban</label><br>
@@ -479,7 +479,7 @@
           {
             option = document.createElement('option');
             option.value = data[i]['kode_ban']
-            option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban'];
+            option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban']+' - '+data[i]['bkl'];
             select.add(option);
           }
           $('#dropBanPsg').select2({placeholder: 'Pilih Ban'});
@@ -504,7 +504,7 @@
           {
             option = document.createElement('option');
             option.value = data[i]['kode_ban']
-            option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban'];
+            option.text = data[i]['kode_ban']+' - '+data[i]['nama_ban']+' - '+data[i]['bkl'];
             select.add(option);
           }
           $('#dropBanLps').select2({placeholder: 'Pilih Ban'});
@@ -536,6 +536,7 @@
           {
             jenis = 'Marset Ban';
           }
+          $('[name="kode_ban_pasang"]').val(data.kode_ban);
           $('[name="jenis_ban_psg"]').val(jenis);
           $('[name="ukuran_ban_psg"]').val(data.ukuran_ban);
           $('[name="merk_ban_psg"]').val(data.merk_ban);
@@ -563,6 +564,7 @@
           {
             jenis = 'Marset Ban';
           }
+          $('[name="kode_ban_lepas"]').val(data.kode_ban);
           $('[name="jenis_ban_lps"]').val(jenis);
           $('[name="ukuran_ban_lps"]').val(data.ukuran_ban);
           $('[name="merk_ban_lps"]').val(data.merk_ban);
