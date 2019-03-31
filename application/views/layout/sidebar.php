@@ -88,22 +88,15 @@
             <li class="<?php if($this->uri->segment(1)=='stok-spare-part'){echo 'active';}?>"><a href="<?= base_url('stok-spare-part')?>">Barang</a></li>
           </ul>
         </li>
-        <li class="treeview <?php $arr=array('laporan-master-barang','laporan-master-customer','laporan-master-kendaraan','laporan-master-karyawan','laporan-master-driver','laporan-master-biaya-driver','laporan-master-tujuan','laporan-master-supplier','laporan-master-ban'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
-          <a href="#"><i class="fa fa-newspaper-o"></i> <span>Laporan</span>
+        <li class="treeview <?php $arr=array('admin-settings','admin-users'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
+          <a href="#"><i class="fa fa-users"></i> <span>Administrator</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li <?php if($this->uri->segment(1)=='laporan-master-barang'){echo 'active';}?>><a href="<?= base_url('laporan-master-barang')?>">Barang</a></li>
-            <li <?php if($this->uri->segment(1)=='laporan-master-customer'){echo 'active';}?>><a href="<?= base_url('laporan-master-customer')?>">Customer</a></li>
-            <li <?php if($this->uri->segment(1)=='laporan-master-kendaraan'){echo 'active';}?>><a href="<?= base_url('laporan-master-kendaraan')?>">Kendaraan</a></li>
-            <li <?php if($this->uri->segment(1)=='laporan-master-karyawan'){echo 'active';}?>><a href="<?= base_url('laporan-master-karyawan')?>">Karyawan</a></li>
-            <li <?php if($this->uri->segment(1)=='laporan-master-sopir'){echo 'active';}?>><a href="<?= base_url('laporan-master-sopir')?>">Sopir</a></li>
-            <li <?php if($this->uri->segment(1)=='laporan-master-biaya-sopir'){echo 'active';}?>><a href="<?= base_url('laporan-master-biaya-sopir')?>">Biaya Sopir</a></li>
-            <li <?php if($this->uri->segment(1)=='laporan-master-tujuan'){echo 'active';}?>><a href="<?= base_url('laporan-master-tujuan')?>">Tujuan</a></li>
-            <li <?php if($this->uri->segment(1)=='laporan-master-supplier'){echo 'active';}?>><a href="<?= base_url('laporan-master-supplier')?>">Supplier</a></li>
-            <li <?php if($this->uri->segment(1)=='laporan-master-ban'){echo 'active';}?>><a href="<?= base_url('laporan-master-ban')?>">Ban</a></li>
+            <li class="<?php if($this->uri->segment(1)=='admin-settings'){echo 'active';}?>"><a href="<?= base_url('admin-settings')?>">Settings</a></li>
+            <li class="<?php if($this->uri->segment(1)=='admin-users'){echo 'active';}?>"><a href="<?= base_url('admin-users')?>">Users</a></li>
           </ul>
         </li>
       </ul>

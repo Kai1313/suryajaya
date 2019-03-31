@@ -224,67 +224,18 @@ class Paging extends CI_Controller
 		$this->load->view('layout/wrapper',$data);
 	}
 
-	//Laporan
-	public function lap_master_barang()
+	//Administrator
+	public function admin_settings()
 	{
-		$data['page_header']='Laporan Master Barang';
-		$data['content']='menu/lap_master_barang';
+		$data['page_header']='Administrator Settings';
+		$data['content']='menu/admin_settings';
 		$this->load->view('layout/wrapper',$data);
 	}
 
-	public function lap_master_customer()
+	public function admin_users()
 	{
-		$data['page_header']='Laporan Master Customer';
-		$data['content']='menu/lap_master_customer';
-		$this->load->view('layout/wrapper',$data);
-	}
-
-	public function lap_master_kendaraan()
-	{
-		$data['page_header']='Laporan Master Kendaraan';
-		$data['content']='menu/lap_master_kendaraan';
-		$this->load->view('layout/wrapper',$data);
-	}
-
-	public function lap_master_karyawan()
-	{
-		$data['page_header']='Laporan Master Karyawan';
-		$data['content']='menu/lap_master_karyawan';
-		$this->load->view('layout/wrapper',$data);
-	}
-
-	public function lap_master_sopir()
-	{
-		$data['page_header']='Laporan Master Sopir';
-		$data['content']='menu/lap_master_sopir';
-		$this->load->view('layout/wrapper',$data);
-	}
-
-	public function lap_master_biaya_sopir()
-	{
-		$data['page_header']='Laporan Master Biaya Sopir';
-		$data['content']='menu/lap_master_biaya_sopir';
-		$this->load->view('layout/wrapper',$data);
-	}
-
-	public function lap_master_tujuan()
-	{
-		$data['page_header']='Laporan Master Tujuan';
-		$data['content']='menu/lap_master_tujuan';
-		$this->load->view('layout/wrapper',$data);
-	}
-
-	public function lap_master_supplier()
-	{
-		$data['page_header']='Laporan Master Supplier';
-		$data['content']='menu/lap_master_supplier';
-		$this->load->view('layout/wrapper',$data);
-	}
-
-	public function lap_master_ban()
-	{
-		$data['page_header']='Laporan Master Ban';
-		$data['content']='menu/lap_master_ban';
+		$data['page_header']='Administrator Users';
+		$data['content']='menu/admin_users';
 		$this->load->view('layout/wrapper',$data);
 	}
 

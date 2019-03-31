@@ -9,6 +9,59 @@ class Crud extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
+	//Administrator
+	public function adminSettings()
+	{
+		$ins = array(
+			'bkl_ban_dalam'=>$this->input->post('bkl_ban_dalam'),
+			'bkl_ban_luar'=>$this->input->post('bkl_ban_luar'),
+			'bkl_marset'=>$this->input->post('bkl_marset'),
+			'nama'=>$this->input->post('nama'),
+			'alamat'=>$this->input->post('alamat'),
+			'kota'=>$this->input->post('kota'),
+			'provinsi'=>$this->input->post('provinsi'),
+			'kodepos'=>$this->input->post('kodepos'),
+			'satuan_kasbon'=>$this->input->post('satuan_kasbon'),
+		);
+		$this->db->update('profile_settings',$ins,array('id'=>'1'));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function addUser()
+	{
+		$ins = array(
+			'username'=>$this->input->post('username'),
+			'password'=>md5($this->input->post('password')),
+			'level'=>$this->input->post('level'),
+			'data_sts'=>'1'
+		);
+		$this->db->insert('users',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updUser()
+	{
+		$upd = array(
+			'username'=>$this->input->post('username'),
+			'password'=>md5($this->input->post('password')),
+			'level'=>$this->input->post('level'),
+			'data_sts'=>'1'
+		);
+		$this->db->update('users',$upd,array('id'=>$this->input->post('id')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function delUser($key)
+	{
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('users',$upd,array('id'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
 	//Generate Nomor Transaksi
 	public function gen_num_($tb,$col,$affix)
 	{
@@ -4196,6 +4249,18 @@ class Crud extends CI_Controller
 	public function getLunas($key)
 	{
 		$data = $this->db->get_where('trx_pelunasan',array('no_lunas'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getSettings($key)
+	{
+		$data = $this->db->get_where('profile_settings',array('id'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function getUser($key)
+	{
+		$data = $this->db->get_where('users',array('id'=>$key))->row();
 		echo json_encode($data);
 	}
 

@@ -11,6 +11,24 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+-- Dumping structure for table suryajaya.hak_akses
+DROP TABLE IF EXISTS `hak_akses`;
+CREATE TABLE IF NOT EXISTS `hak_akses` (
+  `user_id` int(11) NOT NULL,
+  `trx_id` int(11) NOT NULL,
+  `simpan` char(1) DEFAULT NULL,
+  `hapus` char(1) DEFAULT NULL,
+  `update` char(1) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`trx_id`),
+  KEY `FK_hak_akses_trx_list` (`trx_id`),
+  CONSTRAINT `FK_hak_akses_trx_list` FOREIGN KEY (`trx_id`) REFERENCES `trx_list` (`id`),
+  CONSTRAINT `FK_hak_akses_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.hak_akses: ~0 rows (approximately)
+/*!40000 ALTER TABLE `hak_akses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hak_akses` ENABLE KEYS */;
+
 -- Dumping structure for table suryajaya.inv_ban
 DROP TABLE IF EXISTS `inv_ban`;
 CREATE TABLE IF NOT EXISTS `inv_ban` (
@@ -273,12 +291,12 @@ CREATE TABLE IF NOT EXISTS `profile_settings` (
   `logo` char(100) DEFAULT NULL,
   `satuan_kasbon` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.profile_settings: ~0 rows (approximately)
+-- Dumping data for table suryajaya.profile_settings: ~1 rows (approximately)
 /*!40000 ALTER TABLE `profile_settings` DISABLE KEYS */;
 INSERT INTO `profile_settings` (`id`, `bkl_ban_dalam`, `bkl_ban_luar`, `bkl_marset`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `logo`, `satuan_kasbon`) VALUES
-	(1, 1, 11, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+	(1, 1, 11, 1, 'Suryajaya', 'Jalan Maju No.104', 'Tulungagung', 'Jawa Timur', '62011', NULL, 100000.00);
 /*!40000 ALTER TABLE `profile_settings` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_bayar_bonklaim_sopir
@@ -355,12 +373,13 @@ CREATE TABLE IF NOT EXISTS `trx_beli_ban` (
   CONSTRAINT `FK_trx_beli_ban_master_supplier` FOREIGN KEY (`kode_supplier`) REFERENCES `master_supplier` (`kode_supplier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_beli_ban: ~3 rows (approximately)
+-- Dumping data for table suryajaya.trx_beli_ban: ~4 rows (approximately)
 /*!40000 ALTER TABLE `trx_beli_ban` DISABLE KEYS */;
 INSERT INTO `trx_beli_ban` (`no_pembelian`, `kode_supplier`, `nota_toko`, `tgl_pembelian`, `grand_total`, `data_sts`) VALUES
 	('BL1901-000001', NULL, NULL, '2019-01-06', NULL, '0'),
 	('BL1901-000002', 'SUP0001', 'SH12345', '2019-01-06', 2000000.00, '1'),
-	('BL1903-000001', 'SUP0002', '345678987', '2019-03-21', 5000000.00, '1');
+	('BL1903-000001', 'SUP0002', '345678987', '2019-03-21', 5000000.00, '1'),
+	('BL1903-000002', NULL, NULL, '2019-03-30', NULL, '0');
 /*!40000 ALTER TABLE `trx_beli_ban` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_beli_ban_det
@@ -377,14 +396,15 @@ CREATE TABLE IF NOT EXISTS `trx_beli_ban_det` (
   KEY `FK_trx_beli_ban_det_master_ban` (`kode_ban`),
   CONSTRAINT `FK_trx_beli_ban_det_master_ban` FOREIGN KEY (`kode_ban`) REFERENCES `master_ban` (`kode_ban`),
   CONSTRAINT `FK_trx_beli_ban_det_trx_beli_ban` FOREIGN KEY (`no_pembelian`) REFERENCES `trx_beli_ban` (`no_pembelian`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_beli_ban_det: ~2 rows (approximately)
+-- Dumping data for table suryajaya.trx_beli_ban_det: ~3 rows (approximately)
 /*!40000 ALTER TABLE `trx_beli_ban_det` DISABLE KEYS */;
 INSERT INTO `trx_beli_ban_det` (`det_id`, `no_pembelian`, `kode_ban`, `qty_beli`, `harga_satuan`, `jumlah`) VALUES
 	(2, 'BL1901-000002', 'BAN0001', 2.00, 1000000.00, 2000000.00),
 	(3, NULL, NULL, NULL, NULL, 0.00),
-	(4, 'BL1903-000001', 'BAN0001', 5.00, 1000000.00, 5000000.00);
+	(4, 'BL1903-000001', 'BAN0001', 5.00, 1000000.00, 5000000.00),
+	(5, 'BL1903-000002', 'BAN0001', 1.00, 100000.00, 100000.00);
 /*!40000 ALTER TABLE `trx_beli_ban_det` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_beli_barang
@@ -885,7 +905,7 @@ CREATE TABLE IF NOT EXISTS `trx_lepas_ban` (
   CONSTRAINT `FK_trx_lepas_ban_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_lepas_ban: ~4 rows (approximately)
+-- Dumping data for table suryajaya.trx_lepas_ban: ~5 rows (approximately)
 /*!40000 ALTER TABLE `trx_lepas_ban` DISABLE KEYS */;
 INSERT INTO `trx_lepas_ban` (`no_pelepasan`, `kode_kendaraan`, `tgl_pelepasan`, `bengkel_pelepasan`, `data_sts`) VALUES
 	('LPS1901-000001', NULL, '2019-01-20', NULL, '0'),
@@ -919,6 +939,19 @@ INSERT INTO `trx_lepas_ban_det` (`det_id`, `no_pelepasan`, `kode_ban`, `kode_inv
 	(1, 'LPS1902-000001', 'BAN0001', NULL, '1', '0'),
 	(2, 'LPS1903-000001', 'BAN0001', 1, '1', '0');
 /*!40000 ALTER TABLE `trx_lepas_ban_det` ENABLE KEYS */;
+
+-- Dumping structure for table suryajaya.trx_list
+DROP TABLE IF EXISTS `trx_list`;
+CREATE TABLE IF NOT EXISTS `trx_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` char(50) NOT NULL DEFAULT '0',
+  `data_sts` char(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.trx_list: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_list` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_list` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_opname_ban
 DROP TABLE IF EXISTS `trx_opname_ban`;
@@ -1077,7 +1110,7 @@ CREATE TABLE IF NOT EXISTS `trx_pasang_ban_det` (
   CONSTRAINT `FK_trx_pasang_ban_det_trx_pasang_ban` FOREIGN KEY (`no_pemasangan`) REFERENCES `trx_pasang_ban` (`no_pemasangan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_pasang_ban_det: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_pasang_ban_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_pasang_ban_det` DISABLE KEYS */;
 INSERT INTO `trx_pasang_ban_det` (`det_id`, `no_pemasangan`, `kode_ban`, `kode_inventory`, `qty_pasang`, `status_pasang`) VALUES
 	(3, 'PSG1902-000001', 'BAN0001', NULL, 1.00, '0'),
@@ -1251,6 +1284,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` char(50) DEFAULT '0',
   `password` char(50) DEFAULT '0',
+  `level` char(1) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

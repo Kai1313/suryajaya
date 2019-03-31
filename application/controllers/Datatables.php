@@ -74,6 +74,9 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/report/ReportPelunasanPiutang','rptLunas');
 		$this->load->model('Datatables/report/ReportInputKas','rptKas');
 		$this->load->model('Datatables/report/ReportKatalog','rptKtl');
+
+		$this->load->model('Datatables/administrator/AdminSettings','admSettings');
+		$this->load->model('Datatables/administrator/AdminUsers','admUsers');
 	}
 
 	//Data Report Transaksi
@@ -618,7 +621,7 @@ class Datatables extends CI_Controller
 				"data" => $data,
 			);
 		echo json_encode($output);
-	}	
+	}
 
 	public function rptBeliBarang()
 	{
@@ -1952,6 +1955,71 @@ class Datatables extends CI_Controller
 				"draw" => $_POST['draw'],
 				"recordsTotal" => $this->showBan->count_all(),
 				"recordsFiltered" => $this->showBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	//Administrator
+	public function adminSettings()
+	{
+		$list = $this->admSettings->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = $dat->bkl_ban_dalam;
+			$row[] = $dat->bkl_ban_luar;
+			$row[] = $dat->bkl_marset;
+			$row[] = $dat->nama;
+			$row[] = $dat->alamat.', '.$dat->kota.', '.$dat->provinsi.' - '.$dat->kodepos;
+			$row[] = number_format($dat->satuan_kasbon,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->admSettings->count_all(),
+				"recordsFiltered" => $this->admSettings->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function adminUsers()
+	{
+		$list = $this->admUsers->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			switch ($dat->level)
+			{
+				case '0':
+					$level = 'Administrator';
+					break;
+				case '1':
+					$level = 'Regular';
+					break;
+				case '2':
+					$level = 'Supervisor';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = $dat->username;
+			$row[] = $level;
+			$row[] = '';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->id."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->id."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->admUsers->count_all(),
+				"recordsFiltered" => $this->admUsers->count_filtered(),
 				"data" => $data,
 			);
 		echo json_encode($output);
