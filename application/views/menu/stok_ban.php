@@ -246,7 +246,7 @@
         dataType: 'JSON',
         success: function(data)
         {
-          switch()
+          switch(data.sts_ban)
           {
             case '0':
             $('[name="stok"]').val(data.stok_baru);

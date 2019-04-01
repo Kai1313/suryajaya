@@ -74,12 +74,72 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/report/ReportPelunasanPiutang','rptLunas');
 		$this->load->model('Datatables/report/ReportInputKas','rptKas');
 		$this->load->model('Datatables/report/ReportKatalog','rptKtl');
+		$this->load->model('Datatables/report/ReportOpnameBan','rptOpnameBan');
 
 		$this->load->model('Datatables/administrator/AdminSettings','admSettings');
 		$this->load->model('Datatables/administrator/AdminUsers','admUsers');
 	}
 
 	//Data Report Transaksi
+	public function rptOpnameBan()
+	{
+		$list = $this->rptOpnameBan->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			switch ($dat->sts_stok)
+			{
+				case '0':
+					$sts = 'Baru';
+					break;
+				case '1':
+					$sts = 'Bekas';
+					break;
+				case '2':
+					$sts = 'Vulkansir';
+					break;
+				case '3':
+					$sts = 'Afkir/Buang';
+					break;
+				case '4':
+					$sts = 'Terpasang';
+					break;
+				default:
+					break;
+			}
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = $dat->kode_ban.' - '.$dat->merk_ban;
+			$row[] = $dat->ukuran_ban;
+			$row[] = $jenis;
+			$row[] = $dat->bkl;
+			$row[] = $sts;
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptOpnameBan->count_all(),
+				"recordsFiltered" => $this->rptOpnameBan->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function rptInputKas()
 	{
 		$list = $this->rptKas->get_datatables();

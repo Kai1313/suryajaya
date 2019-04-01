@@ -66,7 +66,7 @@
       margin-top: 0;
       margin-bottom: 0;
     }
-    .table thead th
+    /*.table thead th
     {
       margin: 0 !important;
       padding-top: 0 !important;
@@ -99,7 +99,7 @@
       height: 25px !important;
       background-color: #FFFFFF;
       border: none;
-    }
+    }*/
     .printing .loc-info .loc-notice
     {
       margin-top: 0;
@@ -135,56 +135,78 @@
         display: none;
       }
     }
-    </style>
+  </style>
   <body>
     <div class="container hidden-print">
       <div class="row">
-        <div class="col-sm-2 col-xs-3">
-          <button class="btn btn-block btn-primary" type="button" onclick="printDiv()">Print</button>
+        <!-- <div class="col-sm-2 col-xs-3">
+          <label>Tanggal Awal</label>
+          <div class="input-group date">
+            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+            <input type="text" name="tgl_awal" class="form-control pull-right" id="tgl_awal" placeholder="dd/mm/yyyy">
+          </div>
         </div>
         <div class="col-sm-2 col-xs-3">
-          <button class="btn btn-block btn-success addBtn" type="button">Tambah Kolom</button>
+          <label>Tanggal Akhir</label>
+          <div class="input-group date">
+            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+            <input type="text" name="tgl_akhir" class="form-control pull-right" id="tgl_akhir" placeholder="dd/mm/yyyy">
+          </div>
+        </div> -->
+        <div class="col-sm-2 col-xs-3">
+          <label>Kode Ban</label>
+          <select class="form-control" name="kode_ban" id="dropBan" style="width: 100%;">
+            <option value="">Pilih Ban</option>
+          </select>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+          <label>&nbsp;</label>
+          <button type="button" class="btn btn-block btn-primary" onclick="reloadTb()">Filter</button>
         </div>
       </div>
     </div>
     <div class="container printing" id="print-div">
-      <input type="hidden" name="">
       <header>
         <div class="row">
-          <!-- <div class="col-sm-2 col-xs-2"> -->
+          <div class="col-sm-3 col-xs-3">
             <!-- <img id="img_logo" class="img-responsive" src=""> -->
-            <!-- <h2>Suryajaya</h2> -->
-          <!-- </div> -->
-          <div class="col-sm-offset=2 col-xs-offset-2 col-sm-2 col-xs-2 text-center">
-            <!-- <img id="img_logo" class="img-responsive" src=""> -->
-            <h3>Slip Upah</h3>
+            <h2>Suryajaya</h2>
           </div>
-          <!-- <div class="col-sm-2 col-xs-2 company-details">
+          <div class="col-sm-9 col-xs-9 company-details">
             <div><span name="comp-address">Tulungagung</span></div>
             <div>Phone <span name="comp-phone">031 845557</span></div>
             <div>Fax <span name="comp-fax">031 845558</span></div>
-          </div> -->
+          </div>
         </div>
       </header>
       <main>
         <div class="row">
           <div class="col-sm-4 col-xs-4 to-details">
             <div>Kepada :</div>
-            <div class="to-name" name="karyawan"></div>
-            <br>
-            <h3>Sub Total <span name="sub_nom" class="chgnum"></span></h3>
-            <h3>Bon <span name="sub_bon" class="chgnum"></span></h3>
-            <hr>
-            <h3>Jumlah <span name="grand_nom" class="chgnum"></span></h3>
+            <div class="to-name" name="to_name"></div>
+            <div class="to-phone" name="to_phone"></div>
+            <div class="to-address" name="to_address"></div>
           </div>
-          <div class="col-sm-2 col-xs-2 printing-info">
+          <div class="col-sm-8 col-xs-8 printing-info">
             <h4 class="info-code" name="data_code"></h4>
             <div class="reff-content">Tgl : <span name="data_date"></span></div>
+            <!-- <div class="reff-content">Rekening : <span name="data_acc"></span></div> -->
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12 col-xs-12">
-            <h3><span name="terbilang"></span></h3>
+          <div class="col-sm-12 col-xs-12 table-responsive">
+            <table id="rptOpnameBan" class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
+              <thead>
+                <tr>
+                  <th class="text-center col-xs-2 col-sm-2">Kode Ban</th>
+                  <th class="text-center col-xs-2 col-sm-2">Ukuran</th>
+                  <th class="text-center col-xs-2 col-sm-2">Jenis Ban</th>
+                  <th class="text-center col-xs-3 col-sm-3">No. BKL</th>
+                  <th class="text-center col-xs-3 col-sm-3">Status Ban</th>
+                </tr>
+              </thead>
+              <tbody id="tb_content"></tbody>
+            </table>
           </div>
         </div>
       </main>
@@ -193,7 +215,7 @@
           <div class="col-xs-3 col-sm-3">
             <div>Kepada</div>
           </div>
-          <div class="col-xs-3 col-sm-3">
+          <div class="col-xs-offset-2 col-sm-offset-2 col-xs-3 col-sm-3">
             <div>Mengetahui</div>
           </div>
         </div>
@@ -201,7 +223,7 @@
           <div class="col-xs-3 col-sm-3">
             <div>(................)</div>
           </div>
-          <div class="col-xs-3 col-sm-3">
+          <div class="col-xs-offset-2 col-sm-offset-2 col-xs-3 col-sm-3">
             <div>(................)</div>
           </div>
         </div>
@@ -213,31 +235,86 @@
   <script>
     $(function ()
     {
-      key = '<?= $key ;?>';
-      fetchData(key);
+      fetchData();
+      dropban();
+      $('#tgl_awal').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+      });
+      $('#tgl_akhir').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+      });
     })
-    function fetchData(key)
+    function dropban()
     {
       $.ajax({
-        url : "<?php echo site_url('Crud/getPrintUpah/')?>"+key,
+        url : "<?php echo site_url('Crud/getDropBan')?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
-        {
-          $('[name="karyawan"]').text('Nama '+data['a'].nama_karyawan);
-          $('[name="sub_nom"]').text('Sub Total '+data['a'].sub_total);
-          $('[name="sub_bon"]').text('Potong '+data['a'].sub_bon);
-          $('[name="grand_nom"]').text('Jumlah '+data['a'].grand_total);
-          $('[name="data_code"]').text(data['a'].no_kuitansi);
-          $('[name="data_date"]').text(data['a'].tgl_upah);
-          $('[name="terbilang"]').text(data['b']+' Rupiah');
-          $('.chgnum').number(true,2);
+        {   
+          var select = document.getElementById('dropBan');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_ban']
+            option.text = data[i]['nama_ban'];
+            select.add(option);
+          }
+          $('#dropBan').select2({placeholder: 'Pilih Ban'});
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
-          alert('Error get data from ajax');
+          alert('Error get Ban data');
         }
       });
+    }
+    function fetchData()
+    {
+      table = $('#rptOpnameBan').DataTable({
+        "info": false,
+        "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "paging": false,
+        "order": [],
+        "ajax": {
+          "url": "<?php echo site_url('Datatables/rptOpnameBan')?>",
+          "type": "POST",
+          "data": function(data)
+            {
+              data.kode_ban = $('[name="kode_ban"]').val();
+            },
+          },
+        "columnDefs": [
+          { 
+            "targets": [ 0 ],
+            "orderable": false,
+          },
+          {
+            "className": "text-center", "targets": ['_all']
+          }
+        ],
+        "dom": 'Bfrtip',
+          "buttons": 
+          {
+            "dom": 
+            {
+              "button": 
+              {
+                "tag": 'button',
+                "className": 'btn btn-sm btn-info'
+              }
+            },
+            "buttons": ['excelHtml5','print']
+          }
+      });
+    }
+    function reloadTb()
+    {
+      table.ajax.reload(null,false);
     }
     function printDiv()
     {
