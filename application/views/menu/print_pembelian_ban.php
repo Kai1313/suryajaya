@@ -180,11 +180,11 @@
             <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
               <thead>
                 <tr>
-                  <th class="text-center col-xs-2 col-sm-2">Jenis Ban</th>
-                  <th class="text-center col-xs-3 col-sm-3">Keterangan</th>
-                  <th class="text-center col-xs-2 col-sm-2">Qty</th>
-                  <th class="text-center col-xs-2 col-sm-2">Harga</th>
-                  <th class="text-center col-xs-3 col-sm-3">Jumlah</th>
+                  <th class="text-center col-xs-2 col-sm-2">No BKL</th>
+                  <th class="text-center col-xs-2 col-sm-2">Jenis</th>
+                  <th class="text-center col-xs-2 col-sm-2">Ukuran</th>
+                  <th class="text-center col-xs-3 col-sm-3">Merk</th>
+                  <th class="text-center col-xs-3 col-sm-3">Harga</th>
                 </tr>
               </thead>
               <tbody id="tb_content"></tbody>
@@ -261,11 +261,11 @@
           $('[name="data_code"]').text(data['a'].no_pembelian);
           $('[name="data_date"]').text(data['a'].tgl_pembelian);
           $('[name="printing_total"]').text(data['a'].grand_total);
-          var blankrow = 7-data['b'].length;
-          for (var i = 0; i < data['b'].length; i++)
+          var blankrow = 7-data['e'].length;
+          for (var i = 0; i < data['e'].length; i++)
           {
             var jenis;
-            switch(data['b'][i]["jenis_ban"])
+            switch(data['e'][i]["jenis_ban"])
             {
               case '0':
               jenis = 'Ban Dalam';
@@ -280,11 +280,11 @@
               break;
             }
             var $tr = $('<tr>').append(
+              $('<td class="text-center">'+data['e'][i]["bkl"]+'</td>'),
               $('<td class="text-center">'+jenis+'</td>'),
-              $('<td class="text-center">'+data['b'][i]["ukuran_ban"]+' - '+data['b'][i]["merk_ban"]+' Nomor BKL : '+data['d']+'</td>'),
-              $('<td class="text-center chgnum">'+data['b'][i]["qty_beli"]+'</td>'),
-              $('<td class="text-center chgnum">'+data['b'][i]["harga_satuan"]+'</td>'),
-              $('<td class="text-right chgnum">'+data['b'][i]["jumlah"]+'</td>')
+              $('<td class="text-center">'+data['e'][i]["ukuran_ban"]+'</td>'),
+              $('<td class="text-center">'+data['e'][i]["merk_ban"]+'</td>'),
+              $('<td class="text-center chgnum" name="hrg'+data['e'][i]["kode_ban"]+'"></td>')
               ).appendTo('#tb_content');
           }
           for (var j = 0; j < blankrow; j++)
@@ -293,6 +293,10 @@
               $('<td class="blank-row"></td>'),
               $('<td></td>'),$('<td></td>'),$('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
               ).appendTo('#tb_content');
+          }
+          for (var i = 0; i < data['b'].length; i++)
+          {
+            $('[name="hrg'+data['b'][i]["kode_ban"]+'"]').text(data['b'][i]["harga_satuan"]);
           }
           $('td.chgnum').number(true,2);
           $('th.chgnum').number(true,2);
