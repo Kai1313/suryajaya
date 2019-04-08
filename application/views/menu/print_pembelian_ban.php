@@ -180,21 +180,22 @@
             <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
               <thead>
                 <tr>
+                  <th class="text-center col-xs-1 col-sm-1">No</th>
                   <th class="text-center col-xs-2 col-sm-2">No BKL</th>
                   <th class="text-center col-xs-2 col-sm-2">Jenis</th>
                   <th class="text-center col-xs-2 col-sm-2">Ukuran</th>
                   <th class="text-center col-xs-3 col-sm-3">Merk</th>
-                  <th class="text-center col-xs-3 col-sm-3">Harga</th>
+                  <th class="text-center col-xs-2 col-sm-2">Harga</th>
                 </tr>
               </thead>
               <tbody id="tb_content"></tbody>
               <tfoot>
                 <tr>
-                  <th colspan="4" class="text-right">GRAND TOTAL</th>
+                  <th colspan="5" class="text-right">GRAND TOTAL</th>
                   <th class="text-right chgnum"><span name="printing_total"></span></th>
                 </tr>
                 <tr>
-                  <th colspan="5" class="notice-row">
+                  <th colspan="6" class="notice-row">
                     <div class="row">
                       <div class="col-sm-2 col-xs-2">TERBILANG<br>KETERANGAN</div>
                       <div class="col-sm-9 col-xs-9"><span name="printing_spelled"></span><br><span name="printing_info"></span></div>
@@ -280,6 +281,7 @@
               break;
             }
             var $tr = $('<tr>').append(
+              $('<td class="text-center">'+(i+1)+'</td>'),
               $('<td class="text-center">'+data['e'][i]["bkl"]+'</td>'),
               $('<td class="text-center">'+jenis+'</td>'),
               $('<td class="text-center">'+data['e'][i]["ukuran_ban"]+'</td>'),
