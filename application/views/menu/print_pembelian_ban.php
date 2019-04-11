@@ -283,7 +283,7 @@
               default:
               break;
             }
-            current = data['e'][i]["kode_ban"];
+            current = data['e'][i]["jenis_ban"];
             cou = (current!=before)?1:(cou+1);
             var $tr = $('<tr>').append(
               $('<td class="text-center">'+cou+'</td>'),
@@ -293,7 +293,7 @@
               $('<td class="text-center">'+data['e'][i]["merk_ban"]+'</td>'),
               $('<td class="text-center chgnum" name="hrg'+data['e'][i]["kode_ban"]+'"></td>')
               ).appendTo('#tb_content');
-            before = data['e'][i]["kode_ban"];
+            before = data['e'][i]["jenis_ban"];
           }
           for (var j = 0; j < blankrow; j++)
           {
