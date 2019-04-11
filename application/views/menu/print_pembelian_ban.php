@@ -263,6 +263,9 @@
           $('[name="data_date"]').text(data['a'].tgl_pembelian);
           $('[name="printing_total"]').text(data['a'].grand_total);
           var blankrow = 7-data['e'].length;
+          var current = '';
+          var before = '';
+          var cou = 1;
           for (var i = 0; i < data['e'].length; i++)
           {
             var jenis;
@@ -280,14 +283,17 @@
               default:
               break;
             }
+            current = data['e'][i]["kode_ban"];
+            cou = (current!=before)?1:(cou+1);
             var $tr = $('<tr>').append(
-              $('<td class="text-center">'+(i+1)+'</td>'),
+              $('<td class="text-center">'+cou+'</td>'),
               $('<td class="text-center">'+data['e'][i]["bkl"]+'</td>'),
               $('<td class="text-center">'+jenis+'</td>'),
               $('<td class="text-center">'+data['e'][i]["ukuran_ban"]+'</td>'),
               $('<td class="text-center">'+data['e'][i]["merk_ban"]+'</td>'),
               $('<td class="text-center chgnum" name="hrg'+data['e'][i]["kode_ban"]+'"></td>')
               ).appendTo('#tb_content');
+            before = data['e'][i]["kode_ban"];
           }
           for (var j = 0; j < blankrow; j++)
           {
