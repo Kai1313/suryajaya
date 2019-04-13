@@ -281,7 +281,7 @@
               break;
             }
             var $tr = $('<tr>').append(
-              $('<td class="text-center">'+(i+1)+'</td>'),
+              $('<td class="text-center">'+cou+'</td>'),
               $('<td class="text-center">'+data['e'][i]["bkl"]+'</td>'),
               $('<td class="text-center">'+jenis+'</td>'),
               $('<td class="text-center">'+data['e'][i]["ukuran_ban"]+'</td>'),
