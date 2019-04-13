@@ -4306,7 +4306,7 @@ class Crud extends CI_Controller
 		$data['b'] = $this->db->join('master_ban b','b.kode_ban = a.kode_ban')->get_where('trx_beli_ban_det a',array('a.no_pembelian'=>$key))->result();
 		$data['c'] = $this->db->select('SUM(a.jumlah) as subtotal')->join('trx_beli_ban b','b.no_pembelian = a.no_pembelian')->get_where('trx_beli_ban_det a',array('a.no_pembelian'=>$key))->row();
 		$data['d'] = $this->db->select('group_concat(bkl SEPARATOR ", ") as conStr')->get_where('inv_ban',array('kode_transaksi'=>$key))->row()->conStr;
-		$data['e'] = $this->db->join('master_ban c','c.kode_ban = a.kode_ban')->join('trx_beli_ban b','b.no_pembelian  = a.kode_transaksi')->get_where('inv_ban a',array('a.kode_transaksi'=>$key))->result();
+		$data['e'] = $this->db->join('master_ban c','c.kode_ban = a.kode_ban')->join('trx_beli_ban b','b.no_pembelian  = a.kode_transaksi')->order_by('c.jenis_ban')->get_where('inv_ban a',array('a.kode_transaksi'=>$key))->result();
 		echo json_encode($data);
 	}
 
