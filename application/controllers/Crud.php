@@ -62,6 +62,321 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getMenu()
+	{
+		$data['mst'] = $this->db->get_where('trx_list',array('data_sts'=>'1','status'=>'0'))->result();
+		$data['trx'] = $this->db->get_where('trx_list',array('data_sts'=>'1','status'=>'1'))->result();
+		echo json_encode($data);
+	}
+
+	public function upAkses()
+	{
+		$user = '1';
+		$master = $this->input->post('mst');
+		$trxs = $this->input->post('trx');
+		$data['mst'] = count($master);
+		$data['trx'] = count($trxs);
+		$del_acc = $this->db->delete('hak_akses',array('user_id'=>$user));
+		if(sizeof($trxs)>0)
+		{
+			foreach($trxs as $trx)
+			{
+				switch ($trx)
+				{
+					case '11':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t11'))?$this->input->post('t11'):null,
+							'update'=>($this->input->post('t12'))?$this->input->post('t12'):null,
+							'hapus'=>($this->input->post('t13'))?$this->input->post('t13'):null
+						);
+						break;
+					case '12':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t21'))?$this->input->post('t21'):null,
+							'update'=>($this->input->post('t22'))?$this->input->post('t22'):null,
+							'hapus'=>($this->input->post('t23'))?$this->input->post('t23'):null
+						);
+						break;
+					case '13':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t31'))?$this->input->post('t31'):null,
+							'update'=>($this->input->post('t32'))?$this->input->post('t32'):null,
+							'hapus'=>($this->input->post('t33'))?$this->input->post('t33'):null
+						);
+						break;
+					case '14':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t41'))?$this->input->post('t41'):null,
+							'update'=>($this->input->post('t42'))?$this->input->post('t42'):null,
+							'hapus'=>($this->input->post('t43'))?$this->input->post('t43'):null
+						);
+						break;
+					case '15':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t51'))?$this->input->post('t51'):null,
+							'update'=>($this->input->post('t52'))?$this->input->post('t52'):null,
+							'hapus'=>($this->input->post('t53'))?$this->input->post('t53'):null
+						);
+						break;
+					case '16':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t61'))?$this->input->post('t61'):null,
+							'update'=>($this->input->post('t62'))?$this->input->post('t62'):null,
+							'hapus'=>($this->input->post('t63'))?$this->input->post('t63'):null
+						);
+						break;
+					case '17':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t71'))?$this->input->post('t71'):null,
+							'update'=>($this->input->post('t72'))?$this->input->post('t72'):null,
+							'hapus'=>($this->input->post('t73'))?$this->input->post('t73'):null
+						);
+						break;
+					case '18':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t81'))?$this->input->post('t81'):null,
+							'update'=>($this->input->post('t82'))?$this->input->post('t82'):null,
+							'hapus'=>($this->input->post('t83'))?$this->input->post('t83'):null
+						);
+						break;
+					case '19':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t91'))?$this->input->post('t91'):null,
+							'update'=>($this->input->post('t92'))?$this->input->post('t92'):null,
+							'hapus'=>($this->input->post('t93'))?$this->input->post('t93'):null
+						);
+						break;
+					case '20':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t101'))?$this->input->post('t101'):null,
+							'update'=>($this->input->post('t102'))?$this->input->post('t102'):null,
+							'hapus'=>($this->input->post('t103'))?$this->input->post('t103'):null
+						);
+						break;
+					case '21':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t111'))?$this->input->post('t111'):null,
+							'update'=>($this->input->post('t112'))?$this->input->post('t112'):null,
+							'hapus'=>($this->input->post('t113'))?$this->input->post('t113'):null
+						);
+						break;
+					case '22':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t121'))?$this->input->post('t121'):null,
+							'update'=>($this->input->post('t122'))?$this->input->post('t122'):null,
+							'hapus'=>($this->input->post('t123'))?$this->input->post('t123'):null
+						);
+						break;
+					case '23':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t131'))?$this->input->post('t131'):null,
+							'update'=>($this->input->post('t132'))?$this->input->post('t132'):null,
+							'hapus'=>($this->input->post('t133'))?$this->input->post('t133'):null
+						);
+						break;
+					case '24':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t141'))?$this->input->post('t141'):null,
+							'update'=>($this->input->post('t142'))?$this->input->post('t142'):null,
+							'hapus'=>($this->input->post('t143'))?$this->input->post('t143'):null
+						);
+						break;
+					case '25':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t151'))?$this->input->post('t151'):null,
+							'update'=>($this->input->post('t152'))?$this->input->post('t152'):null,
+							'hapus'=>($this->input->post('t153'))?$this->input->post('t153'):null
+						);
+						break;
+					case '26':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t161'))?$this->input->post('t161'):null,
+							'update'=>($this->input->post('t162'))?$this->input->post('t162'):null,
+							'hapus'=>($this->input->post('t163'))?$this->input->post('t163'):null
+						);
+						break;
+					case '27':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t171'))?$this->input->post('t171'):null,
+							'update'=>($this->input->post('t172'))?$this->input->post('t172'):null,
+							'hapus'=>($this->input->post('t173'))?$this->input->post('t173'):null
+						);
+						break;
+					case '28':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t181'))?$this->input->post('t181'):null,
+							'update'=>($this->input->post('t182'))?$this->input->post('t182'):null,
+							'hapus'=>($this->input->post('t183'))?$this->input->post('t183'):null
+						);
+						break;
+					case '29':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t191'))?$this->input->post('t191'):null,
+							'update'=>($this->input->post('t192'))?$this->input->post('t192'):null,
+							'hapus'=>($this->input->post('t193'))?$this->input->post('t193'):null
+						);
+						break;
+					case '30':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$trx,
+							'simpan'=>($this->input->post('t201'))?$this->input->post('t201'):null,
+							'update'=>($this->input->post('t202'))?$this->input->post('t202'):null,
+							'hapus'=>($this->input->post('t203'))?$this->input->post('t203'):null
+						);
+						break;
+					default:
+						# code...
+						break;
+				}
+				$this->db->insert('hak_akses',$dtacc);
+			}
+		}
+		if(sizeof($master)>0)
+		{
+			foreach($master as $mst)
+			{
+				switch ($mst)
+				{
+					case '1':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m11'))?$this->input->post('m11'):null,
+							'update'=>($this->input->post('m12'))?$this->input->post('m12'):null,
+							'hapus'=>($this->input->post('m13'))?$this->input->post('m13'):null
+						);
+						break;
+					case '2':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m21'))?$this->input->post('m21'):null,
+							'update'=>($this->input->post('m22'))?$this->input->post('m22'):null,
+							'hapus'=>($this->input->post('m23'))?$this->input->post('m23'):null
+						);
+						break;
+					case '3':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m31'))?$this->input->post('m31'):null,
+							'update'=>($this->input->post('m32'))?$this->input->post('m32'):null,
+							'hapus'=>($this->input->post('m33'))?$this->input->post('m33'):null
+						);
+						break;
+					case '4':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m41'))?$this->input->post('m41'):null,
+							'update'=>($this->input->post('m42'))?$this->input->post('m42'):null,
+							'hapus'=>($this->input->post('m43'))?$this->input->post('m43'):null
+						);
+						break;
+					case '5':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m51'))?$this->input->post('m51'):null,
+							'update'=>($this->input->post('m52'))?$this->input->post('m52'):null,
+							'hapus'=>($this->input->post('m53'))?$this->input->post('m53'):null
+						);
+						break;
+					case '6':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m61'))?$this->input->post('m61'):null,
+							'update'=>($this->input->post('m62'))?$this->input->post('m62'):null,
+							'hapus'=>($this->input->post('m63'))?$this->input->post('m63'):null
+						);
+						break;
+					case '7':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m71'))?$this->input->post('m71'):null,
+							'update'=>($this->input->post('m72'))?$this->input->post('m72'):null,
+							'hapus'=>($this->input->post('m73'))?$this->input->post('m73'):null
+						);
+						break;
+					case '8':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m81'))?$this->input->post('m81'):null,
+							'update'=>($this->input->post('m82'))?$this->input->post('m82'):null,
+							'hapus'=>($this->input->post('m83'))?$this->input->post('m83'):null
+						);
+						break;
+					case '9':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m91'))?$this->input->post('m91'):null,
+							'update'=>($this->input->post('m92'))?$this->input->post('m92'):null,
+							'hapus'=>($this->input->post('m93'))?$this->input->post('m93'):null
+						);
+						break;
+					case '10':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>$mst,
+							'simpan'=>($this->input->post('m101'))?$this->input->post('m101'):null,
+							'update'=>($this->input->post('m102'))?$this->input->post('m102'):null,
+							'hapus'=>($this->input->post('m103'))?$this->input->post('m103'):null
+						);
+						break;
+					default:
+						# code...
+						break;
+				}
+				$this->db->insert('hak_akses',$dtacc);
+			}
+		}
+		$data['status'] = TRUE;
+		echo json_encode($data);
+	}
+
 	//Generate Nomor Transaksi
 	public function gen_num_($tb,$col,$affix)
 	{

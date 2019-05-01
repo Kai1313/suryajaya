@@ -2070,6 +2070,7 @@ class Datatables extends CI_Controller
 			}
 			$no++;
 			$row = array();
+			$row[] = $no;
 			$row[] = $dat->username;
 			$row[] = $level;
 			$row[] = '';

@@ -46,6 +46,7 @@
                 </div>
                 <div class="form-group">
                   <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
+                  <button type="button" class="btn btn-sm btn-primary" onclick="openModal()">Modal</button>
                 </div>
               </div>
             </form>
@@ -73,6 +74,51 @@
     </section>
     <!-- /.content -->
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modal-akses">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <form id="form-akses">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <strong>Data Master</strong><br />
+                    <input type="checkbox" name="master_pick" onclick="pickall_master()"> Pilih Semua
+                  </div>
+                  <div class="panel-body" id="master">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <strong>Data Transaksi</strong><br />
+                    <input type="checkbox" name="trx_pick" onclick="pickall_trx()"> Pilih Semua
+                  </div>
+                  <div class="panel-body" id="trx">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary pull-left" onclick="upAkses()">Simpan</button>
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.Modal -->
   <!-- /.content-wrapper -->
   <?php include 'application/views/layout/footer.php' ;?>
   <?php include 'application/views/layout/controlsidebar.php' ;?>
@@ -82,7 +128,12 @@
     $(function ()
     {
       tbUsers();
+      checkboxes();
     })
+    function openModal()
+    {
+      $('#modal-akses').modal('show');
+    }
     function tbUsers()
     {
       table = $('#mUsers').DataTable({
@@ -181,6 +232,67 @@
           else
           {
             alert('Gagal Menghapus User');
+          }
+        }
+      });
+    }
+    function checkboxes()
+    {
+      $('#master').empty();
+      $('#trx').empty();
+      $.ajax({
+        url : "<?php echo site_url('Crud/getMenu')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+          for (var i = 0; i < data['mst'].length; i++) 
+          {
+            var chkbox = $('<div class="row"><div class="col-xs-3"><input type="checkbox" name="mst[]" class="mst" value="'+data['mst'][i]['id']+'" /> '+data['mst'][i]['nama']+'</div><div class="col-xs-3"><input type="checkbox" class="mst" name="'+data['mst'][i]['code']+'1" value="1" /> Simpan</div><div class="col-xs-3"><input type="checkbox" class="mst" name="'+data['mst'][i]['code']+'2" value="1" /> Update</div><div class="col-xs-3"><input type="checkbox" class="mst" name="'+data['mst'][i]['code']+'3" value="1" /> Hapus</div></div>');
+            chkbox.appendTo('#master');
+          }
+          for (var i = 0; i < data['trx'].length; i++) 
+          {
+            var chkbox = $('<div class="row"><div class="col-xs-3"><input type="checkbox" name="trx[]" class="trx" value="'+data['trx'][i]['id']+'" /> '+data['trx'][i]['nama']+'</div><div class="col-xs-3"><input type="checkbox" class="trx" name="'+data['trx'][i]['code']+'1" value="1" /> Simpan</div><div class="col-xs-3"><input type="checkbox" class="trx" name="'+data['trx'][i]['code']+'2" value="1" /> Update</div><div class="col-xs-3"><input type="checkbox" class="trx" name="'+data['trx'][i]['code']+'3" value="1" /> Hapus</div></div>');
+            chkbox.appendTo('#trx');
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get data from ajax');
+        }
+      });
+    }
+    function pickall_master()
+    {
+      $('[name="master_pick"]').click(function() 
+      {
+        $('.mst').prop('checked',$(this).prop('checked'));
+      });
+    }
+    function pickall_trx()
+    {
+      $('[name="trx_pick"]').click(function() 
+      {
+        $('.trx').prop('checked',$(this).prop('checked'));
+      });
+    }
+    function upAkses()
+    {
+      $.ajax({
+        type: 'POST',
+        url: '<?= site_url('Crud/upAkses')?>',
+        data: $('#form-akses').serialize(),
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            alert('Sukses Menambah Akses User');
+          }
+          else
+          {
+            alert('Gagal Menambah Akses User');
           }
         }
       });
