@@ -2073,7 +2073,7 @@ class Datatables extends CI_Controller
 			$row[] = $no;
 			$row[] = $dat->username;
 			$row[] = $level;
-			$row[] = '';
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="hakAkses('."'".$dat->id."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>';
 			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->id."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->id."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}
