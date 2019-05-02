@@ -11,21 +11,16 @@
 		//fungsi login
 		public function login($username, $password)
 		{
-			$query = $this->CI->db->get_where('master_user', array('user_name'=>$username, 'user_password'=>$password));
+			$query = $this->CI->db->get_where('users', array('username'=>$username, 'password'=>$password));
 			if($query->num_rows() > 0)
 			{
-				$que1 = $this->CI->db->get_where('master_user', array('user_name'=>$username, 'user_password'=>$password));
+				$que1 = $this->CI->db->get_where('users', array('username'=>$username, 'password'=>$password));
 				$usrdata = $que1->row();
-				$que2 = $this->CI->db->get_where('master_branch', array('branch_id'=>$usrdata->BRANCH_ID));
-				$brcdata = $que2->row();
 				$ses = array(
 					'log_id'=>uniqid(rand()),
-					'user_id'=>$usrdata->USER_ID,
-					'user_name'=>$usrdata->USER_NAME,
-					'user_branch'=>$usrdata->BRANCH_ID,
-					'user_branchname'=>$brcdata->BRANCH_NAME,
-					'branch_sts'=>$brcdata->BRANCH_STATUS,					
-					'user_level'=>$usrdata->USER_LEVEL
+					'user_id'=>$usrdata->id,
+					'user_name'=>$usrdata->username,
+					'user_level'=>$usrdata->level
 				);
 				$this->CI->session->set_userdata($ses);
 				// redirect(base_url('Dashboard/tes'));
@@ -48,7 +43,7 @@
 			{
 				$this->CI->session->set_flashdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Belum Login!!!</strong></div></div>');
 				$this->sessiondel();
-				redirect(base_url('Dashboard/login_'));
+				redirect(base_url('login-page'));
 			}
 		}
 
@@ -61,7 +56,7 @@
 			if($get->num_rows() < 1)
 			{
 				$this->CI->session->set_userdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Tidak Memiliki Akses Halaman Tersebut</strong></div></div>');
-				redirect(base_url('Dashboard'));
+				redirect(base_url('dashboard'));
 			}
 		}
 
@@ -74,7 +69,7 @@
 			if($get->num_rows() < 1)
 			{
 				$this->CI->session->set_userdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Tidak Memiliki Akses Halaman Tersebut</strong></div></div>');
-				redirect(base_url('Dashboard'));
+				redirect(base_url('dashboard'));
 			}
 		}
 
@@ -85,7 +80,7 @@
 			if($this->CI->session->userdata('akses_admin') != '1')
 			{
 				$this->CI->session->set_flashdata('success', '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Hak Akses Tidak Dimiliki!!!</strong></div></div>');				
-				redirect(base_url('Dashboard'));
+				redirect(base_url('dashboard'));
 			}
 		}
 
@@ -108,7 +103,7 @@
 		{
 			$this->CI->session->set_flashdata('alert', '<div class="col-xs-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Logout Berhasil</strong></div></div>');
 			$this->sessiondel();
-			redirect(base_url('Dashboard/login_'));
+			redirect(base_url('login-page'));
 		}
 	}
 

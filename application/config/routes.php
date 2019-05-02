@@ -87,3 +87,4 @@ $route['admin-settings'] = 'Paging/admin_settings';
 $route['admin-users'] = 'Paging/admin_users';
 $route['stok-ban'] = 'Paging/stok_ban';
 $route['stok-spare-part'] = 'Paging/stok_spare_part';
+$route['login-page'] = 'Paging/login_page';
