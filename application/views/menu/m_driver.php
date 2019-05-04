@@ -157,7 +157,7 @@
           }
           else
           {
-            alert('Gagal Menambah Driver');
+            alert(data.err);
           }
         }
       });

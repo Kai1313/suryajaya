@@ -932,6 +932,14 @@ class Crud extends CI_Controller
 	//CRUD Master Driver
 	public function addDriver()
 	{
+		$chkKode = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_driver')))->num_rows();
+		if($chkKode > 0)
+		{
+			$data['status'] = FALSE;
+			$data['err'] = 'Kode Sudah Terpakai';
+			echo json_encode($data);
+	    exit();
+		}
 		$ins = array(
 			'kode_driver'=>$this->input->post('kode_driver'),
 			'nama_driver'=>$this->input->post('nama_driver'),
