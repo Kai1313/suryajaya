@@ -970,6 +970,10 @@ class Crud extends CI_Controller
 			'kota_driver'=>$this->input->post('kota_driver'),
 			'jenis_driver'=>$this->input->post('jenis_driver'),
 			'tlp_driver'=>$this->input->post('tlp_driver'),
+			'nama_bank'=>$this->input->post('nama_bank'),
+			'rek_bank'=>$this->input->post('rek_bank'),
+			'anrek_bank'=>$this->input->post('anrek_bank'),
+			'transfer_bank'=>$this->input->post('transfer_bank'),
 			'data_sts'=>'1'
 		);
 		$this->db->insert('master_driver',$ins);
@@ -985,6 +989,10 @@ class Crud extends CI_Controller
 			'kota_driver'=>$this->input->post('kota_driver'),
 			'jenis_driver'=>$this->input->post('jenis_driver'),
 			'tlp_driver'=>$this->input->post('tlp_driver'),
+			'nama_bank'=>$this->input->post('nama_bank'),
+			'rek_bank'=>$this->input->post('rek_bank'),
+			'anrek_bank'=>$this->input->post('anrek_bank'),
+			'transfer_bank'=>$this->input->post('transfer_bank'),
 			'data_sts'=>'1'
 		);
 		$this->db->update('master_driver',$upd,array('kode_driver'=>$this->input->post('kode_driver')));

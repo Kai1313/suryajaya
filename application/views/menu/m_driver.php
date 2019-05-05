@@ -53,6 +53,22 @@
                   </label>
                 </div>
                 <div class="form-group">
+                  <label>Nama Bank</label>
+                  <input type="text" name="nama_bank" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Rek Bank</label>
+                  <input type="text" name="rek_bank" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>A/N Bank</label>
+                  <input type="text" name="anrek_bank" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Transfer</label>
+                  <input type="text" name="transfer_bank" class="form-control">
+                </div>
+                <div class="form-group">
                   <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
                 </div>
               </div>
@@ -69,8 +85,8 @@
                     <th class="text-center">Kode</th>
                     <th class="text-center">Nama</th>
                     <th class="text-center">Alamat</th>
-                    <th class="text-center">Kota</th>
                     <th class="text-center">Telepon</th>
+                    <th class="text-center">Rekening</th>
                     <th class="text-center">Jenis</th>
                     <th class="text-center">Action</th>
                   </tr>
@@ -177,6 +193,10 @@
           $('[name="jenis_driver"]').parent().removeClass(' checked');
           $('[name="jenis_driver"][value="'+data.jenis_driver+'"]').parent().addClass(' checked');
           $('[name="tlp_driver"]').val(data.tlp_driver);
+          $('[name="nama_bank"]').val(data.nama_bank);
+          $('[name="rek_bank"]').val(data.rek_bank);
+          $('[name="anrek_bank"]').val(data.anrek_bank);
+          $('[name="transfer_bank"]').val(data.transfer_bank);
           $('[name="tipe_form"]').val('1');
         }
       });

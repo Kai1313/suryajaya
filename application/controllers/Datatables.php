@@ -1831,10 +1831,10 @@ class Datatables extends CI_Controller
 			$row[] = $no;
 			$row[] = $dat->kode_driver;
 			$row[] = $dat->nama_driver;
-			$row[] = $dat->alamat_driver;
-			$row[] = $dat->kota_driver;
-			$row[] = ($dat->jenis_driver=='1')?'Kernet':'Sopir';
+			$row[] = $dat->alamat_driver.', '.$dat->kota_driver;			
 			$row[] = $dat->tlp_driver;
+			$row[] = $dat->nama_bank.' : '.$dat->rek_bank.' a/n '.$dat->anrek_bank;
+			$row[] = ($dat->jenis_driver=='1')?'Kernet':'Sopir';
 			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_driver."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_driver."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
 			$data[] = $row;
 		}

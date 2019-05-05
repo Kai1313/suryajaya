@@ -3,8 +3,8 @@
 	class ShowDriver extends CI_Model 
 	{
 		var $table = 'master_driver';
-		var $column_order = array(null,'kode_driver','nama_driver','alamat_driver','kota_driver','jenis_driver','tlp_driver',null);
-		var $column_search = array('kode_driver','nama_driver','alamat_driver','kota_driver','jenis_driver','tlp_driver');
+		var $column_order = array(null,'kode_driver','nama_driver','alamat_driver','kota_driver','jenis_driver','tlp_driver','nama_bank',null);
+		var $column_search = array('kode_driver','nama_driver','alamat_driver','kota_driver','jenis_driver','tlp_driver','nama_bank');
 		var $order = array('kode_driver' => 'asc'); 
 		public function __construct()
 		{

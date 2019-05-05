@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `hak_akses` (
   CONSTRAINT `FK_hak_akses_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.hak_akses: ~0 rows (approximately)
+-- Dumping data for table suryajaya.hak_akses: ~30 rows (approximately)
 /*!40000 ALTER TABLE `hak_akses` DISABLE KEYS */;
 INSERT INTO `hak_akses` (`user_id`, `trx_id`, `simpan`, `hapus`, `update`) VALUES
 	(1, 1, '1', '1', '1'),
@@ -186,6 +186,10 @@ CREATE TABLE IF NOT EXISTS `master_driver` (
   `nama_driver` char(100) DEFAULT NULL,
   `alamat_driver` varchar(1024) DEFAULT NULL,
   `kota_driver` char(100) DEFAULT NULL,
+  `rek_bank` char(100) DEFAULT NULL,
+  `nama_bank` char(100) DEFAULT NULL,
+  `anrek_bank` char(100) DEFAULT NULL,
+  `transfer_bank` char(100) DEFAULT NULL,
   `tlp_driver` char(20) DEFAULT NULL,
   `jenis_driver` char(1) DEFAULT NULL,
   `jml_bon` decimal(10,2) DEFAULT NULL,
@@ -196,11 +200,12 @@ CREATE TABLE IF NOT EXISTS `master_driver` (
   PRIMARY KEY (`kode_driver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.master_driver: ~2 rows (approximately)
+-- Dumping data for table suryajaya.master_driver: ~3 rows (approximately)
 /*!40000 ALTER TABLE `master_driver` DISABLE KEYS */;
-INSERT INTO `master_driver` (`kode_driver`, `nama_driver`, `alamat_driver`, `kota_driver`, `tlp_driver`, `jenis_driver`, `jml_bon`, `cair_bon`, `jml_klaim`, `cair_klaim`, `data_sts`) VALUES
-	('DRV0001', 'Sugeng', 'Putat Jaya No.88', 'Surabaya', '085235789172', '0', 0.00, NULL, 0.00, NULL, '1'),
-	('DRV0002', 'Mulyadi', 'Lesti No.42', 'Surabaya', '088353678678', '1', 0.00, NULL, 0.00, NULL, '1');
+INSERT INTO `master_driver` (`kode_driver`, `nama_driver`, `alamat_driver`, `kota_driver`, `rek_bank`, `nama_bank`, `anrek_bank`, `transfer_bank`, `tlp_driver`, `jenis_driver`, `jml_bon`, `cair_bon`, `jml_klaim`, `cair_klaim`, `data_sts`) VALUES
+	('DRV0001', 'Sugeng', 'Putat Jaya No.88', 'Surabaya', '123456789', 'BCA', 'Sugeng', 'BCA', '085235789172', '0', 0.00, NULL, 0.00, NULL, '1'),
+	('DRV0002', 'Mulyadi', 'Lesti No.42', 'Surabaya', NULL, NULL, NULL, NULL, '088353678678', '1', 0.00, NULL, 0.00, NULL, '1'),
+	('DRV0003', 'Irfan', 'Adityawarman 42', 'Surabaya', NULL, NULL, NULL, NULL, '9876543', '0', NULL, NULL, NULL, NULL, '1');
 /*!40000 ALTER TABLE `master_driver` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_karyawan
@@ -256,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `master_kendaraan` (
 INSERT INTO `master_kendaraan` (`kode_kendaraan`, `nopol`, `sopir_kendaraan`, `kernet_kendaraan`, `no_mesin`, `no_rangka`, `tipe_kendaraan`, `jenis_kendaraan`, `nama_pemilik`, `thn_pembuatan`, `no_bpkb`, `warna_kendaraan`, `masa_stnk`, `cc_kendaraan`, `data_sts`) VALUES
 	(1, 'P3251ZS', 'DRV0001', 'DRV0002', '12831991', '10230301', 'Honda', 'Pick Up', 'Joko', '2000', '12023391', 'Hitam', '2020', '2500', '0'),
 	(2, 'B2345XS', 'DRV0001', 'DRV0002', '01010291', '29304813', 'Dino', 'Dump Truck', 'Kuri', '2012', '4944505', 'Kuning', '2020', '5000', '1'),
-	(3, 'B2345XX', 'DRV0001', 'DRV0002', '0987654', '0987654', 'Toyota', 'Pick Up', 'Joni', '2015', '098765', 'Hitam', '2019', '2000', '1');
+	(3, 'B2345XX', 'DRV0001', 'DRV0002', '0987654', '0987654', 'Toyota', 'Pick Up', 'Joni', '2015', '098765', 'Silver', '2019', '2000', '1');
 /*!40000 ALTER TABLE `master_kendaraan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.master_rekening
