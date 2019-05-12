@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                   <label>Password</label>
-                  <input type="text" name="password" class="form-control">
+                  <input type="password" name="password" class="form-control">
                 </div>
                 <div class="form-group">
                   <label>Level</label><br>
@@ -85,6 +85,7 @@
         </div>
         <div class="modal-body">
           <form id="form-akses">
+            <input type="hidden" name="user_id">
             <div class="row">
               <div class="col-xs-12">
                 <div class="panel panel-default">
@@ -130,8 +131,9 @@
       tbUsers();
       checkboxes();
     })
-    function openModal()
+    function hakAkses(key)
     {
+      $('[name="user_id"]').val(key);
       $('#modal-akses').modal('show');
     }
     function tbUsers()

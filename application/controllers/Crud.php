@@ -55,7 +55,7 @@ class Crud extends CI_Controller
 	{
 		$ins = array(
 			'username'=>$this->input->post('username'),
-			'password'=>md5($this->input->post('password')),
+			'password'=>$this->input->post('password'),
 			'level'=>$this->input->post('level'),
 			'data_sts'=>'1'
 		);
@@ -68,7 +68,7 @@ class Crud extends CI_Controller
 	{
 		$upd = array(
 			'username'=>$this->input->post('username'),
-			'password'=>md5($this->input->post('password')),
+			'password'=>$this->input->post('password'),
 			'level'=>$this->input->post('level'),
 			'data_sts'=>'1'
 		);
@@ -94,7 +94,7 @@ class Crud extends CI_Controller
 
 	public function upAkses()
 	{
-		$user = '1';
+		$user = $this->input->post('user_id');
 		$master = $this->input->post('mst');
 		$trxs = $this->input->post('trx');
 		$data['mst'] = count($master);
