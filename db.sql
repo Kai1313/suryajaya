@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
+-- Server version:               10.1.37-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
 -- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
@@ -57,7 +57,8 @@ INSERT INTO `hak_akses` (`user_id`, `trx_id`, `simpan`, `hapus`, `update`) VALUE
 	(1, 27, '1', '1', '1'),
 	(1, 28, '1', '1', '1'),
 	(1, 29, '1', '1', '1'),
-	(1, 30, '1', '1', '1');
+	(1, 30, '1', '1', '1'),
+	(2, 10, '1', '1', '1');
 /*!40000 ALTER TABLE `hak_akses` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.inv_ban
@@ -256,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `master_kendaraan` (
   PRIMARY KEY (`kode_kendaraan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.master_kendaraan: ~2 rows (approximately)
+-- Dumping data for table suryajaya.master_kendaraan: ~3 rows (approximately)
 /*!40000 ALTER TABLE `master_kendaraan` DISABLE KEYS */;
 INSERT INTO `master_kendaraan` (`kode_kendaraan`, `nopol`, `sopir_kendaraan`, `kernet_kendaraan`, `no_mesin`, `no_rangka`, `tipe_kendaraan`, `jenis_kendaraan`, `nama_pemilik`, `thn_pembuatan`, `no_bpkb`, `warna_kendaraan`, `masa_stnk`, `cc_kendaraan`, `data_sts`) VALUES
 	(1, 'P3251ZS', 'DRV0001', 'DRV0002', '12831991', '10230301', 'Honda', 'Pick Up', 'Joko', '2000', '12023391', 'Hitam', '2020', '2500', '0'),
@@ -334,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `profile_settings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.profile_settings: ~1 rows (approximately)
+-- Dumping data for table suryajaya.profile_settings: ~0 rows (approximately)
 /*!40000 ALTER TABLE `profile_settings` DISABLE KEYS */;
 INSERT INTO `profile_settings` (`id`, `bkl_ban_dalam`, `bkl_ban_luar`, `bkl_marset`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `logo`, `satuan_kasbon`) VALUES
 	(1, 5, 12, 1, 'Suryajaya', 'Jalan Maju No.104', 'Tulungagung', 'Jawa Timur', '62011', NULL, 100000.00);
@@ -414,7 +415,7 @@ CREATE TABLE IF NOT EXISTS `trx_beli_ban` (
   CONSTRAINT `FK_trx_beli_ban_master_supplier` FOREIGN KEY (`kode_supplier`) REFERENCES `master_supplier` (`kode_supplier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_beli_ban: ~3 rows (approximately)
+-- Dumping data for table suryajaya.trx_beli_ban: ~4 rows (approximately)
 /*!40000 ALTER TABLE `trx_beli_ban` DISABLE KEYS */;
 INSERT INTO `trx_beli_ban` (`no_pembelian`, `kode_supplier`, `nota_toko`, `tgl_pembelian`, `grand_total`, `data_sts`) VALUES
 	('BL1901-000001', NULL, NULL, '2019-01-06', NULL, '0'),
@@ -439,7 +440,7 @@ CREATE TABLE IF NOT EXISTS `trx_beli_ban_det` (
   CONSTRAINT `FK_trx_beli_ban_det_trx_beli_ban` FOREIGN KEY (`no_pembelian`) REFERENCES `trx_beli_ban` (`no_pembelian`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_beli_ban_det: ~2 rows (approximately)
+-- Dumping data for table suryajaya.trx_beli_ban_det: ~5 rows (approximately)
 /*!40000 ALTER TABLE `trx_beli_ban_det` DISABLE KEYS */;
 INSERT INTO `trx_beli_ban_det` (`det_id`, `no_pembelian`, `kode_ban`, `qty_beli`, `harga_satuan`, `jumlah`) VALUES
 	(2, 'BL1901-000002', 'BAN0001', 2.00, 1000000.00, 2000000.00),
@@ -975,7 +976,7 @@ CREATE TABLE IF NOT EXISTS `trx_lepas_ban_det` (
   CONSTRAINT `FK_trx_lepas_ban_det_trx_lepas_ban` FOREIGN KEY (`no_pelepasan`) REFERENCES `trx_lepas_ban` (`no_pelepasan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_lepas_ban_det: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_lepas_ban_det: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_lepas_ban_det` DISABLE KEYS */;
 INSERT INTO `trx_lepas_ban_det` (`det_id`, `no_pelepasan`, `kode_ban`, `kode_inventory`, `qty_lepas`, `status_lepas`) VALUES
 	(1, 'LPS1902-000001', 'BAN0001', NULL, '1', '0'),
@@ -1188,7 +1189,7 @@ CREATE TABLE IF NOT EXISTS `trx_pasang_ban_det` (
   CONSTRAINT `FK_trx_pasang_ban_det_trx_pasang_ban` FOREIGN KEY (`no_pemasangan`) REFERENCES `trx_pasang_ban` (`no_pemasangan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_pasang_ban_det: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_pasang_ban_det: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_pasang_ban_det` DISABLE KEYS */;
 INSERT INTO `trx_pasang_ban_det` (`det_id`, `no_pemasangan`, `kode_ban`, `kode_inventory`, `qty_pasang`, `status_pasang`) VALUES
 	(3, 'PSG1902-000001', 'BAN0001', NULL, 1.00, '0'),
@@ -1405,12 +1406,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `level` char(1) DEFAULT NULL,
   `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.users: ~0 rows (approximately)
+-- Dumping data for table suryajaya.users: ~3 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `password`, `level`, `data_sts`) VALUES
-	(1, 'admin', '1234567', '0', '1');
+	(1, 'admin', '1234567', '0', '1'),
+	(2, 'user1', '123', '1', '1'),
+	(3, 'user2', '123', '2', '1');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
