@@ -51,8 +51,7 @@
 		public function master_check_($id,$mn)
 		{
 			$this->logcheck_();
-			$this->CI->db->where('user_id = '.$id.' AND menu_code = "'.$mn.'"');
-			$get = $this->CI->db->get('group_user');
+			$get = $this->CI->db->join('trx_list b','b.id = a.trx_id')->get_where('hak_akses a',array('a.user_id'=>$id,'b.code'=>$mn));
 			if($get->num_rows() < 1)
 			{
 				$this->CI->session->set_userdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Tidak Memiliki Akses Halaman Tersebut</strong></div></div>');
@@ -64,11 +63,46 @@
 		public function trx_check_($id,$mn)
 		{
 			$this->logcheck_();
-			$this->CI->db->where('user_id = '.$id.' AND menu_code = "'.$mn.'"');
-			$get = $this->CI->db->get('group_user');
+			$get = $this->CI->db->join('trx_list b','b.id = a.trx_id')->get_where('hak_akses a',array('a.user_id'=>$id,'b.code'=>$mn));
 			if($get->num_rows() < 1)
 			{
 				$this->CI->session->set_userdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Tidak Memiliki Akses Halaman Tersebut</strong></div></div>');
+				redirect(base_url('dashboard'));
+			}
+		}
+
+		//fungsi cek hak simpan
+		public function save_check_($id,$mn)
+		{
+			$this->logcheck_();
+			$get = $this->CI->db->join('trx_list b','b.id = a.trx_id')->get_where('hak_akses a',array('simpan'=>'1','a.user_id'=>$id,'b.code'=>$mn));
+			if($get->num_rows() < 1)
+			{
+				$this->CI->session->set_userdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Tidak Memiliki Hak Akses Tersebut</strong></div></div>');
+				redirect(base_url('dashboard'));
+			}
+		}
+
+		//fungsi cek hak hapus
+		public function delete_check_($id,$mn)
+		{
+			$this->logcheck_();
+			$get = $this->CI->db->join('trx_list b','b.id = a.trx_id')->get_where('hak_akses a',array('hapus'=>'1','a.user_id'=>$id,'b.code'=>$mn));
+			if($get->num_rows() < 1)
+			{
+				$this->CI->session->set_userdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Tidak Memiliki Hak Akses Tersebut</strong></div></div>');
+				redirect(base_url('dashboard'));
+			}
+		}
+
+		//fungsi cek hak update
+		public function update_check_($id,$mn)
+		{
+			$this->logcheck_();
+			$get = $this->CI->db->join('trx_list b','b.id = a.trx_id')->get_where('hak_akses a',array('update'=>'1','a.user_id'=>$id,'b.code'=>$mn));
+			if($get->num_rows() < 1)
+			{
+				$this->CI->session->set_userdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Tidak Memiliki Hak Akses Tersebut</strong></div></div>');
 				redirect(base_url('dashboard'));
 			}
 		}
@@ -77,9 +111,9 @@
 		public function admlog()
 		{
 			$this->logcheck_();
-			if($this->CI->session->userdata('akses_admin') != '1')
+			if($this->CI->session->userdata('user_level') != '0')
 			{
-				$this->CI->session->set_flashdata('success', '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Hak Akses Tidak Dimiliki!!!</strong></div></div>');				
+				$this->CI->session->set_flashdata('success', '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Hak Akses Tidak Dimiliki!!!</strong></div></div>');
 				redirect(base_url('dashboard'));
 			}
 		}

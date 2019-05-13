@@ -53,6 +53,7 @@ class Crud extends CI_Controller
 
 	public function addUser()
 	{
+		$this->authsys->save_check_($_SESSION['user_id']);
 		$ins = array(
 			'username'=>$this->input->post('username'),
 			'password'=>$this->input->post('password'),
