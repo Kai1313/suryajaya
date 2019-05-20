@@ -60,6 +60,14 @@
                   <input type="text" name="satuan_kasbon" class="form-control num">
                 </div>
                 <div class="form-group">
+                  <label>Telepon</label>
+                  <input type="text" name="no_telepon" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Fax</label>
+                  <input type="text" name="no_fax" class="form-control">
+                </div>
+                <div class="form-group">
                   <button type="button" class="btn btn-sm btn-primary" onclick="add()">Simpan</button>
                 </div>
               </div>
@@ -181,6 +189,8 @@
           $('[name="kota"]').val(data.kota);
           $('[name="provinsi"]').val(data.provinsi);
           $('[name="kodepos"]').val(data.kodepos);
+          $('[name="no_telepon"]').val(data.no_telepon);
+          $('[name="no_fax"]').val(data.no_fax);
           $('[name="satuan_kasbon"]').val(data.satuan_kasbon);
         }
       });

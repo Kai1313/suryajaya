@@ -332,13 +332,15 @@ CREATE TABLE IF NOT EXISTS `profile_settings` (
   `kodepos` char(100) DEFAULT NULL,
   `logo` char(100) DEFAULT NULL,
   `satuan_kasbon` decimal(10,2) DEFAULT NULL,
+  `no_telepon` char(20) DEFAULT NULL,
+  `no_fax` char(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.profile_settings: ~0 rows (approximately)
+-- Dumping data for table suryajaya.profile_settings: ~1 rows (approximately)
 /*!40000 ALTER TABLE `profile_settings` DISABLE KEYS */;
-INSERT INTO `profile_settings` (`id`, `bkl_ban_dalam`, `bkl_ban_luar`, `bkl_marset`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `logo`, `satuan_kasbon`) VALUES
-	(1, 5, 12, 1, 'Suryajaya', 'Jalan Maju No.104', 'Tulungagung', 'Jawa Timur', '62011', NULL, 100000.00);
+INSERT INTO `profile_settings` (`id`, `bkl_ban_dalam`, `bkl_ban_luar`, `bkl_marset`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `logo`, `satuan_kasbon`, `no_telepon`, `no_fax`) VALUES
+	(1, 5, 12, 1, 'Suryajaya', 'Jalan Maju No.104', 'Tulungagung', 'Jawa Timur', '62011', NULL, 100000.00, '34567890', '456789');
 /*!40000 ALTER TABLE `profile_settings` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_bayar_bonklaim_sopir

@@ -170,7 +170,7 @@
         <div class="row">
           <div class="col-sm-3 col-xs-3">
             <!-- <img id="img_logo" class="img-responsive" src=""> -->
-            <h2>Suryajaya</h2>
+            <h2 name="comp-name">Suryajaya</h2>
           </div>
           <div class="col-sm-9 col-xs-9 company-details">
             <div><span name="comp-address">Tulungagung</span></div>
@@ -235,6 +235,7 @@
   <script>
     $(function ()
     {
+      appsData();
       fetchData();
       dropkaryawan();
       $('#tgl_awal').datepicker({
@@ -246,6 +247,25 @@
         format: 'dd/mm/yyyy'
       });
     })
+    function appsData()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getAppsData')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+          $('[name="comp-name"]').text(data.nama);
+          $('[name="comp-address"]').text(data.alamat+', '+data.kota+', '+data.provinsi+' '+data.kodepos);
+          $('[name="comp-phone"]').text(data.no_telepon);
+          $('[name="comp-fax"]').text(data.no_fax);
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get data');
+        }
+      });
+    }
     function dropkaryawan()
     {
       $.ajax({

@@ -44,6 +44,8 @@ class Crud extends CI_Controller
 			'kota'=>$this->input->post('kota'),
 			'provinsi'=>$this->input->post('provinsi'),
 			'kodepos'=>$this->input->post('kodepos'),
+			'no_telepon'=>$this->input->post('no_telepon'),
+			'no_fax'=>$this->input->post('no_fax'),
 			'satuan_kasbon'=>$this->input->post('satuan_kasbon'),
 		);
 		$this->db->update('profile_settings',$ins,array('id'=>'1'));
@@ -820,6 +822,7 @@ class Crud extends CI_Controller
 	//CRUD Master Rekening
 	public function addRekening()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m10');
 		$ins = array(
 			'kode_rekening'=>$this->input->post('kode_rekening'),
 			'nama_bank'=>$this->input->post('nama_bank'),
@@ -834,6 +837,7 @@ class Crud extends CI_Controller
 
 	public function updRekening()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m10');
 		$upd = array(
 			'nama_bank'=>$this->input->post('nama_bank'),
 			'no_rekening'=>$this->input->post('no_rekening'),
@@ -847,6 +851,7 @@ class Crud extends CI_Controller
 
 	public function delRekening($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m10');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_rekening',$upd,array('kode_rekening'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -862,6 +867,7 @@ class Crud extends CI_Controller
 	//CRUD Master Barang
 	public function addBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m1');
 		$ins = array(
 			'kode_barang'=>$this->input->post('kode_barang'),
 			'nama_barang'=>$this->input->post('nama_barang'),
@@ -879,6 +885,7 @@ class Crud extends CI_Controller
 
 	public function updBarang()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m1');
 		$upd = array(
 			'nama_barang'=>$this->input->post('nama_barang'),
 			'nama_satuan'=>$this->input->post('nama_satuan'),
@@ -895,6 +902,7 @@ class Crud extends CI_Controller
 
 	public function delBarang($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m1');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_barang',$upd,array('kode_barang'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -910,6 +918,7 @@ class Crud extends CI_Controller
 	//CRUD Master Customer
 	public function addCustomer()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m2');
 		$ins = array(
 			'kode_customer'=>$this->input->post('kode_customer'),
 			'nama_customer'=>$this->input->post('nama_customer'),
@@ -926,6 +935,7 @@ class Crud extends CI_Controller
 
 	public function updCustomer()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m2');
 		$upd = array(
 			'nama_customer'=>$this->input->post('nama_customer'),
 			'alamat_customer'=>$this->input->post('alamat_customer'),
@@ -941,6 +951,7 @@ class Crud extends CI_Controller
 
 	public function delCustomer($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m2');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_customer',$upd,array('kode_customer'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -956,6 +967,7 @@ class Crud extends CI_Controller
 	//CRUD Master Driver
 	public function addDriver()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m5');
 		$chkKode = $this->db->get_where('master_driver',array('kode_driver'=>$this->input->post('kode_driver')))->num_rows();
 		if($chkKode > 0)
 		{
@@ -984,6 +996,7 @@ class Crud extends CI_Controller
 
 	public function updDriver()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m5');
 		$upd = array(
 			'nama_driver'=>$this->input->post('nama_driver'),
 			'alamat_driver'=>$this->input->post('alamat_driver'),
@@ -1003,6 +1016,7 @@ class Crud extends CI_Controller
 
 	public function delDriver($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m5');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_driver',$upd,array('kode_driver'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -1018,6 +1032,7 @@ class Crud extends CI_Controller
 	//CRUD Master Biaya Driver
 	public function addBiayaDriver()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m6');
 		$ins = array(
 			'kode_biaya_driver'=>$this->input->post('kode_biaya'),
 			'ket_biaya_driver'=>$this->input->post('ket_biaya'),
@@ -1031,6 +1046,7 @@ class Crud extends CI_Controller
 
 	public function updBiayaDriver()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m6');
 		$upd = array(
 			'ket_biaya_driver'=>$this->input->post('ket_biaya'),
 			'nom_biaya_driver'=>$this->input->post('nom_biaya'),
@@ -1043,6 +1059,7 @@ class Crud extends CI_Controller
 
 	public function delBiayaDriver($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m6');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_biaya_driver',$upd,array('kode_biaya_driver'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -1058,6 +1075,7 @@ class Crud extends CI_Controller
 	//CRUD Master Tujuan
 	public function addTujuan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m7');
 		$ins = array(
 			'kode_tujuan'=>$this->input->post('kode_tujuan'),
 			'ket_tujuan'=>$this->input->post('ket_tujuan'),
@@ -1070,6 +1088,7 @@ class Crud extends CI_Controller
 
 	public function updTujuan()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m7');
 		$upd = array(
 			'ket_tujuan'=>$this->input->post('ket_tujuan'),
 			'data_sts'=>'1'
@@ -1081,6 +1100,7 @@ class Crud extends CI_Controller
 
 	public function delTujuan($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m7');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_tujuan',$upd,array('kode_tujuan'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -1096,6 +1116,7 @@ class Crud extends CI_Controller
 	//CRUD Master Supplier
 	public function addSupplier()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m8');
 		$ins = array(
 			'kode_supplier'=>$this->input->post('kode_supplier'),
 			'nama_supplier'=>$this->input->post('nama_supplier'),
@@ -1111,6 +1132,7 @@ class Crud extends CI_Controller
 
 	public function updSupplier()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m8');
 		$upd = array(
 			'kode_supplier'=>$this->input->post('kode_supplier'),
 			'nama_supplier'=>$this->input->post('nama_supplier'),
@@ -1126,6 +1148,7 @@ class Crud extends CI_Controller
 
 	public function delSupplier($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m8');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_supplier',$upd,array('kode_supplier'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -1141,6 +1164,7 @@ class Crud extends CI_Controller
 	//CRUD Master Karyawan
 	public function addKaryawan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m4');
 		$ins = array(
 			'kode_karyawan'=>$this->input->post('kode_karyawan'),
 			'nama_karyawan'=>$this->input->post('nama_karyawan'),
@@ -1164,6 +1188,7 @@ class Crud extends CI_Controller
 
 	public function updKaryawan()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m4');
 		$upd = array(
 			'nama_karyawan'=>$this->input->post('nama_karyawan'),
 			'alamat_karyawan'=>$this->input->post('alamat_karyawan'),
@@ -1186,6 +1211,7 @@ class Crud extends CI_Controller
 
 	public function delKaryawan($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m4');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_karyawan',$upd,array('kode_karyawan'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -1201,6 +1227,7 @@ class Crud extends CI_Controller
 	//CRUD Master Kendaraan
 	public function addKendaraan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m3');
 		$ins = array(
 			'nopol'=>$this->input->post('nopol'),
 			'no_mesin'=>$this->input->post('no_mesin'),
@@ -1224,6 +1251,7 @@ class Crud extends CI_Controller
 
 	public function updKendaraan()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m3');
 		$upd = array(
 			'no_mesin'=>$this->input->post('no_mesin'),
 			'no_rangka'=>$this->input->post('no_rangka'),
@@ -1246,6 +1274,7 @@ class Crud extends CI_Controller
 
 	public function delKendaraan($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m3');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_kendaraan',$upd,array('kode_kendaraan'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -1261,6 +1290,7 @@ class Crud extends CI_Controller
 	//CRUD Master Ban
 	public function addBan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m9');
 		$ins = array(
 			'kode_ban'=>$this->input->post('kode_ban'),
 			'nama_ban'=>$this->input->post('nama_ban'),
@@ -1278,6 +1308,7 @@ class Crud extends CI_Controller
 
 	public function updBan()
 	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m9');
 		$upd = array(
 			'nama_ban'=>$this->input->post('nama_ban'),
 			'jenis_ban'=>$this->input->post('jenis_ban'),
@@ -1294,6 +1325,7 @@ class Crud extends CI_Controller
 
 	public function delBan($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m9');
 		$upd = array( 'data_sts'=>'0' );
 		$this->db->update('master_ban',$upd,array('kode_ban'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -1468,6 +1500,7 @@ class Crud extends CI_Controller
 	//Transaksi Pembelian Barang/Spare Part
 	public function addBeliBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t1');
 		$ins = array(
 			'no_nota'=>$this->input->post('no_nota'),
 			'kode_barang'=>$this->input->post('kode_barang'),
@@ -1529,6 +1562,7 @@ class Crud extends CI_Controller
 
 	public function saveBeliBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t1');
 		$getSts = $this->db->get_where('trx_beli_barang',array('no_nota'=>$this->input->post('no_nota')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -1536,6 +1570,7 @@ class Crud extends CI_Controller
 		}
 		else
 		{
+			$this->authsys->update_check_($_SESSION['user_id'],'t1');
 			$upd = array(
 				'kode_supplier'=>$this->input->post('kode_supplier'),
 				'nota_toko'=>$this->input->post('nota_toko'),
@@ -1575,6 +1610,7 @@ class Crud extends CI_Controller
 
 	public function cancelBeliBarang()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t1');
 		$getSts = $this->db->get_where('trx_beli_barang',array('no_nota'=>$this->input->post('no_nota')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -1622,6 +1658,7 @@ class Crud extends CI_Controller
 	//Transaksi Biaya Kendaraan
 	public function addBiayaKdr()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t6');
 		$ins = array(
 			'no_biaya'=>$this->input->post('no_kuitansi'),
 			'keterangan'=>$this->input->post('keterangan'),
@@ -1669,6 +1706,7 @@ class Crud extends CI_Controller
 
 	public function tempBiayaKdr()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t6');
 		$getSts = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$this->input->post('no_kuitansi')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -1676,6 +1714,7 @@ class Crud extends CI_Controller
 		}
 		else
 		{
+			$this->authsys->save_check_($_SESSION['user_id'],'t6');
 			$upd = array(
 				'kode_karyawan'=>$this->input->post('kode_karyawan'),
 				'kode_kendaraan'=>$this->input->post('nopol'),
@@ -1704,6 +1743,7 @@ class Crud extends CI_Controller
 
 	public function saveBiayaKdr()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t6');
 		$getSts = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$this->input->post('no_kuitansi')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -1711,6 +1751,7 @@ class Crud extends CI_Controller
 		}
 		else
 		{
+			$this->authsys->update_check_($_SESSION['user_id'],'t6');
 			$upd = array(
 				'kode_karyawan'=>$this->input->post('kode_karyawan'),
 				'kode_kendaraan'=>$this->input->post('nopol'),
@@ -1739,6 +1780,7 @@ class Crud extends CI_Controller
 
 	public function cancelBiayaKdr()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t6');
 		$getSts = $this->db->get_where('trx_biaya_kendaraan',array('no_biaya'=>$this->input->post('no_kuitansi')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -1778,6 +1820,7 @@ class Crud extends CI_Controller
 	//Transaksi Kuitansi
 	public function addKuitansi()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t19');
 		$ins = array(
 			'no_kuitansi'=>$this->input->post('no_kuitansi'),
 			'ket_pembayaran'=>$this->input->post('keterangan'),
@@ -1807,6 +1850,7 @@ class Crud extends CI_Controller
 
 	public function rmvKuitansi($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t19');
 		$this->db->delete('trx_kuitansi_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -1825,6 +1869,7 @@ class Crud extends CI_Controller
 
 	public function saveKuitansi()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t19');
 		$getSts = $this->db->get_where('trx_kuitansi',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -1858,6 +1903,7 @@ class Crud extends CI_Controller
 
 	public function cancelKuitansi()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t19');
 		$getSts = $this->db->get_where('trx_kuitansi',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -1897,6 +1943,7 @@ class Crud extends CI_Controller
 	//Transaksi Pelunasan Tagihan
 	public function addLunas()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t18');
 		$ins = array(
 			'no_lunas'=>$this->input->post('no_lunas'),
 			'det_tagihan'=>$this->input->post('no_tagihan'),
@@ -1926,6 +1973,7 @@ class Crud extends CI_Controller
 
 	public function rmvLunas($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t18');
 		$this->db->delete('trx_pelunasan_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -1944,6 +1992,7 @@ class Crud extends CI_Controller
 
 	public function saveLunas()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t18');
 		$getSts = $this->db->get_where('trx_pelunasan',array('no_lunas'=>$this->input->post('no_lunas')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -1975,6 +2024,7 @@ class Crud extends CI_Controller
 
 	public function cancelLunas()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t18');
 		$getSts = $this->db->get_where('trx_pelunasan',array('no_lunas'=>$this->input->post('no_lunas')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -2014,6 +2064,7 @@ class Crud extends CI_Controller
 	//Transaksi Pemakaian Barang/Spare Part
 	public function addKatalog1()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t12');
 		$ins = array(
 			'no_katalog'=>$this->input->post('no_katalog'),
 			'ket_det'=>$this->input->post('kode_barang'),
@@ -2037,6 +2088,7 @@ class Crud extends CI_Controller
 
 	public function addKatalog2()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t12');
 		$ins = array(
 			'no_katalog'=>$this->input->post('no_katalog'),
 			'ket_det'=>$this->input->post('kode_ban'),
@@ -2060,6 +2112,7 @@ class Crud extends CI_Controller
 
 	public function rmvKatalog($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t12');
 		$this->db->delete('trx_katalog_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -2078,6 +2131,7 @@ class Crud extends CI_Controller
 
 	public function saveKatalog()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t12');
 		$getSts = $this->db->get_where('trx_katalog',array('no_katalog'=>$this->input->post('no_katalog')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -2111,6 +2165,7 @@ class Crud extends CI_Controller
 
 	public function cancelKatalog()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t12');
 		$getSts = $this->db->get_where('trx_katalog',array('no_katalog'=>$this->input->post('no_katalog')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -2445,6 +2500,7 @@ class Crud extends CI_Controller
 	//Transaksi Pemakaian Barang/Spare Part
 	public function addPakaiBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t2');
 		$ins = array(
 			'no_pakai_brg'=>$this->input->post('no_pemakaian'),
 			'kode_barang'=>$this->input->post('kode_barang'),
@@ -2468,6 +2524,7 @@ class Crud extends CI_Controller
 
 	public function rmvPakaiBarang($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t2');
 		$this->db->delete('trx_pakai_barang_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -2486,6 +2543,7 @@ class Crud extends CI_Controller
 
 	public function tempPakaiBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t2');
 		$getSts = $this->db->get_where('trx_pakai_barang',array('no_pakai_brg'=>$this->input->post('no_pemakaian')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -2521,6 +2579,7 @@ class Crud extends CI_Controller
 
 	public function savePakaiBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t2');
 		$getSts = $this->db->get_where('trx_pakai_barang',array('no_pakai_brg'=>$this->input->post('no_pemakaian')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -2567,6 +2626,7 @@ class Crud extends CI_Controller
 
 	public function cancelPakaiBarang()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t2');
 		$getSts = $this->db->get_where('trx_pakai_barang',array('no_pakai_brg'=>$this->input->post('no_pemakaian')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -2614,6 +2674,7 @@ class Crud extends CI_Controller
 	//Transaksi Pembelian Ban
 	public function addBeliBan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t3');
 		$ins = array(
 			'no_pembelian'=>$this->input->post('no_pembelian'),
 			'kode_ban'=>$this->input->post('kode_ban'),
@@ -2645,6 +2706,7 @@ class Crud extends CI_Controller
 
 	public function rmvBeliBan($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t3');
 		$this->db->delete('trx_beli_ban_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -2663,6 +2725,7 @@ class Crud extends CI_Controller
 
 	public function saveBeliBan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t3');
 		$getSts = $this->db->get_where('trx_beli_ban',array('no_pembelian'=>$this->input->post('no_pembelian')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -2744,6 +2807,7 @@ class Crud extends CI_Controller
 
 	public function cancelBeliBan()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t2');
 		$getSts = $this->db->get_where('trx_beli_ban',array('no_pembelian'=>$this->input->post('no_pembelian')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -2797,6 +2861,7 @@ class Crud extends CI_Controller
 	//Transaksi Pemasangan Ban
 	public function addPasangBan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t4');
 		$getBan = $this->db->get_where('master_ban',array('kode_ban'=>$this->input->post('kode_ban_pasang')))->row();
 		$stsBan = $this->input->post('status_ban_psg');
 		switch($stsBan)
@@ -2845,6 +2910,7 @@ class Crud extends CI_Controller
 
 	public function rmvPasangBan($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t4');	
 		$this->db->delete('trx_pasang_ban_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -2863,6 +2929,7 @@ class Crud extends CI_Controller
 
 	public function savePasangBan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t4');
 		$getSts = $this->db->get_where('trx_pasang_ban',array('no_pemasangan'=>$this->input->post('no_pemasangan')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -2929,6 +2996,7 @@ class Crud extends CI_Controller
 
 	public function cancelPasangBan()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t4');
 		$getSts = $this->db->get_where('trx_pasang_ban',array('no_pemasangan'=>$this->input->post('no_pemasangan')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3001,6 +3069,7 @@ class Crud extends CI_Controller
 	//Transaksi Pelepasan Ban
 	public function addLepasBan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t5');
 		$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$this->input->post('kode_ban_lepas')))->row()->stok_pasang;
 		$cekStok = $this->db->get_where('inv_ban',array('inv_id'=>$this->input->post('kode_inv_lepas')))->row()->sts_stok;
 		if($cekStok != '4')
@@ -3035,6 +3104,7 @@ class Crud extends CI_Controller
 
 	public function rmvLepasBan($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t5');
 		$this->db->delete('trx_lepas_ban_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -3053,6 +3123,7 @@ class Crud extends CI_Controller
 
 	public function saveLepasBan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t5');
 		$getSts = $this->db->get_where('trx_lepas_ban',array('no_pelepasan'=>$this->input->post('no_pelepasan')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3121,6 +3192,7 @@ class Crud extends CI_Controller
 
 	public function cancelLepasBan()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t5');
 		$getSts = $this->db->get_where('trx_lepas_ban',array('no_pelepasan'=>$this->input->post('no_pelepasan')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3191,6 +3263,7 @@ class Crud extends CI_Controller
 	//Transaksi Retur Pembelian Barang/Spare Part
 	public function addReturBeliBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t7');
 		$ins = array(
 			'no_retur'=>$this->input->post('no_retur'),
 			'kode_barang'=>$this->input->post('kode_barang'),
@@ -3215,6 +3288,7 @@ class Crud extends CI_Controller
 
 	public function rmvReturBeliBarang($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t7');
 		$this->db->delete('trx_retur_beli_barang_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -3233,6 +3307,7 @@ class Crud extends CI_Controller
 
 	public function saveReturBeliBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t7');
 		$getSts = $this->db->get_where('trx_retur_beli_barang',array('no_retur'=>$this->input->post('no_retur')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3275,6 +3350,7 @@ class Crud extends CI_Controller
 
 	public function cancelReturBeliBarang()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t7');
 		$getSts = $this->db->get_where('trx_retur_beli_barang',array('no_retur'=>$this->input->post('no_retur')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3322,6 +3398,7 @@ class Crud extends CI_Controller
 	//Transaksi Retur Pemakaian Barang/Spare Part
 	public function addReturPakaiBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t8');
 		$ins = array(
 			'no_retur'=>$this->input->post('no_retur'),
 			'kode_barang'=>$this->input->post('kode_barang'),
@@ -3346,6 +3423,7 @@ class Crud extends CI_Controller
 
 	public function rmvReturPakaiBarang($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t8');
 		$this->db->delete('trx_retur_pakai_barang_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -3364,6 +3442,7 @@ class Crud extends CI_Controller
 
 	public function saveReturPakaiBarang()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t8');
 		$getSts = $this->db->get_where('trx_retur_pakai_barang',array('no_retur'=>$this->input->post('no_retur')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3406,6 +3485,7 @@ class Crud extends CI_Controller
 
 	public function cancelReturPakaiBarang()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t8');
 		$getSts = $this->db->get_where('trx_retur_pakai_barang',array('no_retur'=>$this->input->post('no_retur')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3453,6 +3533,7 @@ class Crud extends CI_Controller
 	//Transaksi Input Bon Karyawan
 	public function saveBonKaryawan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t9');
 		$getSts = $this->db->get_where('trx_input_bon_karyawan',array('no_bon'=>$this->input->post('no_bon')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3493,6 +3574,7 @@ class Crud extends CI_Controller
 
 	public function cancelBonKaryawan()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t9');
 		$getSts = $this->db->get_where('trx_input_bon_karyawan',array('no_bon'=>$this->input->post('no_bon')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3539,6 +3621,7 @@ class Crud extends CI_Controller
 	//Transaksi Input Kas
 	public function saveKas()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t10');
 		$getSts = $this->db->get_where('trx_input_kas',array('no_kas'=>$this->input->post('no_kas')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3572,6 +3655,7 @@ class Crud extends CI_Controller
 
 	public function cancelKas()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t10');
 		$getSts = $this->db->get_where('trx_input_kas',array('no_kas'=>$this->input->post('no_kas')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3611,6 +3695,7 @@ class Crud extends CI_Controller
 	//Transaksi Input Bon Sopir
 	public function saveBonSopir()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t13');
 		$getSts = $this->db->get_where('trx_input_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3651,6 +3736,7 @@ class Crud extends CI_Controller
 
 	public function cancelBonSopir()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t13');
 		$getSts = $this->db->get_where('trx_input_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3697,6 +3783,7 @@ class Crud extends CI_Controller
 	//Transaksi Input Klaim Sopir
 	public function saveKlaimSopir()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t14');
 		$getSts = $this->db->get_where('trx_input_klaim_sopir',array('no_klaim'=>$this->input->post('no_klaim')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3737,6 +3824,7 @@ class Crud extends CI_Controller
 
 	public function cancelKlaimSopir()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t14');
 		$getSts = $this->db->get_where('trx_input_klaim_sopir',array('no_klaim'=>$this->input->post('no_klaim')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3783,6 +3871,7 @@ class Crud extends CI_Controller
 	//Transaksi Bayar Upah Karyawan
 	public function saveBayarUpahKaryawan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t11');
 		$getSts = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3842,6 +3931,7 @@ class Crud extends CI_Controller
 
 	public function cancelBayarUpahKaryawan()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t11');
 		$getSts = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$this->input->post('no_kuitansi')))->row();
 		$getJmlBon = $getSts->sub_bon;
 		if($getSts->data_sts != '1')
@@ -3889,6 +3979,7 @@ class Crud extends CI_Controller
 	//Transaksi Bayar Bon Klaim Sopir
 	public function saveBayarSopir()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t20');
 		$getSts = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$this->input->post('no_bayar')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -3931,6 +4022,7 @@ class Crud extends CI_Controller
 
 	public function cancelBayarSopir()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t20');
 		$getSts = $this->db->get_where('trx_bayar_bonklaim_sopir',array('no_bayar'=>$this->input->post('no_bayar')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -3979,6 +4071,7 @@ class Crud extends CI_Controller
 	//Transaksi Kas Bon Sopir
 	public function saveKasBonSopir()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t15');
 		$getSts = $this->db->get_where('trx_kas_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -4069,6 +4162,7 @@ class Crud extends CI_Controller
 
 	public function cancelKasBonSopir()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t15');
 		$getSts = $this->db->get_where('trx_kas_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -4108,6 +4202,7 @@ class Crud extends CI_Controller
 	//Transaksi Kas Bon Kantor
 	public function saveKasBonKantor()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t16');
 		$getSts = $this->db->get_where('trx_kas_bon_kantor',array('no_bon'=>$this->input->post('no_bon')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -4228,6 +4323,7 @@ class Crud extends CI_Controller
 
 	public function cancelKasBonKantor()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t16');
 		$getSts = $this->db->get_where('trx_kas_bon_kantor',array('no_bon'=>$this->input->post('no_bon')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -4267,6 +4363,7 @@ class Crud extends CI_Controller
 	//Transaksi Tagihan
 	public function addTagihanA()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t17');
 		$ins = array(
 			'no_tagihan'=>$this->input->post('no_tagihan'),
 			'no_bon'=>$this->input->post('kode_bon'),
@@ -4296,6 +4393,7 @@ class Crud extends CI_Controller
 
 	public function addTagihanB()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t17');
 		$ins = array(
 			'no_tagihan'=>$this->input->post('no_tagihan'),
 			'no_bon'=>$this->input->post('kode_bon'),
@@ -4325,6 +4423,7 @@ class Crud extends CI_Controller
 
 	public function addTagihanC()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t17');
 		$ins = array(
 			'no_tagihan'=>$this->input->post('no_tagihan'),
 			'no_bon'=>$this->input->post('kode_bon'),
@@ -4354,6 +4453,7 @@ class Crud extends CI_Controller
 
 	public function addTagihanD()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t17');
 		$ins = array(
 			'no_tagihan'=>$this->input->post('no_tagihan'),
 			'no_bon'=>$this->input->post('kode_bon'),
@@ -4389,6 +4489,7 @@ class Crud extends CI_Controller
 
 	public function rmvTagihan($key)
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t17');
 		$this->db->delete('trx_tagihan_det',array('det_id'=>$key));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 		$data['msg'] = ($data['status']!=FALSE)?
@@ -4407,6 +4508,7 @@ class Crud extends CI_Controller
 
 	public function saveTagihan()
 	{
+		$this->authsys->save_check_($_SESSION['user_id'],'t17');
 		$getSts = $this->db->get_where('trx_tagihan',array('no_tagihan'=>$this->input->post('no_tagihan')))->row();
 		if($getSts->data_sts != '0')
 		{
@@ -4438,6 +4540,7 @@ class Crud extends CI_Controller
 
 	public function cancelTagihan()
 	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t17');
 		$getSts = $this->db->get_where('trx_tagihan',array('no_tagihan'=>$this->input->post('no_tagihan')))->row();
 		if($getSts->data_sts != '1')
 		{
@@ -4815,5 +4918,12 @@ class Crud extends CI_Controller
 			$hasil = trim($temp);
 		}
 		return $hasil;
+	}
+
+	//Get Apps Data
+	public function getAppsData()
+	{
+		$data = $this->db->get_where('profile_settings',array('id'=>'1'))->row();
+		echo json_encode($data);
 	}
 }
