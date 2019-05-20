@@ -14,7 +14,11 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
-
+      <p>
+        <?php echo $this->session->userdata('log_id');?>
+        <br />
+        <?php echo $this->session->userdata('user_name');?>
+      </p>
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
