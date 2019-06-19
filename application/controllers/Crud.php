@@ -3968,6 +3968,7 @@ class Crud extends CI_Controller
 	public function printBayarUpahKaryawan($key)
 	{
 		$data['key'] = $key;
+		$data['upah'] = $this->db->get_where('trx_bayar_upah_karyawan',array('no_kuitansi'=>$key))->row();
 		$this->load->view('menu/print_upah',$data);
 	}
 

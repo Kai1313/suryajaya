@@ -155,9 +155,9 @@
             <!-- <img id="img_logo" class="img-responsive" src=""> -->
             <!-- <h2>Suryajaya</h2> -->
           <!-- </div> -->
-          <div class="col-sm-offset=2 col-xs-offset-2 col-sm-2 col-xs-2 text-center">
+          <div class="col-sm-2 col-xs-2 text-left">
             <!-- <img id="img_logo" class="img-responsive" src=""> -->
-            <h3>Slip Upah</h3>
+            <h3><strong>Penggajian</strong></h3>
           </div>
           <!-- <div class="col-sm-2 col-xs-2 company-details">
             <div><span name="comp-address">Tulungagung</span></div>
@@ -169,13 +169,13 @@
       <main>
         <div class="row">
           <div class="col-sm-4 col-xs-4 to-details">
-            <div>Kepada :</div>
+            <div class="to-name" name="kodekaryawan"></div>
             <div class="to-name" name="karyawan"></div>
             <br>
-            <h3>Sub Total <span name="sub_nom" class="chgnum"></span></h3>
+            <!-- <h3>Sub Total <span name="sub_nom" class="chgnum"></span></h3>
             <h3>Bon <span name="sub_bon" class="chgnum"></span></h3>
             <hr>
-            <h3>Jumlah <span name="grand_nom" class="chgnum"></span></h3>
+            <h3>Jumlah <span name="grand_nom" class="chgnum"></span></h3> -->
           </div>
           <div class="col-sm-2 col-xs-2 printing-info">
             <h4 class="info-code" name="data_code"></h4>
@@ -183,7 +183,90 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12 col-xs-12">
+          <div class="col-sm-6 col-xs-6 table-responsive">
+            <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
+              <thead>
+                <th></th><th></th><th></th>
+              </thead>
+              <tr>
+                <td class="col-xs-3">Masuk Kerja</td>
+                <td class="col-xs-3"><?= $upah->hari_kerja; ?> hari</td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_harian; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">6x Kerja Penuh</td>
+                <td class="col-xs-3"></td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_bonusharian; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Hari Minggu</td>
+                <td class="col-xs-3"><?= $upah->uang_minggu; ?> hari</td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_minggu; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Lembur</td>
+                <td class="col-xs-3"><?= $upah->uang_lembur; ?> hari</td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_lembur; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Hari Besar</td>
+                <td class="col-xs-3"><?= $upah->uang_haribesar; ?> hari</td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_haribesar; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Uang Makan</td>
+                <td class="col-xs-3"><?= $upah->uang_makan; ?> hari</td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_makan; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Gaji Bulanan</td>
+                <td class="col-xs-3"><?= $upah->uang_bulanan; ?> bulan</td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_bulanan; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Bonus Bulanan</td>
+                <td class="col-xs-3"></td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_bonusbulanan; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Lain - Lain</td>
+                <td class="col-xs-3"></td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_lain; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Jumlah</td>
+                <td class="col-xs-3"></td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_total; ?></td>
+              </tr>
+              <tr>
+                <td class="col-xs-3">Sisa Bon</td>
+                <td class="col-xs-3"></td>
+                <td class="col-xs-6 text-right chgnum"><?= $upah->sub_bon; ?></td>
+              </tr>
+              <tfoot>
+                <th class="col-xs-3">Total Terima</th>
+                <th class="col-xs-3"></th>
+                <th class="col-xs-6 text-right chgnum"><?= $upah->grand_total; ?></th>
+              </tfoot>
+                  <!-- <tfoot>
+                    <tr>
+                      <th colspan="5" class="text-right">GRAND TOTAL</th>
+                      <th class="text-right chgnum"><span name="printing_total"></span></th>
+                    </tr>
+                    <tr>
+                      <th colspan="6" class="notice-row">
+                        <div class="row">
+                          <div class="col-sm-2 col-xs-2">TERBILANG<br>KETERANGAN</div>
+                          <div class="col-sm-9 col-xs-9"><span name="printing_spelled"></span><br><span name="printing_info"></span></div>
+                        </div>
+                      </th>
+                    </tr>
+                  </tfoot> -->
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-xs-6">
             <h3><span name="terbilang"></span></h3>
           </div>
         </div>
@@ -191,10 +274,10 @@
       <footer>
         <div class="row text-center">
           <div class="col-xs-3 col-sm-3">
-            <div>Kepada</div>
+            <div>Dibuat</div>
           </div>
           <div class="col-xs-3 col-sm-3">
-            <div>Mengetahui</div>
+            <div>Dibayar</div>
           </div>
         </div>
         <div class="row signature">
@@ -224,6 +307,7 @@
         dataType: "JSON",
         success: function(data)
         {
+          $('[name="kodekaryawan"]').text('Kode '+data['a'].kode_karyawan);
           $('[name="karyawan"]').text('Nama '+data['a'].nama_karyawan);
           $('[name="sub_nom"]').text('Sub Total '+data['a'].sub_total);
           $('[name="sub_bon"]').text('Potong '+data['a'].sub_bon);
