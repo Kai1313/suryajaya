@@ -24,7 +24,7 @@ class Paging extends CI_Controller
 	//Master
 	public function m_barang()
 	{
-		$this->authsys->master_check_($_SESSION['user_id'],'m1');
+		$this->authsys->master_check_($this->session->userdata('user_id'),'m1');
 		$data['page_header']='Master Barang';
 		$data['content']='menu/m_barang';
 		$this->load->view('layout/wrapper',$data);

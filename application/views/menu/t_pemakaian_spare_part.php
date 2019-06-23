@@ -370,7 +370,7 @@
           {
             option = document.createElement('option');
             option.value = data[i]['kode_barang']
-            option.text = data[i]['kode_barang']+' - '+data[i]['nama_barang'];
+            option.text = data[i]['kode_barang']+' - '+data[i]['nama_barang']+' - '+data[i]['part_number'];
             select.add(option);
           }
           $('#dropBarang').select2({placeholder: 'Pilih Barang'});

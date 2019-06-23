@@ -39,7 +39,8 @@
 		//fungsi cek login
 		public function logcheck_()
 		{
-			if(!isset($_SESSION['log_id']))
+			// if(!isset($_SESSION['log_id']))
+			if($this->CI->session->userdata('log_id')=='')
 			{
 				$this->CI->session->set_flashdata('alert', '<div class="col-xs-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Anda Belum Login!!!</strong></div></div>');
 				$this->sessiondel();
