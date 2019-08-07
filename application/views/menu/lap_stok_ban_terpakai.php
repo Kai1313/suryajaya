@@ -155,7 +155,7 @@
       <header>
         <div class="row">
           <div class="col-xs-12 text-center">
-            <h2>LAPORAN STOK BAN BARU</h2>
+            <h2>LAPORAN STOK BAN TERPAKAI</h2>
           </div>
         </div>
         <div class="row">
