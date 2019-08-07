@@ -9,6 +9,22 @@ class Crud extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
+	//Laporan
+	public function laporanStokBanBaru()
+	{
+		$this->load->view('menu/lap_stok_ban_baru');
+	}
+
+	public function laporanStokBanTerpasang()
+	{
+		$this->load->view('menu/lap_stok_ban_terpasang');
+	}
+
+	public function laporanStokBanTerpakai()
+	{
+		$this->load->view('menu/lap_stok_ban_terpakai');
+	}
+
 	//Administrator
 	public function loginauth()
 	{
@@ -55,7 +71,7 @@ class Crud extends CI_Controller
 
 	public function addUser()
 	{
-		$this->authsys->save_check_($_SESSION['user_id']);
+		// $this->authsys->save_check_($_SESSION['user_id']);
 		$ins = array(
 			'username'=>$this->input->post('username'),
 			'password'=>$this->input->post('password'),
@@ -2740,6 +2756,7 @@ class Crud extends CI_Controller
 				'grand_total'=>$this->input->post('g_total'),
 				'data_sts'=>'1'
 			);
+			$tglBeli = $this->dateFix_($this->input->post('tgl_pembelian'));
 			$this->db->update('trx_beli_ban',$upd,array('no_pembelian'=>$this->input->post('no_pembelian')));
 			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
 			if($data['status']!=FALSE)
@@ -2747,8 +2764,9 @@ class Crud extends CI_Controller
 				$detAll = $this->db->get_where('trx_beli_ban_det',array('no_pembelian'=>$this->input->post('no_pembelian')))->result();
 				foreach ($detAll as $det)
 				{
+					$hargaBeli = $det->harga_satuan;
 					$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_baru;
-					$this->beliBanUpInv($det->kode_ban,$det->qty_beli,$det->no_pembelian);
+					$this->beliBanUpInv($det->kode_ban,$this->input->post('kode_supplier'),$det->qty_beli,$det->no_pembelian,$tglBeli,$hargaBeli);
 					$upStok = $getStok+$det->qty_beli;
 					$upd = array('stok_baru'=>$upStok);
 					$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
@@ -2769,7 +2787,7 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function beliBanUpInv($key,$count,$trxCode)
+	public function beliBanUpInv($key,$sup,$count,$trxCode,$tgl,$hargaBeli)
 	{
 		$getJnsBan = $this->db->get_where('master_ban',array('kode_ban'=>$key))->row()->jenis_ban;
 		switch ($getJnsBan)
@@ -2795,9 +2813,12 @@ class Crud extends CI_Controller
 			$ins = array(
 				'kode_transaksi'=>$trxCode,
 				'kode_ban'=>$key,
+				'kode_supplier'=>$sup,
 				'kode_transaksi'=>$trxCode,
 				'bkl'=>$bklPlus,
 				'sts_stok'=>'0',
+				'tgl_beli'=>$tgl,
+				'harga_beli'=>$hargaBeli,
 				'data_sts'=>'1'
 			);
 			$this->db->insert('inv_ban',$ins);
@@ -2958,24 +2979,27 @@ class Crud extends CI_Controller
 							$upStok = ($getStok->stok_baru*1)-($det->qty_pasang*1);
 							$upPsg = ($getStok->stok_pasang*1)+($det->qty_pasang*1);
 							$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+							$stsPasang = '0';
 							break;
 						case '1':
 							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_bekas;
 							$upStok = ($getStok->stok_bekas*1)-($det->qty_pasang*1);
 							$upPsg = ($getStok->stok_pasang*1)+($det->qty_pasang*1);
 							$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+							$stsPasang = '1';
 							break;
 						case '2':
 							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_vulkanisir;
 							$upStok = ($getStok->stok_vulkanisir*1)-($det->qty_pasang*1);
 							$upPsg = ($getStok->stok_pasang*1)+($det->qty_pasang*1);
 							$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
+							$stsPasang = '2';
 							break;
 						default:
 							break;
 					}
 					$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
-					$upInv = array('sts_stok'=>'4');
+					$upInv = array('sts_stok'=>'4','tgl_pasang'=>$this->dateFix_($this->input->post('tgl_pemasangan')),'bengkel_pasang'=>$this->input->post('bengkel_pemasangan'),'sts_pasang'=>$stsPasang);
 					$this->db->update('inv_ban',$upInv,array('inv_id'=>$det->kode_inventory));
 				}
 			}
@@ -3015,21 +3039,21 @@ class Crud extends CI_Controller
 						$upStok = ($getStok->stok_baru*1)+($det->qty_pasang*1);
 						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
 						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
-						$upInv = array('sts_stok'=>'0');
+						$upInv = array('sts_stok'=>'0','tgl_pasang'=>NULL,'bengkel_pasang'=>NULL,'sts_pasang'=>NULL);
 						break;
 					case '1':
 						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_bekas;
 						$upStok = ($getStok->stok_bekas*1)+($det->qty_pasang*1);
 						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
 						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
-						$upInv = array('sts_stok'=>'1');
+						$upInv = array('sts_stok'=>'1','tgl_pasang'=>NULL,'bengkel_pasang'=>NULL,'sts_pasang'=>NULL);
 						break;
 					case '2':
 						$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row()->stok_vulkanisir;
 						$upStok = ($getStok->stok_vulkanisir*1)+($det->qty_pasang*1);
 						$upPsg = ($getStok->stok_pasang*1)-($det->qty_pasang*1);
 						$upd = array('stok_baru'=>$upStok,'stok_pasang'=>$upPsg);
-						$upInv = array('sts_stok'=>'2');
+						$upInv = array('sts_stok'=>'2','tgl_pasang'=>NULL,'bengkel_pasang'=>NULL,'sts_pasang'=>NULL);
 						break;
 					default:
 						break;
@@ -3152,21 +3176,21 @@ class Crud extends CI_Controller
 							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
 							$upStok = ($getStok->stok_bekas*1)+($det->qty_lepas*1);
 							$upd = array('stok_bekas'=>$upStok,'stok_pasang'=>$upLps);
-							$upInv = array('sts_stok'=>'1');
+							$upInv = array('sts_stok'=>'1','tgl_lepas'=>$this->dateFix_($this->input->post('tgl_pelepasan')),'bengkel_lepas'=>$this->input->post('bengkel_pelepasan'));
 							break;
 						case '1':
 							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
 							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
 							$upStok = ($getStok->stok_vulkanisir*1)+($det->qty_lepas*1);
 							$upd = array('stok_vulkanisir'=>$upStok,'stok_pasang'=>$upLps);
-							$upInv = array('sts_stok'=>'2');
+							$upInv = array('sts_stok'=>'2','tgl_lepas'=>$this->dateFix_($this->input->post('tgl_pelepasan')),'bengkel_lepas'=>$this->input->post('bengkel_pelepasan'));
 							break;
 						case '2':
 							$getStok = $this->db->get_where('master_ban',array('kode_ban'=>$det->kode_ban))->row();
 							$upLps = ($getStok->stok_pasang*1)-($det->qty_lepas*1);
 							$upStok = ($getStok->stok_afkir*1)+($det->qty_lepas*1);
 							$upd = array('stok_afkir'=>$upStok,'stok_pasang'=>$upLps);
-							$upInv = array('sts_stok'=>'3');
+							$upInv = array('sts_stok'=>'3','tgl_lepas'=>$this->dateFix_($this->input->post('tgl_pelepasan')),'bengkel_lepas'=>$this->input->post('bengkel_pelepasan'));
 							break;
 						default:
 							break;
@@ -3227,7 +3251,7 @@ class Crud extends CI_Controller
 					default:
 						break;
 				}
-				$upInv = array('sts_stok'=>'4');
+				$upInv = array('sts_stok'=>'4','tgl_lepas'=>NULL,'bengkel_lepas'=>NULL);
 				$this->db->update('master_ban',$upd,array('kode_ban'=>$det->kode_ban));
 				$this->db->update('inv_ban',$upInv,array('inv_id'=>$det->kode_inventory));
 			}

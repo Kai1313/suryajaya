@@ -88,6 +88,16 @@
             <li class="<?php if($this->uri->segment(1)=='stok-spare-part'){echo 'active';}?>"><a href="<?= base_url('stok-spare-part')?>">Barang</a></li>
           </ul>
         </li>
+        <li class="treeview <?php $arr=array('laporan'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
+          <a href="#"><i class="fa fa-cubes"></i> <span>Laporan</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?php if($this->uri->segment(1)=='laporan'){echo 'active';}?>"><a href="<?= base_url('laporan')?>">Laporan Ban</a></li>
+          </ul>
+        </li>
         <li class="treeview <?php $arr=array('admin-settings','admin-users'); if(in_array($this->uri->segment(1),$arr)){echo ' active';} ?>">
           <a href="#"><i class="fa fa-users"></i> <span>Administrator</span>
             <span class="pull-right-container">

@@ -75,12 +75,182 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/report/ReportInputKas','rptKas');
 		$this->load->model('Datatables/report/ReportKatalog','rptKtl');
 		$this->load->model('Datatables/report/ReportOpnameBan','rptOpnameBan');
+		$this->load->model('Datatables/report/ReportStokBanBaru','rptStokBanBaru');
+		$this->load->model('Datatables/report/ReportStokBanTerpasang','rptStokBanTerpasang');
+		$this->load->model('Datatables/report/ReportStokBanTerpakai','rptStokBanTerpakai');
 
 		$this->load->model('Datatables/administrator/AdminSettings','admSettings');
 		$this->load->model('Datatables/administrator/AdminUsers','admUsers');
 	}
 
 	//Data Report Transaksi
+	public function rptStokBanTerpakai()
+	{
+		$list = $this->rptStokBanTerpakai->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset';
+					break;
+				default:
+					break;
+			}
+			switch ($dat->sts_pasang)
+			{
+				case '0':
+					$sts = 'Baru';
+					break;
+				case '1':
+					$sts = 'Bekas';
+					break;
+				case '2':
+					$sts = 'Vulkansir';
+					break;
+				case '3':
+					$sts = 'Afkir/Buang';
+					break;
+				case '4':
+					$sts = 'Terpasang';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = date('d/m/Y', strtotime($dat->tgl_pasang));
+			$row[] = date('d/m/Y', strtotime($dat->tgl_lepas));
+			$row[] = $dat->nama_supplier;
+			$row[] = $dat->kode_ban.' - '.$dat->merk_ban.' - '.$dat->ukuran_ban;
+			$row[] = $jenis;
+			$row[] = $dat->bkl;
+			$row[] = $dat->bengkel_pasang;
+			$row[] = $sts;
+			$row[] = number_format($dat->harga_beli,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptStokBanTerpakai->count_all(),
+				"recordsFiltered" => $this->rptStokBanTerpakai->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function rptStokBanTerpasang()
+	{
+		$list = $this->rptStokBanTerpasang->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset';
+					break;
+				default:
+					break;
+			}
+			switch ($dat->sts_pasang)
+			{
+				case '0':
+					$sts = 'Baru';
+					break;
+				case '1':
+					$sts = 'Bekas';
+					break;
+				case '2':
+					$sts = 'Vulkansir';
+					break;
+				case '3':
+					$sts = 'Afkir/Buang';
+					break;
+				case '4':
+					$sts = 'Terpasang';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = $dat->kode_ban.' - '.$dat->merk_ban;
+			$row[] = $dat->nama_supplier;
+			$row[] = $dat->ukuran_ban;
+			$row[] = $jenis;
+			$row[] = $dat->bkl;
+			$row[] = $dat->bengkel_pasang;
+			$row[] = date('d/m/Y', strtotime($dat->tgl_pasang));
+			$row[] = $sts;
+			$row[] = number_format($dat->harga_beli,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptStokBanTerpasang->count_all(),
+				"recordsFiltered" => $this->rptStokBanTerpasang->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
+	public function rptStokBanBaru()
+	{
+		$list = $this->rptStokBanBaru->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			switch ($dat->jenis_ban)
+			{
+				case '0':
+					$jenis = 'Ban Dalam';
+					break;
+				case '1':
+					$jenis = 'Ban Luar';
+					break;
+				case '2':
+					$jenis = 'Marset';
+					break;
+				default:
+					break;
+			}
+			$no++;
+			$row = array();
+			$row[] = $dat->kode_ban.' - '.$dat->merk_ban;
+			$row[] = $dat->nama_supplier;
+			$row[] = $dat->ukuran_ban;
+			$row[] = $jenis;
+			$row[] = $dat->bkl;
+			$row[] = date('d/m/Y', strtotime($dat->tgl_beli));
+			$row[] = number_format($dat->harga_beli,2);
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->rptStokBanBaru->count_all(),
+				"recordsFiltered" => $this->rptStokBanBaru->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function rptOpnameBan()
 	{
 		$list = $this->rptOpnameBan->get_datatables();

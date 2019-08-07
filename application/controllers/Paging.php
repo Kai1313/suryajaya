@@ -298,4 +298,14 @@ class Paging extends CI_Controller
 		$data['content']='menu/stok_spare_part';
 		$this->load->view('layout/wrapper',$data);
 	}
+
+	//Laporan
+	//Stok
+	public function laporan()
+	{
+		$this->authsys->logcheck_();
+		$data['page_header']='Laporan';
+		$data['content']='menu/laporan';
+		$this->load->view('layout/wrapper',$data);
+	}
 }

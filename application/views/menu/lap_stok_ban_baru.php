@@ -154,6 +154,11 @@
     <div class="container printing" id="print-div">
       <header>
         <div class="row">
+          <div class="col-xs-12 text-center">
+            <h2>LAPORAN STOK BAN BARU</h2>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-sm-3 col-xs-3">
             <!-- <img id="img_logo" class="img-responsive" src=""> -->
             <h2 name="comp-name">Suryajaya</h2>
@@ -181,14 +186,16 @@
         </div>
         <div class="row">
           <div class="col-sm-12 col-xs-12 table-responsive">
-            <table id="rptOpnameBan" class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
+            <table id="rptStokBanBaru" class="table table-bordered" border="0" cellspacing="0" cellpadding="0" width="100%">
               <thead>
                 <tr>
                   <th class="text-center col-xs-2 col-sm-2">Kode Ban</th>
+                  <th class="text-center col-xs-2 col-sm-2">Supplier</th>
                   <th class="text-center col-xs-2 col-sm-2">Ukuran</th>
-                  <th class="text-center col-xs-2 col-sm-2">Jenis Ban</th>
-                  <th class="text-center col-xs-3 col-sm-3">No. BKL</th>
-                  <th class="text-center col-xs-3 col-sm-3">Status Ban</th>
+                  <th class="text-center col-xs-1 col-sm-1">Jenis Ban</th>
+                  <th class="text-center col-xs-1 col-sm-1">No. BKL</th>
+                  <th class="text-center col-xs-2 col-sm-2">Tgl Beli</th>
+                  <th class="text-center col-xs-2 col-sm-2">Harga Beli</th>
                 </tr>
               </thead>
               <tbody id="tb_content"></tbody>
@@ -279,7 +286,7 @@
     }
     function fetchData()
     {
-      table = $('#rptOpnameBan').DataTable({
+      table = $('#rptStokBanBaru').DataTable({
         "info": false,
         "responsive": true,
         "processing": true,
@@ -287,7 +294,7 @@
         "paging": false,
         "order": [],
         "ajax": {
-          "url": "<?php echo site_url('Datatables/rptOpnameBan')?>",
+          "url": "<?php echo site_url('Datatables/rptStokBanBaru')?>",
           "type": "POST",
           "data": function(data)
             {
