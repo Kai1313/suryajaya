@@ -1,21 +1,19 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class SearchDaftarInputBonKaryawan extends CI_Model 
+	class ShowPom extends CI_Model 
 	{
-		var $table = 'trx_input_bon_karyawan a';
-		var $column_order = array(null,'a.no_bon','a.tgl_bon','b.nama_karyawan','a.data_sts',null);
-		var $column_search = array('a.no_bon','a.tgl_bon','b.nama_karyawan','a.data_sts');
-		var $order = array('a.tgl_bon' => 'asc'); 
+		var $table = 'master_pom';
+		var $column_order = array(null,'kode_pom','nama_pom',null);
+		var $column_search = array('kode_pom','nama_pom');
+		var $order = array('kode_pom' => 'asc'); 
 		public function __construct()
 		{
-			parent::__construct();
+			parent::__construct();		
 		}
 		private function _get_datatables_query()
 		{
-			$this->db->select('a.*,b.nama_karyawan');
 			$this->db->from($this->table);
-			$this->db->join('master_karyawan b','b.kode_karyawan = a.kode_karyawan','left');
-			$this->db->where('a.data_sts !=','3');
+			$this->db->where('data_sts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{

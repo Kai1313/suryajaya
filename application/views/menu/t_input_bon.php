@@ -74,24 +74,31 @@
         <div class="col-md-12 col-xs-12">
           <div class="box">
             <div class="box-body">
-              <div class="col-md-1 col-xs-1">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="saveDt()">Simpan</button>
+              <div class="row">
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-success" onclick="saveDt()">Simpan</button>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 col-xs-1">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="printDt()">Cetak</button>
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-warning" onclick="cancelDt()">Batal</button>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 col-xs-1">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-danger" onclick="delDt()">Hapus</button>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 col-xs-1">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-primary" onclick="printDt()">Cetak</button>
+                  </div>
+                </div>
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -231,6 +238,27 @@
       $.ajax({
         type: 'POST',
         url: '<?= site_url('Crud/cancelBonKaryawan')?>',
+        data: $('form').serialize(),
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
+    function delDt()
+    {
+      key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'';
+      $.ajax({
+        type: 'POST',
+        url: '<?= site_url('Crud/delBonKaryawan')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)

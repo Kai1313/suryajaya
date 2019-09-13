@@ -63,6 +63,7 @@ $route['master-tujuan'] = 'Paging/m_tujuan';
 $route['master-supplier'] = 'Paging/m_supplier';
 $route['master-ban'] = 'Paging/m_ban';
 $route['master-rekening'] = 'Paging/m_rekening';
+$route['master-pom'] = 'Paging/m_pom';
 $route['transaksi-pembelian-spare-part'] = 'Paging/t_pembelian_spare_part';
 $route['transaksi-pemakaian-spare-part'] = 'Paging/t_pemakaian_spare_part';
 $route['transaksi-pembelian-ban'] = 'Paging/t_pembelian_ban';

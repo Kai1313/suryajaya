@@ -58,6 +58,7 @@ INSERT INTO `hak_akses` (`user_id`, `trx_id`, `simpan`, `hapus`, `update`) VALUE
 	(1, 28, '1', '1', '1'),
 	(1, 29, '1', '1', '1'),
 	(1, 30, '1', '1', '1'),
+	(1, 31, '1', '1', '1'),
 	(2, 10, '1', '1', '1');
 /*!40000 ALTER TABLE `hak_akses` ENABLE KEYS */;
 
@@ -188,6 +189,25 @@ INSERT INTO `master_customer` (`kode_customer`, `nama_customer`, `alamat_custome
 	('CUST0004', 'Handoko', 'Lesti No.42', 'Surabaya', 'Customer', '0987654', '1');
 /*!40000 ALTER TABLE `master_customer` ENABLE KEYS */;
 
+-- Dumping structure for table suryajaya.master_customer_harga
+DROP TABLE IF EXISTS `master_customer_harga`;
+CREATE TABLE IF NOT EXISTS `master_customer_harga` (
+  `id_harga` int(11) NOT NULL AUTO_INCREMENT,
+  `kode_customer` char(10) NOT NULL DEFAULT '0',
+  `tujuan` varchar(254) DEFAULT NULL,
+  `nominal` decimal(10,2) DEFAULT NULL,
+  `data_sts` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id_harga`),
+  KEY `FK_master_customer_harga_master_customer` (`kode_customer`),
+  CONSTRAINT `FK_master_customer_harga_master_customer` FOREIGN KEY (`kode_customer`) REFERENCES `master_customer` (`kode_customer`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.master_customer_harga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_customer_harga` DISABLE KEYS */;
+INSERT INTO `master_customer_harga` (`id_harga`, `kode_customer`, `tujuan`, `nominal`, `data_sts`) VALUES
+	(1, 'CUST0001', 'Jakarta - Surabaya', 1500000.00, '1');
+/*!40000 ALTER TABLE `master_customer_harga` ENABLE KEYS */;
+
 -- Dumping structure for table suryajaya.master_driver
 DROP TABLE IF EXISTS `master_driver`;
 CREATE TABLE IF NOT EXISTS `master_driver` (
@@ -273,6 +293,22 @@ INSERT INTO `master_kendaraan` (`kode_kendaraan`, `nopol`, `sopir_kendaraan`, `k
 	(3, 'B2345XX', 'DRV0001', 'DRV0002', '0987654', '0987654', 'Toyota', 'Pick Up', 'Joni', '2015', '098765', 'Silver', '2019', '2000', '1');
 /*!40000 ALTER TABLE `master_kendaraan` ENABLE KEYS */;
 
+-- Dumping structure for table suryajaya.master_pom
+DROP TABLE IF EXISTS `master_pom`;
+CREATE TABLE IF NOT EXISTS `master_pom` (
+  `kode_pom` char(10) NOT NULL,
+  `nama_pom` char(100) NOT NULL,
+  `data_sts` char(1) NOT NULL,
+  PRIMARY KEY (`kode_pom`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table suryajaya.master_pom: ~2 rows (approximately)
+/*!40000 ALTER TABLE `master_pom` DISABLE KEYS */;
+INSERT INTO `master_pom` (`kode_pom`, `nama_pom`, `data_sts`) VALUES
+	('POM001', 'POM MENANGGAL', '1'),
+	('POM002', 'POM JOMBANG PEJATEN', '1');
+/*!40000 ALTER TABLE `master_pom` ENABLE KEYS */;
+
 -- Dumping structure for table suryajaya.master_rekening
 DROP TABLE IF EXISTS `master_rekening`;
 CREATE TABLE IF NOT EXISTS `master_rekening` (
@@ -340,15 +376,50 @@ CREATE TABLE IF NOT EXISTS `profile_settings` (
   `kodepos` char(100) DEFAULT NULL,
   `logo` char(100) DEFAULT NULL,
   `satuan_kasbon` decimal(10,2) DEFAULT NULL,
+  `bonus_upah_harian` decimal(10,2) DEFAULT NULL,
   `no_telepon` char(20) DEFAULT NULL,
   `no_fax` char(20) DEFAULT NULL,
+  `solar_jktsby` decimal(10,2) DEFAULT NULL,
+  `solar_sbyjkt` decimal(10,2) DEFAULT NULL,
+  `solar_naik` decimal(10,2) DEFAULT NULL,
+  `retribusi_bak` decimal(10,2) DEFAULT NULL,
+  `retribusi_tangki` decimal(10,2) DEFAULT NULL,
+  `stut_jktsby` decimal(10,2) DEFAULT NULL,
+  `stut_sbyjkt` decimal(10,2) DEFAULT NULL,
+  `nginap_sby` decimal(10,2) DEFAULT NULL,
+  `nginap_jkt` decimal(10,2) DEFAULT NULL,
+  `biaya_perkg` decimal(10,2) DEFAULT NULL,
+  `bantuan` decimal(10,2) DEFAULT NULL,
+  `bkr2t` decimal(10,2) DEFAULT NULL,
+  `ngepok` decimal(10,2) DEFAULT NULL,
+  `uang_kernet` decimal(10,2) DEFAULT NULL,
+  `denda_a` decimal(10,2) DEFAULT NULL,
+  `denda_b` decimal(10,2) DEFAULT NULL,
+  `denda_c` decimal(10,2) DEFAULT NULL,
+  `batas_kgbaksbyjkt` decimal(10,2) DEFAULT NULL,
+  `batas_kgbakjktsby` decimal(10,2) DEFAULT NULL,
+  `harga_bataskgbak` decimal(10,2) DEFAULT NULL,
+  `batas_kgtangki` decimal(10,2) DEFAULT NULL,
+  `harga_bataskgtangki` decimal(10,2) DEFAULT NULL,
+  `beratlebih_baksbyjkt` decimal(10,2) DEFAULT NULL,
+  `beratlebih_bakjktsby` decimal(10,2) DEFAULT NULL,
+  `beratlebih_tangki` decimal(10,2) DEFAULT NULL,
+  `pulang_kosonga` decimal(10,2) DEFAULT NULL,
+  `pulang_kosongb` decimal(10,2) DEFAULT NULL,
+  `pulang_kosongc` decimal(10,2) DEFAULT NULL,
+  `bon_jkta` decimal(10,2) DEFAULT NULL,
+  `bon_jktb` decimal(10,2) DEFAULT NULL,
+  `bon_jktc` decimal(10,2) DEFAULT NULL,
+  `bon_jktd` decimal(10,2) DEFAULT NULL,
+  `bon_jkte` decimal(10,2) DEFAULT NULL,
+  `tab_sopir` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.profile_settings: ~1 rows (approximately)
 /*!40000 ALTER TABLE `profile_settings` DISABLE KEYS */;
-INSERT INTO `profile_settings` (`id`, `bkl_ban_dalam`, `bkl_ban_luar`, `bkl_marset`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `logo`, `satuan_kasbon`, `no_telepon`, `no_fax`) VALUES
-	(1, 5, 32, 1, 'Suryajaya', 'Jalan Maju No.104', 'Tulungagung', 'Jawa Timur', '62011', NULL, 100000.00, '34567890', '456789');
+INSERT INTO `profile_settings` (`id`, `bkl_ban_dalam`, `bkl_ban_luar`, `bkl_marset`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `logo`, `satuan_kasbon`, `bonus_upah_harian`, `no_telepon`, `no_fax`, `solar_jktsby`, `solar_sbyjkt`, `solar_naik`, `retribusi_bak`, `retribusi_tangki`, `stut_jktsby`, `stut_sbyjkt`, `nginap_sby`, `nginap_jkt`, `biaya_perkg`, `bantuan`, `bkr2t`, `ngepok`, `uang_kernet`, `denda_a`, `denda_b`, `denda_c`, `batas_kgbaksbyjkt`, `batas_kgbakjktsby`, `harga_bataskgbak`, `batas_kgtangki`, `harga_bataskgtangki`, `beratlebih_baksbyjkt`, `beratlebih_bakjktsby`, `beratlebih_tangki`, `pulang_kosonga`, `pulang_kosongb`, `pulang_kosongc`, `bon_jkta`, `bon_jktb`, `bon_jktc`, `bon_jktd`, `bon_jkte`, `tab_sopir`) VALUES
+	(1, 5, 32, 1, 'Suryajaya', 'Jalan Maju No.104', 'Tulungagung', 'Jawa Timur', '62011', NULL, 100000.00, 100000.00, '34567890', '456789', 2000000.00, 1500000.00, 1000000.00, 100000.00, 1000000.00, 200000.00, 200000.00, 200000.00, 500000.00, 500000.00, 400000.00, 100000.00, 550000.00, 1000000.00, 100000.00, 100000.00, 100000.00, 18000.00, 30000.00, 600000.00, 25000.00, 850000.00, 35.00, 35.00, 35.00, 1700000.00, 15000000.00, 0.00, 3900000.00, 3200000.00, 2400000.00, 3700000.00, 1600000.00, 50000.00);
 /*!40000 ALTER TABLE `profile_settings` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_bayar_bonklaim_sopir
@@ -404,6 +475,8 @@ CREATE TABLE IF NOT EXISTS `trx_bayar_upah_karyawan` (
 
 -- Dumping data for table suryajaya.trx_bayar_upah_karyawan: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_bayar_upah_karyawan` DISABLE KEYS */;
+INSERT INTO `trx_bayar_upah_karyawan` (`no_kuitansi`, `kode_karyawan`, `tgl_upah`, `hari_kerja`, `sub_harian`, `bonus_harian`, `sub_bonusharian`, `uang_makan`, `sub_makan`, `uang_lembur`, `sub_lembur`, `uang_minggu`, `sub_minggu`, `uang_haribesar`, `sub_haribesar`, `uang_bulanan`, `sub_bulanan`, `bonus_bulanan`, `sub_bonusbulanan`, `uang_lain`, `sub_lain`, `sub_total`, `sub_bon`, `grand_total`, `data_sts`) VALUES
+	('KUI1908-000001', NULL, '2019-08-21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0');
 /*!40000 ALTER TABLE `trx_bayar_upah_karyawan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_beli_ban
@@ -466,6 +539,8 @@ CREATE TABLE IF NOT EXISTS `trx_beli_barang` (
 
 -- Dumping data for table suryajaya.trx_beli_barang: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_beli_barang` DISABLE KEYS */;
+INSERT INTO `trx_beli_barang` (`no_nota`, `kode_supplier`, `nota_toko`, `tgl_nota`, `diskon`, `nom_diskon`, `grand_total`, `data_sts`) VALUES
+	('SK1908-000001', NULL, NULL, '2019-08-20', NULL, NULL, NULL, '0');
 /*!40000 ALTER TABLE `trx_beli_barang` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_beli_barang_det
@@ -544,8 +619,10 @@ CREATE TABLE IF NOT EXISTS `trx_input_bon_karyawan` (
   CONSTRAINT `FK_trx_input_bon_karyawan_master_karyawan` FOREIGN KEY (`kode_karyawan`) REFERENCES `master_karyawan` (`kode_karyawan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_input_bon_karyawan: ~0 rows (approximately)
+-- Dumping data for table suryajaya.trx_input_bon_karyawan: ~1 rows (approximately)
 /*!40000 ALTER TABLE `trx_input_bon_karyawan` DISABLE KEYS */;
+INSERT INTO `trx_input_bon_karyawan` (`no_bon`, `kode_karyawan`, `tgl_bon`, `nom_bon`, `ket_bon`, `data_sts`) VALUES
+	('BON1908-000001', 'KRY00001', '2019-08-24', 1000000.00, 'tes', '3');
 /*!40000 ALTER TABLE `trx_input_bon_karyawan` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_input_bon_sopir
@@ -729,11 +806,15 @@ DROP TABLE IF EXISTS `trx_kas_bon_sopir`;
 CREATE TABLE IF NOT EXISTS `trx_kas_bon_sopir` (
   `no_bon` char(20) NOT NULL,
   `tgl_bon` date DEFAULT NULL,
+  `tgl_berangkat` date DEFAULT NULL,
+  `tgl_datang` date DEFAULT NULL,
+  `jumlah_pp` int(11) DEFAULT NULL,
   `kode_kendaraan` int(11) DEFAULT NULL,
   `kode_sopir` char(10) DEFAULT NULL,
   `kode_kernet` char(10) DEFAULT NULL,
   `tab_sopir` char(10) DEFAULT NULL,
   `berat_jenis` char(1) DEFAULT NULL,
+  `jenis_kendaraan` char(1) DEFAULT NULL,
   `ket_kasbon` text,
   `uang_saku_kota` decimal(10,2) DEFAULT NULL,
   `tgl_bon_kota` date DEFAULT NULL,
@@ -788,6 +869,20 @@ CREATE TABLE IF NOT EXISTS `trx_kas_bon_sopir` (
   `tambah_b` decimal(10,2) DEFAULT NULL,
   `tambah_c` decimal(10,2) DEFAULT NULL,
   `tambah_d` decimal(10,2) DEFAULT NULL,
+  `ngepok` decimal(10,2) DEFAULT NULL,
+  `solar_jkt` decimal(10,2) DEFAULT NULL,
+  `solar_sby` decimal(10,2) DEFAULT NULL,
+  `solar_naik` decimal(10,2) DEFAULT NULL,
+  `pulang` decimal(10,2) DEFAULT NULL,
+  `total_perincian` decimal(10,2) DEFAULT NULL,
+  `bon_sangujkt` decimal(10,2) DEFAULT NULL,
+  `hutang_pribadi` decimal(10,2) DEFAULT NULL,
+  `klaim` decimal(10,2) DEFAULT NULL,
+  `uang_kenek` decimal(10,2) DEFAULT NULL,
+  `total_potongan` decimal(10,2) DEFAULT NULL,
+  `total_akhir` decimal(10,2) DEFAULT NULL,
+  `kode_biaya_sbyjkt` char(10) DEFAULT NULL,
+  `kode_biaya_jktsby` char(10) DEFAULT NULL,
   `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`no_bon`),
   KEY `FK_trx_kas_bon_sopir_master_kendaraan` (`kode_kendaraan`),
@@ -814,7 +909,7 @@ CREATE TABLE IF NOT EXISTS `trx_kas_bon_sopir` (
   CONSTRAINT `FK_trx_kas_bon_sopir_master_kendaraan` FOREIGN KEY (`kode_kendaraan`) REFERENCES `master_kendaraan` (`kode_kendaraan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table suryajaya.trx_kas_bon_sopir: ~1 rows (approximately)
+-- Dumping data for table suryajaya.trx_kas_bon_sopir: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_kas_bon_sopir` DISABLE KEYS */;
 /*!40000 ALTER TABLE `trx_kas_bon_sopir` ENABLE KEYS */;
 
@@ -943,7 +1038,7 @@ CREATE TABLE IF NOT EXISTS `trx_list` (
   `status` char(1) DEFAULT NULL,
   `data_sts` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table suryajaya.trx_list: ~30 rows (approximately)
 /*!40000 ALTER TABLE `trx_list` DISABLE KEYS */;
@@ -977,7 +1072,8 @@ INSERT INTO `trx_list` (`id`, `nama`, `code`, `status`, `data_sts`) VALUES
 	(27, 'Tagihan', 't17', '1', '1'),
 	(28, 'Pelunasan Piutang', 't18', '1', '1'),
 	(29, 'Kuitansi', 't19', '1', '1'),
-	(30, 'Pembayaran Bon/Klaim', 't20', '1', '1');
+	(30, 'Pembayaran Bon/Klaim', 't20', '1', '1'),
+	(31, 'Pom', 'm11', '0', '1');
 /*!40000 ALTER TABLE `trx_list` ENABLE KEYS */;
 
 -- Dumping structure for table suryajaya.trx_opname_ban

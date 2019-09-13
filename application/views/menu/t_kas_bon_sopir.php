@@ -40,11 +40,32 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label>Tanggal Berangkat Sby</label>
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_berangkat" class="form-control pull-right" id="tgl_berangkat" placeholder="dd/mm/yyyy" onchange="diffDate()">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Tanggal Datang Sby</label>
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="tgl_datang" class="form-control pull-right" id="tgl_datang" placeholder="dd/mm/yyyy" onchange="diffDate()">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>PP</label>
+                      <input type="text" name="jumlah_pp" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
                       <label>Keterangan</label>
                       <textarea class="form-control" name="ket_kasbon" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                      <br>
                       <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newBon()">Bon Baru</button>
                       <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editBon()">Edit Bon</button>
                     </div>
@@ -69,14 +90,17 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label>Tabungan Sopir</label>
-                      <input type="text" name="tab_sopir" class="form-control num_" value="100000">
-                    </div>
-                    <div class="form-group">
                       <label>Berat Jenis</label>
                       <select class="form-control" name="berat_jenis" id="berat_jenis" onchange="beratStat()">
                         <option value="0">Berat (Kg)</option>
                         <option value="1">Volume (Dm3)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Jenis Kendaraan</label>
+                      <select class="form-control" name="jenis_kendaraan" id="jenis_kendaraan">
+                        <option value="0">Bak</option>
+                        <option value="1">Tangki</option>
                       </select>
                     </div>
                   </div>
@@ -91,187 +115,93 @@
           <div class="col-md-12 col-xs-12">
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_1" data-toggle="tab">Bon-Uang Saku</a></li>
-                <li><a href="#tab_2" data-toggle="tab">Berangkat</a></li>
-                <li><a href="#tab_3" data-toggle="tab">Kembali</a></li>
-                <li><a href="#tab_4" data-toggle="tab">Solar</a></li>
+                <li class="active"><a href="#tab_1" data-toggle="tab">Umum</a></li>
+                <li><a href="#tab_2" data-toggle="tab">Perincian</a></li>
+                <li><a href="#tab_3" data-toggle="tab">Potongan</a></li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                   <div class="row">
-                    <div class="col-md-4 col-xs-12">
+                    <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_kota" class="form-control pull-right" id="tgl_bon_kota" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_a" class="form-control pull-right" id="tgl_bon_a" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_b" class="form-control pull-right" id="tgl_bon_b" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_c" class="form-control pull-right" id="tgl_bon_c" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_d" class="form-control pull-right" id="tgl_bon_d" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-8 col-xs-12">
-                      <div class="row">
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Bon Sangu Kota</label>
-                            <input type="text" name="uang_saku_kota" class="form-control num_ chgbonsaku">
-                          </div>
-                          <div class="form-group">
-                            <label>Bon Uang Saku 1</label>
-                            <input type="text" name="uang_saku_a" class="form-control num_ chgbonsaku">
-                          </div>
-                          <div class="form-group">
-                            <label>Bon Uang Saku 2</label>
-                            <input type="text" name="uang_saku_b" class="form-control num_ chgbonsaku">
-                          </div>
-                          <div class="form-group">
-                            <label>Bon Uang Saku 3</label>
-                            <input type="text" name="uang_saku_c" class="form-control num_ chgbonsaku">
-                          </div>
-                          <div class="form-group">
-                            <label>Bon Uang Saku 4</label>
-                            <input type="text" name="uang_saku_d" class="form-control num_ chgbonsaku">
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_kota_sum" class="form-control num_" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_a_sum" class="form-control num_" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_b_sum" class="form-control num_" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_c_sum" class="form-control num_" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_d_sum" class="form-control num_" readonly>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 col-xs-12">
-                          <div class="form-group">
-                            <label>Total Bon Uang Saku</label>
-                            <input type="text" name="sub_uang_saku" class="form-control num_" readonly>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                      <div class="form-group">
-                        <label>Nama Pom</label>
-                        <select class="form-control" name="nama_pom" id="nama_pom">
-                          <option value="0">Pom A</option>
-                          <option value="1">Pom B</option>
+                        <label>Cust Sby - Jkt 1</label>
+                        <select class="form-control" name="kode_customer_a" id="dropPengirimA" style="width: 100%;">
+                          <option value="">Pilih Customer</option>
                         </select>
                       </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_solar" class="form-control pull-right" id="tgl_solar" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
                     </div>
-                    <div class="col-md-8 col-xs-12">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label>Bon Solar</label>
-                            <input type="text" name="uang_solar" class="form-control num_ chgbonsaku">
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSolar" value="100000" readonly>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_solar_sum" class="form-control num_" readonly>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Sby - Jkt 1</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_muatan_a" class="form-control num_">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-offset-4 col-md-8 col-xs-12">
+                    <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Total Bon Uang Saku & Solar</label>
-                        <input type="text" name="sub_bonall" class="form-control num_" readonly>
+                        <label>Cust Sby - Jkt 2</label>
+                        <select class="form-control" name="kode_customer_b" id="dropPengirimB" style="width: 100%;">
+                          <option value="">Pilih Customer</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Sby - Jkt 2</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_muatan_b" class="form-control num_">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Cust Jkt - Sby 1</label>
+                        <select class="form-control" name="kode_customer_c" id="dropPengirimC" style="width: 100%;">
+                          <option value="">Pilih Customer</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Jkt - Sby 1</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_muatan_c" class="form-control num_">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Cust Jkt - Sby 2</label>
+                        <select class="form-control" name="kode_customer_d" id="dropPengirimD" style="width: 100%;">
+                          <option value="">Pilih Customer</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Jkt - Sby 2</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_muatan_d" class="form-control num_">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -279,287 +209,391 @@
                 <div class="tab-pane" id="tab_2">
                   <div class="row">
                     <div class="col-md-8 col-xs-12">
-                      <div class="row">
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Tanggal Muat</label>
-                            <div class="input-group date">
-                              <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                              </div>
-                              <input type="text" name="tgl_muat" class="form-control pull-right" id="tgl_muat" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Tanggal Bongkar</label>
-                            <div class="input-group date">
-                              <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                              </div>
-                              <input type="text" name="tgl_bongkar" class="form-control pull-right" id="tgl_bongkar" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Hari</label>
-                            <input type="text" name="hari_berangkat" class="form-control" readonly>
-                          </div>
-                        </div>
+                      <div class="form-group">
+                        <label>Biaya Jalan Sby - Jkt</label>
+                        <select class="form-control" name="kode_biaya_sbyjkt" id="dropBiayaSbyJkt" style="width: 100%;" onchange="hitungPerincian()">
+                          <option value="">Pilih Biaya</option>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Uang Makan</label>
-                        <input type="text" name="uang_makan" class="form-control num_">
+                        <label>Nominal</label>
+                        <input type="text" name="biaya_sbyjkt" class="form-control perincianchg num_" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-4">
                       <div class="form-group">
-                        <label>Alamat Pengirim 1</label>
-                        <select class="form-control" name="kode_customer_a" id="dropPengirimA" style="width: 100%;">
-                          <option value="">Pilih Pengirim</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Alamat Penerima 1</label>
-                        <select class="form-control" name="kode_customer_b" id="dropPenerimaA" style="width: 100%;">
-                          <option value="">Pilih Penerima</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>No Surat Jalan 1</label>
-                        <input type="text" name="surat_jalan_a" class="form-control">
+                        <label>Bantuan 1</label>
+                        <input type="text" name="bantuan1" class="form-control perincianchg num_">
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-4">
                       <div class="form-group">
-                        <label>Jenis Muatan 1</label>
-                        <input type="text" name="jenis_muatan_a" class="form-control">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_bantuan1" class="form-control num_" readonly>
                       </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
                       <div class="form-group">
-                        <label>Berat Muatan 1</label>
-                        <div class="input-group">
-                          <input type="text" name="berat_muatan_a" class="form-control num_ chgberatbrgkt">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
-                        </div>
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_bantuan1" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-4">
                       <div class="form-group">
-                        <label>Alamat Pengirim 2</label>
-                        <select class="form-control" name="kode_customer_c" id="dropPengirimB" style="width: 100%;">
-                          <option value="">Pilih Pengirim</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Alamat Penerima 2</label>
-                        <select class="form-control" name="kode_customer_d" id="dropPenerimaB" style="width: 100%;">
-                          <option value="">Pilih Penerima</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>No Surat Jalan 2</label>
-                        <input type="text" name="surat_jalan_b" class="form-control">
+                        <label>Bantuan 2</label>
+                        <input type="text" name="bantuan2" class="form-control perincianchg num_">
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-4">
                       <div class="form-group">
-                        <label>Jenis Muatan 2</label>
-                        <input type="text" name="jenis_muatan_b" class="form-control">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_bantuan2" class="form-control num_" readonly>
                       </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
                       <div class="form-group">
-                        <label>Berat Muatan 2</label>
-                        <div class="input-group">
-                          <input type="text" name="berat_muatan_b" class="form-control num_ chgberatbrgkt">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
-                        </div>
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_bantuan2" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-offset-3 col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-4">
                       <div class="form-group">
-                        <label>Total Berat Muat</label>
-                        <input type="text" name="sub_beratmuat" class="form-control num_" readonly>
+                        <label>Ngepok</label>
+                        <input type="text" name="ngepok" class="form-control perincianchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="def_ngepok" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_ngepok" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8 col-xs-12">
+                      <div class="form-group">
+                        <label>Biaya Jalan Jkt - Sby</label>
+                        <select class="form-control" name="kode_biaya_jktsby" id="dropBiayaJktSby" style="width: 100%;" onchange="hitungPerincian()">
+                          <option value="">Pilih Biaya</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label>Nominal</label>
+                        <input type="text" name="biaya_jktsby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label>Solar Ke Jkt</label>
+                        <input type="text" name="solar_jkt" class="form-control perincianchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="def_solar_jkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_solar_jkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label>Solar Ke Sby</label>
+                        <input type="text" name="solar_sby" class="form-control perincianchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="def_solar_sby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_solar_sby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label>Solar Naik</label>
+                        <input type="text" name="solar_naik" class="form-control perincianchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="def_solar_naik" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_solar_naik" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label>Retribusi Jalan</label>
+                        <input type="text" name="retribusi" class="form-control perincianchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="def_retribusi" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_retribusi" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8 col-xs-12">
+                      <div class="form-group">
+                        <label>Pulang Kosong</label>
+                        <select class="form-control" name="pulang" id="dropBiayaPulang" style="width: 100%;" onchange="hitungPerincian()">
+                          <option value="">Pilih Biaya</option>
+                          <?php $dtPlg = $this->db->get_where('profile_settings', array('id'=>'1'))->row(); ?>
+                          <option value="<?= $dtPlg->pulang_kosonga; ?>"><?= number_format($dtPlg->pulang_kosonga, 2);?></option>
+                          <option value="<?= $dtPlg->pulang_kosongb; ?>"><?= number_format($dtPlg->pulang_kosongb, 2);?></option>
+                          <option value="<?= $dtPlg->pulang_kosongc; ?>"><?= number_format($dtPlg->pulang_kosongc, 2);?></option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label>Nominal</label>
+                        <input type="text" name="biaya_pulang" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label>Bantuan 3</label>
+                        <input type="text" name="bantuan3" class="form-control perincianchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="def_bantuan3" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_bantuan3" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label>Bantuan 4</label>
+                        <input type="text" name="bantuan4" class="form-control perincianchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="def_bantuan4" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_bantuan4" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-offset-8 col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Perincian</label>
+                        <input type="text" name="total_perincian" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab_3">
                   <div class="row">
-                    <div class="col-md-8 col-xs-12">
-                      <div class="row">
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Tanggal Muat</label>
-                            <div class="input-group date">
-                              <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                              </div>
-                              <input type="text" name="tgl_muat_b" class="form-control pull-right" id="tgl_muat_b" placeholder="dd/mm/yyyy" onchange="diffKmb()">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Tanggal Bongkar</label>
-                            <div class="input-group date">
-                              <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                              </div>
-                              <input type="text" name="tgl_bongkar_b" class="form-control pull-right" id="tgl_bongkar_b" placeholder="dd/mm/yyyy" onchange="diffKmb()">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Hari</label>
-                            <input type="text" name="hari_berangkat_b" class="form-control" readonly>
-                          </div>
-                        </div>
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label>Bon Sangu Jkt</label>
+                        <select class="form-control" name="bon_sangujkt" id="dropSanguJkt" style="width: 100%;" onchange="hitungPotongan()">
+                          <option value="">Pilih Bon</option>
+                          <?php $dtBon = $this->db->get_where('profile_settings', array('id'=>'1'))->row(); ?>
+                          <option value="<?= $dtBon->bon_jkta; ?>"><?= number_format($dtBon->bon_jkta,2); ?></option>
+                          <option value="<?= $dtBon->bon_jktb; ?>"><?= number_format($dtBon->bon_jktb,2); ?></option>
+                          <option value="<?= $dtBon->bon_jktc; ?>"><?= number_format($dtBon->bon_jktc,2); ?></option>
+                          <option value="<?= $dtBon->bon_jktd; ?>"><?= number_format($dtBon->bon_jktd,2); ?></option>
+                          <option value="<?= $dtBon->bon_jkte; ?>"><?= number_format($dtBon->bon_jkte,2); ?></option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-offset-4 col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="nom_bon_sangujkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label>Hutang Pribadi</label>
+                        <input type="text" name="inp_hutangpribadi" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-offset-4 col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_hutangpribadi" class="form-control potonganchg num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label>Klaim</label>
+                        <input type="text" name="inp_klaim" class="form-control potonganchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-offset-4 col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_klaim" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label>Uang Kenek</label>
+                        <input type="text" name="inp_uangkenek" class="form-control potonganchg num_">
                       </div>
                     </div>
                     <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Uang Makan</label>
-                        <input type="text" name="uang_makan_b" class="form-control num_">
+                        <label></label>
+                        <input type="text" name="def_uangkenek" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_uangkenek" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Alamat Pengirim 3</label>
-                        <select class="form-control" name="kode_customer_e" id="dropPengirimC" style="width: 100%;">
-                          <option value="">Pilih Pengirim</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Alamat Penerima 3</label>
-                        <select class="form-control" name="kode_customer_f" id="dropPenerimaC" style="width: 100%;">
-                          <option value="">Pilih Penerima</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>No Surat Jalan 3</label>
-                        <input type="text" name="surat_jalan_c" class="form-control">
+                        <label>Koreksi 1</label>
+                        <input type="text" name="inp_koreksi1" class="form-control potonganchg num_">
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-offset-4 col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Jenis Muatan 3</label>
-                        <input type="text" name="jenis_muatan_c" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label>Berat Muatan 3</label>
-                        <div class="input-group">
-                          <input type="text" name="berat_muatan_c" class="form-control num_ chgberatkmb">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
-                        </div>
+                        <label></label>
+                        <input type="text" name="total_koreksi1" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Alamat Pengirim 4</label>
-                        <select class="form-control" name="kode_customer_g" id="dropPengirimD" style="width: 100%;">
-                          <option value="">Pilih Pengirim</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Alamat Penerima 4</label>
-                        <select class="form-control" name="kode_customer_h" id="dropPenerimaD" style="width: 100%;">
-                          <option value="">Pilih Penerima</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>No Surat Jalan 4</label>
-                        <input type="text" name="surat_jalan_d" class="form-control">
+                        <label>Koreksi 2</label>
+                        <input type="text" name="inp_koreksi2" class="form-control potonganchg num_">
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-offset-4 col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Jenis Muatan 4</label>
-                        <input type="text" name="jenis_muatan_d" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <label>Berat Muatan 4</label>
-                        <div class="input-group">
-                          <input type="text" name="berat_muatan_d" class="form-control num_ chgberatkmb">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
-                        </div>
+                        <label></label>
+                        <input type="text" name="total_koreksi2" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-offset-3 col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Total Berat Muat</label>
-                        <input type="text" name="sub_beratmuat_b" class="form-control num_" readonly>
+                        <label>Koreksi 3</label>
+                        <input type="text" name="inp_koreksi3" class="form-control potonganchg num_">
+                      </div>
+                    </div>
+                    <div class="col-md-offset-4 col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <label></label>
+                        <input type="text" name="total_koreksi3" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="tab-pane" id="tab_4">
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Solar Berangkat</label>
-                        <input type="text" name="solar_berangkat" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Bantuan 1</label>
-                        <input type="text" name="bantuan_a" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Bantuan 2</label>
-                        <input type="text" name="bantuan_b" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Tambahan 1</label>
-                        <input type="text" name="tambah_a" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Tambahan 2</label>
-                        <input type="text" name="tambah_b" class="form-control num_">
+                        <label>Tabungan Sopir</label>
+                        <input type="text" name="inp_tabsopir" class="form-control potonganchg num_">
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Solar Kembali</label>
-                        <input type="text" name="solar_kembali" class="form-control num_">
+                        <label></label>
+                        <input type="text" name="def_tabsopir" class="form-control num_" readonly>
                       </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Bantuan 3</label>
-                        <input type="text" name="bantuan_c" class="form-control num_">
+                        <label></label>
+                        <input type="text" name="total_tabsopir" class="form-control num_" readonly>
                       </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-offset-8 col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Bantuan 4</label>
-                        <input type="text" name="bantuan_d" class="form-control num_">
+                        <label>Total Potongan</label>
+                        <input type="text" name="total_potongan" class="form-control num_" readonly>
                       </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-offset-8 col-md-4 col-xs-12">
                       <div class="form-group">
-                        <label>Tambahan 3</label>
-                        <input type="text" name="tambah_c" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Tambahan 4</label>
-                        <input type="text" name="tambah_d" class="form-control num_">
+                        <label>Sisa/Kurang</label>
+                        <input type="text" name="total_akhir" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
@@ -573,24 +607,31 @@
         <div class="col-md-12 col-xs-12">
           <div class="box">
             <div class="box-body">
-              <div class="col-md-1 col-xs-1">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="saveDt()">Simpan</button>
+              <div class="row">
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-success" onclick="saveDt()">Simpan</button>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 col-xs-1">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="printDt()">Cetak</button>
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-warning" onclick="cancelDt()">Batal</button>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 col-xs-1">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-danger" onclick="delDt()">Hapus</button>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 col-xs-1">
-                <div class="form-group">
-                  <button type="button" class="btn btn-md btn-primary" onclick="cancelDt()">Batal</button>
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-primary" onclick="printDt()">Cetak</button>
+                  </div>
+                </div>
+                <div class="col-md-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-md btn-primary" onclick="reportDt()">Laporan</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -641,68 +682,62 @@
   <script>
     $(function ()
     {
+      var retBak = 0;
+      var retTangki = 0;
+      getSettings();
       $('.num_').number(true,2);
       key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'0';
       $('#tgl_bon').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
       });
-      $('#tgl_bon_kota').datepicker({
+      $('#tgl_berangkat').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
       });
-      $('#tgl_bon_a').datepicker({
+      $('#tgl_datang').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy'
       });
-      $('#tgl_bon_b').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-      });
-      $('#tgl_bon_c').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-      });
-      $('#tgl_bon_d').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-      });
-      $('#tgl_solar').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-      });
-      $('#tgl_muat').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-      });
-      $('#tgl_muat_b').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-      });
-      $('#tgl_bongkar').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-      });
-      $('#tgl_bongkar_b').datepicker({
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-      });
+      perincianChg();
+      potonganChg();
       bonsakuchg();
       beratBrgkt();
       beratKmb();
       $('#berat_jenis').select2({placeholder: 'Pilih Berat Jenis'});
       $('#nama_pom').select2({placeholder: 'Pilih Pom'});
+      $('#jenis_kendaraan').select2({placeholder: 'Pilih Kendaraan'});
+      $('#dropBiayaPulang').select2({placeholder: 'Pilih Biaya'});
+      $('#dropSanguJkt').select2({placeholder: 'Pilih Sangu'});
       dropkendaraan();
       dropsopir();
       dropkernet();
+      dropbiayasbyjkt();
+      dropbiayajktsby();
       droppengirim_a();
       droppengirim_b();
       droppengirim_c();
       droppengirim_d();
-      droppenerima_a();
-      droppenerima_b();
-      droppenerima_c();
-      droppenerima_d();
+      $('#dropBiayaSbyJkt').change(function()
+      {
+        pickBiayaSbyJkt($('#dropBiayaSbyJkt option:selected').val());
+      });
+      $('#dropBiayaJktSby').change(function()
+      {
+        pickBiayaJktSby($('#dropBiayaJktSby option:selected').val());
+      });
+      $('#jenis_kendaraan').change(function()
+      {
+        pickJenisKendaraan($('#jenis_kendaraan option:selected').val());
+      });
+      $('#dropBiayaPulang').change(function()
+      {
+        $('[name="biaya_pulang"]').val($('#dropBiayaPulang option:selected').val());
+      });
+      $('#dropSanguJkt').change(function()
+      {
+        $('[name="nom_bon_sangujkt"]').val($('#dropSanguJkt option:selected').val());
+      });
     })
     function newBon()
     {
@@ -789,6 +824,56 @@
         error: function (jqXHR, textStatus, errorThrown)
         {
           alert('Error get ban data');
+        }
+      });
+    }
+    function dropbiayasbyjkt()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropBiayaSopir')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropBiayaSbyJkt');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_biaya_driver']
+            option.text = data[i]['kode_biaya_driver']+' - '+data[i]['ket_biaya_driver'];
+            select.add(option);
+          }
+          $('#dropBiayaSbyJkt').select2({placeholder: 'Pilih Biaya'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get biaya data');
+        }
+      });
+    }
+    function dropbiayajktsby()
+    {
+      $.ajax({
+        url : "<?php echo site_url('Crud/getDropBiayaSopir')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+          var select = document.getElementById('dropBiayaJktSby');
+          var option;
+          for (var i = 0; i < data.length; i++)
+          {
+            option = document.createElement('option');
+            option.value = data[i]['kode_biaya_driver']
+            option.text = data[i]['kode_biaya_driver']+' - '+data[i]['ket_biaya_driver'];
+            select.add(option);
+          }
+          $('#dropBiayaJktSby').select2({placeholder: 'Pilih Biaya'});
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Error get biaya data');
         }
       });
     }
@@ -992,6 +1077,64 @@
         }
       });
     }
+    function pickBiayaSbyJkt(key)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/pickDropBiayaDriver/')?>'+key,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          $('[name="biaya_sbyjkt"]').val(data.nom_biaya_driver);
+        }
+      });
+    }
+    function pickBiayaJktSby(key)
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/pickDropBiayaDriver/')?>'+key,
+        dataType: 'JSON',
+        success: function(data)
+        {
+          $('[name="biaya_jktsby"]').val(data.nom_biaya_driver);
+        }
+      });
+    }
+    function pickJenisKendaraan(key)
+    {
+      if(key != '1') {
+        $('[name="def_retribusi"]').val(retTangki);
+        hitungPerincian();
+        hitungPotongan();
+      }
+      else {
+        $('[name="def_retribusi"]').val(retBak);
+        hitungPerincian();
+        hitungPotongan();
+      }
+    }
+    function getSettings()
+    {
+      $.ajax({
+        type: 'GET',
+        url: '<?= site_url('Crud/getSettings/1')?>',
+        dataType: 'JSON',
+        success: function(data)
+        {
+          $('[name="def_solar_sby"]').val(data.solar_jktsby);
+          $('[name="def_solar_jkt"]').val(data.solar_sbyjkt);
+          $('[name="def_solar_naik"]').val(data.solar_naik);
+          $('[name="def_bantuan2"]').val(data.bkr2t);
+          $('[name="def_ngepok"]').val(data.ngepok);
+          $('[name="def_uangkenek"]').val(data.uang_kernet);
+          $('[name="def_tabsopir"]').val(data.tab_sopir);
+          $('[name="def_retribusi"]').val(data.retribusi_bak);
+          retBak = data.retribusi_bak;
+          retTangki = data.retribusi_tangki;
+        }
+      });
+    }
     function saveDt()
     {
       key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'';
@@ -1146,6 +1289,94 @@
         }
       });
     }
+    function hitungPerincian()
+    {
+      biaya_sbyjkt = $('[name="biaya_sbyjkt"]').val()*1;
+      bantuan1 = $('[name="bantuan1"]').val()*1;
+      total_bantuan1 = parseFloat(bantuan1)*1;
+      $('[name="total_bantuan1"]').val(total_bantuan1);
+      bantuan2 = $('[name="bantuan2"]').val()*1;
+      def_bantuan2 = $('[name="def_bantuan2"]').val()*1;
+      total_bantuan2 = parseFloat(bantuan2)*parseFloat(def_bantuan2);
+      $('[name="total_bantuan2"]').val(total_bantuan2);
+      ngepok = $('[name="ngepok"]').val()*1;
+      def_ngepok = $('[name="def_ngepok"]').val()*1;
+      total_ngepok = parseFloat(ngepok)*parseFloat(def_ngepok);
+      $('[name="total_ngepok"]').val(total_ngepok);
+      biaya_jktsby = $('[name="biaya_jktsby"]').val()*1;
+      solar_jkt = $('[name="solar_jkt"]').val()*1;
+      def_solar_jkt = $('[name="def_solar_jkt"]').val()*1;
+      total_solar_jkt = parseFloat(solar_jkt)*parseFloat(def_solar_jkt);
+      $('[name="total_solar_jkt"]').val(total_solar_jkt);
+      solar_sby = $('[name="solar_sby"]').val()*1;
+      def_solar_sby = $('[name="def_solar_sby"]').val()*1;
+      total_solar_sby = parseFloat(solar_sby)*parseFloat(def_solar_sby);
+      $('[name="total_solar_sby"]').val(total_solar_sby);
+      solar_naik = $('[name="solar_naik"]').val()*1;
+      def_solar_naik = $('[name="def_solar_naik"]').val()*1;
+      total_solar_naik = parseFloat(solar_naik)*parseFloat(def_solar_naik);
+      $('[name="total_solar_naik"]').val(total_solar_naik);
+      retribusi = $('[name="retribusi"]').val()*1;
+      def_retribusi = $('[name="def_retribusi"]').val()*1;
+      total_retribusi = parseFloat(retribusi)*parseFloat(def_retribusi);
+      $('[name="total_retribusi"]').val(total_retribusi);
+      biaya_pulang = $('[name="biaya_pulang"]').val()*1;
+      bantuan3 = $('[name="bantuan3"]').val()*1;
+      total_bantuan3 = parseFloat(bantuan3)*1;
+      $('[name="total_bantuan3"]').val(total_bantuan3);
+      bantuan4 = $('[name="bantuan4"]').val()*1;
+      total_bantuan4 = parseFloat(bantuan4)*1;
+      $('[name="total_bantuan4"]').val(total_bantuan4);
+      total_perincian = parseFloat(biaya_sbyjkt)+parseFloat(total_bantuan1)+parseFloat(total_bantuan2)+parseFloat(total_ngepok)+parseFloat(total_solar_jkt)+parseFloat(total_solar_sby)+parseFloat(total_solar_naik)+parseFloat(total_retribusi)+parseFloat(biaya_pulang)+parseFloat(total_bantuan3)+parseFloat(total_bantuan4)
+      $('[name="total_perincian"]').val(total_perincian);
+    }
+    function perincianChg()
+    {
+      $('.perincianchg').on('input', function()
+      {
+        hitungPerincian();
+      });
+    }
+    function hitungPotongan()
+    {
+      nom_bon_sangujkt = $('[name="nom_bon_sangujkt"]').val()*1;
+      inp_hutangpribadi = $('[name="inp_hutangpribadi"]').val()*1;
+      total_hutangpribadi = parseFloat(inp_hutangpribadi)*1;
+      $('[name="total_hutangpribadi"]').val(total_hutangpribadi);
+      inp_klaim = $('[name="inp_klaim"]').val()*1;
+      total_klaim = parseFloat(inp_klaim)*1;
+      $('[name="total_klaim"]').val(total_klaim);
+      inp_uangkenek = $('[name="inp_uangkenek"]').val()*1;
+      def_uangkenek = $('[name="def_uangkenek"]').val()*1;
+      total_uangkenek = parseFloat(inp_uangkenek)*parseFloat(def_uangkenek);
+      $('[name="total_uangkenek"]').val(total_uangkenek);
+      console.log($('[name="total_uangkenek"]').val());
+      inp_koreksi1 = $('[name="inp_koreksi1"]').val()*1;
+      total_koreksi1 = parseFloat(inp_koreksi1)*1;
+      $('[name="total_koreksi1"]').val(total_koreksi1);
+      inp_koreksi2 = $('[name="inp_koreksi2"]').val()*1;
+      total_koreksi2 = parseFloat(inp_koreksi2)*1;
+      $('[name="total_koreksi2"]').val(total_koreksi2);
+      inp_koreksi3 = $('[name="inp_koreksi3"]').val()*1;
+      total_koreksi3 = parseFloat(inp_koreksi3)*1;
+      $('[name="total_koreksi3"]').val(total_koreksi3);
+      inp_tabsopir = $('[name="inp_tabsopir"]').val()*1;
+      def_tabsopir = $('[name="def_tabsopir"]').val()*1;
+      total_tabsopir = parseFloat(inp_tabsopir)*parseFloat(def_tabsopir);
+      $('[name="total_tabsopir"]').val(total_tabsopir);
+      total_potongan = parseFloat(nom_bon_sangujkt)+parseFloat(total_hutangpribadi)+parseFloat(total_klaim)+parseFloat(total_uangkenek)+parseFloat(total_koreksi1)+parseFloat(total_koreksi2)+parseFloat(total_koreksi3)+parseFloat(total_tabsopir);
+      $('[name="total_potongan"]').val(total_potongan);
+      total_rinci = $('[name="total_perincian"]').val()*1;
+      total_akhir = parseFloat(total_rinci)-parseFloat(total_potongan);
+      $('[name="total_akhir"]').val(total_akhir);
+    }
+    function potonganChg()
+    {
+      $('.potonganchg').on('input', function()
+      {
+        hitungPotongan();
+      });
+    }
     function hitungbonsaku_()
     {
       uangSakuKota = $('[name="uang_saku_kota"]').val()*100000;
@@ -1200,6 +1431,12 @@
       {
         hitungberatkmb_();
       });
+    }
+    function diffDate()
+    {
+      st = moment($('[name="tgl_berangkat"]').val(),'DD/MM/YYYY');
+      ed = moment($('[name="tgl_datang"]').val(),'DD/MM/YYYY');
+      $('[name="jumlah_pp"]').val(ed.diff(st,'days'));
     }
     function diffBrgkt()
     {

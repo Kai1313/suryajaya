@@ -63,6 +63,59 @@ class Crud extends CI_Controller
 			'no_telepon'=>$this->input->post('no_telepon'),
 			'no_fax'=>$this->input->post('no_fax'),
 			'satuan_kasbon'=>$this->input->post('satuan_kasbon'),
+			'bonus_upah_harian'=>$this->input->post('bonus_harian'),
+		);
+		$this->db->update('profile_settings',$ins,array('id'=>'1'));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function adminSettingsKiri()
+	{
+		$ins = array(
+			'solar_jktsby'=>$this->input->post('solar_jktsby'),
+			'solar_sbyjkt'=>$this->input->post('solar_sbyjkt'),
+			'solar_naik'=>$this->input->post('solar_naik'),
+			'retribusi_bak'=>$this->input->post('retribusi_bak'),
+			'retribusi_tangki'=>$this->input->post('retribusi_tangki'),
+			'stut_jktsby'=>$this->input->post('stut_jktsby'),
+			'stut_sbyjkt'=>$this->input->post('stut_sbyjkt'),
+			'nginap_sby'=>$this->input->post('nginap_sby'),
+			'nginap_jkt'=>$this->input->post('nginap_jkt'),
+			'biaya_perkg'=>$this->input->post('biaya_perkg'),
+			'bantuan'=>$this->input->post('bantuan'),
+			'bkr2t'=>$this->input->post('bkr2t'),
+			'ngepok'=>$this->input->post('ngepok'),
+			'uang_kernet'=>$this->input->post('uang_kernet'),
+			'denda_a'=>$this->input->post('denda_a'),
+			'denda_b'=>$this->input->post('denda_b'),
+			'denda_c'=>$this->input->post('denda_c'),
+		);
+		$this->db->update('profile_settings',$ins,array('id'=>'1'));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function adminSettingsKanan()
+	{
+		$ins = array(
+			'batas_kgbaksbyjkt'=>$this->input->post('batas_kgbaksbyjkt'),
+			'batas_kgbakjktsby'=>$this->input->post('batas_kgbakjktsby'),
+			'harga_bataskgbak'=>$this->input->post('harga_bataskgbak'),
+			'batas_kgtangki'=>$this->input->post('batas_kgtangki'),
+			'harga_bataskgtangki'=>$this->input->post('harga_bataskgtangki'),
+			'beratlebih_baksbyjkt'=>$this->input->post('beratlebih_baksbyjkt'),
+			'beratlebih_bakjktsby'=>$this->input->post('beratlebih_bakjktsby'),
+			'beratlebih_tangki'=>$this->input->post('beratlebih_tangki'),
+			'pulang_kosonga'=>$this->input->post('pulang_kosonga'),
+			'pulang_kosongb'=>$this->input->post('pulang_kosongb'),
+			'pulang_kosongc'=>$this->input->post('pulang_kosongc'),
+			'bon_jkta'=>$this->input->post('bon_jkta'),
+			'bon_jktb'=>$this->input->post('bon_jktb'),
+			'bon_jktc'=>$this->input->post('bon_jktc'),
+			'bon_jktd'=>$this->input->post('bon_jktd'),
+			'bon_jkte'=>$this->input->post('bon_jkte'),
+			'tab_sopir'=>$this->input->post('tab_sopir'),
 		);
 		$this->db->update('profile_settings',$ins,array('id'=>'1'));
 		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
@@ -835,6 +888,47 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	//CRUD Master Pom
+	public function addPom()
+	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m11');
+		$ins = array(
+			'kode_pom'=>$this->input->post('kode_pom'),
+			'nama_pom'=>$this->input->post('nama_pom'),
+			'data_sts'=>'1'
+		);
+		$this->db->insert('master_pom',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updPom()
+	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m11');
+		$upd = array(
+			'nama_pom'=>$this->input->post('nama_pom'),
+			'data_sts'=>'1'
+		);
+		$this->db->update('master_pom',$upd,array('kode_pom'=>$this->input->post('kode_pom')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function delPom($key)
+	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m6');
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_pom',$upd,array('kode_pom'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function getPom($key)
+	{
+		$data = $this->db->get_where('master_pom', array('kode_pom'=>$key))->row();
+		echo json_encode($data);
+	}
+
 	//CRUD Master Rekening
 	public function addRekening()
 	{
@@ -977,6 +1071,49 @@ class Crud extends CI_Controller
 	public function getCustomer($key)
 	{
 		$data = $this->db->get_where('master_customer', array('kode_customer'=>$key))->row();
+		echo json_encode($data);
+	}
+
+	public function addHargaCustomer()
+	{
+		$this->authsys->save_check_($_SESSION['user_id'],'m2');
+		$ins = array(
+			'kode_customer'=>$this->input->post('kode_customer'),
+			'tujuan'=>$this->input->post('tujuan'),
+			'nominal'=>$this->input->post('nominal'),
+			'data_sts'=>'1'
+		);
+		$this->db->insert('master_customer_harga',$ins);
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function updHargaCustomer()
+	{
+		$this->authsys->update_check_($_SESSION['user_id'],'m2');
+		$upd = array(
+			'kode_customer'=>$this->input->post('kode_customer'),
+			'tujuan'=>$this->input->post('tujuan'),
+			'nominal'=>$this->input->post('nominal'),
+			'data_sts'=>'1'
+		);
+		$this->db->update('master_customer_harga',$upd,array('id_harga'=>$this->input->post('id_harga')));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function delHargaCustomer($key)
+	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'m2');
+		$upd = array( 'data_sts'=>'0' );
+		$this->db->update('master_customer_harga',$upd,array('id_harga'=>$key));
+		$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		echo json_encode($data);
+	}
+
+	public function getCustomerHarga($key)
+	{
+		$data = $this->db->get_where('master_customer_harga', array('id_harga'=>$key))->row();
 		echo json_encode($data);
 	}
 
@@ -1391,6 +1528,12 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function getDropBiayaSopir()
+	{
+		$data = $this->db->get_where('master_biaya_driver',array('data_sts'=>'1'))->result();
+		echo json_encode($data);
+	}
+
 	public function getDropBan()
 	{
 		$data = $this->db->get_where('master_ban',array('data_sts'=>'1'))->result();
@@ -1510,6 +1653,12 @@ class Crud extends CI_Controller
 	public function pickDropTagihan($key)
 	{
 		$data = $this->db->join('trx_tagihan b','b.no_tagihan = a.no_tagihan')->get_where('trx_tagihan_det a',array('a.det_id'=>$key,'b.data_sts'=>'1'))->row();
+		echo json_encode($data);
+	}
+
+	public function pickDropBiayaDriver($key)
+	{
+		$data = $this->db->get_where('master_biaya_driver',array('kode_biaya_driver'=>$key))->row();
 		echo json_encode($data);
 	}
 
@@ -3631,6 +3780,34 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function delBonKaryawan()
+	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t9');
+		$getSts = $this->db->get_where('trx_input_bon_karyawan',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$del = array('data_sts'=>'3');
+			$this->db->update('trx_input_bon_karyawan',$del,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Bon Karyawan</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Bon Karyawan</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
 	public function printBonKaryawan($key)
 	{
 		$data['key'] = $key;
@@ -4107,65 +4284,47 @@ class Crud extends CI_Controller
 			$upd = array(
 				'kode_kendaraan'=>$this->input->post('kode_kendaraan'),
 				'tgl_bon'=>($this->input->post('tgl_bon')!='')?$this->dateFix_($this->input->post('tgl_bon')):NULL,
+				'tgl_berangkat'=>($this->input->post('tgl_berangkat')!='')?$this->dateFix_($this->input->post('tgl_berangkat')):NULL,
+				'tgl_datang'=>($this->input->post('tgl_datang')!='')?$this->dateFix_($this->input->post('tgl_datang')):NULL,
+				'jumlah_pp'=>$this->input->post('jumlah_pp'),
 				'kode_sopir'=>$this->input->post('kode_sopir'),
 				'kode_kernet'=>$this->input->post('kode_kernet'),
 				'kode_sopir'=>$this->input->post('kode_sopir'),
-				'tab_sopir'=>$this->input->post('tab_sopir'),
+				'tab_sopir'=>$this->input->post('inp_tabsopir'),
 				'berat_jenis'=>$this->input->post('berat_jenis'),
+				'jenis_kendaraan'=>$this->input->post('jenis_kendaraan'),
 				'ket_kasbon'=>$this->input->post('ket_kasbon'),
-				'uang_saku_kota'=>$this->input->post('uang_saku_kota'),
-				'uang_saku_a'=>$this->input->post('uang_saku_a'),
-				'uang_saku_b'=>$this->input->post('uang_saku_b'),
-				'uang_saku_c'=>$this->input->post('uang_saku_c'),
-				'uang_saku_d'=>$this->input->post('uang_saku_d'),
-				'tgl_bon_kota'=>($this->input->post('tgl_bon_kota')!='')?$this->dateFix_($this->input->post('tgl_bon_kota')):NULL,
-				'tgl_bon_a'=>($this->input->post('tgl_bon_a')!='')?$this->dateFix_($this->input->post('tgl_bon_a')):NULL,
-				'tgl_bon_b'=>($this->input->post('tgl_bon_b')!='')?$this->dateFix_($this->input->post('tgl_bon_b')):NULL,
-				'tgl_bon_c'=>($this->input->post('tgl_bon_c')!='')?$this->dateFix_($this->input->post('tgl_bon_c')):NULL,
-				'tgl_bon_d'=>($this->input->post('tgl_bon_d')!='')?$this->dateFix_($this->input->post('tgl_bon_d')):NULL,
-				'sub_uang_saku'=>$this->input->post('sub_uang_saku'),
-				'uang_solar'=>$this->input->post('uang_solar'),
-				'tgl_solar'=>($this->input->post('tgl_solar')!='')?$this->dateFix_($this->input->post('tgl_solar')):NULL,
-				'nama_pom'=>$this->input->post('nama_pom'),
-				'sub_bonall'=>$this->input->post('sub_bonall'),
-				'tgl_muat'=>($this->input->post('tgl_muat')!='')?$this->dateFix_($this->input->post('tgl_muat')):NULL,
-				'tgl_muat_b'=>($this->input->post('tgl_muat_b')!='')?$this->dateFix_($this->input->post('tgl_muat_b')):NULL,
-				'tgl_bongkar'=>($this->input->post('tgl_bongkar')!='')?$this->dateFix_($this->input->post('tgl_bongkar')):NULL,
-				'tgl_bongkar_b'=>($this->input->post('tgl_bongkar_b')!='')?$this->dateFix_($this->input->post('tgl_bongkar_b')):NULL,
-				'uang_makan'=>$this->input->post('uang_makan'),
-				'uang_makan_b'=>$this->input->post('uang_makan_b'),
 				'kode_customer_a'=>($this->input->post('kode_customer_a')!='')?$this->input->post('kode_customer_a'):NULL,
 				'kode_customer_b'=>($this->input->post('kode_customer_b')!='')?$this->input->post('kode_customer_b'):NULL,
 				'kode_customer_c'=>($this->input->post('kode_customer_c')!='')?$this->input->post('kode_customer_c'):NULL,
 				'kode_customer_d'=>($this->input->post('kode_customer_d')!='')?$this->input->post('kode_customer_d'):NULL,
-				'kode_customer_e'=>($this->input->post('kode_customer_e')!='')?$this->input->post('kode_customer_e'):NULL,
-				'kode_customer_f'=>($this->input->post('kode_customer_f')!='')?$this->input->post('kode_customer_f'):NULL,
-				'kode_customer_g'=>($this->input->post('kode_customer_g')!='')?$this->input->post('kode_customer_g'):NULL,
-				'kode_customer_h'=>($this->input->post('kode_customer_h')!='')?$this->input->post('kode_customer_h'):NULL,
-				'jenis_muatan_a'=>$this->input->post('jenis_muatan_a'),
-				'jenis_muatan_b'=>$this->input->post('jenis_muatan_b'),
-				'jenis_muatan_c'=>$this->input->post('jenis_muatan_c'),
-				'jenis_muatan_d'=>$this->input->post('jenis_muatan_d'),
+				'kode_biaya_sbyjkt'=>($this->input->post('kode_biaya_sbyjkt')!='')?$this->input->post('kode_biaya_sbyjkt'):NULL,
+				'kode_biaya_jktsby'=>($this->input->post('kode_biaya_jktsby')!='')?$this->input->post('kode_biaya_jktsby'):NULL,
 				'berat_muatan_a'=>$this->input->post('berat_muatan_a'),
 				'berat_muatan_b'=>$this->input->post('berat_muatan_b'),
 				'berat_muatan_c'=>$this->input->post('berat_muatan_c'),
 				'berat_muatan_d'=>$this->input->post('berat_muatan_d'),
-				'surat_jalan_a'=>$this->input->post('surat_jalan_a'),
-				'surat_jalan_b'=>$this->input->post('surat_jalan_b'),
-				'surat_jalan_c'=>$this->input->post('surat_jalan_c'),
-				'surat_jalan_d'=>$this->input->post('surat_jalan_d'),
-				'sub_beratmuat'=>$this->input->post('sub_beratmuat'),
-				'sub_beratmuat_b'=>$this->input->post('sub_beratmuat_b'),
 				'solar_berangkat'=>$this->input->post('solar_berangkat'),
 				'solar_kembali'=>$this->input->post('solar_kembali'),
-				'bantuan_a'=>$this->input->post('bantuan_a'),
-				'bantuan_b'=>$this->input->post('bantuan_b'),
-				'bantuan_c'=>$this->input->post('bantuan_c'),
-				'bantuan_d'=>$this->input->post('bantuan_d'),
-				'tambah_a'=>$this->input->post('tambah_a'),
-				'tambah_b'=>$this->input->post('tambah_b'),
-				'tambah_c'=>$this->input->post('tambah_c'),
-				'tambah_d'=>$this->input->post('tambah_d'),
+				'bantuan_a'=>$this->input->post('bantuan1'),
+				'bantuan_b'=>$this->input->post('bantuan2'),
+				'bantuan_c'=>$this->input->post('bantuan3'),
+				'bantuan_d'=>$this->input->post('bantuan4'),
+				'ngepok'=>$this->input->post('ngepok'),
+				'solar_jkt'=>$this->input->post('solar_jkt'),
+				'solar_sby'=>$this->input->post('solar_sby'),
+				'solar_naik'=>$this->input->post('solar_naik'),
+				'pulang'=>$this->input->post('pulang'),
+				'total_perincian'=>$this->input->post('total_perincian'),
+				'total_potongan'=>$this->input->post('total_potongan'),
+				'total_akhir'=>$this->input->post('total_akhir'),
+				'bon_sangujkt'=>$this->input->post('bon_sangujkt'),
+				'hutang_pribadi'=>$this->input->post('inp_hutangpribadi'),
+				'klaim'=>$this->input->post('inp_klaim'),
+				'uang_kenek'=>$this->input->post('inp_uangkenek'),
+				'tambah_a'=>$this->input->post('koreksi1'),
+				'tambah_b'=>$this->input->post('koreksi2'),
+				'tambah_c'=>$this->input->post('koreksi3'),
 				'data_sts'=>'1'
 			);
 			$this->db->update('trx_kas_bon_sopir',$upd,array('no_bon'=>$this->input->post('no_bon')));

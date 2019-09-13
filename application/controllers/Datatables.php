@@ -16,6 +16,8 @@ class Datatables extends CI_Controller
 		$this->load->model('Datatables/show/ShowKendaraan','showKendaraan');
 		$this->load->model('Datatables/show/ShowBan','showBan');
 		$this->load->model('Datatables/show/ShowRekening','showRekening');
+		$this->load->model('Datatables/show/ShowPom','showPom');
+		$this->load->model('Datatables/show/ShowCustHarga','showCustHarga');
 
 		$this->load->model('Datatables/details/DetPembelianBarang','detBeliBrg');
 		$this->load->model('Datatables/details/DetPemakaianBarang','detPakaiBrg');
@@ -1907,6 +1909,54 @@ class Datatables extends CI_Controller
 	}
 
 	//Data Master
+	public function mCustomerHarga($kode)
+	{
+		$list = $this->showCustHarga->get_datatables($kode);
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->tujuan;
+			$row[] = $dat->nominal;
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="editHarga('."'".$dat->id_harga."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delHarga('."'".$dat->id_harga."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->showCustHarga->count_all(),
+				"recordsFiltered" => $this->showCustHarga->count_filtered($kode),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+	
+	public function mPom()
+	{
+		$list = $this->showPom->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $dat)
+		{
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $dat->kode_pom;
+			$row[] = $dat->nama_pom;
+			$row[] = '<a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit('."'".$dat->kode_pom."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del('."'".$dat->kode_pom."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
+			$data[] = $row;
+		}
+		$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $this->showPom->count_all(),
+				"recordsFiltered" => $this->showPom->count_filtered(),
+				"data" => $data,
+			);
+		echo json_encode($output);
+	}
+
 	public function mRekening()
 	{
 		$list = $this->showRekening->get_datatables();

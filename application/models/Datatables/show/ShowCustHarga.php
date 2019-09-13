@@ -1,21 +1,21 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class SearchDaftarInputBonKaryawan extends CI_Model 
+	class ShowCustHarga extends CI_Model 
 	{
-		var $table = 'trx_input_bon_karyawan a';
-		var $column_order = array(null,'a.no_bon','a.tgl_bon','b.nama_karyawan','a.data_sts',null);
-		var $column_search = array('a.no_bon','a.tgl_bon','b.nama_karyawan','a.data_sts');
-		var $order = array('a.tgl_bon' => 'asc'); 
+		var $table = 'master_customer_harga';
+		var $column_order = array(null,'tujuan','nominal',null);
+		var $column_search = array('tujuan','nominal');
+		var $order = array('tujuan' => 'asc'); 
 		public function __construct()
 		{
-			parent::__construct();
+			parent::__construct();		
 		}
-		private function _get_datatables_query()
+		private function _get_datatables_query($kode)
 		{
-			$this->db->select('a.*,b.nama_karyawan');
-			$this->db->from($this->table);
-			$this->db->join('master_karyawan b','b.kode_karyawan = a.kode_karyawan','left');
-			$this->db->where('a.data_sts !=','3');
+            $this->db->from($this->table);
+            $this->db->join('master_customer', 'master_customer.kode_customer = master_customer_harga.kode_customer');
+            $this->db->where('master_customer_harga.data_sts','1');
+            $this->db->where('master_customer_harga.kode_customer',$kode);
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{
@@ -45,17 +45,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables()
+		public function get_datatables($kode)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($kode);
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered()
+		public function count_filtered($kode)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($kode);
 			$query = $this->db->get();
 			return $query->num_rows();
 		}

@@ -3,6 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Paging extends CI_Controller
 {
+	public function __construct()
+	{
+		parent::__construct();
+		date_default_timezone_set('Asia/Jakarta');
+	}
+
+	//Ambil Settings
+	public function getSettingData() {
+		$data = $this->db->get_where('profile_settings', array('id'=>'1'))->row();
+		return $data;
+	}
+
 	//Dashboard
 	public function index()
 	{
@@ -102,6 +114,14 @@ class Paging extends CI_Controller
 		$this->load->view('layout/wrapper',$data);
 	}
 
+	public function m_pom()
+	{
+		$this->authsys->master_check_($this->session->userdata('user_id'),'m11');
+		$data['page_header']='Master Pom';
+		$data['content']='menu/m_pom';
+		$this->load->view('layout/wrapper',$data);
+	}
+
 	//Transaksi
 	public function t_pembelian_spare_part()
 	{
@@ -177,6 +197,7 @@ class Paging extends CI_Controller
 
 	public function t_input_upah()
 	{
+		$data['settings'] = $this->getSettingData();
 		$this->authsys->trx_check_($_SESSION['user_id'],'t11');
 		$data['page_header']='Transaksi Input Upah';
 		$data['content']='menu/t_input_upah';
