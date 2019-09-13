@@ -4314,6 +4314,7 @@ class Crud extends CI_Controller
 				'solar_jkt'=>$this->input->post('solar_jkt'),
 				'solar_sby'=>$this->input->post('solar_sby'),
 				'solar_naik'=>$this->input->post('solar_naik'),
+				'retribusi'=>$this->input->post('retribusi'),
 				'pulang'=>$this->input->post('pulang'),
 				'total_perincian'=>$this->input->post('total_perincian'),
 				'total_potongan'=>$this->input->post('total_potongan'),
@@ -4322,9 +4323,9 @@ class Crud extends CI_Controller
 				'hutang_pribadi'=>$this->input->post('inp_hutangpribadi'),
 				'klaim'=>$this->input->post('inp_klaim'),
 				'uang_kenek'=>$this->input->post('inp_uangkenek'),
-				'tambah_a'=>$this->input->post('koreksi1'),
-				'tambah_b'=>$this->input->post('koreksi2'),
-				'tambah_c'=>$this->input->post('koreksi3'),
+				'tambah_a'=>$this->input->post('inp_koreksi1'),
+				'tambah_b'=>$this->input->post('inp_koreksi2'),
+				'tambah_c'=>$this->input->post('inp_koreksi3'),
 				'data_sts'=>'1'
 			);
 			$this->db->update('trx_kas_bon_sopir',$upd,array('no_bon'=>$this->input->post('no_bon')));
