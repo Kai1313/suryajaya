@@ -1158,10 +1158,10 @@
     }
     function cancelDt()
     {
-      key = ($('[name="no_pembelian"]').val()!='')?$('[name="no_pembelian"]').val():'';
+      key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'';
       $.ajax({
         type: 'POST',
-        url: '<?= site_url('Crud/cancelBeliBan')?>',
+        url: '<?= site_url('Crud/cancelKasBonSopir')?>',
         data: $('form').serialize(),
         dataType: 'JSON',
         success: function(data)
@@ -1169,9 +1169,27 @@
           if(data.status)
           {
             msg = $('<div>').append(data.msg).appendTo('#alertMsg');
-            $('#form-detail-pembelian')[0].reset();
-            tbDetBeli(key);
-            subTotal(key);
+          }
+          else
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
+          }
+        }
+      });
+    }
+    function delDt()
+    {
+      key = ($('[name="no_bon"]').val()!='')?$('[name="no_bon"]').val():'';
+      $.ajax({
+        type: 'POST',
+        url: '<?= site_url('Crud/delKasBonSopir')?>',
+        data: $('form').serialize(),
+        dataType: 'JSON',
+        success: function(data)
+        {
+          if(data.status)
+          {
+            msg = $('<div>').append(data.msg).appendTo('#alertMsg');
           }
           else
           {

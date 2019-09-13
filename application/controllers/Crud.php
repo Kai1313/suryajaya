@@ -4372,6 +4372,34 @@ class Crud extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function delKasBonSopir()
+	{
+		$this->authsys->delete_check_($_SESSION['user_id'],'t15');
+		$getSts = $this->db->get_where('trx_kas_bon_sopir',array('no_bon'=>$this->input->post('no_bon')))->row();
+		if($getSts->data_sts != '0')
+		{
+			$data['status'] = FALSE;
+		}
+		else
+		{
+			$can = array('data_sts'=>'2');
+			$this->db->update('trx_kas_bon_sopir',$can,array('no_bon'=>$this->input->post('no_bon')));
+			$data['status'] = ($this->db->affected_rows())?TRUE:FALSE;
+		}
+		$data['msg'] = ($data['status']!=FALSE)?
+		'<div class="alert alert-success alert-dismissible" id="alert_success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <h4><i class="icon fa fa-check"></i> Sukses Menghapus Kas Bon Sopir</h4>
+		 </div>'
+		 :
+		 '<div class="alert alert-danger alert-dismissible" id="alert_failed">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      	<h4><i class="icon fa fa-ban"></i> Gagal Menghapus Kas Bon Sopir</h4>
+      </div>'
+		 ;
+		echo json_encode($data);
+	}
+
 	public function printKasBonSopir($key)
 	{
 		$data['key'] = $key;
