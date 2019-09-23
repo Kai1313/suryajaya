@@ -169,10 +169,10 @@ class Crud extends CI_Controller
 		$user = $this->input->post('user_id');
 		$master = $this->input->post('mst');
 		$trxs = $this->input->post('trx');
-		$data['mst'] = count($master);
-		$data['trx'] = count($trxs);
-		$del_acc = $this->db->delete('hak_akses',array('user_id'=>$user));
-		if(sizeof($trxs)>0)
+		$data['mst'] = ($master != '')?count($master):0;
+		$data['trx'] = ($trxs != '')?count($trxs):0;
+		$this->db->delete('hak_akses',array('user_id'=>$user));
+		if(isset($trxs))
 		{
 			foreach($trxs as $trx)
 			{
@@ -365,7 +365,7 @@ class Crud extends CI_Controller
 				$this->db->insert('hak_akses',$dtacc);
 			}
 		}
-		if(sizeof($master)>0)
+		if(isset($master))
 		{
 			foreach($master as $mst)
 			{
@@ -459,6 +459,15 @@ class Crud extends CI_Controller
 							'simpan'=>($this->input->post('m101'))?$this->input->post('m101'):null,
 							'update'=>($this->input->post('m102'))?$this->input->post('m102'):null,
 							'hapus'=>($this->input->post('m103'))?$this->input->post('m103'):null
+						);
+						break;
+					case '31':
+						$dtacc = array(
+							'user_id'=>$user,
+							'trx_id'=>'31',
+							'simpan'=>($this->input->post('m111'))?$this->input->post('m111'):null,
+							'update'=>($this->input->post('m112'))?$this->input->post('m112'):null,
+							'hapus'=>($this->input->post('m113'))?$this->input->post('m113'):null
 						);
 						break;
 					default:

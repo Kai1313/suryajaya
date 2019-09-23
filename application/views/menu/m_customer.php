@@ -88,11 +88,11 @@
               <input type="hidden" name="kode_customer" class="form-control">
               <input type="hidden" name="id_harga" class="form-control">
                 <div class="form-group">
-                  <label>Kode Customer</label>
+                  <label>Tujuan</label>
                   <input type="text" name="tujuan" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label>Nama Customer</label>
+                  <label>Nominal</label>
                   <input type="text" name="nominal" class="form-control">
                 </div>
                 <div class="form-group">

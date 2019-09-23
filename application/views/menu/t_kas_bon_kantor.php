@@ -20,7 +20,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">Form Kas Bon Kantor</h3>
             </div>
-            <form role="form" id="form-kas-bon-sopir">
+            <form role="form" id="form-kas-bon-kantor">
               <input type="hidden" name="tipe_form" value="">
               <div class="box-body">
                 <div class="row">
@@ -96,7 +96,13 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <br>
+                      <label>Jenis Kendaraan</label>
+                      <select class="form-control" name="jenis_kendaraan" id="jenis_kendaraan">
+                        <option value="0">Bak</option>
+                        <option value="1">Tangki</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
                       <button type="button" id="newBtn" class="btn btn-sm btn-primary" onclick="newBon()">Bon Baru</button>
                       <button type="button" id="editBtn" class="btn btn-sm btn-primary" onclick="editBon()">Edit Bon</button>
                     </div>
@@ -112,233 +118,126 @@
           <div class="col-md-12 col-xs-12">
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_1" data-toggle="tab">Bon-Uang Saku</a></li>
+                <li class="active"><a href="#tab_1" data-toggle="tab">Umum</a></li>
                 <li><a href="#tab_2" data-toggle="tab">Berangkat</a></li>
                 <li><a href="#tab_3" data-toggle="tab">Kembali</a></li>
-                <li><a href="#tab_4" data-toggle="tab">Solar</a></li>
-                <li><a href="#tab_5" data-toggle="tab">Sopir</a></li>
+                <li><a href="#tab_4" data-toggle="tab">Perincian</a></li>
+                <li><a href="#tab_5" data-toggle="tab">Potongan</a></li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                   <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_kota" class="form-control pull-right" id="tgl_bon_kota" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_a" class="form-control pull-right" id="tgl_bon_a" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_b" class="form-control pull-right" id="tgl_bon_b" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_c" class="form-control pull-right" id="tgl_bon_c" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_bon_d" class="form-control pull-right" id="tgl_bon_d" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-8 col-xs-12">
+                    <div class="col-md-12 col-xs-12">
                       <div class="row">
-                        <div class="col-md-4 col-xs-4">
+                        <div class="col-md-3 col-xs-3">
                           <div class="form-group">
-                            <label>Bon Uang Saku Kota</label>
-                            <input type="text" name="uang_saku_kota" class="form-control num_ chgbonsaku">
-                          </div>
-                          <div class="form-group">
-                            <label>Bon Uang Saku 1</label>
-                            <input type="text" name="uang_saku_a" class="form-control num_ chgbonsaku">
-                          </div>
-                          <div class="form-group">
-                            <label>Bon Uang Saku 2</label>
-                            <input type="text" name="uang_saku_b" class="form-control num_ chgbonsaku">
-                          </div>
-                          <div class="form-group">
-                            <label>Bon Uang Saku 3</label>
-                            <input type="text" name="uang_saku_c" class="form-control num_ chgbonsaku">
-                          </div>
-                          <div class="form-group">
-                            <label>Bon Uang Saku 4</label>
-                            <input type="text" name="uang_saku_d" class="form-control num_ chgbonsaku">
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSangu" value="100000" readonly>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_kota_sum" class="form-control num_" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_a_sum" class="form-control num_" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_b_sum" class="form-control num_" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_c_sum" class="form-control num_" readonly>
-                          </div>
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_saku_d_sum" class="form-control num_" readonly>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 col-xs-12">
-                          <div class="form-group">
-                            <label>Total Bon Uang Saku</label>
-                            <input type="text" name="sub_uang_saku" class="form-control num_" readonly>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                      <div class="form-group">
-                        <label>Nama Pom</label>
-                        <select class="form-control" name="nama_pom" id="nama_pom">
-                          <option value="0">Pom A</option>
-                          <option value="1">Pom B</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" name="tgl_solar" class="form-control pull-right" id="tgl_solar" placeholder="dd/mm/yyyy">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-8 col-xs-12">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label>Bon Solar</label>
-                            <input type="text" name="uang_solar" class="form-control num_ chgbonsaku">
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" class="form-control num_ defSolar" value="100000" readonly>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label>&nbsp;</label>
-                            <input type="text" name="uang_solar_sum" class="form-control num_" readonly>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-offset-4 col-md-8 col-xs-12">
-                      <div class="form-group">
-                        <label>Total Bon Uang Saku & Solar</label>
-                        <input type="text" name="sub_bonall" class="form-control num_" readonly>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane" id="tab_2">
-                  <div class="row">
-                    <div class="col-md-8 col-xs-12">
-                      <div class="row">
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Tanggal Muat</label>
+                            <label>Tanggal Muat Dari Sby</label>
                             <div class="input-group date">
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" name="tgl_muat" class="form-control pull-right" id="tgl_muat" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                              <input type="text" name="tgl_muat_sby" class="form-control pull-right" id="tgl_muat" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-4 col-xs-4">
+                        <div class="col-md-3 col-xs-3">
+                          <div class="form-group">
+                            <label>Tanggal Tiba Di Jkt</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" name="tgl_datang_jkt" class="form-control pull-right" id="tgl_muat" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
                           <div class="form-group">
                             <label>Tanggal Bongkar</label>
                             <div class="input-group date">
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" name="tgl_bongkar" class="form-control pull-right" id="tgl_bongkar" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                              <input type="text" name="tgl_bongkar_jkt" class="form-control pull-right" id="tgl_bongkar" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-4 col-xs-4">
+                        <div class="col-md-3 col-xs-3">
                           <div class="form-group">
-                            <label>Hari</label>
-                            <input type="text" name="hari_berangkat" class="form-control" readonly>
+                            <label>Nginap Jkt</label>
+                            <input type="text" name="nginap_jkt" class="form-control" readonly>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-4 col-xs-12">
-                      <div class="form-group">
-                        <label>Uang Makan</label>
-                        <input type="text" name="uang_makan" class="form-control num_">
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                      <div class="row">
+                        <div class="col-md-3 col-xs-3">
+                          <div class="form-group">
+                            <label>Tanggal Muat Dari Jkt</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" name="tgl_muat_jkt" class="form-control pull-right" id="tgl_muat" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="form-group">
+                            <label>Tanggal Tiba Di Sby</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" name="tgl_datang_sby" class="form-control pull-right" id="tgl_muat" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="form-group">
+                            <label>Tanggal Bongkar</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" name="tgl_bongkar_sby" class="form-control pull-right" id="tgl_bongkar" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="form-group">
+                            <label>Nginap Sby</label>
+                            <input type="text" name="nginap_sby" class="form-control" readonly>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-3">
+                      <div class="form-group">
+                        <label>Tanggal Berangkat Lagi</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_berangkat_lagi" class="form-control pull-right" id="tgl_muat" placeholder="dd/mm/yyyy" onchange="diffBrgkt()">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-3">
+                      <div class="form-group">
+                        <label>Sby - Jkt PP</label>
+                        <input type="text" name="jumlah_pp" class="form-control" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_2">
+                  <!-- Kirim 1 -->
                   <div class="row">
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
@@ -353,10 +252,6 @@
                           <option value="">Pilih Penerima</option>
                         </select>
                       </div>
-                      <div class="form-group">
-                        <label>No Surat Jalan 1</label>
-                        <input type="text" name="surat_jalan_a" class="form-control">
-                      </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
@@ -364,47 +259,168 @@
                         <input type="text" name="jenis_muatan_a" class="form-control">
                       </div>
                       <div class="form-group">
-                        <label>Berat Muatan 1</label>
+                        <label>No Surat Jalan 1</label>
+                        <input type="text" name="surat_jalan_a" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Kirim 1</label>
                         <div class="input-group">
-                          <input type="text" name="berat_muatan_a" class="form-control num_ chgberatbrgkt">
+                          <input type="text" name="berat_kirim_a" class="form-control num_ chgberatbrgkt">
                           <div class="input-group-addon">
                             <span class="beratSts">Kg</span>
                           </div>
                         </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Terima 1</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_terima_a" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Susut 1</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_susut_a" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Biaya Susut 1</label>
+                        <input type="text" name="biaya_susut_a" class="form-control num_ chgbrutobrgkt">
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Ongkos Angkut 1</label>
-                        <input type="text" name="ongkos_angkut" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Ongkos Angkut Bruto 1</label>
-                        <input type="text" name="ongkos_bruto" class="form-control num_ chgbrutobrgkt">
+                        <label>Biaya/Kg 1</label>
+                        <select class="form-control" name="biaya_perkg_a" id="dropBiayaPerkgA" style="width: 100%;">
+                          <option value="">Pilih Biaya</option>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Borongan Sopir 1</label>
-                        <select class="form-control" name="borong_sopir" id="borSopir" style="width: 100%;">
-                          <option value="">Pilih Borongan</option>
-                          <option value="0">Berat</option>
-                          <option value="1">Volume</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Tambah Borong 1</label>
-                        <div class="input-group">
-                          <input type="text" name="tambah_borong_a" class="form-control num_">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
-                        </div>
+                        <label>Jumlah Biaya 1</label>
+                        <input type="text" name="jum_biaya_a" class="form-control">
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Tambah Borong 1</label>
+                        <input type="text" name="tambah_borong_a" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Ongkos 1</label>
+                        <input type="text" name="total_ongkos_a" class="form-control num_">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Tujuan 1</label>
+                        <select class="form-control" name="tujuan_a" id="tujuan1" style="width: 100%;">
+                          <option value="">Pilih Tujuan</option>
+                          <option value="0">SBY - JKT</option>
+                          <option value="1">JKT - SBY</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Jenis Muatan 1</label>
+                        <input type="text" name="jenis_muatan_a" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <form id="detail-muatan-1">
+                    <div class="row">
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Motif 1</label>
+                          <input type="text" name="motif" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Type 1</label>
+                          <input type="text" name="type_muat" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Pecah Box 1</label>
+                          <input type="text" name="pecah_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Ukuran 1</label>
+                          <input type="text" name="ukuran" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Qty Box 1</label>
+                          <input type="text" name="qty_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Berat Box 1</label>
+                          <input type="text" name="berat_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Jumlah Kg 1</label>
+                          <input type="text" name="jml_kg" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <br>
+                        <button type="button" class="btn btn-primary">Tambah</button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="row">
+                    <table id="detail-1" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+                      <thead>
+                        <th class="text-center">Motif</th>
+                        <th class="text-center">Tipe</th>
+                        <th class="text-center">Pecah Box</th>
+                        <th class="text-center">Ukuran</th>
+                        <th class="text-center">Qty Box</th>
+                        <th class="text-center">Berat Box</th>
+                        <th class="text-center">Jml Kg</th>
+                      </thead>
+                    </table>
+                  </div>
+                  <hr>
+                  <!-- Kirim 2 -->
+                  <hr>
                   <div class="row">
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
@@ -419,10 +435,6 @@
                           <option value="">Pilih Penerima</option>
                         </select>
                       </div>
-                      <div class="form-group">
-                        <label>No Surat Jalan 2</label>
-                        <input type="text" name="surat_jalan_b" class="form-control">
-                      </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
@@ -430,101 +442,168 @@
                         <input type="text" name="jenis_muatan_b" class="form-control">
                       </div>
                       <div class="form-group">
-                        <label>Berat Muatan 2</label>
+                        <label>No Surat Jalan 2</label>
+                        <input type="text" name="surat_jalan_b" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Kirim 2</label>
                         <div class="input-group">
-                          <input type="text" name="berat_muatan_b" class="form-control num_ chgberatbrgkt">
+                          <input type="text" name="berat_kirim_b" class="form-control num_ chgberatbrgkt">
                           <div class="input-group-addon">
                             <span class="beratSts">Kg</span>
                           </div>
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Terima 2</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_terima_b" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Susut 2</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_susut_b" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Biaya Susut 1</label>
+                        <input type="text" name="biaya_susut_a" class="form-control num_ chgbrutobrgkt">
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Ongkos Angkut 2</label>
-                        <input type="text" name="ongkos_angkut_2" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Ongkos Angkut Bruto 2</label>
-                        <input type="text" name="ongkos_bruto_2" class="form-control num_ chgbrutobrgkt">
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                      <div class="form-group">
-                        <label>Borongan Sopir 2</label>
-                        <select class="form-control" name="borong_sopir_2" id="borSopir2" style="width: 100%;">
-                          <option value="">Pilih Borongan</option>
-                          <option value="0">Berat</option>
-                          <option value="1">Volume</option>
+                        <label>Biaya/Kg 2</label>
+                        <select class="form-control" name="biaya_perkg_b" id="dropBiayaPerkgB" style="width: 100%;">
+                          <option value="">Pilih Biaya</option>
                         </select>
                       </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Tambah Borong 2</label>
-                        <div class="input-group">
-                          <input type="text" name="tambah_borong_b" class="form-control num_">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
-                        </div>
+                        <label>Jumlah Biaya 2</label>
+                        <input type="text" name="jum_biaya_b" class="form-control">
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-offset-3 col-md-6 col-xs-12">
+                    <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Total Berat Muat</label>
-                        <input type="text" name="sub_beratmuat" class="form-control num_" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label>Total Ongkos Bruto</label>
-                        <input type="text" name="sub_bruto" class="form-control num_" readonly>
+                        <label>Tambah Borong 2</label>
+                        <input type="text" name="tambah_borong_b" class="form-control num_">
                       </div>
                     </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Ongkos 2</label>
+                        <input type="text" name="total_ongkos_b" class="form-control num_">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Tujuan 2</label>
+                        <select class="form-control" name="tujuan_b" id="tujuan2" style="width: 100%;">
+                          <option value="">Pilih Tujuan</option>
+                          <option value="0">SBY - JKT</option>
+                          <option value="1">JKT - SBY</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Jenis Muatan 2</label>
+                        <input type="text" name="jenis_muatan_b" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <form id="detail-muatan-1">
+                    <div class="row">
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Motif 2</label>
+                          <input type="text" name="motif" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Type 2</label>
+                          <input type="text" name="type_muat" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Pecah Box 2</label>
+                          <input type="text" name="pecah_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Ukuran 2</label>
+                          <input type="text" name="ukuran" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Qty Box 2</label>
+                          <input type="text" name="qty_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Berat Box 2</label>
+                          <input type="text" name="berat_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Jumlah Kg 2</label>
+                          <input type="text" name="jml_kg" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <br>
+                        <button type="button" class="btn btn-primary">Tambah</button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="row">
+                    <table id="detail-2" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+                      <thead>
+                        <th class="text-center">Motif</th>
+                        <th class="text-center">Tipe</th>
+                        <th class="text-center">Pecah Box</th>
+                        <th class="text-center">Ukuran</th>
+                        <th class="text-center">Qty Box</th>
+                        <th class="text-center">Berat Box</th>
+                        <th class="text-center">Jml Kg</th>
+                      </thead>
+                    </table>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab_3">
-                  <div class="row">
-                    <div class="col-md-8 col-xs-12">
-                      <div class="row">
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Tanggal Muat</label>
-                            <div class="input-group date">
-                              <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                              </div>
-                              <input type="text" name="tgl_muat_b" class="form-control pull-right" id="tgl_muat_b" placeholder="dd/mm/yyyy" onchange="diffKmb()">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Tanggal Bongkar</label>
-                            <div class="input-group date">
-                              <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                              </div>
-                              <input type="text" name="tgl_bongkar_b" class="form-control pull-right" id="tgl_bongkar_b" placeholder="dd/mm/yyyy" onchange="diffKmb()">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                          <div class="form-group">
-                            <label>Hari</label>
-                            <input type="text" name="hari_berangkat_b" class="form-control" readonly>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-xs-12">
-                      <div class="form-group">
-                        <label>Uang Makan</label>
-                        <input type="text" name="uang_makan_b" class="form-control num_">
-                      </div>
-                    </div>
-                  </div>
+                  <!-- Kirim 3 -->
                   <div class="row">
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
@@ -539,10 +618,6 @@
                           <option value="">Pilih Penerima</option>
                         </select>
                       </div>
-                      <div class="form-group">
-                        <label>No Surat Jalan 3</label>
-                        <input type="text" name="surat_jalan_c" class="form-control">
-                      </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
@@ -550,47 +625,168 @@
                         <input type="text" name="jenis_muatan_c" class="form-control">
                       </div>
                       <div class="form-group">
-                        <label>Berat Muatan 3</label>
+                        <label>No Surat Jalan 3</label>
+                        <input type="text" name="surat_jalan_c" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Kirim 3</label>
                         <div class="input-group">
-                          <input type="text" name="berat_muatan_c" class="form-control num_ chgberatkmb">
+                          <input type="text" name="berat_kirim_c" class="form-control num_ chgberatbrgkt">
                           <div class="input-group-addon">
                             <span class="beratSts">Kg</span>
                           </div>
                         </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Terima 3</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_terima_c" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Susut 3</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_susut_c" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Biaya Susut 3</label>
+                        <input type="text" name="biaya_susut_c" class="form-control num_ chgbrutobrgkt">
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Ongkos Angkut 3</label>
-                        <input type="text" name="ongkos_angkut_3" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Ongkos Angkut Bruto 3</label>
-                        <input type="text" name="ongkos_bruto_3" class="form-control num_ chgbrutokmb">
+                        <label>Biaya/Kg 3</label>
+                        <select class="form-control" name="biaya_perkg_c" id="dropBiayaPerkgA" style="width: 100%;">
+                          <option value="">Pilih Biaya</option>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Borongan Sopir 3</label>
-                        <select class="form-control" name="borong_sopir_3" id="borSopir3" style="width: 100%;">
-                          <option value="">Pilih Borongan</option>
-                          <option value="0">Berat</option>
-                          <option value="1">Volume</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Tambah Borong 3</label>
-                        <div class="input-group">
-                          <input type="text" name="tambah_borong_c" class="form-control num_">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
-                        </div>
+                        <label>Jumlah Biaya 3</label>
+                        <input type="text" name="jum_biaya_c" class="form-control">
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Tambah Borong 3</label>
+                        <input type="text" name="tambah_borong_c" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Ongkos 3</label>
+                        <input type="text" name="total_ongkos_c" class="form-control num_">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Tujuan 3</label>
+                        <select class="form-control" name="tujuan_c" id="tujuan3" style="width: 100%;">
+                          <option value="">Pilih Tujuan</option>
+                          <option value="0">SBY - JKT</option>
+                          <option value="1">JKT - SBY</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Jenis Muatan 3</label>
+                        <input type="text" name="jenis_muatan_c" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <form id="detail-muatan-1">
+                    <div class="row">
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Motif 3</label>
+                          <input type="text" name="motif" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Type 3</label>
+                          <input type="text" name="type_muat" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Pecah Box 3</label>
+                          <input type="text" name="pecah_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Ukuran 3</label>
+                          <input type="text" name="ukuran" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Qty Box 3</label>
+                          <input type="text" name="qty_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Berat Box 3</label>
+                          <input type="text" name="berat_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Jumlah Kg 3</label>
+                          <input type="text" name="jml_kg" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <br>
+                        <button type="button" class="btn btn-primary">Tambah</button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="row">
+                    <table id="detail-3" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+                      <thead>
+                        <th class="text-center">Motif</th>
+                        <th class="text-center">Tipe</th>
+                        <th class="text-center">Pecah Box</th>
+                        <th class="text-center">Ukuran</th>
+                        <th class="text-center">Qty Box</th>
+                        <th class="text-center">Berat Box</th>
+                        <th class="text-center">Jml Kg</th>
+                      </thead>
+                    </table>
+                  </div>
+                  <hr>
+                  <!-- Kirim 4 -->
+                  <hr>
                   <div class="row">
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
@@ -605,9 +801,98 @@
                           <option value="">Pilih Penerima</option>
                         </select>
                       </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>No Surat Jalan 4</label>
-                        <input type="text" name="surat_jalan_d" class="form-control">
+                        <label>Jenis Muatan 2</label>
+                        <input type="text" name="jenis_muatan_b" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <label>No Surat Jalan 2</label>
+                        <input type="text" name="surat_jalan_b" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Kirim 4</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_kirim_d" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Terima 4</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_terima_d" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Berat Susut 4</label>
+                        <div class="input-group">
+                          <input type="text" name="berat_susut_d" class="form-control num_ chgberatbrgkt">
+                          <div class="input-group-addon">
+                            <span class="beratSts">Kg</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Biaya Susut 4</label>
+                        <input type="text" name="biaya_susut_d" class="form-control num_ chgbrutobrgkt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Biaya/Kg 4</label>
+                        <select class="form-control" name="biaya_perkg_d" id="dropBiayaPerkgB" style="width: 100%;">
+                          <option value="">Pilih Biaya</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Jumlah Biaya 4</label>
+                        <input type="text" name="jum_biaya_d" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Tambah Borong 4</label>
+                        <input type="text" name="tambah_borong_d" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Ongkos 4</label>
+                        <input type="text" name="total_ongkos_d" class="form-control num_">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Tujuan 4</label>
+                        <select class="form-control" name="tujuan_d" id="tujuan4" style="width: 100%;">
+                          <option value="">Pilih Tujuan</option>
+                          <option value="0">SBY - JKT</option>
+                          <option value="1">JKT - SBY</option>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
@@ -615,157 +900,648 @@
                         <label>Jenis Muatan 4</label>
                         <input type="text" name="jenis_muatan_d" class="form-control">
                       </div>
-                      <div class="form-group">
-                        <label>Berat Muatan 4</label>
-                        <div class="input-group">
-                          <input type="text" name="berat_muatan_d" class="form-control num_ chgberatkmb">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
+                    </div>
+                  </div>
+                  <form id="detail-muatan-1">
+                    <div class="row">
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Motif 4</label>
+                          <input type="text" name="motif" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Type 4</label>
+                          <input type="text" name="type_muat" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Pecah Box 4</label>
+                          <input type="text" name="pecah_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Ukuran 4</label>
+                          <input type="text" name="ukuran" class="form-control">
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                      <div class="form-group">
-                        <label>Ongkos Angkut 4</label>
-                        <input type="text" name="ongkos_angkut_4" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Ongkos Angkut Bruto 4</label>
-                        <input type="text" name="ongkos_bruto_4" class="form-control num_ chgbrutokmb">
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                      <div class="form-group">
-                        <label>Borongan Sopir 4</label>
-                        <select class="form-control" name="borong_sopir_4" id="borSopir4" style="width: 100%;">
-                          <option value="">Pilih Borongan</option>
-                          <option value="0">Berat</option>
-                          <option value="1">Volume</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Tambah Borong 4</label>
-                        <div class="input-group">
-                          <input type="text" name="tambah_borong_d" class="form-control num_">
-                          <div class="input-group-addon">
-                            <span class="beratSts">Kg</span>
-                          </div>
+                    <div class="row">
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Qty Box 4</label>
+                          <input type="text" name="qty_box" class="form-control">
                         </div>
                       </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Berat Box 4</label>
+                          <input type="text" name="berat_box" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <div class="form-group">
+                          <label>Jumlah Kg 4</label>
+                          <input type="text" name="jml_kg" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12">
+                        <br>
+                        <button type="button" class="btn btn-primary">Tambah</button>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                   <div class="row">
-                    <div class="col-md-offset-3 col-md-6 col-xs-12">
-                      <div class="form-group">
-                        <label>Total Berat Muat</label>
-                        <input type="text" name="sub_beratmuat_b" class="form-control num_" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label>Total Ongkos Bruto</label>
-                        <input type="text" name="sub_bruto_b" class="form-control num_" readonly>
-                      </div>
-                    </div>
+                    <table id="detail-4" class="table table-bordered table-striped" cellpadding="0" cellspacing="0" width="100%">
+                      <thead>
+                        <th class="text-center">Motif</th>
+                        <th class="text-center">Tipe</th>
+                        <th class="text-center">Pecah Box</th>
+                        <th class="text-center">Ukuran</th>
+                        <th class="text-center">Qty Box</th>
+                        <th class="text-center">Berat Box</th>
+                        <th class="text-center">Jml Kg</th>
+                      </thead>
+                    </table>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab_4">
                   <div class="row">
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Solar Berangkat</label>
-                        <input type="text" name="solar_berangkat" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Bantuan 1</label>
-                        <input type="text" name="bantuan_a" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Bantuan 2</label>
-                        <input type="text" name="bantuan_b" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Tambahan 1</label>
-                        <input type="text" name="tambah_a" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Tambahan 2</label>
-                        <input type="text" name="tambah_b" class="form-control num_">
+                        <label>Biaya Jalan</label>
+                        <select class="form-control" name="tujuan_a" id="tujuan1" style="width: 100%;">
+                          <option value="">Pilih Tujuan</option>
+                          <option value="0">SBY - JKT</option>
+                          <option value="1">JKT - SBY</option>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
                       <div class="form-group">
-                        <label>Solar Kembali</label>
-                        <input type="text" name="solar_kembali" class="form-control num_">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_biayajln" class="form-control num_" readonly>
                       </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Bantuan 1</label>
+                        <input type="text" name="info_bantuana" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_bantuana" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_bantuana" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Bantuan 2</label>
+                        <input type="text" name="info_bantuanb" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_bantuanb" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_bantuanb" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_bantuanb" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Ngepok</label>
+                        <input type="text" name="nom_ngepok" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_ngepok" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_ngepok" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Biaya Jalan Sby - Jkt</label>
+                        <input type="text" name="nom_biayasbyjkt" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-6 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_biayasbyjkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Solar ke Jkt</label>
+                        <input type="text" name="nom_solarjkt" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_solarjkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_solarjkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Solar ke Sby</label>
+                        <input type="text" name="nom_solarsby" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_solarsby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_solarsby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Solar Naik</label>
+                        <input type="text" name="nom_solarnaik" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_solarnaik" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_solarnaik" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Retribusi Jalan</label>
+                        <input type="text" name="nom_retrijln" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_retrijln" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_retrijln" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Pulang Kosong</label>
+                        <select class="form-control" name="pulang" id="dropPulang" style="width: 100%;">
+                          <option value="">Pilih Pulang</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-6 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_pulang" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
                       <div class="form-group">
                         <label>Bantuan 3</label>
-                        <input type="text" name="bantuan_c" class="form-control num_">
+                        <input type="text" name="info_bantuanc" class="form-control">
                       </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_bantuanc" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_bantuanc" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
                       <div class="form-group">
                         <label>Bantuan 4</label>
-                        <input type="text" name="bantuan_d" class="form-control num_">
+                        <input type="text" name="info_bantuand" class="form-control">
                       </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
                       <div class="form-group">
-                        <label>Tambahan 3</label>
-                        <input type="text" name="tambah_c" class="form-control num_">
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_bantuand" class="form-control num_">
                       </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
                       <div class="form-group">
-                        <label>Tambahan 4</label>
-                        <input type="text" name="tambah_d" class="form-control num_">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_bantuand" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-md-offset-9 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Perincian</label>
+                        <input type="text" name="total_rinci" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab_5">
                   <div class="row">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-3 col-xs-12">
                       <div class="form-group">
-                        <label>Uang Sopir Berangkat 1</label>
-                        <input type="text" name="uang_sopir_a" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Uang Sopir Berangkat 2</label>
-                        <input type="text" name="uang_sopir_b" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Uang Sopir Kembali 1</label>
-                        <input type="text" name="uang_sopir_c" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Uang Sopir Kembali 2</label>
-                        <input type="text" name="uang_sopir_d" class="form-control num_">
+                        <label>Bon Sangu Jkt</label>
+                        <select class="form-control" name="bon_sangujkt" id="dropBonSangu" style="width: 100%;">
+                          <option value="">Pilih Sangu</option>
+                        </select>
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-3 col-md-offset-6 col-xs-12">
                       <div class="form-group">
-                        <label>Koreksi Berangkat 1</label>
-                        <input type="text" name="koreksi_sopir_a" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Koreksi Berangkat 2</label>
-                        <input type="text" name="koreksi_sopir_b" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Koreksi Kembali 1</label>
-                        <input type="text" name="koreksi_sopir_c" class="form-control num_">
-                      </div>
-                      <div class="form-group">
-                        <label>Koreksi Kembali 2</label>
-                        <input type="text" name="koreksi_sopir_d" class="form-control num_">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_pulang" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-offset-3 col-md-6 col-xs-12">
+                    <div class="col-md-3 col-xs-12">
                       <div class="form-group">
-                        <label>Total Uang Sopir</label>
-                        <input type="text" name="sub_uangsopir" class="form-control num_" readonly>
+                        <label>Hutang Pribadi</label>
+                        <input type="text" name="info_hutang" class="form-control">
                       </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
                       <div class="form-group">
-                        <label>Total Koreksi</label>
-                        <input type="text" name="sub_koreksi" class="form-control num_" readonly>
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_hutang" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_hutang" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_hutang" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Klaim</label>
+                        <input type="text" name="info_klaim" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_klaim" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_klaim" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_klaim" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Uang Kenek</label>
+                        <input type="text" name="nom_uangkenek" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_uangkenek" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_uangkenek" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Koreksi 1</label>
+                        <input type="text" name="info_koreksia" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_koreksia" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_koreksia" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Koreksi 2</label>
+                        <input type="text" name="info_koreksib" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_koreksib" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_koreksib" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                      <div class="form-group">
+                        <label>Koreksi 3</label>
+                        <input type="text" name="info_koreksic" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="nom_koreksic" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_koreksic" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Tabungan Sopir</label>
+                        <input type="text" name="nom_tabsopir" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_tabsopir" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_tabsopir" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-md-offset-9 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Potongan</label>
+                        <input type="text" name="total_potong" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-md-offset-9 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Sisa/Kurang</label>
+                        <input type="text" name="total_sisa" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Denda Jkt</label>
+                        <input type="text" name="nom_dendajkt" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-6 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_dendajkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Denda Sby</label>
+                        <input type="text" name="nom_dendasby" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-6 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_dendasby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Nginap Jkt</label>
+                        <input type="text" name="nom_nginapjkt" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_nginapjkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_nginapjkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Nginap Sby</label>
+                        <input type="text" name="nom_nginapsby" class="form-control num_">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_nginapsby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_nginapsby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Stut Sby - Jkt</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_stut_sbyjkt_awal" class="form-control pull-right" id="tgl_stut_sbyjkt_awal" placeholder="dd/mm/yyyy" onchange="diffStutSbyJkt()">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_stut_sbyjkt_akhir" class="form-control pull-right" id="tgl_stut_sbyjkt_akhir" placeholder="dd/mm/yyyy" onchange="diffStutSbyJkt()">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_stutsbyjkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_stutsbyjkt" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>Stut Jkt - Sby</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_stut_jktsby_awal" class="form-control pull-right" id="tgl_stut_jktsby_awal" placeholder="dd/mm/yyyy" onchange="diffStutJktSby()">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" name="tgl_stut_jktsby_akhir" class="form-control pull-right" id="tgl_stut_jktsby_akhir" placeholder="dd/mm/yyyy" onchange="diffStutJktSby()">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="def_stutjktsby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                      <div class="form-group">
+                        <label>&nbsp;</label>
+                        <input type="text" name="total_stutjktsby" class="form-control num_" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 col-md-offset-9 col-xs-12">
+                      <div class="form-group">
+                        <label>Total Tambahan</label>
+                        <input type="text" name="total_tambah" class="form-control num_" readonly>
                       </div>
                     </div>
                   </div>
